@@ -1,0 +1,85 @@
+@charset "utf-8";
+/* CSS Document */
+
+.notificacion{
+padding-top: 2vh !important;
+padding-bottom: 1vh !important;
+min-height:0px !important;
+background:none !important;
+/* height: 11vh !important; */
+text-align: left;
+width: 100% !important;
+}
+.titulo_notificacion{
+    float: left;
+    width: auto;
+    position: absolute;
+    text-align: left;
+    overflow: hidden;
+    background: none;
+    border: none;
+    font-size: 2.5vh;
+    height: 3.5vh;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 3vw;
+    text-transform: uppercase;
+}
+.texto_notificacion{
+    height: auto;
+    float: left;
+    width: auto;
+    position: absolute;
+    text-align: left;
+    overflow: hidden;
+    background: none;
+    border: none;
+    font-size: 2vh;
+    top: 3.5vh;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 3vw;
+    text-transform: capitalize;
+}
+.hora_notificacion{
+    height: auto;
+    float: left;
+    width: auto;
+    position: absolute;
+    text-align: left;
+    overflow: hidden;
+    background: none;
+    border: none;
+    font-size: 1.5vh;
+    bottom: 0px;
+    padding: 0px;
+    margin: 0px;
+    right: 2vh;
+    opacity: 0.5;
+}
+#notificaciones_boton_configurar{
+    width: 100%;
+    background: #9C9C9C;
+    border: none;
+    color: #151515;
+    font-size: 2.5vh;
+    padding: 0.5vh;
+}
+#notificacion_count{
+    width: 70%;
+    height: 2.5vh;
+    vertical-align: middle;
+    border-radius: 100%;
+    position: absolute;
+    top: -0.5vh;
+    color: #151515;
+    bottom: 0px;
+    margin: auto;
+    left: 0px;
+    right: 0px;
+    line-height: normal;
+    font-size: 2vh;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-weight: bolder;
+}

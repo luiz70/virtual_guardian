@@ -1,0 +1,110 @@
+@charset "utf-8";
+/* CSS DocumentIPHONES */
+/*iphone 4*/
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
+	
+}
+/*iphone 5 5s */
+/* only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) */
+@media (max-width: 320px){
+.input35vh{
+		color: #FFFFFF !important;
+	
+		font-size: 19px !important;
+		font-weight: 100 !important;
+}
+.login_input_bg{
+    width: 80%;
+    margin-left: 10%;
+    background: rgba(169, 169, 169, 0.1);
+}
+div{
+    font-size: 3vh !important;
+}
+.login_titulo{
+    font-size: 5vh !important;
+    height: 5.5vh;
+    margin-bottom: 5vh;
+}
+#login_input{
+    margin-top: 8vh;
+}
+.login_boton{
+    font-size: 3.5vh;
+    height: 6vh;
+    width: 30vw;
+    margin-left: 35vw;
+    margin-top: 5vh;
+}
+#login_logo{
+    margin-top: 10vh;
+}
+.login_pie{
+    font-size: 3.5vh;
+    height: 7vh;
+}
+.body_registro{
+    bottom:16vh !important;
+}
+.popup-title{
+    font-size:3.5vh !important;
+}
+span{
+    font-size:3vh !important;
+}
+.popup-buttons .button{
+    font-size:16px !important;
+    height:25px !important;
+    
+}
+.btn_mapa_flotante{
+    width:6vh !important;
+    height:6vh !important;
+}
+.btn_mapa_flotante2{
+    top:16vh !important;
+}
+.item-icon-right{
+    padding-right:40px !important;
+    
+}
+.item-icon-left{
+    padding-left:50px !important;
+}
+.item-icon-right .icon{
+    right:3px !important;
+}
+.titulo_menu{
+    font-size:3.5vh !important;
+}
+.div3vh{
+    font-size:3vh !important;
+}
+.div25vh{
+    font-size:2.5vh !important;
+    height:7vh !important;
+}
+.cuerpo_auto{
+    top:9vh !important;
+}
+#auto_pie, #personas_pie{
+    font-size: 3.5vh;
+    height: 7vh;
+}
+#input_prompt{
+    font-size:19px !important;
+}
+.eliminar_persona{
+	  width: 4.0vh;
+  height: 4.0vh;
+}
+
+}
+/*iphone 6*/
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation : portrait) { 
+
+}
+/*iphone 6+*/
+@media only screen and (min-device-width : 414px) and (max-device-width : 736px) and (orientation : portrait) { 
+
+}
