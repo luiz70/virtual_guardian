@@ -1,5 +1,5 @@
 angular.module('starter')
-.controller("mapa",function($scope,$rootScope,$http,$ionicPopover,$timeout){
+.controller("mapa",function($scope,$rootScope,$http,$ionicPopover,$timeout,$window){
 	
 	//VARIABLES
 	$rootScope.map;
@@ -20,34 +20,45 @@ angular.module('starter')
 	if(window.localStorage.getArray("Peligros"))$rootScope.Peligros=window.localStorage.getArray("Peligros");
  	
 	$scope.createMap=function(){
+            
 		$scope.first=0;
 		if($scope.Conexion(1,function(){
 			$rootScope.sinMapa=true;
 			$rootScope.cargando=false;
 		})){
-			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true });
-			$scope.verificaHistorial();
+			$scope.loadMaps();
 		}
 		$scope.radio=$rootScope.Usuario.Rango;
-		
-		//if(window.localStorage.getArray("Eventos"))$rootScope.Eventos=window.localStorage.getArray("Eventos");
-		//else $rootScope.Eventos=[]
-		//console.log($rootScope.Eventos.length);
 		if(window.localStorage.getArray("Auto"))$scope.vigilando=true;
 	}
-	
+	initialize =function (){
+		$rootScope.sinMapa=false;
+			$rootScope.cargando=true;
+			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true });
+			$scope.verificaHistorial();
+	}
+    $scope.loadMaps=function(){
+			var s = document.createElement('script'); // use global document since Angular's $document is weak
+            s.src = 'https://maps.google.com/maps/api/js?key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs&sensor=false&libraries=drawing&callback=initialize';
+            document.body.appendChild(s);
+			
+    }
+            $scope.initialize=function(){alert(1);}
 	$scope.revisaPos=function(){
-		navigator.geolocation.getCurrentPosition($scope.onSPos, $scope.onError,{enableHighAccuracy: true });	
+		navigator.geolocation.getCurrentPosition($scope.onSPos, $scope.onErrorc,{enableHighAccuracy: true });	
 	}
 	$scope.revisaPosCarro=function(){
 		if(!window.localStorage.getArray("Auto"))
-		navigator.geolocation.getCurrentPosition($scope.onSPosc, $scope.onError,{enableHighAccuracy: true });
+		navigator.geolocation.getCurrentPosition($scope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true });
 	}
 	$scope.onSPos=function(position){
 		$scope.ubicacionMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 		$rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 		$scope.circuloRadio.setCenter($scope.ubicacionMarker.getPosition());
 		$rootScope.showEventos();
+	}
+	$scope.onErrorc=function(){
+		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
 	}
 	$scope.onSPosc=function(position){
 		$scope.carroMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
@@ -116,12 +127,52 @@ $scope.hideBarra=function(){
 					},1000,function(){});
 }
  	$scope.onError=function(error) {
-		$rootScope.sinMapa=true;
-		$rootScope.cargando=false;
+		if($scope.Conexion(1,function(){
+			$rootScope.sinMapa=true;
+			$rootScope.cargando=false;
+		})){
+			$rootScope.sinMapa=false;
+		var mapOptions = {
+    		zoom: 12,
+			center:new google.maps.LatLng(20.6737919,-103.3354131),
+    		mapTypeControl: false,
+    		panControl: false,
+	    	zoomControl: false,
+    		scaleControl: false,
+    		streetViewControl: false,
+    		streetViewControlOptions: {
+        		position: google.maps.ControlPosition.RIGHT_BOTTOM
+    		}
+		}
+		$scope.infos = new google.maps.InfoWindow({
+    		content: '',
+			disableAutoPan:false,
+  		});
+	
+		$rootScope.map = new google.maps.Map(document.getElementById('inicio_mapa'), mapOptions);
+		google.maps.event.addListenerOnce($rootScope.map,"idle",function (){
+			$scope.setPosicion($rootScope.map, 20.6737919,-103.3354131)
+			$rootScope.map.setCenter(new google.maps.LatLng(20.6737919,-103.3354131));
+			$rootScope.showEventos();
+			$rootScope.cargando=false;
+			$scope.hideBarra();
+			
+		});
+		
+		$scope.poscar=new google.maps.LatLng(20.6737919,-103.3354131);
+		$rootScope.mapCarro = new google.maps.Map(document.getElementById('auto_mapa'), mapOptions);
+		$rootScope.mapCarro.setZoom(17);
+		if(window.localStorage.getArray("Auto")){
+			$scope.poscar=new google.maps.LatLng(window.localStorage.getArray("Auto").Latitud,window.localStorage.getArray("Auto").Longitud);
+		}
+		google.maps.event.addListenerOnce($rootScope.mapCarro,"idle",function (){//iniciaFiltro();}
+			$scope.setCarro($scope.poscar.lat(),$scope.poscar.lng())
+			$rootScope.mapCarro.setCenter($scope.poscar);
+		});
+		}
 	}
 	$rootScope.Reload=function(){
-			window.location.reload();
-		//
+		$scope.createMap();
 	}
 	
 
@@ -417,7 +468,8 @@ alert(1);
 	$rootScope.showEventos=function(){
 		
 		//if($rootScope.Eventos.length>0)
-		$scope.getEventos();
+		if($scope.Conexion(1,function(){
+		}))$scope.getEventos();
 	}
 	$rootScope.muestraEventos=function(){
 	$scope.limpia();
@@ -533,3 +585,43 @@ alert(1);
 		
 	}
 })
+.directive('lazyLoad', ['$window', '$q', function ($window, $q) {
+                       function load_script() {
+                       var s = document.createElement('script'); // use global document since Angular's $document is weak
+                       s.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize';
+                       document.body.appendChild(s);
+                       }
+                       function lazyLoadApi(key) {
+                       var deferred = $q.defer();
+                       $window.initialize = function () {
+                       deferred.resolve();
+                       };
+                       // thanks to Emil Stenström: http://friendlybit.com/js/lazy-loading-asyncronous-javascript/
+                       if ($window.attachEvent) {
+                       $window.attachEvent('onload', load_script);
+                       } else {
+                       $window.addEventListener('load', load_script, false);
+                       }
+                       return deferred.promise;
+                       }
+                       return {
+                       restrict: 'E',
+                       link: function (scope, element, attrs) { // function content is optional
+                       // in this example, it shows how and when the promises are resolved
+                       if ($window.google && $window.google.maps) {
+                       console.log('gmaps already loaded');
+                       } else {
+                       lazyLoadApi().then(function () {
+                                          console.log('promise resolved');
+                                          if ($window.google && $window.google.maps) {
+                                          console.log('gmaps loaded');
+                                          } else {
+                                          console.log('gmaps not loaded');
+                                          }
+                                          }, function () {
+                                          console.log('promise rejected');
+                                          });
+                       }
+                       }
+                       };
+                       }]);

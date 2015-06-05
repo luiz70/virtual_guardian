@@ -30,7 +30,9 @@ angular.module('starter')
 					24:"Alguien mas ha iniciado sesión con este usuario.<br>Inicie sesión de nuevo",
 					25:"Virtual Guardian y los logotipos de la aplicación son marcas comerciales de Red Guardian Virtual S.A. de C.V. Todos los derechos reservados.",
 					26:"Virtual Guardian para dispositivos móviles fue creado con software de licencia abierta.",
-					27:"Versión "
+					27:"Versión ",
+					28:"Configuración GPS",
+					29:"El GPS no está disponible en este momento, verifique su configuración de GPS o intente más tarde."
 					
 				},
 				menu:{
@@ -48,7 +50,7 @@ angular.module('starter')
 				12:"Radio:",
 				13:"Eventos:",
 				14:"Personas:",
-				15:"Autos:",
+				15:"Auto:",
 				16:"Rango personas:",
 				17:"Rango auto:",
 				18:"Rango personal:",

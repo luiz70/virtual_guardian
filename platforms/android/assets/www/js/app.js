@@ -37,7 +37,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
     if(window.localStorage.getArray("nPendientes")) $rootScope.notPendientes=window.localStorage.getArray("nPendientes");
 	else $rootScope.notPendientes=0;	
 	$rootScope.tabInicial=1;
-	$rootScope.iOS=false;//(window.device.platform=="iOS");
+	$rootScope.iOS=(window.device.platform=="iOS");
                        
 	window.addEventListener('native.keyboardshow', keyboardShowHandler);
 	window.addEventListener('native.keyboardhide', keyboardHideHandler);
