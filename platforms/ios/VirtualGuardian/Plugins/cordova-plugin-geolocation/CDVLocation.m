@@ -96,6 +96,7 @@
 
 - (void)startLocation:(BOOL)enableHighAccuracy
 {
+    NSLog(@"starloc");
     if (![self isLocationServicesEnabled]) {
         [self returnLocationError:PERMISSIONDENIED withMessage:@"Location services are not enabled."];
         return;
@@ -160,7 +161,6 @@
         if (![self isLocationServicesEnabled]) {
             return;
         }
-
         [self.locationManager stopUpdatingLocation];
         __locationStarted = NO;
         __highAccuracyEnabled = NO;
@@ -293,7 +293,7 @@
         [returnInfo setObject:[NSNumber numberWithDouble:lInfo.altitude] forKey:@"altitude"];
         [returnInfo setObject:[NSNumber numberWithDouble:lInfo.coordinate.latitude] forKey:@"latitude"];
         [returnInfo setObject:[NSNumber numberWithDouble:lInfo.coordinate.longitude] forKey:@"longitude"];
-
+        NSLog(@"%f, %f",lInfo.coordinate.latitude,lInfo.coordinate.longitude);
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:returnInfo];
         [result setKeepCallbackAsBool:keepCallback];
     }

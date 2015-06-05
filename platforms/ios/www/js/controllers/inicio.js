@@ -440,7 +440,6 @@ $scope.cambia_rango_auto=function(value){
 		console.log($rootScope.Usuario.Periodo);
 	}
 	$scope.abreDate=function(val){
-
 		if($rootScope.iOS){
 			if(val==1){
 			var options = {

@@ -63,6 +63,10 @@
                         {
                             "xml": "<feature name=\"AppVersion\"><param name=\"ios-package\" value=\"AppVersion\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"DatePicker\"><param name=\"ios-package\" value=\"DatePicker\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -145,6 +149,9 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "uk.co.whiteoctober.cordova.appversion": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "cordova-plugin-datepicker": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },

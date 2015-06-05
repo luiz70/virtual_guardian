@@ -101,4 +101,7 @@
     <feature name="AppVersion">
         <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion" />
     </feature>
+    <feature name="DatePickerPlugin">
+        <param name="android-package" value="com.plugin.datepicker.DatePickerPlugin" />
+    </feature>
 </widget>

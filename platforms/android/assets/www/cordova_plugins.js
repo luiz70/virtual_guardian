@@ -90,6 +90,13 @@ module.exports = [
         "clobbers": [
             "cordova.getAppVersion"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-datepicker/www/android/DatePicker.js",
+        "id": "cordova-plugin-datepicker.DatePicker",
+        "clobbers": [
+            "datePicker"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -107,7 +114,8 @@ module.exports.metadata =
     "cordova-plugin-vibration": "1.1.0",
     "cordova-sqlite-storage": "0.7.9",
     "com.phonegap.plugins.PushPlugin": "2.2.1",
-    "uk.co.whiteoctober.cordova.appversion": "0.1.7"
+    "uk.co.whiteoctober.cordova.appversion": "0.1.7",
+    "cordova-plugin-datepicker": "0.7.1"
 }
 // BOTTOM OF METADATA
 });

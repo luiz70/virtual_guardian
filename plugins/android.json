@@ -51,6 +51,10 @@
                         {
                             "xml": "<feature name=\"AppVersion\"><param name=\"android-package\" value=\"uk.co.whiteoctober.cordova.AppVersion\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"DatePickerPlugin\"><param name=\"android-package\" value=\"com.plugin.datepicker.DatePickerPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -157,6 +161,9 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "uk.co.whiteoctober.cordova.appversion": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "cordova-plugin-datepicker": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },
