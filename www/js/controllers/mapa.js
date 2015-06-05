@@ -25,6 +25,8 @@ angular.module('starter')
 			$rootScope.sinMapa=true;
 			$rootScope.cargando=false;
 		})){
+			$rootScope.sinMapa=false;
+			$rootScope.cargando=true;
 			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true });
 			$scope.verificaHistorial();
 		}
@@ -120,8 +122,8 @@ $scope.hideBarra=function(){
 		$rootScope.cargando=false;
 	}
 	$rootScope.Reload=function(){
-			window.location.reload();
-		//
+			//window.location.reload();
+		$scope.createMap();
 	}
 	
 
