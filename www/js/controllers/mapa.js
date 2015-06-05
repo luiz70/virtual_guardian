@@ -291,8 +291,8 @@ $scope.setCarro=function (lat,long) {
   	});
 	}
 	google.maps.event.addListener($scope.carroMarker, "click", function() {
-		//if($scope.vigilando)$scope.muestraPeligrosGuardados();
-		
+		if($scope.vigilando)$scope.muestraPeligrosGuardados();
+		$scope.cargaInfoCarro(false);
         //$rootScope.mapCarro.panTo(loc);
 	});
 	
@@ -319,7 +319,7 @@ $scope.cargaInfoCarro=function(val){
             opacity: 0.9,
             width: (window.innerWidth*0.9)+"px"
         },
-        //closeBoxMargin: "19px 4px 2px 2px",
+        closeBoxMargin: "10000px 0px 0px 0px",
         closeBoxURL: "/img/iconos/inv.png",
         infoBoxClearance: new google.maps.Size(1, 1)
     	});

@@ -83,7 +83,7 @@ angular.module('starter')
 					5:"Estos son los eventos que han sucedido en la semana a menos de ",
 					6:"km de tu auto.",
 					7:"¿Quieres estacionarlo aquí?",
-					8:"Arrastra el auto hasta la ubicación donde estacionaste el auto para cuidarlo por ti.",
+					8:"Arrastra el auto hasta la ubicación donde lo estacionaste para cuidarlo por ti.",
 					9:"(Por tu seguridad Virtual Guardian no almacena la ubicación en sus servidores)"
 				},
 				personas:{
