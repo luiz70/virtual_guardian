@@ -35,6 +35,11 @@ angular.module('starter')
 					29:"El GPS no está disponible en este momento, verifique su configuración de GPS o intente más tarde."
 					
 				},
+				mapa:{
+					1:"Fecha:",
+					2:"Hora:",
+					3:"Dirección:"
+				},
 				menu:{
 				1:"Filtros",
 				2:"Ajustes de aplicación",
@@ -77,7 +82,9 @@ angular.module('starter')
 					4:"Análisis de seguridad",
 					5:"Estos son los eventos que han sucedido en la semana a menos de ",
 					6:"km de tu auto.",
-					7:"¿Quieres estacionarlo aquí?"
+					7:"¿Quieres estacionarlo aquí?",
+					8:"Arrastra el auto hasta la ubicación donde estacionaste el auto para cuidarlo por ti.",
+					9:"(Por tu seguridad Virtual Guardian no almacena la ubicación en sus servidores)"
 				},
 				personas:{
 					1:"Agregar persona",

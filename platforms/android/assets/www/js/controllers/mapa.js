@@ -17,6 +17,9 @@ angular.module('starter')
 	$scope.vigilando=false;
 	$rootScope.Peligros=[];
 	$scope.time=null;
+	$scope.Infobox=null;
+	$scope.selectedMarker=null;
+	$scope.markerLoaded=false;
 	if(window.localStorage.getArray("Peligros"))$rootScope.Peligros=window.localStorage.getArray("Peligros");
  	
 	$scope.createMap=function(){
@@ -32,17 +35,22 @@ angular.module('starter')
 		if(window.localStorage.getArray("Auto"))$scope.vigilando=true;
 	}
 	initialize =function (){
-		console.log("inicia");
-		$rootScope.sinMapa=false;
+		var e = document.createElement('script'); // use global document since Angular's $document is weak
+            e.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js';
+            document.body.appendChild(e);
+			$rootScope.sinMapa=false;
 			$rootScope.cargando=true;
 			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true,timeout:5000 });
 			$scope.verificaHistorial();
+			
 	}
     $scope.loadMaps=function(){
-		console.log("loadMaps");
 			var s = document.createElement('script'); // use global document since Angular's $document is weak
             s.src = 'https://maps.google.com/maps/api/js?key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs&sensor=false&libraries=drawing&callback=initialize';
             document.body.appendChild(s);
+			
+			
+			
 			
     }
             $scope.initialize=function(){alert(1);}
@@ -276,16 +284,72 @@ $scope.setCarro=function (lat,long) {
 		draggable:!$scope.vigilando
     });
 	
+    
+   $scope.cargaInfoCarro(true);
   	google.maps.event.addListener($scope.carroMarker, 'mouseup', function() {
 		if($scope.carroMarker.getDraggable())$rootScope.mapCarro.setCenter($scope.carroMarker.getPosition());
   	});
 	}
 	google.maps.event.addListener($scope.carroMarker, "click", function() {
-		if($scope.vigilando)$scope.muestraPeligrosGuardados();
+		//if($scope.vigilando)$scope.muestraPeligrosGuardados();
+		
+        //$rootScope.mapCarro.panTo(loc);
+	});
+	
+	google.maps.event.addListener($scope.carroMarker, "mouseover", function() {
+		$scope.cargaInfoCarro(false);
+	});
+	google.maps.event.addListener($scope.carroMarker, "mouseout", function() {
+		$scope.cargaInfoCarro(true);
 	});
 	$scope.carroMarker.setPosition(myLatLng);
 	$rootScope.mapCarro.setCenter($scope.carroMarker.getPosition());
-}		
+}	
+$scope.cargaInfoCarro=function(val){
+	
+	if(!$scope.Infobox)$scope.Infobox = new InfoBox({
+         content: document.getElementById("infobox"),
+		 alignBottom:true,
+         disableAutoPan: false,
+         maxWidth: window.innerWidth*0.9,
+         pixelOffset: new google.maps.Size(-(window.innerWidth*0.9)/2, -25),
+         zIndex: null,
+         boxStyle: {
+            //background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
+            opacity: 0.9,
+            width: (window.innerWidth*0.9)+"px"
+        },
+        //closeBoxMargin: "19px 4px 2px 2px",
+        closeBoxURL: "/img/iconos/inv.png",
+        infoBoxClearance: new google.maps.Size(1, 1)
+    	});
+		if(val){if(!$scope.vigilando)$scope.Infobox.open($rootScope.mapCarro, $scope.carroMarker);
+		}else $scope.Infobox.close();
+	
+}	
+$scope.cargaInfoEvento=function(val){
+	
+	if(!$scope.InfoboxEvento)$scope.InfoboxEvento = new InfoBox({
+         content: document.getElementById("infoboxEvento"),
+		 alignBottom:true,
+         disableAutoPan: false,
+         maxWidth: window.innerWidth*0.9,
+         pixelOffset: new google.maps.Size(-(window.innerWidth*0.9)/2, -57),
+         zIndex: null,
+         boxStyle: {
+            //background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
+            opacity: 0.95,
+            width: (window.innerWidth*0.9)+"px"
+        },
+        //closeBoxMargin: "19px 4px 2px 2px",
+        closeBoxURL: "/img/iconos/inv.png",
+        infoBoxClearance: new google.maps.Size(1, 1)
+    	});
+		if(val){$scope.InfoboxEvento.open($rootScope.map, $scope.selectedMarker);
+		}else $scope.InfoboxEvento.close();
+	
+}	
+
 $scope.setMarcador=function (evento) {
 	var icono = {
    	url: 'img/marcadores/'+evento.IdAsunto+'.png',
@@ -305,7 +369,8 @@ $scope.setMarcador=function (evento) {
         icon: icono,
         shape: shape,
        	zIndex: 2,
-		data:evento
+		data:evento,
+		animation: google.maps.Animation.DROP
     });
 	$scope.marcadores.push(marker);
 	google.maps.event.addListener(marker, "dblclick", function() {
@@ -317,36 +382,28 @@ $scope.setMarcador=function (evento) {
 	});
 }
 $scope.clickEvento=function (marker){
+	
+	if(!marker.data.Info){
+		$scope.markerLoaded=false;
 $http.get("http://www.virtual-guardian.com/api/evento/"+marker.data.IdEvento)
 		.success(function(data,status,header,config){
 			var d=data;
 			if(d.Direccion.substr(0,2)==", ")d.Direccion=d.Direccion.substr(2)
-			var subt=d.Estado;
-			if(d.Municipio!="")subt=d.Municipio+', '+d.Estado;
-			$scope.infos.setContent('<div class="list card" style ="margin:0px;  width: 100%">'+
- ' <div class="item item-avatar" style="box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);  z-index: 50; border: none;  height: 7vh;min-height: 0px;padding: 0.5vh; padding-left: 7vh;">'+
-   ' <img src="img/marcadores/'+marker.data.IdAsunto+'.png" style="opacity:1;  height: 100%;width: auto;left: 0px;">'+
-   ' <p style="  color: #000;  opacity: 1;  font-size: 2.5vh;height:3vh">'+d.Asunto+'</p>'+
-   ' <p style="  text-transform: capitalize;height:2.7vh">'+subt+'</p>'+
- ' </div>'+
-
- ' <div class="item item-image" style="  padding: 10px;  border: none;  text-align: left;">'+
-   '<p style="  color: #000;font-size:2vh">Fecha: '+d.Fecha+'</p>'+
-   '<p style="  color: #000;font-size:2vh">Hora: '+d.Hora+'</p>'+
-   '<p style="  color: #000;font-size:2vh;  white-space: normal;  text-transform: capitalize;">Dirección: '+d.Direccion+'</p>'+
- ' </div>'+
-'</div>')
+			d.Subtitulo=d.Estado;
+			if(d.Municipio!="")d.Subtitulo=d.Municipio+', '+d.Estado;
+			$scope.selectedMarker.data.Info=d;
+			$scope.markerLoaded=true;
 			})
 		.error(function(error,status,header,config){
 			console.log(data);
+			$scope.cargaInfoEvento(false);
 			})
-		
+	}	
 	
+	$scope.selectedMarker=marker;
+  	$scope.cargaInfoEvento(true);
+	//$rootScope.map.setCenter(marker.getPosition())
 	
-  	
-	$scope.infos.setContent("<button style='  width: 40vw;  height: 50px;  font-size: 2.5vh;  background: none;  border: none;'>"+$scope.idioma.general[1]+"</button>");
-	$scope.infos.open($rootScope.map,marker);
-	$rootScope.map.setCenter(marker.getPosition())
 }
 var cierraInfo=function(){
 alert(1);
@@ -375,6 +432,7 @@ alert(1);
 			window.localStorage.removeItem("Peligros")
 			$scope.carroMarker.setDraggable(true);
 			$scope.vigilando=!$scope.vigilando;	
+			$scope.cargaInfoCarro(!$scope.vigilando);
 			if(window.plugins.pushNotification)window.plugins.pushNotification.carLocation(function () {}, function () {}, {"Estatus":"0","Latitud":"","Longitud":"",});
 			
 		}
@@ -442,6 +500,7 @@ alert(1);
         }, {"Estatus":"1","Latitud":""+$scope.carroMarker.getPosition().lat(),"Longitud":""+$scope.carroMarker.getPosition().lng()});
 		$scope.carroMarker.setDraggable(false);
 		$scope.vigilando=!$scope.vigilando;
+		$scope.cargaInfoCarro(false);
 		$scope.popover.hide();
 	}
 	
@@ -464,6 +523,7 @@ alert(1);
 	$scope.createMap();
 	
 	$scope.limpia=function(){
+		$scope.cargaInfoEvento(false);
 		for( var i=0; i<$scope.marcadores.length;i++)
 			$scope.marcadores[i].setMap(null);
 		$scope.marcadores=[];
@@ -591,43 +651,3 @@ alert(1);
 		
 	}
 })
-.directive('lazyLoad', ['$window', '$q', function ($window, $q) {
-                       function load_script() {
-                       var s = document.createElement('script'); // use global document since Angular's $document is weak
-                       s.src = 'https://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize';
-                       document.body.appendChild(s);
-                       }
-                       function lazyLoadApi(key) {
-                       var deferred = $q.defer();
-                       $window.initialize = function () {
-                       deferred.resolve();
-                       };
-                       // thanks to Emil Stenström: http://friendlybit.com/js/lazy-loading-asyncronous-javascript/
-                       if ($window.attachEvent) {
-                       $window.attachEvent('onload', load_script);
-                       } else {
-                       $window.addEventListener('load', load_script, false);
-                       }
-                       return deferred.promise;
-                       }
-                       return {
-                       restrict: 'E',
-                       link: function (scope, element, attrs) { // function content is optional
-                       // in this example, it shows how and when the promises are resolved
-                       if ($window.google && $window.google.maps) {
-                       console.log('gmaps already loaded');
-                       } else {
-                       lazyLoadApi().then(function () {
-                                          console.log('promise resolved');
-                                          if ($window.google && $window.google.maps) {
-                                          console.log('gmaps loaded');
-                                          } else {
-                                          console.log('gmaps not loaded');
-                                          }
-                                          }, function () {
-                                          console.log('promise rejected');
-                                          });
-                       }
-                       }
-                       };
-                       }]);
