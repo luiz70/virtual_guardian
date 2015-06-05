@@ -1,5 +1,5 @@
 <ion-pan ng-hide="!pantallas[0]" style="  position: absolute;  top: 0vh;  background: none;  bottom: 0vh;  height: auto;  width: 100vw;">
-<ion-content id="inicio_mapa" class="inicio_mapa"  data-tap-disabled="true" style="top:0px;" on-touch="hideBarra()" ng-mouseover="hideBarra()">
+<ion-content id="inicio_mapa" class="inicio_mapa"  data-tap-disabled="true" style="top:0px;" on-touch="hideBarra()" ng-mouseover="hideBarra()" ng-hide="sinMapa">
 </ion-content> 
 <div style="position: absolute;top: 8vh;width: 100%;bottom: 0vh;overflow: hidden;" class="ng-hide" ng-show="sinMapa" ng-click="Reload()">
     <div style="  width: 50vw;position: absolute;height: 50vw;top: 0px;bottom: 8vh;left: 0px;  right: 0px;  margin: auto;  opacity: 0.2;">

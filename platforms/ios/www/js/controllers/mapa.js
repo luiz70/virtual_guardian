@@ -32,12 +32,14 @@ angular.module('starter')
 		if(window.localStorage.getArray("Auto"))$scope.vigilando=true;
 	}
 	initialize =function (){
+		console.log("inicia");
 		$rootScope.sinMapa=false;
 			$rootScope.cargando=true;
-			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true });
+			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true,timeout:5000 });
 			$scope.verificaHistorial();
 	}
     $scope.loadMaps=function(){
+		console.log("loadMaps");
 			var s = document.createElement('script'); // use global document since Angular's $document is weak
             s.src = 'https://maps.google.com/maps/api/js?key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs&sensor=false&libraries=drawing&callback=initialize';
             document.body.appendChild(s);
@@ -45,11 +47,11 @@ angular.module('starter')
     }
             $scope.initialize=function(){alert(1);}
 	$scope.revisaPos=function(){
-		navigator.geolocation.getCurrentPosition($scope.onSPos, $scope.onErrorc,{enableHighAccuracy: true });	
+		navigator.geolocation.getCurrentPosition($scope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:5000 });	
 	}
 	$scope.revisaPosCarro=function(){
 		if(!window.localStorage.getArray("Auto"))
-		navigator.geolocation.getCurrentPosition($scope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true });
+		navigator.geolocation.getCurrentPosition($scope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:5000 });
 	}
 	$scope.onSPos=function(position){
 		$scope.ubicacionMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
@@ -127,10 +129,12 @@ $scope.hideBarra=function(){
 					},1000,function(){});
 }
  	$scope.onError=function(error) {
+		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
 		if($scope.Conexion(1,function(){
 			$rootScope.sinMapa=true;
 			$rootScope.cargando=false;
 		})){
+			console.log("onerrorMaps");
 			$rootScope.sinMapa=false;
 		var mapOptions = {
     		zoom: 12,
@@ -469,6 +473,8 @@ alert(1);
 		
 		//if($rootScope.Eventos.length>0)
 		if($scope.Conexion(1,function(){
+			$rootScope.cargando=false;
+			$rootScope.sinMapa=true;
 		}))$scope.getEventos();
 	}
 	$rootScope.muestraEventos=function(){
