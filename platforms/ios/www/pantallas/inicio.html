@@ -98,7 +98,7 @@
      						{{filtros.Inicial.getDate()+"/"+idioma.meses[(filtros.Inicial.getMonth()+1)].substring(0,3)+"/"+filtros.Inicial.getFullYear()}}
                                 </span>
                         	</div>
-                            <input class="fechaMenu" type="date" ng-model="filtros.Inicial" ng-show="!iOS">
+                            <input class="fechaMenu" type="date" ng-model="filtros.Inicial" ng-show="!iOS || ipad">
                         </ion-item>
                         
                         <ion-item class="item input_home" ng-click="abreDate(2)">
@@ -109,7 +109,7 @@
                           	{{filtros.Final.getDate()+"/"+idioma.meses[(filtros.Final.getMonth()+1)].substring(0,3)+"/"+filtros.Final.getFullYear()}}
                                 </span>
                         	</div>
-                            <input class="fechaMenu" type="date" ng-model="filtros.Final" ng-show="!iOS">
+                            <input class="fechaMenu" type="date" ng-model="filtros.Final" ng-show="!iOS || ipad">
                         </ion-item>
                         <!--ion-item class="item item-divider">
                             Estados

@@ -292,15 +292,15 @@ $scope.setCarro=function (lat,long) {
 	}
 	google.maps.event.addListener($scope.carroMarker, "click", function() {
 		if($scope.vigilando)$scope.muestraPeligrosGuardados();
-		$scope.cargaInfoCarro(false);
+		//$scope.cargaInfoCarro(false);
         //$rootScope.mapCarro.panTo(loc);
 	});
 	
 	google.maps.event.addListener($scope.carroMarker, "mouseover", function() {
-		$scope.cargaInfoCarro(false);
+		//$scope.cargaInfoCarro(false);
 	});
 	google.maps.event.addListener($scope.carroMarker, "mouseout", function() {
-		$scope.cargaInfoCarro(true);
+		//$scope.cargaInfoCarro(true);
 	});
 	$scope.carroMarker.setPosition(myLatLng);
 	$rootScope.mapCarro.setCenter($scope.carroMarker.getPosition());
@@ -312,14 +312,13 @@ $scope.cargaInfoCarro=function(val){
 		 alignBottom:true,
          disableAutoPan: false,
          maxWidth: window.innerWidth*0.9,
-         pixelOffset: new google.maps.Size(-(window.innerWidth*0.9)/2, -25),
+         pixelOffset: new google.maps.Size($rootScope.ipad?-(window.innerWidth*0.7)/2:-(window.innerWidth*0.9)/2, -25),
          zIndex: null,
          boxStyle: {
-            //background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
             opacity: 0.9,
-            width: (window.innerWidth*0.9)+"px"
+            width: $rootScope.ipad?(window.innerWidth*0.7)+"px":(window.innerWidth*0.9)+"px"
         },
-        closeBoxMargin: "10000px 0px 0px 0px",
+        closeBoxMargin: "0px -20000px 0px 0px",
         closeBoxURL: "/img/iconos/inv.png",
         infoBoxClearance: new google.maps.Size(1, 1)
     	});
@@ -334,14 +333,14 @@ $scope.cargaInfoEvento=function(val){
 		 alignBottom:true,
          disableAutoPan: false,
          maxWidth: window.innerWidth*0.9,
-         pixelOffset: new google.maps.Size(-(window.innerWidth*0.9)/2, -57),
+         pixelOffset: new google.maps.Size($rootScope.ipad?-(window.innerWidth*0.8)/2:-(window.innerWidth*0.9)/2, -57),
          zIndex: null,
          boxStyle: {
             //background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
             opacity: 0.95,
-            width: (window.innerWidth*0.9)+"px"
+            width: $rootScope.ipad?(window.innerWidth*0.8)+"px":(window.innerWidth*0.9)+"px"
         },
-        //closeBoxMargin: "19px 4px 2px 2px",
+        closeBoxMargin: "-2000000px -2000000px  0px 0px",
         closeBoxURL: "/img/iconos/inv.png",
         infoBoxClearance: new google.maps.Size(1, 1)
     	});
