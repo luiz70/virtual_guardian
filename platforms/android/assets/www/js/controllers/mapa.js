@@ -312,14 +312,14 @@ $scope.cargaInfoCarro=function(val){
 		 alignBottom:true,
          disableAutoPan: false,
          maxWidth: window.innerWidth*0.9,
-         pixelOffset: new google.maps.Size($rootScope.ipad?-(window.innerWidth*0.7)/2:-(window.innerWidth*0.9)/2, -25),
+         pixelOffset: new google.maps.Size($rootScope.ipad?-(window.innerWidth*0.7)*0.5:-(window.innerWidth*0.9)*0.5, -25),
          zIndex: null,
          boxStyle: {
             opacity: 0.9,
             width: $rootScope.ipad?(window.innerWidth*0.7)+"px":(window.innerWidth*0.9)+"px"
         },
-        closeBoxMargin: "0px -20000px 0px 0px",
-        closeBoxURL: "/img/iconos/inv.png",
+        closeBoxMargin: "2vh 2vh 0px 0px",
+        closeBoxURL: "",
         infoBoxClearance: new google.maps.Size(1, 1)
     	});
 		if(val){if(!$scope.vigilando)$scope.Infobox.open($rootScope.mapCarro, $scope.carroMarker);
@@ -333,15 +333,15 @@ $scope.cargaInfoEvento=function(val){
 		 alignBottom:true,
          disableAutoPan: false,
          maxWidth: window.innerWidth*0.9,
-         pixelOffset: new google.maps.Size($rootScope.ipad?-(window.innerWidth*0.8)/2:-(window.innerWidth*0.9)/2, -57),
+         pixelOffset: new google.maps.Size($rootScope.ipad?(-(window.innerWidth*0.8)*0.5):-(window.innerWidth*0.9)*0.5, -57),
          zIndex: null,
          boxStyle: {
             //background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
             opacity: 0.95,
             width: $rootScope.ipad?(window.innerWidth*0.8)+"px":(window.innerWidth*0.9)+"px"
         },
-        closeBoxMargin: "-2000000px -2000000px  0px 0px",
-        closeBoxURL: "/img/iconos/inv.png",
+        closeBoxMargin: -"2vh -2vh  0px 0px",
+        closeBoxURL: "",
         infoBoxClearance: new google.maps.Size(1, 1)
     	});
 		if(val){$scope.InfoboxEvento.open($rootScope.map, $scope.selectedMarker);
@@ -387,6 +387,7 @@ $scope.clickEvento=function (marker){
 $http.get("http://www.virtual-guardian.com/api/evento/"+marker.data.IdEvento)
 		.success(function(data,status,header,config){
 			var d=data;
+			//console.log(d);
 			if(d.Direccion.substr(0,2)==", ")d.Direccion=d.Direccion.substr(2)
 			d.Subtitulo=d.Estado;
 			if(d.Municipio!="")d.Subtitulo=d.Municipio+', '+d.Estado;

@@ -51,7 +51,7 @@
 </button>
 </ion-pan>
 <div class="infobox-wrapper">
-    <div id="infoboxEvento" >
+    <div id="infoboxEvento" style="overflow:hidden" >
     <div style="text-align:center;padding:2vh" ng-hide="markerLoaded">
     <ion-spinner icon="android" class="spinner-dark"></ion-spinner>
     <div style="width:100%;text-align:center;font-size:3vh">{{idioma.general[1]}}</div>
@@ -71,7 +71,7 @@
  <div class="item item-image" style="  padding: 10px;  border: none;  text-align: left;">
   <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[1]}} {{selectedMarker.data.Info.Fecha}}</p>
   <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[2]}} {{selectedMarker.data.Info.Hora}}</p>
-  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;  white-space: normal;  text-transform: capitalize;margin-left:0.5vh;">{{idioma.mapa[3]}} {{selectedMarker.data.Info.Direccion}}</p>
+  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.8vh;  white-space: normal;  text-transform: capitalize;margin-left:0.5vh;">{{idioma.mapa[3]}} {{selectedMarker.data.Info.Direccion}}</p>
  </div>
 </div>
 </div>

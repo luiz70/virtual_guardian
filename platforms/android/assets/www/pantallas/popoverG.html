@@ -1,8 +1,27 @@
- <ion-modal-view>
-    <ion-header-bar>
-      <h1 class="title">My Modal title</h1>
-    </ion-header-bar>
-    <ion-content>
-      Hello!
-    </ion-content>
-  </ion-modal-view>
+<ion-popover-view style="opacity: 1;  width: 90vw;  height: 80vh;  left: 0px;  right: 0px;  top: 0px;  bottom: 0px;  margin: auto;  position: absolute;  background: #F5F5F5;">
+	<div class="popup-head" style=" height: 7.5vh; ">
+		<h3 class="popup-title " >{{idioma.auto[4]}}</h3>
+	</div>
+    <div class="popup-body" style="height: 64.5vh;">
+    	<div class="div25vh" style="  font-size: 2vh;height: 6vh;overflow: hidden;">{{idioma.auto[5]+(Usuario.RangoAuto/1000)+idioma.auto[6]}}
+        </div>
+        <div class="cuerpo_auto" style="width: 94%;position: absolute;bottom: 0vh;top: 8vh;border-bottom: solid 1px #C6C6C6; border-top: solid 1px #C6C6C6;">
+        <ion-content style="background:none; margin:0px " has-bouncing="true">
+	<ion-list>
+    	<ion-item class="item item-avatar notificacion" ng-repeat="peligro in Peligros track by $index" style="border:none;  border-bottom: solid 1px #D3D3D3;border-top: none;  padding-bottom: 2vh !important;" >
+      		<img ng-src="img/marcadores/{{peligro.IdAsunto}}.png">
+      		<h2 style="  font-size: 2.5vh !important;  color: #3C3C3C;">{{peligro.Titulo}}</h2>
+      		<p style="  color: #4A4A4A;  text-transform: capitalize;  line-height: 2.5vh; font-size: 2vh;">{{peligro.Subtitulo}}</p>
+	  		<p class="hora_notificacion" style="font-size:1.5vh !important;  color: #000;  opacity: 0.7;line-height: initial;width: 100%; text-align: right;">{{peligro.Fecha+" "+peligro.Hora }}</p>
+  		</ion-item>
+        
+    </ion-list>
+</ion-content>
+        </div>
+          
+    </div>
+	<div class="popup-buttons" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;"><!-- ngRepeat: button in buttons -->
+        <button  class="button ng-binding button-positive" ng-class="button.type || 'button-default'" ng-click="ocultaPeligros()" style="  height: 100%;
+  padding: 0px !important;">{{idioma.general[2]}}</button>
+     </div> 
+</ion-popover-view>
