@@ -52,26 +52,26 @@
 </ion-pan>
 <div class="infobox-wrapper">
     <div id="infoboxEvento" >
-    <div style="text-align:center" ng-hide="markerLoaded">
+    <div style="text-align:center;padding:2vh" ng-hide="markerLoaded">
     <ion-spinner icon="android" class="spinner-dark"></ion-spinner>
     <div style="width:100%;text-align:center;font-size:3vh">{{idioma.general[1]}}</div>
     
     </div>
         <div class="list card" style ="margin:0px;  width: 100%;box-shadow:none;" ng-hide="!markerLoaded">
         
- <div class="item item-avatar" style="box-shadow:none;  z-index: 50; border: none;  height: 9vh;min-height: 0px;padding: 0.5vh; padding-left: 9vh;">
-   <img src={{"img/marcadores/"+selectedMarker.data.IdAsunto+".png"}} style="opacity:1;  height: 100%;width: auto;left: 0px;">
-   <p style="  color: #000;  opacity: 1;  font-size: 3.5vh;height:3.5vh">{{selectedMarker.data.Info.Asunto}}</p>
-   <p style="font-size: 3vh;text-transform: capitalize;height:3vh">{{selectedMarker.data.Info.Subtitulo}}</p>
-   <button style="position:absolute;top:0px;right:0px;width:5vh;height:5vh;padding:0px;background:none;border:none" ng-click="cargaInfoEvento(false)">
-    		<img src="img/iconos/cancelmap.png" width="100%">
+ <div class="item item-avatar" style="box-shadow:none;  z-index: 50; border: none;  height: 7vh;min-height: 0px;padding: 0.3vh; padding-left: 7vh;padding-bottom:0px">
+   <img src={{"img/marcadores/"+selectedMarker.data.IdAsunto+".png"}} style="opacity:1;  height: 90%;width: auto;left: 0.5vh;">
+   <p style="  color: #000;  opacity: 1;  font-size: 3.3vh;height:3.4vh;line-height:3.4vh">{{selectedMarker.data.Info.Asunto}}</p>
+   <p style="font-size: 2.5vh;text-transform: capitalize;height:3.5vh !important;line-height:2.5vh">{{selectedMarker.data.Info.Subtitulo}}</p>
+   <button class="cerrar_info" style="position:absolute;top:0px;right:0px;width:5vh;height:5vh;padding:0px;background:none;border:none" ng-click="cargaInfoEvento(false)">
+    		<img  src="img/iconos/cancelmap.png" width="100%">
 	</button>
  </div>
 
  <div class="item item-image" style="  padding: 10px;  border: none;  text-align: left;">
-  <p style="  color: #000;font-size:3vh;height:3.5vh !important">{{idioma.mapa[1]}} {{selectedMarker.data.Info.Fecha}}</p>
-  <p style="  color: #000;font-size:3vh;height:3.5vh !important">{{idioma.mapa[2]}} {{selectedMarker.data.Info.Hora}}</p>
-  <p style="  color: #000;font-size:3vh;height:3.5vh !important  white-space: normal;  text-transform: capitalize;">{{idioma.mapa[3]}} {{selectedMarker.data.Info.Direccion}}</p>
+  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[1]}} {{selectedMarker.data.Info.Fecha}}</p>
+  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[2]}} {{selectedMarker.data.Info.Hora}}</p>
+  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;  white-space: normal;  text-transform: capitalize;margin-left:0.5vh;">{{idioma.mapa[3]}} {{selectedMarker.data.Info.Direccion}}</p>
  </div>
 </div>
 </div>

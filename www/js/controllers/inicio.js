@@ -441,7 +441,7 @@ $scope.cambia_rango_auto=function(value){
 	}
 	$scope.abreDate=function(val){
 
-		if($rootScope.iOS){
+		if($rootScope.iOS && !$rootScope.ipad){
 			if(val==1){
 			var options = {
 			  date: $rootScope.filtros.Inicial,

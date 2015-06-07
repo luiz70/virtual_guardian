@@ -19,7 +19,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-	 
+    
   
 	//if(navigator.splashscreen)
 	//navigator.splashscreen.show();
@@ -38,7 +38,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	else $rootScope.notPendientes=0;	
 	$rootScope.tabInicial=1;
 	$rootScope.iOS=(window.device.platform=="iOS");
-                       
+    $rootScope.ipad=(window.device.model.substring(0,4).toLowerCase()=="ipad");
 	window.addEventListener('native.keyboardshow', keyboardShowHandler);
 	window.addEventListener('native.keyboardhide', keyboardHideHandler);
 	document.addEventListener("pause", $rootScope.onPause);
