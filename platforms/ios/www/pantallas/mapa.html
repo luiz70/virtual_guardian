@@ -32,10 +32,10 @@
  <input type="range" name="volume">
  <i class="icon ion-volume-high"></i>
 </div-->
-          <div class="item range range-energized inicio_barra_rango" on-release="showEventos()" >
+          <div class="item range range-energized inicio_barra_rango" on-touch="startRange()" on-release="loadEventos()" >
             <i class="icon ion-android-remove" style="color:#FFFFFF; font-size:2vh"></i>
             <input id="inicio_barra_rango" type="range" name="volume" min="10" max="16000" step="1" style="height: 100%;
-  margin: 0px;" ng-model="radio" ng-click="showEventos()" ng-change="updateBar(radio)">
+  margin: 0px;" ng-model="radio"  ng-change="updateBar(radio)">
             <i class="icon ion-android-add" style="color:#FFFFFF; font-size:2vh"></i>
             
           </div>
@@ -51,7 +51,7 @@
 </button>
 </ion-pan>
 <div class="infobox-wrapper">
-    <div id="infoboxEvento" >
+    <div id="infoboxEvento" style="overflow:hidden" >
     <div style="text-align:center;padding:2vh" ng-hide="markerLoaded">
     <ion-spinner icon="android" class="spinner-dark"></ion-spinner>
     <div style="width:100%;text-align:center;font-size:3vh">{{idioma.general[1]}}</div>
@@ -71,7 +71,7 @@
  <div class="item item-image" style="  padding: 10px;  border: none;  text-align: left;">
   <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[1]}} {{selectedMarker.data.Info.Fecha}}</p>
   <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[2]}} {{selectedMarker.data.Info.Hora}}</p>
-  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;  white-space: normal;  text-transform: capitalize;margin-left:0.5vh;">{{idioma.mapa[3]}} {{selectedMarker.data.Info.Direccion}}</p>
+  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.8vh;  white-space: normal;  text-transform: capitalize;margin-left:0.5vh;">{{idioma.mapa[3]}} {{selectedMarker.data.Info.Direccion}}</p>
  </div>
 </div>
 </div>

@@ -32,7 +32,10 @@ angular.module('starter')
 					26:"Virtual Guardian para dispositivos móviles fue creado con software de licencia abierta.",
 					27:"Versión ",
 					28:"Configuración GPS",
-					29:"El GPS no está disponible en este momento, verifique su configuración de GPS o intente más tarde."
+					29:"El GPS no está disponible en este momento, verifique su configuración de GPS o intente más tarde.",
+                    30:"Para resolver todas tus dudas sobre el uso de la aplicacion hemos creado un recorrido por todas las funciones que virtual guardian te ofrece",
+                    31:"¿Deseas verlo?",
+                    32:"¿Quieres ver el recorrido de las funciones de la aplicación?"
 					
 				},
 				mapa:{
@@ -44,7 +47,7 @@ angular.module('starter')
 				1:"Filtros",
 				2:"Ajustes de aplicación",
 				3:"Ajustes de notificaciones",
-				4:"Terminos y condiciones",
+				4:"Términos y condiciones",
 				5:"Información",
 				6:"Cerrar sesión",
 				7:"Fecha inicial:",
@@ -67,7 +70,8 @@ angular.module('starter')
 				24:"Tiempo:",
 				25:"Cuando algo suceda dentro de los ultimos minutos te notificaremos, proporciona el tiempo máximo en el que consideras que el evento es relevante. 10-180 min.",
 				26:"El tiempo no es valido, proporciona un valor entre 10 y 180 minutos.",
-                27:"Ayuda"
+                27:"Ayuda",
+            28:"Mi cuenta"
 				},
 				periodos:{
 				7:"Semanal",
@@ -367,7 +371,26 @@ angular.module('starter')
   $scope.$on('$destroy', function() {
     $scope.modalSelect.remove();
   });
-  
+            $scope.modalTerminos=null;
+            $scope.openTerminos = function(m) {
+            $scope.modalTerminos = $ionicModal.fromTemplateUrl(m, {
+                                                             scope: $scope,
+                                                             animation: 'slide-in-up'
+                                                             }).then(function(modal) {
+                                                                     $scope.modalTerminos = modal;
+                                                                     $scope.modalTerminos.show();
+                                                                     });
+            
+            };
+            $scope.closeModalt = function() {
+            $scope.modalTerminos.hide();
+            $scope.modalTerminos.remove();
+            };
+            //Cleanup the modal when we're done with it!
+            $scope.$on('$destroy', function() {
+                       $scope.modalTerminos.remove();
+                       });
+
 
   
 }).service('CordovaNetwork', ['$ionicPlatform', '$q', function($ionicPlatform, $q,$rootScope) {

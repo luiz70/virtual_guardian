@@ -324,6 +324,9 @@ position: absolute;
 .gm-style-iw > div {
   display: none;
 }
+div{
+    line-height:2.8vh;
+}
 /*.popupActivo > .popup > .popup-buttons {
 position: absolute !important;
   bottom: 0px;

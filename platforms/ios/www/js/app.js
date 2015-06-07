@@ -46,7 +46,6 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	
 	
 	
-	
 		if(!window.localStorage.getArray("Usuario")){
 				$rootScope.Usuario=null;
 				$location.path('/login');
@@ -285,7 +284,7 @@ String.prototype.capitalizeFirstLetter = function() {
 
 function cleanutf(st){
 	
-	if(st.indexOf("Á")>=0)st=replaceAll(st,"Á","á");
+	if(st.indexOf("Ã�")>=0)st=replaceAll(st,"Ã�","Ã¡");
 	return st;
 }
 function replaceAll( text, busca, reemplaza ){

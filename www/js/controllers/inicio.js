@@ -100,6 +100,7 @@ angular.module('starter')
 	$scope.ajustes=false;
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
+            $scope.openTerminos("pantallas/cuenta.html");
 	}
 	$scope.revisaUsuario=function(){
 		var arr=[];
@@ -473,7 +474,7 @@ $scope.cambia_rango_auto=function(value){
 		
 	}
 	$scope.abreTerminos=function(){
-		
+		$scope.openTerminos("pantallas/terminos.html");
 	}
 	$scope.abreInfor=function(){
 		var template='<div style=""><b>© Virtual Guardian 2015</b></div>'+
@@ -482,7 +483,10 @@ $scope.cambia_rango_auto=function(value){
 		$scope.popup($rootScope.idioma.general[27]+$rootScope.version,template,function(){})
 	}
             $scope.abreHelp=function(){
-            
+            /*var template=' <div style="">'+$rootScope.idioma.general[30]+'</div>'+
+            '<div style=";margin-top: 3vh;"><b>'+$rootScope.idioma.general[31]+'</b></div>'
+            $scope.popup($rootScope.idioma.menu[27],template,function(){})*/
+            $rootScope.alert($rootScope.idioma.menu[27],$rootScope.idioma.general[32],function(){});
             }
 	
 }).controller("db",function($scope,$rootScope,$http,$ionicPopup,$ionicPopover){

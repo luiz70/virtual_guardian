@@ -321,7 +321,12 @@ position: absolute;
     -webkit-box-shadow: 0 0  8px #000;
     box-shadow: 0 0 8px #000;
 }
-
+.gm-style-iw > div {
+  display: none;
+}
+div{
+    line-height:2.8vh;
+}
 /*.popupActivo > .popup > .popup-buttons {
 position: absolute !important;
   bottom: 0px;
