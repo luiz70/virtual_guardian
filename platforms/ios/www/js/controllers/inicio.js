@@ -101,6 +101,13 @@ angular.module('starter')
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
             $scope.openTerminos("pantallas/cuenta.html");
+			
+			$http.get("http://www.virtual-guardian.com/api/perfilExtras/"+$rootScope.Usuario.Id)
+		.success(function(data,status,header,config){
+			$rootScope.Usuario.Extras=data;
+			})
+		.error(function(error,status,header,config){
+			})
 	}
 	$scope.revisaUsuario=function(){
 		var arr=[];
@@ -329,9 +336,48 @@ angular.module('starter')
 		$location.path('/login');
 		$rootScope.unregister();
 	}
-	$scope.isVigente=function(){
+	$rootScope.abrePaquetes=function(){
+		window.open("https://www.virtual-guardian.com/paquetes.html","_BLANK")
+	}
+	$rootScope.nuevaContra={uno:"",dos:""};
+	$rootScope.cambiarContra=function(){
+		$rootScope.nuevaContra={uno:"",dos:""};
+		$(".modal-backdrop").addClass("unclose");
+		$scope.confirm($rootScope.idioma.cuenta[3],"<div style='text-align:center;margin-bottom:1vh'>"+$rootScope.idioma.cuenta[8]+"</div><input class='input_prompt' ng-model='nuevaContra.uno' type='password' placeholder='"+$rootScope.idioma.cuenta[7]+"' ng-keydown='enterkey($event)'  ng-focus='showCover()' ng-blur='closekey()'><input ng-model='nuevaContra.dos' class='input_prompt' type='password' placeholder='"+$rootScope.idioma.registro[5]+"' ng-keydown='enterkey($event)'  ng-focus='showCover()' ng-blur='closekey()' style='margin-top:1vh;'><div class='popup-buttons popup-visible' style='padding-left:0px;padding-right:0px;padding-bottom:0px'><button  class='button ng-binding button-default' ng-click='cancelarCambioContra()'>Cancelar</button><button class='button button-positive' ng-click='aceptarCambioContra()'>Aceptar</button></div>",function(){
+			$(".modal-backdrop").removeClass("unclose");
+			},$rootScope.idioma.general[2],$rootScope.idioma.general[6],function(){return false});
+	}
+	$rootScope.aceptarCambioContra=function(){
+		if($rootScope.nuevaContra.uno=="" || $rootScope.nuevaContra.uno!=$rootScope.nuevaContra.dos)$rootScope.alert($rootScope.idioma.cuenta[3],$scope.idioma.registro[12],function(){});
+		else if(!$scope.validac($rootScope.nuevaContra.uno)) $rootScope.alert($rootScope.idioma.cuenta[3],$scope.idioma.registro[11],function(){});
+		else {
+			$rootScope.showCargando($rootScope.idioma.general[33]);
+			$http.post("http://www.virtual-guardian.com/api/usuario/contrasena",{
+				Id:$rootScope.Usuario.Id,
+				Contra:$rootScope.nuevaContra.uno,
+				})
+		.success(function(data,status,header,config){
+			$rootScope.hideCargando();
+			
+			$rootScope.alert($rootScope.idioma.cuenta[3],$scope.idioma.cuenta[9],function(){
+			$scope.confirmPopup.close();
+			$(".popup-buttons").removeClass("ng-hide");
+			});
+			})
+		.error(function(error,status,header,config){
+			$rootScope.alert($rootScope.idioma.cuenta[3],$scope.idioma.registro[16],function(){});
+			})
+		}
+	}
+	$rootScope.cancelarCambioContra=function(){
+		$scope.confirmPopup.close();
+	}
+	
+	$rootScope.isVigente=function(){
+		
 		$http.get("http://www.virtual-guardian.com/api/vigencia/"+window.localStorage.getArray("Usuario").Id)
 		.success(function(data,status,header,config){
+			$rootScope.Update=new Date();
 			if(data.Registro!=$rootScope.Usuario.Registro){
 				$scope.alert($scope.idioma.general[23],$scope.idioma.general[24],function(){
 				$scope.cierraS();
@@ -344,6 +390,7 @@ angular.module('starter')
 			if(data.Vigente=="0"){
 				$scope.confirm($scope.idioma.general[11],$scope.idioma.general[12],function(){
 				//ENVIA A PAGINA A VER PAQUETES
+				$rootScope.abrePaquetes();
 				},$scope.idioma.general[13],$scope.idioma.general[14]);
 			}
 			}
@@ -355,7 +402,7 @@ angular.module('starter')
 			})
 	}
 	
-	$scope.isVigente();
+	$rootScope.isVigente();
 	$scope.Conexion=function(i,fun){
 		i=i || 0;
 		fun = fun || function(){};

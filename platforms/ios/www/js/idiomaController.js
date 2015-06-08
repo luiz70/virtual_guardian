@@ -35,7 +35,8 @@ angular.module('starter')
 					29:"El GPS no está disponible en este momento, verifique su configuración de GPS o intente más tarde.",
                     30:"Para resolver todas tus dudas sobre el uso de la aplicacion hemos creado un recorrido por todas las funciones que virtual guardian te ofrece",
                     31:"¿Deseas verlo?",
-                    32:"¿Quieres ver el recorrido de las funciones de la aplicación?"
+                    32:"¿Quieres ver el recorrido de las funciones de la aplicación?",
+					33:"Guardando..."
 					
 				},
 				mapa:{
@@ -43,6 +44,19 @@ angular.module('starter')
 					2:"Hora:",
 					3:"Dirección:"
 				},
+				cuenta:{
+					1:"Usuario",
+					2:"Tipo de suscripcion",
+					3:"Cambiar contraseña",
+					4:"Conseguir versión completa",
+					5:"Versión completa",
+					6:"La version completa te permitira hacer uso ilimitado de Virtual Guardian con la posibilidad de realizar filtros de eventos anteriores a 7 días y recibir notificaciones cuando tu auto corra peligro. ¡Recibe la mejor informacion y protegete al máximo!",
+					7:"Nueva contraseña",
+					8:"Escriba su nueva contraseña",
+					9:"Su contraseña se ha cambiado correctamente.",
+					10:"Inicio suscripción",
+					11:"Vigencia suscripción"
+					},
 				menu:{
 				1:"Filtros",
 				2:"Ajustes de aplicación",
@@ -270,12 +284,17 @@ angular.module('starter')
      		funcion();
    		});
 	}
-	$scope.confirm = function(titulo,pregunta,funcion,btn1,btn2) {
+	$scope.confirm = function(titulo,pregunta,funcion,btn1,btn2,closable) {
+		
+		closable=closable||function(){return true};
 		btn1 = btn1 || $rootScope.idioma.general[2];
     	btn2 = btn2 || $rootScope.idioma.general[6];
-   		var confirmPopup = $ionicPopup.confirm({
+   		$scope.confirmPopup = $ionicPopup.confirm({
      		title: titulo,
-     		template: "<div>"+pregunta+"</div>",
+     		template: "<div>"+pregunta+"</div>"+
+			'<div id="botones_confirm"></div>'
+			
+			,
 			buttons: [{ 
     			text: btn2,
     			type: 'button-default',
@@ -290,15 +309,23 @@ angular.module('starter')
 				}
   			}]
    		});
-   		confirmPopup.then(function(res) {
+		if(!closable())$timeout(function(){
+			$(".popup-buttons").addClass("ng-hide");
+			$(".popup-visible").removeClass("ng-hide");
+			
+		},10);
+		
+   		$scope.confirmPopup.then(function(res) {
 			if(res) {
 				funcion();
-				confirmPopup.close();
+				$scope.confirmPopup.close();
+				
 			} else {
-				 confirmPopup.close();
+				 $scope.confirmPopup.close();
 			}
 		})
  	};
+	
     $scope.prompt=function(title,subtitle,type,placeholder,funcion,valor){
 		valor=valor || "";
 	var myPopup = $ionicPopup.show({
