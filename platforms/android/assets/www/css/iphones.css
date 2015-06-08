@@ -20,6 +20,7 @@
 }
 div{
     font-size: 3vh !important;
+    line-height:3.2vh !important;
 }
 .login_titulo{
     font-size: 5vh !important;
@@ -92,6 +93,9 @@ span{
     height: 7vh;
 }
 #input_prompt{
+    font-size:19px !important;
+}
+.input_prompt{
     font-size:19px !important;
 }
 .eliminar_persona{

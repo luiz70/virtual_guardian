@@ -32,7 +32,11 @@ angular.module('starter')
 					26:"Virtual Guardian para dispositivos móviles fue creado con software de licencia abierta.",
 					27:"Versión ",
 					28:"Configuración GPS",
-					29:"El GPS no está disponible en este momento, verifique su configuración de GPS o intente más tarde."
+					29:"El GPS no está disponible en este momento, verifique su configuración de GPS o intente más tarde.",
+                    30:"Para resolver todas tus dudas sobre el uso de la aplicacion hemos creado un recorrido por todas las funciones que virtual guardian te ofrece",
+                    31:"¿Deseas verlo?",
+                    32:"¿Quieres ver el recorrido de las funciones de la aplicación?",
+					33:"Guardando..."
 					
 				},
 				mapa:{
@@ -40,11 +44,24 @@ angular.module('starter')
 					2:"Hora:",
 					3:"Dirección:"
 				},
+				cuenta:{
+					1:"Usuario",
+					2:"Tipo de suscripcion",
+					3:"Cambiar contraseña",
+					4:"Conseguir versión completa",
+					5:"Versión completa",
+					6:"La version completa te permitira hacer uso ilimitado de Virtual Guardian con la posibilidad de realizar filtros de eventos anteriores a 7 días y recibir notificaciones cuando tu auto corra peligro. ¡Recibe la mejor informacion y protegete al máximo!",
+					7:"Nueva contraseña",
+					8:"Escriba su nueva contraseña",
+					9:"Su contraseña se ha cambiado correctamente.",
+					10:"Inicio suscripción",
+					11:"Vigencia suscripción"
+					},
 				menu:{
 				1:"Filtros",
 				2:"Ajustes de aplicación",
 				3:"Ajustes de notificaciones",
-				4:"Terminos y condiciones",
+				4:"Términos y condiciones",
 				5:"Información",
 				6:"Cerrar sesión",
 				7:"Fecha inicial:",
@@ -67,7 +84,8 @@ angular.module('starter')
 				24:"Tiempo:",
 				25:"Cuando algo suceda dentro de los ultimos minutos te notificaremos, proporciona el tiempo máximo en el que consideras que el evento es relevante. 10-180 min.",
 				26:"El tiempo no es valido, proporciona un valor entre 10 y 180 minutos.",
-                27:"Ayuda"
+                27:"Ayuda",
+            28:"Mi cuenta"
 				},
 				periodos:{
 				7:"Semanal",
@@ -266,12 +284,17 @@ angular.module('starter')
      		funcion();
    		});
 	}
-	$scope.confirm = function(titulo,pregunta,funcion,btn1,btn2) {
+	$scope.confirm = function(titulo,pregunta,funcion,btn1,btn2,closable) {
+		
+		closable=closable||function(){return true};
 		btn1 = btn1 || $rootScope.idioma.general[2];
     	btn2 = btn2 || $rootScope.idioma.general[6];
-   		var confirmPopup = $ionicPopup.confirm({
+   		$scope.confirmPopup = $ionicPopup.confirm({
      		title: titulo,
-     		template: "<div>"+pregunta+"</div>",
+     		template: "<div>"+pregunta+"</div>"+
+			'<div id="botones_confirm"></div>'
+			
+			,
 			buttons: [{ 
     			text: btn2,
     			type: 'button-default',
@@ -286,15 +309,23 @@ angular.module('starter')
 				}
   			}]
    		});
-   		confirmPopup.then(function(res) {
+		if(!closable())$timeout(function(){
+			$(".popup-buttons").addClass("ng-hide");
+			$(".popup-visible").removeClass("ng-hide");
+			
+		},10);
+		
+   		$scope.confirmPopup.then(function(res) {
 			if(res) {
 				funcion();
-				confirmPopup.close();
+				$scope.confirmPopup.close();
+				
 			} else {
-				 confirmPopup.close();
+				 $scope.confirmPopup.close();
 			}
 		})
  	};
+	
     $scope.prompt=function(title,subtitle,type,placeholder,funcion,valor){
 		valor=valor || "";
 	var myPopup = $ionicPopup.show({
@@ -367,7 +398,26 @@ angular.module('starter')
   $scope.$on('$destroy', function() {
     $scope.modalSelect.remove();
   });
-  
+            $scope.modalTerminos=null;
+            $scope.openTerminos = function(m) {
+            $scope.modalTerminos = $ionicModal.fromTemplateUrl(m, {
+                                                             scope: $scope,
+                                                             animation: 'slide-in-up'
+                                                             }).then(function(modal) {
+                                                                     $scope.modalTerminos = modal;
+                                                                     $scope.modalTerminos.show();
+                                                                     });
+            
+            };
+            $scope.closeModalt = function() {
+            $scope.modalTerminos.hide();
+            $scope.modalTerminos.remove();
+            };
+            //Cleanup the modal when we're done with it!
+            $scope.$on('$destroy', function() {
+                       $scope.modalTerminos.remove();
+                       });
+
 
   
 }).service('CordovaNetwork', ['$ionicPlatform', '$q', function($ionicPlatform, $q,$rootScope) {

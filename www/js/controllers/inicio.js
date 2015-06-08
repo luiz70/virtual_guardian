@@ -372,9 +372,12 @@ angular.module('starter')
 	$rootScope.cancelarCambioContra=function(){
 		$scope.confirmPopup.close();
 	}
-	$scope.isVigente=function(){
+	
+	$rootScope.isVigente=function(){
+		
 		$http.get("http://www.virtual-guardian.com/api/vigencia/"+window.localStorage.getArray("Usuario").Id)
 		.success(function(data,status,header,config){
+			$rootScope.Update=new Date();
 			if(data.Registro!=$rootScope.Usuario.Registro){
 				$scope.alert($scope.idioma.general[23],$scope.idioma.general[24],function(){
 				$scope.cierraS();
@@ -399,7 +402,7 @@ angular.module('starter')
 			})
 	}
 	
-	$scope.isVigente();
+	$rootScope.isVigente();
 	$scope.Conexion=function(i,fun){
 		i=i || 0;
 		fun = fun || function(){};

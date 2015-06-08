@@ -285,7 +285,10 @@ $scope.setCarro=function (lat,long) {
     });
 	
     
-   $scope.cargaInfoCarro(true);
+            $timeout(function(){
+                     $scope.cargaInfoCarro(true);
+                     },300);
+                    
   	google.maps.event.addListener($scope.carroMarker, 'mouseup', function() {
 		if($scope.carroMarker.getDraggable())$rootScope.mapCarro.setCenter($scope.carroMarker.getPosition());
   	});
@@ -528,9 +531,15 @@ alert(1);
 			$scope.marcadores[i].setMap(null);
 		$scope.marcadores=[];
 	}
-	
+            $scope.radioViejo=$scope.radio;
+            $rootScope.startRange=function(){
+            $scope.radioViejo=$scope.radio;
+            }
+            $scope.loadEventos=function(){
+            if($scope.radio!=$scope.radioViejo)$rootScope.showEventos();
+            
+            }
 	$rootScope.showEventos=function(){
-		
 		//if($rootScope.Eventos.length>0)
 		if($scope.Conexion(1,function(){
 			$rootScope.cargando=false;

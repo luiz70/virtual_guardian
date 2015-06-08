@@ -32,6 +32,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
         $rootScope.version=version
       });
 	}
+	$rootScope.Update=new Date();
 	$rootScope.front=true;	
 	$rootScope.sinMapa=false;
     if(window.localStorage.getArray("nPendientes")) $rootScope.notPendientes=window.localStorage.getArray("nPendientes");
@@ -163,10 +164,14 @@ $rootScope.unregister=function(){
 	 $ionicPlatform.on("volumedownbutton",function(){alert(1)});
 	 $ionicPlatform.on("volumeupbutton",function(){alert(2)});
 	 $rootScope.onResume=function(){
-		//$rootScope.front=true;
+	if(((new Date()).getTime()-$rootScope.Update.getTime())/60000>=5){
+	$rootScope.isVigente();
+	alert(2);
+	}
+	
 	}
 	$rootScope.onPause=function(){
-	//$rootScope.front=false;		
+	//guarda estado		
 	}
 })
 .config(function($stateProvider, $urlRouterProvider,$httpProvider,$ionicConfigProvider) {

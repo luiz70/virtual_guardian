@@ -206,6 +206,9 @@ position: absolute;
 .input_registro:-ms-input-placeholder { /* Internet Explorer 10+ */
    color:    #858585;
 }
+.unclose{
+	pointer-events:none !important;
+	}
 .perfil_cover{
     position: absolute;
     top: 0px;
@@ -324,6 +327,10 @@ position: absolute;
 .gm-style-iw > div {
   display: none;
 }
+div{
+    line-height:2.8vh;
+}
+
 /*.popupActivo > .popup > .popup-buttons {
 position: absolute !important;
   bottom: 0px;

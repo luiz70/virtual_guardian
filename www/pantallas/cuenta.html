@@ -3,7 +3,7 @@
     <ion-header-bar style="height:7vh;  background: none;">
         <h1 class="title tituloModal" style="text-align:center"><i class="icon ion-person"></i>{{" "+idioma.menu[28]}}</h1>
     </ion-header-bar>
-    <ion-content style="top: 7vh;bottom: 8vh; padding:1vh;" has-bouncing="true">
+    <ion-content style="top: 7vh;bottom: 8vh; padding:2vh;" has-bouncing="true">
     	<div style="font-size:3vh;margin-left:2px"><b style="font-size:3vh"> {{idioma.cuenta[1]}}:</b> {{Usuario.Correo}}</div>
         <div style="font-size:3vh;margin-left:2px;margin-top:0.3vh"><b style="font-size:3vh;">{{idioma.cuenta[2]}}:</b> {{Usuario.Suscripcion.toLowerCase()}}</div>
         <div class="ng-hide" ng-show="Usuario.Extras.TipoSuscripcion>1">
@@ -22,6 +22,6 @@
     </ion-content >
     <div class="popup-buttons popup-visible" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;"><!-- ngRepeat: button in buttons -->
         <button  class="button ng-binding button-positive" ng-class="button.type || 'button-default'" ng-click="closeModalt()" style="  height: 100%;
-            padding: 0px !important;">{{idioma.general[2]}}</button>
+            padding: 0px !important;font-size:3vh;">{{idioma.general[2]}}</button>
     </div>
 </ion-modal-view>

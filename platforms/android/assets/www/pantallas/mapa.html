@@ -32,10 +32,10 @@
  <input type="range" name="volume">
  <i class="icon ion-volume-high"></i>
 </div-->
-          <div class="item range range-energized inicio_barra_rango" on-release="showEventos()" >
+          <div class="item range range-energized inicio_barra_rango" on-touch="startRange()" on-release="loadEventos()" >
             <i class="icon ion-android-remove" style="color:#FFFFFF; font-size:2vh"></i>
             <input id="inicio_barra_rango" type="range" name="volume" min="10" max="16000" step="1" style="height: 100%;
-  margin: 0px;" ng-model="radio" ng-click="showEventos()" ng-change="updateBar(radio)">
+  margin: 0px;" ng-model="radio"  ng-change="updateBar(radio)">
             <i class="icon ion-android-add" style="color:#FFFFFF; font-size:2vh"></i>
             
           </div>
