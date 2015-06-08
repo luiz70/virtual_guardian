@@ -106,4 +106,7 @@
     <feature name="DatePicker">
         <param name="ios-package" value="DatePicker" />
     </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
 </widget>

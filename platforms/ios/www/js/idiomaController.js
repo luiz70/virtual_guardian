@@ -55,7 +55,8 @@ angular.module('starter')
 					8:"Escriba su nueva contraseña",
 					9:"Su contraseña se ha cambiado correctamente.",
 					10:"Inicio suscripción",
-					11:"Vigencia suscripción"
+					11:"Vigencia suscripción",
+					12:"Ajustes de cuenta"
 					},
 				menu:{
 				1:"Filtros",

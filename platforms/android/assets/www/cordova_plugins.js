@@ -97,6 +97,13 @@ module.exports = [
         "clobbers": [
             "datePicker"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
+        "id": "org.apache.cordova.inappbrowser.inappbrowser",
+        "clobbers": [
+            "window.open"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -115,7 +122,8 @@ module.exports.metadata =
     "cordova-sqlite-storage": "0.7.9",
     "com.phonegap.plugins.PushPlugin": "2.2.1",
     "uk.co.whiteoctober.cordova.appversion": "0.1.7",
-    "cordova-plugin-datepicker": "0.7.1"
+    "cordova-plugin-datepicker": "0.7.1",
+    "org.apache.cordova.inappbrowser": "0.6.0"
 }
 // BOTTOM OF METADATA
 });

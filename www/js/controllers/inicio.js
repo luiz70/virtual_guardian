@@ -289,6 +289,7 @@ angular.module('starter')
 	   delete $rootScope.UsuarioTemporal.NotEstados;
 	   delete $rootScope.UsuarioTemporal.NotTipos;
 	   delete $rootScope.UsuarioTemporal.Registro;
+            delete $rootScope.UsuarioTemporal.Extras;
 	   console.log($rootScope.UsuarioTemporal);
 	   if(Object.keys($rootScope.UsuarioTemporal).length>1){
 		   
@@ -337,7 +338,7 @@ angular.module('starter')
 		$rootScope.unregister();
 	}
 	$rootScope.abrePaquetes=function(){
-		window.open("https://www.virtual-guardian.com/paquetes.html","_BLANK")
+		window.open("https://www.virtual-guardian.com/paquetes.html","_system")
 	}
 	$rootScope.nuevaContra={uno:"",dos:""};
 	$rootScope.cambiarContra=function(){
@@ -533,7 +534,13 @@ $scope.cambia_rango_auto=function(value){
             /*var template=' <div style="">'+$rootScope.idioma.general[30]+'</div>'+
             '<div style=";margin-top: 3vh;"><b>'+$rootScope.idioma.general[31]+'</b></div>'
             $scope.popup($rootScope.idioma.menu[27],template,function(){})*/
-            $rootScope.alert($rootScope.idioma.menu[27],$rootScope.idioma.general[32],function(){});
+            
+            $scope.confirm($rootScope.idioma.menu[27],$rootScope.idioma.general[32],function(){
+                              $scope.iniciaTutorial();
+            });
+            }
+            $scope.iniciaTutorial=function(){
+            alert(1);
             }
 	
 }).controller("db",function($scope,$rootScope,$http,$ionicPopup,$ionicPopover){

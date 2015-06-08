@@ -126,4 +126,8 @@ span{
         height:3vh !important;
         width:3vh !important;
     }
+	.texto_cuenta{
+	font-size:2vh !important;
+	
+	}
 }

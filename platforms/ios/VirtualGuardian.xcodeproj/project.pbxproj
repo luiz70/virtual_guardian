@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C2CAFC46FE4C999BB57CBD /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = AA0C5D64FBE3435EA9BE57C2 /* sqlite3.c */; };
 		0286E5362D33435D9958118C /* DatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B77228EBC34765955B3868 /* DatePicker.m */; };
@@ -62,6 +61,7 @@
 		D30A55DD4EB443C08523D0B3 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9161AEF1141D3BA3E1D7C /* CDVStatusBar.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		EA96CBB82B9E462F9739AB7F /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B0EFB4A09B44A983428C95 /* AppDelegate+notification.m */; };
+		C90393EE452648DAA2FA17E7 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 939481291AB44F9D9AD92F36 /* CDVInAppBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +167,8 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = VirtualGuardian/config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		FE1BDBC5B6A1410A9C5D7B72 /* CDVGlobalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVGlobalization.m; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; };
+		939481291AB44F9D9AD92F36 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVInAppBrowser.m"; path = "org.apache.cordova.inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		054431BC68A34EDD96E3C520 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVInAppBrowser.h"; path = "org.apache.cordova.inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +312,8 @@
 				B20526ABD6B44DB4B3A5AE7C /* AppVersion.h */,
 				88B77228EBC34765955B3868 /* DatePicker.m */,
 				52458E881C67452EAA554FF8 /* DatePicker.h */,
+				939481291AB44F9D9AD92F36 /* CDVInAppBrowser.m */,
+				054431BC68A34EDD96E3C520 /* CDVInAppBrowser.h */,
 			);
 			name = Plugins;
 			path = VirtualGuardian/Plugins;
@@ -524,6 +528,7 @@
 				EA96CBB82B9E462F9739AB7F /* AppDelegate+notification.m in Sources */,
 				474B2123F9C44BEDAAAA0D2A /* AppVersion.m in Sources */,
 				0286E5362D33435D9958118C /* DatePicker.m in Sources */,
+				C90393EE452648DAA2FA17E7 /* CDVInAppBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
