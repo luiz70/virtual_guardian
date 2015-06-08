@@ -56,7 +56,9 @@ angular.module('starter')
 					9:"Su contraseña se ha cambiado correctamente.",
 					10:"Inicio suscripción",
 					11:"Vigencia suscripción",
-					12:"Ajustes de cuenta"
+					12:"Ajustes de cuenta",
+					13:"Código",
+					14:"Comparte a tus amigos este código y gana un mes de suscripción completa por cada usuario que se registre."
 					},
 				menu:{
 				1:"Filtros",
@@ -164,7 +166,9 @@ angular.module('starter')
 					25:"No has proporcionado tu correo electrónico.",
 					26:"Recuperar contraseña",
 					27:"El correo proporcionado no esta registrado en Virtual Guardian",
-					28:"El correo de recuperación se ha enviado correctamente, sigue las instrucciones para reestablecer tu contraseña."
+					28:"El correo de recuperación se ha enviado correctamente, sigue las instrucciones para reestablecer tu contraseña.",
+					29:"Si tienes algún código de promocion, ingresalo ahora para hacerlo válido.",
+					30:"Código de promoción"
 					
 				},
 				notificaciones:{

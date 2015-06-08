@@ -104,6 +104,7 @@ angular.module('starter')
 			
 			$http.get("http://www.virtual-guardian.com/api/perfilExtras/"+$rootScope.Usuario.Id)
 		.success(function(data,status,header,config){
+			console.log(data);
 			$rootScope.Usuario.Extras=data;
 			})
 		.error(function(error,status,header,config){

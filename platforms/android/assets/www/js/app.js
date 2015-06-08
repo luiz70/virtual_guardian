@@ -33,6 +33,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
       });
 	}
 	$rootScope.Update=new Date();
+	$rootScope.UpdateEvt=new Date();
 	$rootScope.front=true;	
 	$rootScope.sinMapa=false;
     if(window.localStorage.getArray("nPendientes")) $rootScope.notPendientes=window.localStorage.getArray("nPendientes");
@@ -164,10 +165,8 @@ $rootScope.unregister=function(){
 	 $ionicPlatform.on("volumedownbutton",function(){alert(1)});
 	 $ionicPlatform.on("volumeupbutton",function(){alert(2)});
 	 $rootScope.onResume=function(){
-	if(((new Date()).getTime()-$rootScope.Update.getTime())/60000>=5){
-	$rootScope.isVigente();
-	alert(2);
-	}
+	if(((new Date()).getTime()-$rootScope.Update.getTime())/60000>=30)$rootScope.isVigente();
+	if(((new Date()).getTime()-$rootScope.UpdateEvt.getTime())/60000>=15)$rootScope.showEventos();
 	
 	}
 	$rootScope.onPause=function(){

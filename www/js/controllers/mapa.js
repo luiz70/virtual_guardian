@@ -584,6 +584,7 @@ alert(1);
 			return a.join(",");
 		}
 	$scope.getEventos=function(){
+		
 		if($scope.filtros.Estado){
 		var d2=$scope.filtros.Final;
 		var d=$scope.filtros.Inicial;
@@ -609,6 +610,7 @@ alert(1);
 				Tipos:tp
 				})
 		.success(function(data,status,header,config){
+			$rootScope.UpdateEvt=new Date();
 			$rootScope.Eventos=[];
 			for(var i=0;i<data.length;i++){
 				$rootScope.Eventos.push(JSON.parse(data[i]))

@@ -21,7 +21,8 @@ $(".input_registro").focusin(function(e) {
 		email:"",
 		pass:"",
 		passc:"",
-		codigo:""
+		codigo:"",
+		promo:""
 		}
 	$scope.slideHasChangedr=function($index){
 		$("#rpaso1").removeClass("ractivo");
@@ -55,6 +56,7 @@ $(".input_registro").focusin(function(e) {
 		$http.post("http://www.virtual-guardian.com/api/registro",{
 				Correo:$scope.nuser.email,
 				Contrasena:$scope.nuser.pass,
+				Promo:$scope.nuser.promo,
 				})
 		.success(function(data,status,header,config){
 			$rootScope.hideCargando();
