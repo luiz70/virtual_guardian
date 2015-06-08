@@ -1,13 +1,26 @@
 
 <ion-modal-view>
     <ion-header-bar style="height:7vh;  background: none;">
-        <h1 class="title tituloModal">{{idioma.menu[28]}}</h1>
+        <h1 class="title tituloModal" style="text-align:center"><i class="icon ion-person"></i>{{" "+idioma.menu[28]}}</h1>
     </ion-header-bar>
-    <ion-content style="top: 7vh;bottom: 8vh;" has-bouncing="true">
-        
+    <ion-content style="top: 7vh;bottom: 8vh; padding:1vh;" has-bouncing="true">
+    	<div style="font-size:3vh;margin-left:2px"><b style="font-size:3vh"> {{idioma.cuenta[1]}}:</b> {{Usuario.Correo}}</div>
+        <div style="font-size:3vh;margin-left:2px;margin-top:0.3vh"><b style="font-size:3vh;">{{idioma.cuenta[2]}}:</b> {{Usuario.Suscripcion.toLowerCase()}}</div>
+        <div class="ng-hide" ng-show="Usuario.Extras.TipoSuscripcion>1">
+        <div style="font-size:3vh;margin-left:2px;margin-top:0.5vh"><b style="font-size:3vh"> {{idioma.cuenta[10]}}:</b> {{Usuario.Extras.Inicio}}</div>
+        <div style="font-size:3vh;margin-left:2px;margin-top:0.3vh"><b style="font-size:3vh;">{{idioma.cuenta[11]}}:</b> {{Usuario.Extras.Vigencia}}</div>
+        </div>
+        <div style="width: 100%;border: none;margin-top: 1vh;font-size: 3vh;padding: 2vh;padding-left: 2px;background: none;color: #000;margin-bottom: 1vh;text-align: left;border-top: solid 1px #D9D9D9;border-bottom: solid 1px #D9D9D9;" ng-click="cambiarContra()">{{idioma.cuenta[3]}}
+        <i class="icon ion-chevron-right" style="position:absolute;right:10px;"></i>
+        </div >
+        <div class="ng-hide" ng-show="Usuario.Extras.TipoSuscripcion==1">
+        <button style="  width: 100%;border: none;margin-top: 1vh;font-size: 3vh;padding: 1vh;border-radius: 5px;background-color: #ce932f;margin-bottom: 1vh;" ng-click="abrePaquetes()">{{idioma.cuenta[4]}}</button>
+        <div style="padding-top:2vh;border-top:solid 1px #DDD; margin-top:1px;margin-bottom:0.5vh"><b>{{idioma.cuenta[5]}}:</b></div>
+        <div>{{idioma.cuenta[6]}}</div>
+        </div>
         
     </ion-content >
-    <div class="popup-buttons" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;"><!-- ngRepeat: button in buttons -->
+    <div class="popup-buttons popup-visible" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;"><!-- ngRepeat: button in buttons -->
         <button  class="button ng-binding button-positive" ng-class="button.type || 'button-default'" ng-click="closeModalt()" style="  height: 100%;
             padding: 0px !important;">{{idioma.general[2]}}</button>
     </div>

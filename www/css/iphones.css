@@ -95,6 +95,9 @@ span{
 #input_prompt{
     font-size:19px !important;
 }
+.input_prompt{
+    font-size:19px !important;
+}
 .eliminar_persona{
 	  width: 4.0vh;
   height: 4.0vh;
