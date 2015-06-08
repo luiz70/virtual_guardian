@@ -90,6 +90,13 @@ angular.module('starter')
                 27:"Ayuda",
             28:"Mi cuenta"
 				},
+				recorrido:{
+					1:"¿Cómo usar Virtual Guardian?",
+					2:"Empezaremos por conocer los iconos de los eventos que reportamos para ti:",
+					3:"Siguiente",
+					4:"Terminar",
+					5:'Para ver en otro momento selecciona la opción "Ayuda" del menú lateral.'
+					},
 				periodos:{
 				7:"Semanal",
 				30:"Mensual",
@@ -381,6 +388,7 @@ angular.module('starter')
 	  }
   });
 	}
+	
   $scope.openSelect = function(opciones,multiple) {
 	$scope.opcionesModal=opciones;
 	if(multiple)m="pantallas/modalSelect.html"

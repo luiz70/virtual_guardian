@@ -330,7 +330,9 @@ position: absolute;
 div{
     line-height:2.8vh;
 }
-
+.recorridoFront{
+	z-index:100005;
+}
 /*.popupActivo > .popup > .popup-buttons {
 position: absolute !important;
   bottom: 0px;

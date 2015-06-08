@@ -1,5 +1,5 @@
 angular.module('starter')
-.controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork){
+.controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover){
 	$scope.onTab=function (id){
 		$rootScope.cargando=false;
 		$("#img_btn_1").attr("src","img/iconos/map.png");
@@ -21,7 +21,7 @@ angular.module('starter')
 	{Nombre:$scope.idioma.periodos[365],Periodo:365}
 	]
 	
-	
+	$rootScope.stepRecorrido=0;
 	$scope.fechaNotRef=null;
 	$scope.fechaPerRef=null;
 	$rootScope.cargando=true;
@@ -37,6 +37,29 @@ angular.module('starter')
 	if(window.localStorage.getArray("TipoEventos"))$scope.TipoEventos=window.localStorage.getArray("TipoEventos");
 	else $scope.TipoEventos=[];
 	
+	$rootScope.stepRecorrido=1
+	$rootScope.closeRecorrido=function(){
+		$rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
+			switch($rootScope.stepRecorrido){
+			case 0: $scope.popoverRec.hide();
+			break;
+			case 1:
+			break;
+		}
+			
+			})
+	
+	}
+	$rootScope.nextRecorrido=function(){
+		switch($rootScope.stepRecorrido){
+			case 0:$rootScope.stepRecorrido=1;
+			$scope.popoverRec.hide();
+			$("#tab1").addClass("recorridoFront");
+			break;
+			case 1:
+			break;
+		}
+	}
 	if(!window.localStorage.getArray("Estados"))
 	$http.get("http://www.virtual-guardian.com/api/estados")
 		.success(function(data,status,header,config){
@@ -104,7 +127,6 @@ angular.module('starter')
 			
 			$http.get("http://www.virtual-guardian.com/api/perfilExtras/"+$rootScope.Usuario.Id)
 		.success(function(data,status,header,config){
-			console.log(data);
 			$rootScope.Usuario.Extras=data;
 			})
 		.error(function(error,status,header,config){
