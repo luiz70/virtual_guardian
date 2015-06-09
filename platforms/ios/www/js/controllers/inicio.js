@@ -568,7 +568,7 @@ $scope.cambia_rango_auto=function(value){
             alert(1);
             }
 	
-}).controller("db",function($scope,$rootScope,$http,$cordovaSQLite){
+}).controller("db",function($scope,$rootScope,$http,$cordovaSQLite,$cordovaNetwork){
 	
 	$rootScope.inicializaBaseLocal=function(){
               $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
@@ -587,7 +587,7 @@ $scope.cambia_rango_auto=function(value){
               var d=new Date(event.Fecha);
               var val=event.IdEvento+","+event.IdAsunto+","+event.Latitud+","+event.Longitud+","+d.getTime()+","+event.IdEstado;
                 $rootScope.sqlQuery("INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES("+val+")",function(res){
-                                    
+                                    delete event;
                 });
               
               }
@@ -625,7 +625,6 @@ $scope.cambia_rango_auto=function(value){
                                   }
                                   callback(ids.join(","));
                                   $rootScope.muestraEventos();
-                                  
                                   })
               
               }
@@ -647,39 +646,52 @@ $scope.cambia_rango_auto=function(value){
             funcion(err);
         });
 	}
-    
+              
 	$scope.verificaHistorial=function(){
-		//window.localStorage.setArray("Eventos",[]);
-		if(window.localStorage.getArray("Eventos"))$rootScope.Eventos=window.localStorage.getArray("Eventos");
-		else $rootScope.Eventos=[] ;
-		if(!$scope.buscaJson($rootScope.Eventos,"IdEvento",1)){
-		//Verificar wifi
-			/*$scope.confirm($rootScope.idioma.general[7],$rootScope.idioma.general[8],function(){
-				$rootScope.showCargando("{{idioma.general[9]}}");
-				$scope.getHistorial();
-			});*/
-		}
+            // if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
+             //if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
+              if(!window.localStorage.getItem("AHistorial")){
+                    if($cordovaNetwork.getNetwork().toLowerCase().indexOf("wifi")>=0){
+                                $rootScope.UpdateHistorial=(new Date()).getTime();
+                                window.localStorage.setItem("UpdateHistorial",$rootScope.UpdateHistorial);
+                        $scope.confirm($rootScope.idioma.general[7],$rootScope.idioma.general[8],function(){
+                            $rootScope.showCargando($rootScope.idioma.general[9]);
+                            $scope.getHistorial();
+                        })
+                }
+            }
+              
 	}
 	
 	
 	$scope.getHistorial=function(){
-		var d=new Date();
+              var d=new Date();
+              var d2=new Date();
+              d2.setFullYear(d2.getFullYear()-2);
 		$http.post("http://www.virtual-guardian.com/api/historial",{
-				FechaI:2009-01-01,
+				FechaI:"2010-01-01",//+d2.getFullYear()+"-"+(d2.getMonth()+1)+"-"+d2.getDate(),
 				FechaF:""+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),
 				Estados:"",
 				Asuntos:"",
 				IdEvento:0
 				})
 		.success(function(data,status,header,config){
-			var d=[]
+                 var d=[];
 			for(var i=0;i<data.length;i++){
-				d.push(JSON.parse(data[i]));				
-			}
-			window.localStorage.setArray("Eventos",d);
-			$rootScope.Eventos=d;
-					$rootScope.hideCargando();
-					//console.log($rootScope.Eventos);
+                 var arr = "("+($.map(JSON.parse(data[i]), function(el) { return el; })).join(",")+")"
+                 d.push(arr);
+                 
+                    }
+                 $cordovaSQLite.execute($rootScope.database, "INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES"+d.join(","), [])
+                 .then(function(res){
+                       $rootScope.hideCargando();
+                       window.localStorage.setItem("AHistorial",1);
+                    },function(){
+                       $rootScope.hideCargando();
+                       window.localStorage.setItem("AHistorial",1);
+                       })
+                 
+                 
 			})
 		.error(function(error,status,header,config){
 			console.log(error);

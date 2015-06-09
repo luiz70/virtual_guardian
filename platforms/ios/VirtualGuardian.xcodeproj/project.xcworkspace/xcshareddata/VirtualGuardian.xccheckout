@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>03CBBA6D-DCF1-4E00-A4DA-3074A09E2562</string>
 	<key>IDESourceControlProjectName</key>
-	<string>VirtualGuardian</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>DA9FF704BF8B8446854F708E51E1D5909620A8F7</key>
 		<string>https://github.com/luiz70/virtual_guardian.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>platforms/ios/VirtualGuardian.xcodeproj</string>
+	<string>platforms/ios/VirtualGuardian.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>DA9FF704BF8B8446854F708E51E1D5909620A8F7</key>
