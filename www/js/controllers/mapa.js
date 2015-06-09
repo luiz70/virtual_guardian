@@ -347,8 +347,15 @@ $scope.cargaInfoEvento=function(val){
         closeBoxURL: "",
         infoBoxClearance: new google.maps.Size(1, 1)
     	});
-		if(val){$scope.InfoboxEvento.open($rootScope.map, $scope.selectedMarker);
-		}else $scope.InfoboxEvento.close();
+		if(val){
+            $scope.InfoboxEvento.open($rootScope.map, $scope.selectedMarker);
+            }else {
+            $scope.markerLoaded=false;
+            $scope.selectedMarker=null;
+            $scope.InfoboxEvento.close();
+            
+            }
+            
 	
 }	
 
@@ -371,8 +378,7 @@ $scope.setMarcador=function (evento) {
         icon: icono,
         shape: shape,
        	zIndex: 2,
-		data:evento,
-		animation: google.maps.Animation.DROP
+		data:evento
     });
 	$scope.marcadores.push(marker);
 	google.maps.event.addListener(marker, "dblclick", function() {
@@ -385,26 +391,37 @@ $scope.setMarcador=function (evento) {
 }
 $scope.clickEvento=function (marker){
 	
-	if(!marker.data.Info){
-		$scope.markerLoaded=false;
-$http.get("http://www.virtual-guardian.com/api/evento/"+marker.data.IdEvento)
-		.success(function(data,status,header,config){
-			var d=data;
-			//console.log(d);
-			if(d.Direccion.substr(0,2)==", ")d.Direccion=d.Direccion.substr(2)
-			d.Subtitulo=d.Estado;
-			if(d.Municipio!="")d.Subtitulo=d.Municipio+', '+d.Estado;
-			$scope.selectedMarker.data.Info=d;
-			$scope.markerLoaded=true;
-			})
-		.error(function(error,status,header,config){
-			console.log(data);
-			$scope.cargaInfoEvento(false);
-			})
-	}	
 	
-	$scope.selectedMarker=marker;
+		$scope.markerLoaded=false;
+        $scope.selectedMarker=marker;
+            
+        $rootScope.sqlGetExtras(marker.data.IdEvento,function(res){
+            if(res.Asunto==null){
+                $http.get("http://www.virtual-guardian.com/api/evento/"+marker.data.IdEvento)
+                .success(function(data,status,header,config){
+                    var d=data;
+                    //console.log(d);
+                    if(d.Direccion.substr(0,2)==", ")d.Direccion=d.Direccion.substr(2)
+                    d.Subtitulo=d.Estado;
+                    if(d.Municipio!="")d.Subtitulo=d.Municipio+', '+d.Estado;
+                    $rootScope.sqlSaveExtras(d,marker.data.IdEvento);
+                    $scope.selectedMarker.data.Info=d;
+                    $scope.markerLoaded=true;
+                })
+                .error(function(error,status,header,config){
+                    console.log(error);
+                    $scope.cargaInfoEvento(false);
+                })
+            }else{
+                console.log("LOCAL");
+                $scope.selectedMarker.data.Info=res;
+                $scope.markerLoaded=true;
+                
+            }
+        });
+
   	$scope.cargaInfoEvento(true);
+    
 	//$rootScope.map.setCenter(marker.getPosition())
 	
 }
@@ -598,8 +615,16 @@ alert(1);
 		var st="";
 		var tp="";
 		}
+            d.setHours(0);
+            d.setMinutes(0);
+            d.setSeconds(0);
+            d2.setHours(0);
+            d2.setMinutes(0);
+            d2.setSeconds(0);
 		var rad=0;
 		if($scope.swit)rad=$scope.radio/1000;
+            $rootScope.Eventos=[];
+            $rootScope.sqlGetEventos($scope.ubicacionMarker.getPosition().lat(),$scope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(ids){
 		$http.post("http://www.virtual-guardian.com/api/eventosRadioMapa",{
 				Latitud:$scope.ubicacionMarker.getPosition().lat(),
 				Longitud:$scope.ubicacionMarker.getPosition().lng(),
@@ -607,22 +632,22 @@ alert(1);
 				FechaI:""+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),
 				Radio:rad,
 				Estados:st,
-				Tipos:tp
+				Tipos:tp,
+                Ids:ids
 				})
 		.success(function(data,status,header,config){
 			$rootScope.UpdateEvt=new Date();
-			$rootScope.Eventos=[];
 			for(var i=0;i<data.length;i++){
-				$rootScope.Eventos.push(JSON.parse(data[i]))
+                 $rootScope.sqlInsertEvento(JSON.parse(data[i]));
 			}
-			
-			//window.localStorage.setArray("Eventos",$rootScope.Eventos);
-			$rootScope.muestraEventos();
+                 if(data.length>0)$rootScope.sqlGetEventos($scope.ubicacionMarker.getPosition().lat(),$scope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(){});
+                 
 			
 			})
 		.error(function(error,status,header,config){
-			//console.log(error);
+			console.log(error);
 			})
+        });
 	}
 	$scope.notificacionClick=function(evento){
 		switch(evento.Tipo){
