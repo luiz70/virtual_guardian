@@ -71,13 +71,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-        "id": "cordova-sqlite-storage.SQLitePlugin",
-        "clobbers": [
-            "SQLitePlugin"
-        ]
-    },
-    {
         "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
         "id": "com.phonegap.plugins.PushPlugin.PushNotification",
         "clobbers": [
@@ -104,6 +97,13 @@ module.exports = [
         "clobbers": [
             "window.open"
         ]
+    },
+    {
+        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+        "id": "cordova-sqlite-storage.SQLitePlugin",
+        "clobbers": [
+            "SQLitePlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -119,11 +119,11 @@ module.exports.metadata =
     "cordova-plugin-network-information": "1.0.0",
     "cordova-plugin-statusbar": "1.0.0",
     "cordova-plugin-vibration": "1.1.0",
-    "cordova-sqlite-storage": "0.7.9",
     "com.phonegap.plugins.PushPlugin": "2.2.1",
     "uk.co.whiteoctober.cordova.appversion": "0.1.7",
     "cordova-plugin-datepicker": "0.7.1",
-    "org.apache.cordova.inappbrowser": "0.6.0"
+    "org.apache.cordova.inappbrowser": "0.6.0",
+    "cordova-sqlite-storage": "0.7.9"
 }
 // BOTTOM OF METADATA
 });

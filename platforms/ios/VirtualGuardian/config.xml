@@ -48,9 +48,6 @@
     <feature name="Vibration">
         <param name="ios-package" value="CDVVibration" />
     </feature>
-    <feature name="SQLitePlugin">
-        <param name="ios-package" value="SQLitePlugin" />
-    </feature>
     <feature name="AppVersion">
         <param name="ios-package" value="AppVersion" />
     </feature>
@@ -108,5 +105,8 @@
     </feature>
     <feature name="InAppBrowser">
         <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
+    <feature name="SQLitePlugin">
+        <param name="ios-package" value="SQLitePlugin" />
     </feature>
 </widget>

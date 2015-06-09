@@ -1,0 +1,27 @@
+
+<ion-pane style="background:url(img/background.jpg); background-position:center; background-size:cover;" ng-controller="login" ng-cloak>
+	<div id="login_logo">
+    	<img src="img/logo_blanco.png" id="login_logo_img">
+    </div>
+    <div id="login_input">
+    	<div id="login_titulo" class="login_titulo">{{idioma.login[1]}}</div>
+        <div class="login_input_bg">
+  			<label class="item item-input" style="background: none; border: none;">
+    			<i class="icon ion-person placeholder-icon"></i>
+    			<input id="log_email" class="input35vh" type="email" placeholder="{{idioma.login[2]}}" style="color: #969696;" ng-model="email" ng-keydown="enterkey($event)"  ng-focus="showCover()">
+  			</label>
+            <label class="item item-input" style="background: none; border: none; border-top:1px solid #3C3C3C;">
+    			<i class="icon ion-locked placeholder-icon"></i>
+    			<input id="log_contrasena" class="input35vh" type="password" placeholder="{{idioma.login[3]}}" style="color: #969696;" ng-model="contrasena" ng-keydown="enterapp($event)"  ng-focus="showCover()">
+  			</label>
+    	</div>
+        <button id="login_entrar" class="login_boton" nav-direction="enter" ng-click="iniciaSesion()">{{idioma.login[4]}}</button>
+        
+    </div>
+    
+    <div id="login_pie">
+    <button id="login_crear" class="login_pie" nav-direction="forward" ng-click="registra()">{{idioma.login[5]}}</button>
+    <button id="login_recuperar" class="login_pie" nav-direction="forward" ng-click="recupera()">{{idioma.login[6]}}</button>
+    
+   	</div>
+</ion-pane>

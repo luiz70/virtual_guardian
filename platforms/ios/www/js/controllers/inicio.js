@@ -20,7 +20,7 @@ angular.module('starter')
 	{Nombre:$scope.idioma.periodos[180],Periodo:180},
 	{Nombre:$scope.idioma.periodos[365],Periodo:365}
 	]
-	
+	$rootScope.inicializaBaseLocal();
 	$rootScope.stepRecorrido=0;
 	$scope.fechaNotRef=null;
 	$scope.fechaPerRef=null;
@@ -29,6 +29,7 @@ angular.module('starter')
 	$timeout(function(){ 
 		$ionicSlideBoxDelegate.enableSlide(false); 
 		if($rootScope.tabInicial!=1)$scope.onTab($rootScope.tabInicial);
+        
 	},300);
 	$scope.tamano=window.innerWidth*0.85;
 	$("#capa_menu").hide();
@@ -37,7 +38,7 @@ angular.module('starter')
 	if(window.localStorage.getArray("TipoEventos"))$scope.TipoEventos=window.localStorage.getArray("TipoEventos");
 	else $scope.TipoEventos=[];
 	
-	$rootScope.stepRecorrido=1
+	//$rootScope.stepRecorrido=1
 	$rootScope.closeRecorrido=function(){
 		$rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
 			switch($rootScope.stepRecorrido){
@@ -545,6 +546,7 @@ $scope.cambia_rango_auto=function(value){
 		
 	}
 	$scope.abreTerminos=function(){
+		
 		$scope.openTerminos("pantallas/terminos.html");
 	}
 	$scope.abreInfor=function(){
@@ -566,10 +568,86 @@ $scope.cambia_rango_auto=function(value){
             alert(1);
             }
 	
-}).controller("db",function($scope,$rootScope,$http,$ionicPopup,$ionicPopover){
+}).controller("db",function($scope,$rootScope,$http,$cordovaSQLite){
 	
-	
-	
+	$rootScope.inicializaBaseLocal=function(){
+              $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
+              $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS EVENTOS (IdEvento integer primary key, IdAsunto integer, Latitud real,Longitud real, Asunto text, Direccion text, IdEstado integer,Subtitulo text,Fecha integer,Municipio text, Colonia text, Calles text,FechaScreen text,Hora text)",function(res){
+                                  
+                });
+             /* $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS NOTIFICACIONES (IdNotificacion integer primary key, IdEvento integer, IdAsunto integer,Asunto text, Distancia text, Fecha text, Hora text,Imagen text,Involucrado text, Latitud real, Longitud real,Titulo text, Subtitulo text, Tipo integer)",function(res){
+                                  
+                                  });
+              $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS PERSONAS (IdCliente integer primary key, Correo text, Lugar integer,Tipo Integer)",function(res){
+                                  
+                                  });*/
+	}
+              
+              $rootScope.sqlInsertEvento=function(event){
+              var d=new Date(event.Fecha);
+              var val=event.IdEvento+","+event.IdAsunto+","+event.Latitud+","+event.Longitud+","+d.getTime()+","+event.IdEstado;
+                $rootScope.sqlQuery("INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES("+val+")",function(res){
+                                    
+                });
+              
+              }
+              $rootScope.sqlSaveExtras=function(event,id){
+              $rootScope.sqlQuery("UPDATE EVENTOS SET Asunto='"+event.Asunto+"',Subtitulo='"+event.Subtitulo+"',Direccion='"+event.Direccion+"',Municipio='"+event.Municipio+"',FechaScreen='"+event.Fecha+"',Hora='"+event.Hora+"' WHERE IdEvento="+id,function(res){
+                                  
+                    });
+              
+              }
+              $rootScope.sqlGetEventos=function(Latitud,Longitud,FechaI,FechaF,Radio,Estados,Tipos,callback){
+              var arr=[];
+              var st="";
+              var tp="";
+              var rd="";
+              var fi=new Date(FechaI.toString());
+              var ff=new Date(FechaF.toString());
+              fi.setDate(fi.getDate()-1);
+              if(Estados!="")st=" AND IdEstado IN ("+Estados+") ";
+              if(Tipos!="")tp=" AND IdAsunto IN ("+Tipos+") ";
+              if(Radio>0){
+              var R=6372.795477598;
+              var maxLat=Latitud+ $scope.rad2deg(Radio/R);
+              var minLat=Latitud- $scope.rad2deg(Radio/R);
+              var maxLon=Longitud + $scope.rad2deg(Radio/R/Math.cos($scope.deg2rad(Latitud)))
+              var minLon=Longitud - $scope.rad2deg(Radio/R/Math.cos($scope.deg2rad(Latitud)))
+              rd=" AND (Latitud BETWEEN "+minLat+" AND "+maxLat+") AND ( Longitud BETWEEN "+minLon+" AND "+maxLon+") "
+              }
+              var query="SELECT IdEvento,IdAsunto,Latitud,Longitud FROM EVENTOS WHERE ( Fecha BETWEEN "+fi.getTime()+" AND "+ff.getTime()+" )"+st+tp+rd;
+              
+              $rootScope.sqlQuery(query,function(res){
+                                  var ids=[];
+                                  for(var i=0;i<res.rows.length;i++){
+                                  $rootScope.Eventos.push(res.rows.item(i));
+                                  ids.push(res.rows.item(i).IdEvento);
+                                  }
+                                  callback(ids.join(","));
+                                  $rootScope.muestraEventos();
+                                  
+                                  })
+              
+              }
+             $rootScope.sqlGetExtras=function(id,callback){
+              
+              $rootScope.sqlQuery("SELECT Asunto,Subtitulo,Direccion,Municipio,FechaScreen as Fecha,Hora FROM EVENTOS WHERE IdEvento="+id,function(res){
+                                  console.log(res);
+                                  callback(res.rows.item(0));
+                                  
+                                })
+
+              }
+	$rootScope.sqlQuery=function(query,funcion,values){
+              values=values || [];
+              funcion=funcion || function(){};
+              $cordovaSQLite.execute($rootScope.database, query, values).then(function(res) {
+                funcion(res);
+            }, function (err) {
+            funcion(err);
+        });
+	}
+    
 	$scope.verificaHistorial=function(){
 		//window.localStorage.setArray("Eventos",[]);
 		if(window.localStorage.getArray("Eventos"))$rootScope.Eventos=window.localStorage.getArray("Eventos");
@@ -582,6 +660,7 @@ $scope.cambia_rango_auto=function(value){
 			});*/
 		}
 	}
+	
 	
 	$scope.getHistorial=function(){
 		var d=new Date();
@@ -606,6 +685,14 @@ $scope.cambia_rango_auto=function(value){
 			console.log(error);
 			})
 	}
+              $scope.deg2rad = function(degrees) {
+              return degrees * Math.PI / 180;
+              };
+              
+              // Converts from radians to degrees.
+              $scope.rad2deg = function(radians) {
+              return radians * 180 / Math.PI;
+              };
 	/*$scope.getEventos=function(id){
 		$http.post("http://www.virtual-guardian.com/api/eventos",{
 				IdEvento:id

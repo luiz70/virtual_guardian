@@ -23,7 +23,7 @@ License for iOS version: MIT only
 - FTS3, FTS4, and R-Tree support is tested working OK in this version (for target platforms Android/iOS/Windows "Universal")
 - Status for the other target platforms:
   - Android: now using the [sqlite4java](https://code.google.com/p/sqlite4java/) library (sqlite `3.8.7` embedded), supporting FTS3/FTS4 and R-Tree
-  - iOS: sqlite `3.8.9` embedded
+  - iOS: sqlite `3.8.10.2` embedded
   - WP7: possible to build from C#, as specified by `plugin.xml` - **NOT TESTED**
   - WP8: performance/stability issues have been reported with the CSharp-SQLite library. Windows (universal) platform is recommended for the future. FTS3/FTS4/R-Tree are NOT supported for WP(7/8).
 - Android is supported back to SDK 10 (a.k.a. Gingerbread, Android 2.3.3); support for older versions is available upon request.
@@ -240,6 +240,8 @@ function onDeviceReady() {
 }
 ```
 
+**NOTE:** PRAGMA statements must be executed in `executeSql()` on the database object (i.e. `db.executeSql()`) and NOT within a transaction.
+
 ## Sample with transaction-level nesting
 
 In this case, the same transaction in the first executeSql() callback is being reused to run executeSql() again.
@@ -300,7 +302,7 @@ As an alternative, which will support the ("Mixed Platforms") target, you can us
 - Create your Windows "Universal" (8.1) project using [litehelpers / cordova-windows-nufix](https://github.com/litehelpers/cordova-windows-nufix):
   - `path.to.cordova-windows-nufix/bin/create.bat your_app_path your.app.id YourAppName`
 - `cd your_app_path` and install plugin using `plugman`:
-  - `plugman install --platform windows --project . --plugin https://github.com/litehelpers/cordova-sqlite-common`
+  - `plugman install --platform windows --project . --plugin cordova-sqlite-storage`
 - Put your sql program in your project `www` (don't forget to reference it from `www\index.html` and wait for `deviceready` event)
 
 Then your project in `CordovaApp.sln` should work with "Mixed Platforms" on both Windows 8.1 and Windows Phone 8.1.
@@ -308,18 +310,20 @@ Then your project in `CordovaApp.sln` should work with "Mixed Platforms" on both
 ## Easy install with plugman tool
 
 ```shell
-plugman install --platform MYPLATFORM --project path.to.my.project.folder --plugin https://github.com/litehelpers/cordova-sqlite-common
+plugman install --platform MYPLATFORM --project path.to.my.project.folder --plugin cordova-sqlite-storage
 ```
 
 where MYPLATFORM is `android`, `ios`, `windows`, or `wp8`.
 
 A posting how to get started developing on Windows host without the Cordova CLI tool (for Android target only) is available [here](http://brodybits.blogspot.com/2015/03/trying-cordova-for-android-on-windows-without-cordova-cli.html).
 
+**NOTE:** You can substitute https://github.com/litehelpers/Cordova-sqlite-storage for `cordova-sqlite-storage` to get the latest version directly from github.
+
 ## Easy install with Cordova CLI tool
 
     npm install -g cordova # if you don't have cordova
     cordova create MyProjectFolder com.my.project MyProject && cd MyProjectFolder # if you are just starting
-    cordova plugin add https://github.com/litehelpers/cordova-sqlite-common
+    cordova plugin add cordova-sqlite-storage
 
 You can find more details at [this writeup](http://iphonedevlog.wordpress.com/2014/04/07/installing-chris-brodys-sqlite-database-with-cordova-cli-android/).
 
@@ -331,6 +335,8 @@ You can find more details at [this writeup](http://iphonedevlog.wordpress.com/20
 
     cordova platform rm ios
     cordova platform add ios
+
+**EXTRA NOTE:** You can substitute https://github.com/litehelpers/Cordova-sqlite-storage for `cordova-sqlite-storage` to get the latest version directly from github.
 
 ## Source tree
 

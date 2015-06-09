@@ -1,0 +1,21 @@
+<ion-pan  ng-hide="!pantallas[3]" style="  position: absolute;  top: 0vh;  background: none;  bottom: 0vh;  height: auto;  width: 100vw;">
+<ion-content id="auto_mapa"  class="inicio_mapa"  data-tap-disabled="true" style="top:0px;" ng-hide="sinMapa">
+</ion-content> 
+<div style="position: absolute;top: 8vh;width: 100%;bottom: 0vh;overflow: hidden;" class="ng-hide" ng-show="sinMapa" ng-click="Reload()">
+    <div style="  width: 50vw;position: absolute;height: 50vw;top: 0px;bottom: 8vh;left: 0px;  right: 0px;  margin: auto;  opacity: 0.2;">
+        <img src="img/sinconexion.png" style="  width: 60%; margin-left: 20%;  height: 60%;">
+        <div style="color:#fff;  width: 100%; text-align: center;">{{idioma.general[4]}}</div>
+    </div>
+</div>
+<button id="auto_pie"  value="0" ng-click="vigilar()" ng-hide="sinMapa">{{vigilando ? idioma.auto[2] : idioma.auto[1]}}</button>
+<button class="btn_mapa_flotante" ng-click="revisaPosCarro()" ng-hide="sinMapa">
+	<!--i class="icon ion-android-locate" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
+    <img src="img/iconos/position.png" width="100%" ></div>
+</button>
+</ion-pan>
+<div class="infobox-wrapper">
+    <div id="infobox">
+        {{idioma.auto[8]}}
+        <div class="nota_infobox" style="font-size:2vh;line-height:2.3vh">{{idioma.auto[9]}}</div>
+    </div>
+</div>
