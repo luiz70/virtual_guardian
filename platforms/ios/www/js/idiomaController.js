@@ -32,7 +32,7 @@ angular.module('starter')
 					26:"Virtual Guardian para dispositivos móviles fue creado con software de licencia abierta.",
 					27:"Versión ",
 					28:"Configuración GPS",
-					29:"El GPS no está disponible en este momento, verifique su configuración de GPS o intente más tarde.",
+					29:"El servicio de localización de "+$rootScope.platform+" no está disponible en este momento, intente más tarde.",
                     30:"Para resolver todas tus dudas sobre el uso de la aplicacion hemos creado un recorrido por todas las funciones que virtual guardian te ofrece",
                     31:"¿Deseas verlo?",
                     32:"¿Quieres ver el recorrido de las funciones de la aplicación?",
@@ -185,7 +185,10 @@ angular.module('starter')
 					4:" acepto tu solicitud de personas.",
 					5:" a ",
 					6:" de ",
-					7:" de tu auto."
+					7:" de tu auto.",
+					8:"Codigo de promoción",
+					9:" se registró con tu código de promoción.",
+					10:"Buenas noticias, ahora tienes un mes mas de suscripción completa por invitar a tus amigos."
 				},
 				meses:{
 				1:"Enero",

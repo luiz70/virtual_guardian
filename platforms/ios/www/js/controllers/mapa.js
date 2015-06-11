@@ -93,8 +93,19 @@ angular.module('starter')
     		content: '',
 			disableAutoPan:false,
   		});
-	
+		var styles = [
+		   {
+			 featureType: "poi",
+			 stylers: [
+			  { visibility: "off" }
+			 ]   
+			}
+		];
+		 var styledMap = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
 		$rootScope.map = new google.maps.Map(document.getElementById('inicio_mapa'), mapOptions);
+		$rootScope.map.mapTypes.set('map_style', styledMap);
+  		$rootScope.map.setMapTypeId('map_style');
 		//mapCarro = new google.maps.Map(document.getElementById('carro_mapa'), mapOptions);
 		
 	
@@ -109,6 +120,8 @@ angular.module('starter')
 		
 		$scope.poscar=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 		$rootScope.mapCarro = new google.maps.Map(document.getElementById('auto_mapa'), mapOptions);
+		$rootScope.mapCarro.mapTypes.set('map_style', styledMap);
+  		$rootScope.mapCarro.setMapTypeId('map_style');
 		$rootScope.mapCarro.setZoom(17);
 		if(window.localStorage.getArray("Auto")){
 			$scope.poscar=new google.maps.LatLng(window.localStorage.getArray("Auto").Latitud,window.localStorage.getArray("Auto").Longitud);
@@ -160,8 +173,19 @@ $scope.hideBarra=function(){
     		content: '',
 			disableAutoPan:false,
   		});
-	
+	var styles = [
+		   {
+			 featureType: "poi",
+			 stylers: [
+			  { visibility: "off" }
+			 ]   
+			}
+		];
+		 var styledMap = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
 		$rootScope.map = new google.maps.Map(document.getElementById('inicio_mapa'), mapOptions);
+		$rootScope.map.mapTypes.set('map_style', styledMap);
+  		$rootScope.map.setMapTypeId('map_style');
 		google.maps.event.addListenerOnce($rootScope.map,"idle",function (){
 			$scope.setPosicion($rootScope.map, 20.6737919,-103.3354131)
 			$rootScope.map.setCenter(new google.maps.LatLng(20.6737919,-103.3354131));
@@ -173,6 +197,8 @@ $scope.hideBarra=function(){
 		
 		$scope.poscar=new google.maps.LatLng(20.6737919,-103.3354131);
 		$rootScope.mapCarro = new google.maps.Map(document.getElementById('auto_mapa'), mapOptions);
+		$rootScope.mapCarro.mapTypes.set('map_style', styledMap);
+  		$rootScope.mapCarro.setMapTypeId('map_style');
 		$rootScope.mapCarro.setZoom(17);
 		if(window.localStorage.getArray("Auto")){
 			$scope.poscar=new google.maps.LatLng(window.localStorage.getArray("Auto").Latitud,window.localStorage.getArray("Auto").Longitud);
@@ -668,6 +694,9 @@ alert(1);
 			break;
 			case "6":
 			$scope.onTab(3);
+			break;
+			case "7":
+			$rootScope.alert($scope.idioma.notificaciones[8],$scope.idioma.notificaciones[10],function(){});
 			break;
 		}
 	}

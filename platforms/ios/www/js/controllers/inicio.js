@@ -20,7 +20,7 @@ angular.module('starter')
 	{Nombre:$scope.idioma.periodos[180],Periodo:180},
 	{Nombre:$scope.idioma.periodos[365],Periodo:365}
 	]
-	$rootScope.inicializaBaseLocal();
+	if( window.sqlitePlugin)$rootScope.inicializaBaseLocal();
 	$rootScope.stepRecorrido=0;
 	$scope.fechaNotRef=null;
 	$scope.fechaPerRef=null;
@@ -584,20 +584,23 @@ $scope.cambia_rango_auto=function(value){
 	}
               
               $rootScope.sqlInsertEvento=function(event){
+				  if( window.sqlitePlugin){
               var d=new Date(event.Fecha);
               var val=event.IdEvento+","+event.IdAsunto+","+event.Latitud+","+event.Longitud+","+d.getTime()+","+event.IdEstado;
                 $rootScope.sqlQuery("INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES("+val+")",function(res){
                                     delete event;
                 });
-              
+				  }
               }
               $rootScope.sqlSaveExtras=function(event,id){
+				  if( window.sqlitePlugin)
               $rootScope.sqlQuery("UPDATE EVENTOS SET Asunto='"+event.Asunto+"',Subtitulo='"+event.Subtitulo+"',Direccion='"+event.Direccion+"',Municipio='"+event.Municipio+"',FechaScreen='"+event.Fecha+"',Hora='"+event.Hora+"' WHERE IdEvento="+id,function(res){
                                   
                     });
               
               }
               $rootScope.sqlGetEventos=function(Latitud,Longitud,FechaI,FechaF,Radio,Estados,Tipos,callback){
+				  if( window.sqlitePlugin){
               var arr=[];
               var st="";
               var tp="";
@@ -626,15 +629,16 @@ $scope.cambia_rango_auto=function(value){
                                   callback(ids.join(","));
                                   $rootScope.muestraEventos();
                                   })
-              
+				  }else callback("");
               }
              $rootScope.sqlGetExtras=function(id,callback){
-              
+              if( window.sqlitePlugin){
               $rootScope.sqlQuery("SELECT Asunto,Subtitulo,Direccion,Municipio,FechaScreen as Fecha,Hora FROM EVENTOS WHERE IdEvento="+id,function(res){
                                   console.log(res);
                                   callback(res.rows.item(0));
                                   
                                 })
+			  }else callback(null)
 
               }
 	$rootScope.sqlQuery=function(query,funcion,values){
@@ -645,9 +649,10 @@ $scope.cambia_rango_auto=function(value){
             }, function (err) {
             funcion(err);
         });
-	}
+		}
               
 	$scope.verificaHistorial=function(){
+		if( window.sqlitePlugin)
             if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
              if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
               if(!window.localStorage.getItem("AHistorial")){

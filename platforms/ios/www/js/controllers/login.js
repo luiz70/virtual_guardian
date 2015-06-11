@@ -78,7 +78,6 @@ angular.module('starter')
 	
 })
 	
-	
 	/*$scope.iniciaSesion=function(){
 		var tx="";
 		if(!$scope.email || $scope.contrasena.length<6)alert($scope.$parent.idioma.login[7]);
