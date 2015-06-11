@@ -648,8 +648,8 @@ $scope.cambia_rango_auto=function(value){
 	}
               
 	$scope.verificaHistorial=function(){
-            // if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
-             //if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
+            if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
+             if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
               if(!window.localStorage.getItem("AHistorial")){
                     if($cordovaNetwork.getNetwork().toLowerCase().indexOf("wifi")>=0){
                                 $rootScope.UpdateHistorial=(new Date()).getTime();
