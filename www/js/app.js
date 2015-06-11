@@ -34,6 +34,13 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	}
 	$rootScope.Update=new Date();
 	$rootScope.UpdateEvt=new Date();
+        
+        if(!window.localStorage.getItem("UpdateHistorial")){
+            $rootScope.UpdateHistorial=(new Date()).getTime();
+            window.localStorage.setItem("UpdateHistorial",$rootScope.UpdateHistorial);
+        }
+        else $rootScope.UpdateHistorial=window.localStorage.getItem("UpdateHistorial");
+                       
 	$rootScope.front=true;	
 	$rootScope.sinMapa=false;
     if(window.localStorage.getArray("nPendientes")) $rootScope.notPendientes=window.localStorage.getArray("nPendientes");
