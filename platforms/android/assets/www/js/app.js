@@ -46,6 +46,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
     if(window.localStorage.getArray("nPendientes")) $rootScope.notPendientes=window.localStorage.getArray("nPendientes");
 	else $rootScope.notPendientes=0;	
 	$rootScope.tabInicial=1;
+	$rootScope.platform=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
     $rootScope.ipad=(window.device.model.substring(0,4).toLowerCase()=="ipad");
 	window.addEventListener('native.keyboardshow', keyboardShowHandler);

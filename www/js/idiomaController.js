@@ -32,7 +32,7 @@ angular.module('starter')
 					26:"Virtual Guardian para dispositivos móviles fue creado con software de licencia abierta.",
 					27:"Versión ",
 					28:"Configuración GPS",
-					29:"El servicio de localización de "+window.device.platform+" no está disponible en este momento, intente más tarde.",
+					29:"El servicio de localización no está disponible en este momento, intente más tarde.",
                     30:"Para resolver todas tus dudas sobre el uso de la aplicacion hemos creado un recorrido por todas las funciones que virtual guardian te ofrece",
                     31:"¿Deseas verlo?",
                     32:"¿Quieres ver el recorrido de las funciones de la aplicación?",
