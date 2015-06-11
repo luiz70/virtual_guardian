@@ -571,7 +571,7 @@ $scope.cambia_rango_auto=function(value){
 }).controller("db",function($scope,$rootScope,$http,$cordovaSQLite,$cordovaNetwork){
 	
 	$rootScope.inicializaBaseLocal=function(){
-              $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
+              $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1,androidDatabaseImplementation: 1, androidLockWorkaround: 1,createFromLocation: 1});
               $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS EVENTOS (IdEvento integer primary key, IdAsunto integer, Latitud real,Longitud real, Asunto text, Direccion text, IdEstado integer,Subtitulo text,Fecha integer,Municipio text, Colonia text, Calles text,FechaScreen text,Hora text)",function(res){
                                   
                 });
@@ -648,8 +648,8 @@ $scope.cambia_rango_auto=function(value){
 	}
               
 	$scope.verificaHistorial=function(){
-            // if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
-             //if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
+            if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
+             if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
               if(!window.localStorage.getItem("AHistorial")){
                     if($cordovaNetwork.getNetwork().toLowerCase().indexOf("wifi")>=0){
                                 $rootScope.UpdateHistorial=(new Date()).getTime();
