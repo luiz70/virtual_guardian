@@ -141,6 +141,17 @@ module.exports = [
         "clobbers": [
             "SQLitePlugin"
         ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.toast/www/Toast.js",
+        "id": "nl.x-services.plugins.toast.Toast",
+        "clobbers": [
+            "window.plugins.toast"
+        ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.toast/test/tests.js",
+        "id": "nl.x-services.plugins.toast.tests"
     }
 ];
 module.exports.metadata = 
@@ -160,7 +171,8 @@ module.exports.metadata =
     "uk.co.whiteoctober.cordova.appversion": "0.1.7",
     "cordova-plugin-datepicker": "0.7.1",
     "org.apache.cordova.inappbrowser": "0.6.0",
-    "cordova-sqlite-storage": "0.7.9"
+    "cordova-sqlite-storage": "0.7.9",
+    "nl.x-services.plugins.toast": "2.1.0"
 }
 // BOTTOM OF METADATA
 });

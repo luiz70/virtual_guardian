@@ -571,7 +571,8 @@ $scope.cambia_rango_auto=function(value){
 }).controller("db",function($scope,$rootScope,$http,$cordovaSQLite,$cordovaNetwork){
 	
 	$rootScope.inicializaBaseLocal=function(){
-              $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
+              if($rootScope.iOS)$rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
+              else $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
               $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS EVENTOS (IdEvento integer primary key, IdAsunto integer, Latitud real,Longitud real, Asunto text, Direccion text, IdEstado integer,Subtitulo text,Fecha integer,Municipio text, Colonia text, Calles text,FechaScreen text,Hora text)",function(res){
                                   
                 });

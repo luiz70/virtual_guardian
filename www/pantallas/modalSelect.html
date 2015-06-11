@@ -4,8 +4,22 @@
     </ion-header-bar>
     <ion-content style="top: 7vh;bottom: 8vh;">
         <ion-list>
+            <label class="item item-radio ">
+                <input type="checkbox" name="radio-group" ng-model="false" ng-click="selectAll(true);" >
+                    <div class="item-content" style="background:#424242;color:#fff;border-top:solid 1px #5e5e5e;text-align:center">
+                        <span >{{idioma.menu[29]}}</span>
+                    </div>
+                    <i class="radio-icon disable-pointer-events icon ion-checkmark"></i>
+                    </label>
+            <label class="item item-radio " >
+                <input type="checkbox" name="radio-group" ng-model="false" ng-click="selectAll(false);">
+                    <div class="item-content" style="background:#424242;color:#fff;border-top:solid 1px #5e5e5e;text-align:center">
+                        <span >{{idioma.menu[30]}}</span>
+                    </div>
+                    <i class="radio-icon disable-pointer-events icon ion-checkmark"></i>
+                    </label>
             <!--ion-radio ng-repeat="opcion in opcionesModal" ng-model="opcion.Selected" >{{opcion.Nombre}}</ion-radio-->
-            <label class="item item-radio " ng-repeat="opcion in opcionesModal" ng-model="opcion.Selected" >
+            <label class="item item-radio " ng-repeat="opcion in opcionesModal" ng-model="opcion.Selected" style="border-top:solid 1px #f2f2f2">
                 <input type="checkbox" name="radio-group" ng-model="opcion.Selected">
                     <div class="item-content" >
                         <span >{{opcion.Nombre}}</span>

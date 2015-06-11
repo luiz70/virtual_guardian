@@ -1,5 +1,5 @@
 angular.module('starter')
-.controller("general",function($scope,$ionicLoading,$rootScope,$ionicPlatform,$ionicPopup,$ionicPopover,$ionicModal,$timeout){
+.controller("general",function($scope,$ionicLoading,$rootScope,$ionicPlatform,$ionicPopup,$ionicPopover,$ionicModal,$timeout,$cordovaToast){
 	$scope.Diccionario={
 		es:
 			{
@@ -42,7 +42,9 @@ angular.module('starter')
 				mapa:{
 					1:"Fecha:",
 					2:"Hora:",
-					3:"Dirección:"
+					3:"Dirección:",
+                    4:"¡Ubicación actualizada!",
+                    5:"¡Eventos actualizados!"
 				},
 				cuenta:{
 					1:"Usuario",
@@ -88,7 +90,9 @@ angular.module('starter')
 				25:"Cuando algo suceda dentro de los ultimos minutos te notificaremos, proporciona el tiempo máximo en el que consideras que el evento es relevante. 10-180 min.",
 				26:"El tiempo no es valido, proporciona un valor entre 10 y 180 minutos.",
                 27:"Ayuda",
-            28:"Mi cuenta"
+            28:"Mi cuenta",
+            29:"Seleccionar todo",
+            30:"Desseleccionar todo"
 				},
 				recorrido:{
 					1:"¿Cómo usar Virtual Guardian?",
@@ -279,6 +283,10 @@ angular.module('starter')
       		template: '<div style="width:100%"><ion-spinner icon="android" class="spinner-dark"></ion-spinner></div>'+texto
    		});
  	};
+            $rootScope.showToast=function(mensaje){
+            $cordovaToast.showShortBottom(mensaje);
+            }
+            
  	$rootScope.hideCargando = function(){
     	$ionicLoading.hide();
  	};
@@ -406,6 +414,10 @@ angular.module('starter')
   });
     
   };
+            $scope.selectAll=function(val){
+            for(var i=0;i<$scope.opcionesModal.length;i++)
+            $scope.opcionesModal[i].Selected=val;
+            }
   $scope.closeModal = function() {
     $scope.modalSelect.hide();
 	$scope.modalSelect.remove();

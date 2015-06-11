@@ -66,6 +66,7 @@ angular.module('starter')
 		$rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 		$scope.circuloRadio.setCenter($scope.ubicacionMarker.getPosition());
 		$rootScope.showEventos();
+        $rootScope.showToast($rootScope.idioma.mapa[4])
 	}
 	$scope.onErrorc=function(){
 		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
@@ -73,6 +74,7 @@ angular.module('starter')
 	$scope.onSPosc=function(position){
 		$scope.carroMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 		$rootScope.mapCarro.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+        $rootScope.showToast($rootScope.idioma.mapa[4])
 		
 	}
 	$scope.onSuccess=function (position) {
@@ -582,12 +584,17 @@ alert(1);
             if($scope.radio!=$scope.radioViejo)$rootScope.showEventos();
             
             }
-	$rootScope.showEventos=function(){
+	$rootScope.showEventos=function(toast){
+            toast=toast || 0;
+            
 		//if($rootScope.Eventos.length>0)
 		if($scope.Conexion(1,function(){
 			$rootScope.cargando=false;
 			$rootScope.sinMapa=true;
-		}))$scope.getEventos();
+                           })){
+            $scope.getEventos();
+            if(toast)$rootScope.showToast($rootScope.idioma.mapa[5]);
+            }
 	}
 	$rootScope.muestraEventos=function(){
 	$scope.limpia();

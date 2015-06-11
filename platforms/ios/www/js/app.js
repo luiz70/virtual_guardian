@@ -46,7 +46,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
     if(window.localStorage.getArray("nPendientes")) $rootScope.notPendientes=window.localStorage.getArray("nPendientes");
 	else $rootScope.notPendientes=0;	
 	$rootScope.tabInicial=1;
-                       $rootScope.platform=window.device.platform;
+	$rootScope.platform=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
     $rootScope.ipad=(window.device.model.substring(0,4).toLowerCase()=="ipad");
 	window.addEventListener('native.keyboardshow', keyboardShowHandler);
@@ -54,14 +54,14 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	document.addEventListener("pause", $rootScope.onPause);
 	document.addEventListener("resume", $rootScope.onResume);
 	
-                       
+	
 	
 		if(!window.localStorage.getArray("Usuario")){
 				$rootScope.Usuario=null;
 				$location.path('/login');
 				
 		}else{
-                       
+			
 				$rootScope.Usuario=window.localStorage.getArray("Usuario");
 				console.log($rootScope.Usuario);
 				$location.path('/inicio');

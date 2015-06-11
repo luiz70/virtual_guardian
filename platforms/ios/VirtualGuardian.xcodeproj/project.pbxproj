@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0286E5362D33435D9958118C /* DatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B77228EBC34765955B3868 /* DatePicker.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -63,6 +62,9 @@
 		D30A55DD4EB443C08523D0B3 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9161AEF1141D3BA3E1D7C /* CDVStatusBar.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		EA96CBB82B9E462F9739AB7F /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B0EFB4A09B44A983428C95 /* AppDelegate+notification.m */; };
+		11D061A6CDEB426498D77FFD /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94D152B46F9C45E2A6AA213C /* Toast+UIView.m */; };
+		096A485CE2024F22BF4EB90D /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = C16ADA30523341C1A79DE220 /* Toast.m */; };
+		12868B60E6124101A94743F3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B52D8F61F339427FAD0EF48F /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +176,11 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = VirtualGuardian/config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		FE1BDBC5B6A1410A9C5D7B72 /* CDVGlobalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVGlobalization.m; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; };
+		94D152B46F9C45E2A6AA213C /* Toast+UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Toast+UIView.m"; path = "nl.x-services.plugins.toast/Toast+UIView.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		C16ADA30523341C1A79DE220 /* Toast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Toast.m"; path = "nl.x-services.plugins.toast/Toast.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		AA041D16AA4C49168DBDC003 /* Toast+UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Toast+UIView.h"; path = "nl.x-services.plugins.toast/Toast+UIView.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		372F237F6B5B4220880FF132 /* Toast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Toast.h"; path = "nl.x-services.plugins.toast/Toast.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		B52D8F61F339427FAD0EF48F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "QuartzCore.framework"; path = "System/Library/Frameworks/QuartzCore.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +195,7 @@
 				8D9591612C4040EC8BC74DAD /* CoreLocation.framework in Frameworks */,
 				A30F14D00E084904B311E352 /* SystemConfiguration.framework in Frameworks */,
 				9452F802B32F4EBA8CB5AE2B /* AudioToolbox.framework in Frameworks */,
+				12868B60E6124101A94743F3 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +274,7 @@
 				A6C9EC9993C742F4BFEBC5E3 /* CoreLocation.framework */,
 				847765C470B84A5FA741D486 /* SystemConfiguration.framework */,
 				4F047DD1ED804CE3AC6E8677 /* AudioToolbox.framework */,
+				B52D8F61F339427FAD0EF48F /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -323,6 +332,10 @@
 				1209C363ECBC415FA8E29148 /* sqlite3.c */,
 				336FB0F1A8794F0488127692 /* SQLitePlugin.h */,
 				0135BAC165D84741ADD0D274 /* sqlite3.h */,
+				94D152B46F9C45E2A6AA213C /* Toast+UIView.m */,
+				C16ADA30523341C1A79DE220 /* Toast.m */,
+				AA041D16AA4C49168DBDC003 /* Toast+UIView.h */,
+				372F237F6B5B4220880FF132 /* Toast.h */,
 			);
 			name = Plugins;
 			path = VirtualGuardian/Plugins;
@@ -538,6 +551,8 @@
 				C90393EE452648DAA2FA17E7 /* CDVInAppBrowser.m in Sources */,
 				BAB3C9A3FEDD412F8011CC5B /* SQLitePlugin.m in Sources */,
 				607634F450394830B94E9229 /* sqlite3.c in Sources */,
+				11D061A6CDEB426498D77FFD /* Toast+UIView.m in Sources */,
+				096A485CE2024F22BF4EB90D /* Toast.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
