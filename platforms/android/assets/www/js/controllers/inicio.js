@@ -20,7 +20,7 @@ angular.module('starter')
 	{Nombre:$scope.idioma.periodos[180],Periodo:180},
 	{Nombre:$scope.idioma.periodos[365],Periodo:365}
 	]
-	
+	$rootScope.inicializaBaseLocal();
 	$rootScope.stepRecorrido=0;
 	$scope.fechaNotRef=null;
 	$scope.fechaPerRef=null;
@@ -29,6 +29,7 @@ angular.module('starter')
 	$timeout(function(){ 
 		$ionicSlideBoxDelegate.enableSlide(false); 
 		if($rootScope.tabInicial!=1)$scope.onTab($rootScope.tabInicial);
+        
 	},300);
 	$scope.tamano=window.innerWidth*0.85;
 	$("#capa_menu").hide();
@@ -545,8 +546,8 @@ $scope.cambia_rango_auto=function(value){
 		
 	}
 	$scope.abreTerminos=function(){
-		$rootScope.inicializaBaseLocal();
-		//$scope.openTerminos("pantallas/terminos.html");
+		
+		$scope.openTerminos("pantallas/terminos.html");
 	}
 	$scope.abreInfor=function(){
 		var template='<div style=""><b>© Virtual Guardian 2015</b></div>'+
@@ -567,58 +568,160 @@ $scope.cambia_rango_auto=function(value){
             alert(1);
             }
 	
-}).controller("db",function($scope,$rootScope,$http,$cordovaSQLite){
+}).controller("db",function($scope,$rootScope,$http,$cordovaSQLite,$cordovaNetwork){
 	
 	$rootScope.inicializaBaseLocal=function(){
-	$rootScope.database = $cordovaSQLite.openDB({ name: "my.db", bgType: 1 });
-	$rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS test_table (id integer primary key, data text, data_num integer)");
-	$rootScope.sqlQuery("INSERT INTO test_table (data, data_num) VALUES (?,?)");
-	$rootScope.sqlQuery("SELECT * FROM test_table");
+              $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", androidDatabaseImplementation: 2});
+              $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS EVENTOS (IdEvento integer primary key, IdAsunto integer, Latitud real,Longitud real, Asunto text, Direccion text, IdEstado integer,Subtitulo text,Fecha integer,Municipio text, Colonia text, Calles text,FechaScreen text,Hora text)",function(res){
+                                  
+                });
+             /* $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS NOTIFICACIONES (IdNotificacion integer primary key, IdEvento integer, IdAsunto integer,Asunto text, Distancia text, Fecha text, Hora text,Imagen text,Involucrado text, Latitud real, Longitud real,Titulo text, Subtitulo text, Tipo integer)",function(res){
+                                  
+                                  });
+              $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS PERSONAS (IdCliente integer primary key, Correo text, Lugar integer,Tipo Integer)",function(res){
+                                  
+                                  });*/
 	}
-	$rootScope.sqlQuery=function(query){
-    $cordovaSQLite.execute($rootScope.database, query, ["test", 100]).then(function(res) {
-      console.log("insertId: " + res.insertId);
-    }, function (err) {
-      console.error(err);
-    });
+              
+              $rootScope.sqlInsertEvento=function(event){
+              var d=new Date(event.Fecha);
+              var val=event.IdEvento+","+event.IdAsunto+","+event.Latitud+","+event.Longitud+","+d.getTime()+","+event.IdEstado;
+                $rootScope.sqlQuery("INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES("+val+")",function(res){
+                                    delete event;
+                });
+              
+              }
+              $rootScope.sqlSaveExtras=function(event,id){
+              $rootScope.sqlQuery("UPDATE EVENTOS SET Asunto='"+event.Asunto+"',Subtitulo='"+event.Subtitulo+"',Direccion='"+event.Direccion+"',Municipio='"+event.Municipio+"',FechaScreen='"+event.Fecha+"',Hora='"+event.Hora+"' WHERE IdEvento="+id,function(res){
+                                  
+                    });
+              
+              }
+              $rootScope.sqlGetEventos=function(Latitud,Longitud,FechaI,FechaF,Radio,Estados,Tipos,callback){
+              var arr=[];
+              var st="";
+              var tp="";
+              var rd="";
+              var fi=new Date(FechaI.toString());
+              var ff=new Date(FechaF.toString());
+              fi.setDate(fi.getDate()-1);
+              if(Estados!="")st=" AND IdEstado IN ("+Estados+") ";
+              if(Tipos!="")tp=" AND IdAsunto IN ("+Tipos+") ";
+              if(Radio>0){
+              var R=6372.795477598;
+              var maxLat=Latitud+ $scope.rad2deg(Radio/R);
+              var minLat=Latitud- $scope.rad2deg(Radio/R);
+              var maxLon=Longitud + $scope.rad2deg(Radio/R/Math.cos($scope.deg2rad(Latitud)))
+              var minLon=Longitud - $scope.rad2deg(Radio/R/Math.cos($scope.deg2rad(Latitud)))
+              rd=" AND (Latitud BETWEEN "+minLat+" AND "+maxLat+") AND ( Longitud BETWEEN "+minLon+" AND "+maxLon+") "
+              }
+              var query="SELECT IdEvento,IdAsunto,Latitud,Longitud FROM EVENTOS WHERE ( Fecha BETWEEN "+fi.getTime()+" AND "+ff.getTime()+" )"+st+tp+rd;
+              
+              $rootScope.sqlQuery(query,function(res){
+                                  var ids=[];
+                                  for(var i=0;i<res.rows.length;i++){
+                                  $rootScope.Eventos.push(res.rows.item(i));
+                                  ids.push(res.rows.item(i).IdEvento);
+                                  }
+                                  callback(ids.join(","));
+                                  $rootScope.muestraEventos();
+                                  })
+              
+              }
+             $rootScope.sqlGetExtras=function(id,callback){
+              
+              $rootScope.sqlQuery("SELECT Asunto,Subtitulo,Direccion,Municipio,FechaScreen as Fecha,Hora FROM EVENTOS WHERE IdEvento="+id,function(res){
+                                  console.log(res);
+                                  callback(res.rows.item(0));
+                                  
+                                })
+
+              }
+	$rootScope.sqlQuery=function(query,funcion,values){
+              values=values || [];
+              funcion=funcion || function(){};
+              $cordovaSQLite.execute($rootScope.database, query, values).then(function(res) {
+                funcion(res);
+            }, function (err) {
+            funcion(err);
+        });
 	}
+              
 	$scope.verificaHistorial=function(){
-		//window.localStorage.setArray("Eventos",[]);
-		if(window.localStorage.getArray("Eventos"))$rootScope.Eventos=window.localStorage.getArray("Eventos");
-		else $rootScope.Eventos=[] ;
-		if(!$scope.buscaJson($rootScope.Eventos,"IdEvento",1)){
-		//Verificar wifi
-			/*$scope.confirm($rootScope.idioma.general[7],$rootScope.idioma.general[8],function(){
-				$rootScope.showCargando("{{idioma.general[9]}}");
-				$scope.getHistorial();
-			});*/
-		}
+            // if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
+             //if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
+             /* if(!window.localStorage.getItem("AHistorial")){
+                    if($cordovaNetwork.getNetwork().toLowerCase().indexOf("wifi")>=0){
+                                $rootScope.UpdateHistorial=(new Date()).getTime();
+                                window.localStorage.setItem("UpdateHistorial",$rootScope.UpdateHistorial);
+                        $scope.confirm($rootScope.idioma.general[7],$rootScope.idioma.general[8],function(){
+                            $rootScope.showCargando($rootScope.idioma.general[9]);
+                            $scope.getHistorial();
+                        })
+                }
+            }*/
+			
+              $cordovaSQLite.execute($rootScope.database, "INSERT OR REPLACE INTO EVENTOS SELECT '1' as 'IdEvento', '2' as 'IdAsunto', '3' as 'Latitud' , '4' as 'Longitud' , '5' as 'Fecha', '6' as 'IdEstado' UNION SELECT '2' ,'3','4','5','6','7' UNION SELECT '3','4','5','6','7','8' UNION SELECT '4','5','5','6','7','8' ", [])
+                 .then(function(res){console.log(1);
+                       console.log(res);
+					   $cordovaSQLite.execute($rootScope.database, "INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto) VALUES(1,2),(2,3),(3,4),(4,5)", [])
+                 .then(function(res){console.log(2);
+                       console.log(res);
+                    },function(){
+                       
+                       })
+                    },function(){
+                       
+                       })
+					   
 	}
 	
 	
 	$scope.getHistorial=function(){
-		var d=new Date();
+              var d=new Date();
+              var d2=new Date();
+              d2.setFullYear(d2.getFullYear()-2);
 		$http.post("http://www.virtual-guardian.com/api/historial",{
-				FechaI:2009-01-01,
+				FechaI:"2010-01-01",//+d2.getFullYear()+"-"+(d2.getMonth()+1)+"-"+d2.getDate(),
 				FechaF:""+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),
 				Estados:"",
 				Asuntos:"",
 				IdEvento:0
 				})
 		.success(function(data,status,header,config){
-			var d=[]
+                 var d=[];
 			for(var i=0;i<data.length;i++){
-				d.push(JSON.parse(data[i]));				
-			}
-			window.localStorage.setArray("Eventos",d);
-			$rootScope.Eventos=d;
-					$rootScope.hideCargando();
-					//console.log($rootScope.Eventos);
+                //if($rootScope.iOS){ 
+				var arr = "("+($.map(JSON.parse(data[i]), function(el) { return el; })).join(",")+")"
+                 d.push(arr);
+				/*}else{
+					$cordovaSQLite.execute($rootScope.database, "INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES(?,?,?,?,?,?)",$.map(JSON.parse(data[i]), function(el) { return el; }) );
+				}*/
+                    }
+                 //if($rootScope.iOS)
+				 $cordovaSQLite.execute($rootScope.database, "INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES"+d.join(","), [])
+                 .then(function(res){
+                       $rootScope.hideCargando();
+                       window.localStorage.setItem("AHistorial",1);
+                    },function(){
+                       $rootScope.hideCargando();
+                       window.localStorage.setItem("AHistorial",1);
+                       })
+                 
+                 
 			})
 		.error(function(error,status,header,config){
 			console.log(error);
 			})
 	}
+              $scope.deg2rad = function(degrees) {
+              return degrees * Math.PI / 180;
+              };
+              
+              // Converts from radians to degrees.
+              $scope.rad2deg = function(radians) {
+              return radians * 180 / Math.PI;
+              };
 	/*$scope.getEventos=function(id){
 		$http.post("http://www.virtual-guardian.com/api/eventos",{
 				IdEvento:id

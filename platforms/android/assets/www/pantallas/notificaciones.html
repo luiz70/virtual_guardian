@@ -5,7 +5,7 @@
   </ion-refresher>
 	<ion-list>
     </ion-item>
-        <ion-item class="item" style="background: none;padding: 10px;height: 50px;text-align: center;" ng-show="cargandoN" >
+        <ion-item class="item ng-hide" style="background: none;padding: 10px;height: 50px;text-align: center;" ng-show="cargandoN" >
       	<ion-spinner icon="android" class="spinner-dark"></ion-spinner>	  		
   		</ion-item>
     	<ion-item class="item item-avatar notificacion" ng-repeat="notificacion in Notificaciones track by $index" ng-click="notificacionClick(notificacion)" style="padding-bottom: 2vh !important;" item-width=100% ng-hide="notificacion.Asunto==0 && notificacion.Tipo<5">
@@ -25,5 +25,5 @@
     </ion-list>
 </ion-content>
 </ion-pan>
-<div style="position: absolute;z-index:-1;top: 8vh;bottom: 0px;left: 0px;right: 0px;padding: 2vh;text-align: center;color: #7E7E7E;" class="ng-hide" ng-show="Notificaciones.length==0 && !cargando">{{idioma.notificaciones[1]}}</div>
+<div class="ng-hide" style="position: absolute;z-index:-1;top: 8vh;bottom: 0px;left: 0px;right: 0px;padding: 2vh;text-align: center;color: #7E7E7E;" class="ng-hide" ng-show="Notificaciones.length==0 && !cargando">{{idioma.notificaciones[1]}}</div>
 </div>
