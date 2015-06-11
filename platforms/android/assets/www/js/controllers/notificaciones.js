@@ -38,9 +38,14 @@ angular.module('starter')
 							if(tmp.Tipo==3)tmp.Titulo+=$scope.idioma.notificaciones[6]+tmp.Involucrado;
 							else if(tmp.Tipo==4)tmp.Titulo+=$scope.idioma.notificaciones[7];
 						}else{
+							if(tmp.Tipo<7){
 							tmp.Titulo=$scope.idioma.notificaciones[2];
 							tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[3];
 							if(tmp.Tipo==6)tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[4];
+							}else if(tmp.Tipo==7){
+							tmp.Titulo=$scope.idioma.notificaciones[8];
+							tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[9];
+							}
 						}
 					}
 					$scope.Notificaciones.push(tmp)
@@ -111,9 +116,14 @@ angular.module('starter')
 							if(tmp.Tipo==3)tmp.Titulo+=$scope.idioma.notificaciones[6]+tmp.Involucrado;
 							else if(tmp.Tipo==4)tmp.Titulo+=$scope.idioma.notificaciones[7];
 						}else{
+							if(tmp.Tipo<7){
 							tmp.Titulo=$scope.idioma.notificaciones[2];
 							tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[3];
 							if(tmp.Tipo==6)tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[4];
+							}else if(tmp.Tipo==7){
+							tmp.Titulo=$scope.idioma.notificaciones[8];
+							tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[9];
+							}
 						}
 					}
 					$scope.Notificaciones.unshift(tmp);

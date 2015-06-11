@@ -57,7 +57,7 @@ angular.module('starter')
 				})
 		.success(function(data,status,header,config){
 			if(data.Id){
-				$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[4],function(){});
+				$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[4],function(){$scope.getPersonas();});
 				$scope.getPersonas();
 			}else{
 				if(data.type==1)$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[5],function(){});

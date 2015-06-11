@@ -159,6 +159,10 @@ public class GCMIntentService extends GCMBaseIntentService {
             			Notificaciones.add(extras);
         				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
                 	break;
+            		case 7://codigo
+            			Notificaciones.add(extras);
+        				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
+                	break;
             	}
             }
                 

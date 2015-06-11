@@ -185,7 +185,10 @@ angular.module('starter')
 					4:" acepto tu solicitud de personas.",
 					5:" a ",
 					6:" de ",
-					7:" de tu auto."
+					7:" de tu auto.",
+					8:"Codigo de promoción",
+					9:" se registró con tu código de promoción.",
+					10:"Buenas noticias, ahora tienes un mes mas de suscripción completa por invitar a tus amigos."
 				},
 				meses:{
 				1:"Enero",

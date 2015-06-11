@@ -13,6 +13,9 @@
 		font-size: 19px !important;
 		font-weight: 100 !important;
 }
+#avisopriv{
+ bottom: 16vh !important;
+}
 .login_input_bg{
     width: 80%;
     margin-left: 10%;
@@ -45,7 +48,7 @@ div{
     height: 7vh;
 }
 .body_registro{
-    bottom:16vh !important;
+   bottom: 22vh !important;
 }
 .popup-title{
     font-size:3.5vh !important;
