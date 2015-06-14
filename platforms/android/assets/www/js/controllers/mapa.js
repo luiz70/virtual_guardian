@@ -41,7 +41,7 @@ angular.module('starter')
 			$rootScope.sinMapa=false;
 			$rootScope.cargando=true;
 			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true,timeout:10000 });
-			$scope.verificaHistorial();
+			
 			
 	}
     $scope.loadMaps=function(){
@@ -117,6 +117,7 @@ angular.module('starter')
 			$rootScope.showEventos();
 			$rootScope.cargando=false;
 			$scope.hideBarra();
+			
 			
 		});
 		

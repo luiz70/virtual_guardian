@@ -10,9 +10,9 @@
   		</ion-item>
     	<ion-item class="item item-avatar notificacion" ng-repeat="persona in Personas track by $index" >
         	
-      		<img ng-src="img/iconos/persona.png" style="  border-radius: 0px;  opacity: 0.6;">
-      		<h2 style="  font-size: 3vh !important;  color: #959595; text-overflow:ellipsis; white-space:nowrap; ">{{persona.Correo}}</h2>
-      		<p style="  color: #7F7F7F;">{{persona.Tipo?idioma.personas[8] : persona.Lugar?idioma.personas[10]:idioma.personas[9]}}</p>
+      		<img ng-src="img/iconos/persona.png" style="  border-radius: 0px;  opacity: 0.9;">
+      		<h2 style="  font-size: 3vh !important;  color: #fff; text-overflow:ellipsis; white-space:nowrap; ">{{persona.Correo}}</h2>
+      		<p style="  color: #ce932f;">{{persona.Tipo?idioma.personas[8] : persona.Lugar?idioma.personas[10]:idioma.personas[9]}}</p>
 	  		<div class="eliminar_persona" style="top:3px;" ng-click="eliminaPersona(persona)" ><img src="img/iconos/cancel.png" width="100%"></div>
             <div class="eliminar_persona" style="bottom:3px;" ng-show="persona.Lugar && !persona.Tipo"  ng-click="aceptaPersona(persona)"><img src="img/iconos/acept.png" width="100%"></div>
   		</ion-item>

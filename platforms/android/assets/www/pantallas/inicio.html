@@ -58,7 +58,7 @@
 	<ion-side-menu side="left" width="tamano" ng-controller="menu">
 		<ion-header-bar id="m1" class="bar-dark" style="height: 10vh !important;" ng-click="abreAjustesCuenta()">
 			<div class="titulo_menu" style="  font-weight: 400;">{{Usuario.Correo}}</div>
-            <div class="titulo_menu" style="position:absolute !important; left:0px; bottom:0px;   font-size: 2.5vh !important;  color: #AFA8A8;">{{"Suscripción "+Usuario.Suscripcion.toLowerCase()}}</div>
+            <div class="titulo_menu" style="position:absolute !important; left:0px; bottom:0px;   font-size: 2.5vh !important;  color:#E9E9E9;">{{"Suscripción "+Usuario.Suscripcion.toLowerCase()}}</div>
 		</ion-header-bar>
         <div style="  position: absolute;top: 10vh;bottom: 0px;width: 100%;">
         <div style="width: 100%;height: 90vh;position: relative;" collapse="!ajustes">
@@ -71,10 +71,10 @@
             
 				<ion-item nav-clear class="item item-icon-left item-icon-right item_menu_inicio" ng-click="opcionMenu('filtros')">
                 	
-                	<i class="icon ion-funnel"></i>
+                	<i class="icon ion-funnel" style="color: #ce932f;"></i>
                 	<div>
-                		<div style="position:relative;float:left;" >{{idioma.menu[1]}}</div>
-                        <div style="position:relative;float:right;font-size: 2vh;font-weight: 100;" class="{{filtros.Estado?'fact':'finact'}}">{{filtros.Estado?idioma.general[17]:idioma.general[18]}}</div>
+                		<div style="position:relative;float:left;color: #fff;opacity: 1;" >{{idioma.menu[1]}}</div>
+                        <div style="position:relative;float:right;font-size: 2.5vh;font-weight: 100;" class="{{filtros.Estado?'fact':'finact'}}">{{filtros.Estado?idioma.general[17]:idioma.general[18]}}</div>
                 		<!--label class="toggle inicio_check toggle-energized" style="padding: 0px;  margin: 0px;  margin-left: 2vw;">
    							<input type="checkbox" onChange="">
    							<div class="track" style="width:8vw;height:4vw;  position: relative;">
@@ -146,8 +146,8 @@
                     </ion-list>
                 </div>
 				<ion-item nav-clear class="item item-icon-left item-icon-right item_menu_inicio" ng-click="opcionMenu('aplicacion')" >
-        			<i class="icon ion-gear-b"></i>
-        			<div>{{idioma.menu[2]}}</div>
+        			<i class="icon ion-gear-b" style="color: #ce932f;"></i>
+        			<div style="color: #fff;opacity: 1;">{{idioma.menu[2]}}</div>
         			<i id="home_flecha_aplicacion" class="icon ion-chevron-down" style="font-size:3vh;" ></i>
 				</ion-item>
                 <div id="home_ajustes_aplicacion" class="home_ajustes_hidepart" style="height:0px" collapse="!menuAplicacion">
@@ -197,8 +197,8 @@
                     </ion-list>
                 </div>
                 <ion-item nav-clear class="item item-icon-left item-icon-right item_menu_inicio" ng-click="opcionMenu('notificaciones')" >
-        			<i class="icon ion-chatbox-working"></i>
-        			<div>{{idioma.menu[3]}}</div>
+        			<i class="icon ion-chatbox-working" style="color: #ce932f;"></i>
+        			<div style="color: #fff;opacity: 1;">{{idioma.menu[3]}}</div>
         			<i id="home_flecha_notificaciones" class="icon ion-chevron-down" style="font-size:3vh;" ></i>
                 </ion-item>
                  <div id="home_ajustes_notificaciones" class="home_ajustes_hidepart" style="height:0px" collapse="!menuNotificaciones">
@@ -295,24 +295,24 @@
                     </ion-list>
                 </div>
                  <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreAjustesCuenta()">
-        			<i class="icon ion-person"></i>
-        			<div>{{idioma.cuenta[12]}}</div>
+        			<i class="icon ion-person" style="color: #ce932f;"></i>
+        			<div style="color: #fff;opacity: 1;">{{idioma.cuenta[12]}}</div>
                 </ion-item>
                 <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreTerminos()">
-        			<i class="icon ion-document-text"></i>
-        			<div>{{idioma.menu[4]}}</div>
+        			<i class="icon ion-document-text" style="color: #ce932f;"></i>
+        			<div style="color: #fff;opacity: 1;">{{idioma.menu[4]}}</div>
                 </ion-item>
                  <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreInfor()">
-        			<i class="icon ion-information-circled"></i>
-        			<div>{{idioma.menu[5]}}</div>
+        			<i class="icon ion-information-circled" style="color: #ce932f;"></i>
+        			<div style="color: #fff;opacity: 1;">{{idioma.menu[5]}}</div>
                 </ion-item>
                  <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreHelp()">
-                     <i class="icon ion-help-circled"></i>
-                     <div>{{idioma.menu[27]}}</div>
+                     <i class="icon ion-help-circled" style="color: #ce932f;"></i>
+                     <div style="color: #fff;opacity: 1;">{{idioma.menu[27]}}</div>
                  </ion-item>
                  <ion-item nav-clear class="item item-icon-left item_menu_inicio" nav-direction="back" ng-click="cerrarSesion()" >
-        			<i class="icon ion-power"></i>
-        			<div>{{idioma.menu[6]}}</div>
+        			<i class="icon ion-power" style="color: #ce932f;"></i>
+        			<div style="color: #fff;opacity: 1;">{{idioma.menu[6]}}</div>
                 </ion-item>
 			</ion-list>
 		</ion-content>
