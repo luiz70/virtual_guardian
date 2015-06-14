@@ -16,13 +16,9 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 - (id) getCommandInstance:(NSString*)className;
-- (void)locationManager: (CLLocationManager *)manager
-    didUpdateToLocation: (CLLocation *)newLocation
-           fromLocation: (CLLocation *)oldLocation;
 
 
 @property (nonatomic, retain) NSDictionary	*launchNotification;
 @property (nonatomic, retain) UILocalNotification* local;
-@property (nonatomic,retain) CLLocationManager *locationManager;
 @property (nonatomic,retain) NSString *DistanciaAuto;
 @end

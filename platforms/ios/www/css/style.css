@@ -95,7 +95,7 @@ top: 0px!important;
 }
 
 .titulo_menu{
-    color: #C9C9C9;
+    color: #F4F4F4;
     margin: 0px !important;
   text-align: left !important;
   margin-left: 2vw !important;
@@ -136,7 +136,8 @@ top: 0px!important;
 	  border: none;
   border-radius: 100%;
   text-align: center;
-  opacity: 0.4;
+  
+	  opacity: 0.8;
   cursor:pointer;        
 	  padding: 0px !important;
 	  margin: 0px !important;
@@ -240,7 +241,7 @@ position: absolute;
     opacity: 0 !important;
 }
 .submenu{
-	font-size: 2vh;  
+	font-size: 2.4vh;  
 	padding-top: 1vh;
 	padding-bottom: 1vh;
 	background: rgba(255, 255, 255, 0.04);
@@ -248,7 +249,8 @@ position: absolute;
 	font-weight: 100;
 }
 .finact{
-	color: #686868;
+	color: #C9C9C9;
+	font-style: italic;
 }
 .fact{
 	color: #ce932f;

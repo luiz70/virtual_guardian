@@ -15,7 +15,11 @@
 
 static char launchNotificationKey;
 
+CLLocationManager *locationManager;
+NSMutableArray *locations;
+
 @implementation AppDelegate (notification)
+
 
 - (id) getCommandInstance:(NSString*)className
 {
@@ -80,6 +84,7 @@ static char launchNotificationKey;
                 ;
                int distAuto=[self revisaAuto:userInfo];
                 int distPersona=[self revisaPersonal:userInfo];
+            
                 if(distPersona>=0){
                 //avisaamigos
                     [self informa:userInfo :@"NotificaAmigos":distPersona];
@@ -127,23 +132,30 @@ static char launchNotificationKey;
 }
 -(BOOL)revisaPersonal:(NSDictionary *)userInfo{
     
-    if ([CLLocationManager locationServicesEnabled]) {
-       CLLocationManager *locationManager = [[CLLocationManager alloc] init];
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+   if ([CLLocationManager locationServicesEnabled]) {
+       locationManager = [[CLLocationManager alloc] init];
+       locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         
         //We want to see all location updates, regardless of distance change
         locationManager.distanceFilter = 200.0;
         locationManager.delegate = self;
+       if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+           [locationManager requestWhenInUseAuthorization];
+       }
         [locationManager startUpdatingLocation];
+        
+        
+        
         CLLocation *currentLocation=locationManager.location;
+        NSLog(@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
         CLLocation *eventLoc=[[CLLocation alloc] initWithLatitude:[[userInfo objectForKey:@"Latitud"] doubleValue] longitude:[[userInfo objectForKey:@"Longitud"] doubleValue]];
         int dist=[self revisaDistancia:currentLocation:eventLoc];
-        if(dist<=[userInfo[@"RangoPersonal"] intValue])
+       NSLog(@"%d",dist);
+        if(dist<=[userInfo[@"RangoPersonal"] intValue] && dist>0)
         return dist;
         else return -1;
         [locationManager stopUpdatingLocation];
 
-        
     } else {
         return -1;
     }
@@ -200,10 +212,10 @@ static char launchNotificationKey;
     if (!theConnection) {
         // Release the receivedData object.
         receivedData = nil;
-        NSLog(@"no");
+        
         
         // Inform the user that the connection failed.
-    }else NSLog(@"si");
+    }
 }
 -(int)revisaDistancia:(CLLocation *) cord1:(CLLocation *)cord2{
     
