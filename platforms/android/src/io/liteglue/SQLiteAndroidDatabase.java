@@ -29,7 +29,6 @@ import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 /**
  * Android Database helper class
  */
@@ -63,8 +62,35 @@ class SQLiteAndroidDatabase
     void open(File dbfile) throws Exception {
         dbFile = dbfile; // for possible bug workaround
         mydb = SQLiteDatabase.openOrCreateDatabase(dbfile, null);
+        //cleanAll();
+        //insertMultiple();
     }
-
+    void insertMultiple(String query) {
+    	String [] s=(query.substring(5)).split(":");
+    	String sql = s[0];
+    	long startTime = System.currentTimeMillis();
+        SQLiteStatement statement = mydb.compileStatement(sql);
+        mydb.beginTransaction();
+        for (int i = 1; i<s.length; i++) {
+                 String[] f=s[i].split(",");
+                 statement.clearBindings();
+                 for (int j=0;j<f.length;j++){
+                	 statement.bindString(j+1,f[j]);
+                 }
+                statement.execute();	 
+        	
+         }
+         mydb.setTransactionSuccessful();	
+         mydb.endTransaction();
+    }
+    void cleanAll() {
+    	String sql = "DELETE FROM EVENTOS";
+        SQLiteStatement statement = mydb.compileStatement(sql);
+        mydb.beginTransaction();
+       statement.execute();
+         mydb.setTransactionSuccessful();	
+         mydb.endTransaction();
+    }
     /**
      * Close a database (in the current thread).
      */
@@ -92,7 +118,7 @@ class SQLiteAndroidDatabase
     @SuppressLint("NewApi")
     void executeSqlBatch(String[] queryarr, JSONArray[] jsonparams,
                                  String[] queryIDs, CallbackContext cbc) {
-
+    	
         if (mydb == null) {
             // not allowed - can only happen if someone has closed (and possibly deleted) a database and then re-used the database
             cbc.error("database has been closed");
@@ -108,7 +134,7 @@ class SQLiteAndroidDatabase
             int rowsAffectedCompat = 0;
             boolean needRowsAffectedCompat = false;
             query_id = queryIDs[i];
-
+            QueryType queryType=getQueryType("INSERT");
             JSONObject queryResult = null;
             String errorMessage = "unknown";
 
@@ -117,8 +143,7 @@ class SQLiteAndroidDatabase
 
                 query = queryarr[i];
 
-                QueryType queryType = getQueryType(query);
-
+                queryType = getQueryType(query);
                 if (queryType == QueryType.update || queryType == queryType.delete) {
                     if (android.os.Build.VERSION.SDK_INT >= 11) {
                         SQLiteStatement myStatement = mydb.compileStatement(query);
@@ -154,7 +179,29 @@ class SQLiteAndroidDatabase
                         needRowsAffectedCompat = true;
                     }
                 }
+                //MULTIINSERT:
+                if (queryType == QueryType.multiinsert && jsonparams != null) {
+                	needRawQuery = false;
 
+                    //SQLiteStatement myStatement = mydb.compileStatement(query);
+
+                    //bindArgsToStatement(myStatement, jsonparams[i]);
+
+                    long insertId = -1; // (invalid)
+
+                   
+                        insertId = 300;//myStatement.executeInsert();
+                        insertMultiple(query);
+                        // statement has finished with no constraint violation:
+                        queryResult = new JSONObject();
+                        if (insertId != -1) {
+                            queryResult.put("insertId", insertId);
+                            queryResult.put("rowsAffected", 1);
+                        } else {
+                            queryResult.put("rowsAffected", 0);
+                        }
+                   
+                }
                 // INSERT:
                 if (queryType == QueryType.insert && jsonparams != null) {
                     needRawQuery = false;
@@ -186,6 +233,7 @@ class SQLiteAndroidDatabase
                 }
 
                 if (queryType == QueryType.begin) {
+                	
                     needRawQuery = false;
                     try {
                         mydb.beginTransaction();
@@ -243,7 +291,14 @@ class SQLiteAndroidDatabase
             }
 
             try {
-                if (queryResult != null) {
+            	/*if(queryType==QueryType.multiinsert){
+            		JSONObject r = new JSONObject();
+                    r.put("qid", query_id);
+
+                    r.put("type", "success");
+                    r.put("result", queryResult);
+            	}else*/ if (queryResult != null) {
+                	
                     JSONObject r = new JSONObject();
                     r.put("qid", query_id);
 
@@ -252,6 +307,7 @@ class SQLiteAndroidDatabase
 
                     batchResults.put(r);
                 } else {
+                	
                     JSONObject r = new JSONObject();
                     r.put("qid", query_id);
                     r.put("type", "error");
@@ -504,6 +560,8 @@ class SQLiteAndroidDatabase
         begin,
         commit,
         rollback,
+        multiinsert,
         other
+        
     }
 } /* vim: set expandtab : */

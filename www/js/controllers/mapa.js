@@ -40,7 +40,7 @@ angular.module('starter')
             document.body.appendChild(e);
 			$rootScope.sinMapa=false;
 			$rootScope.cargando=true;
-			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true,timeout:5000 });
+			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true,timeout:10000 });
 			$scope.verificaHistorial();
 			
 	}
@@ -55,11 +55,11 @@ angular.module('starter')
     }
             $scope.initialize=function(){alert(1);}
 	$scope.revisaPos=function(){
-		navigator.geolocation.getCurrentPosition($scope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:5000 });	
+		navigator.geolocation.getCurrentPosition($scope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });	
 	}
 	$scope.revisaPosCarro=function(){
 		if(!window.localStorage.getArray("Auto"))
-		navigator.geolocation.getCurrentPosition($scope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:5000 });
+		navigator.geolocation.getCurrentPosition($scope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });
 	}
 	$scope.onSPos=function(position){
 		$scope.ubicacionMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));

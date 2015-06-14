@@ -571,7 +571,8 @@ $scope.cambia_rango_auto=function(value){
 }).controller("db",function($scope,$rootScope,$http,$cordovaSQLite,$cordovaNetwork){
 	
 	$rootScope.inicializaBaseLocal=function(){
-              $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
+              if($rootScope.iOS)$rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
+              else $rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", androidDatabaseImplementation: 2,androidLockWorkaround: 1});
               $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS EVENTOS (IdEvento integer primary key, IdAsunto integer, Latitud real,Longitud real, Asunto text, Direccion text, IdEstado integer,Subtitulo text,Fecha integer,Municipio text, Colonia text, Calles text,FechaScreen text,Hora text)",function(res){
                                   
                 });
@@ -650,12 +651,19 @@ $scope.cambia_rango_auto=function(value){
             funcion(err);
         });
 		}
-              
 	$scope.verificaHistorial=function(){
+		console.log("ENTRA HISTORIAL");
+		/*$rootScope.sqlQuery("DELETE FROM EVENTOS WHERE IdEvento>=0",function(res){
+			console.log(JSON.stringify(res));
+			});
+		$rootScope.sqlQuery("MULTIINSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto) VALUES(?,?):3,2:4,2:5,2:6,2:7,2:8,2",function(res){
+			console.log(JSON.stringify(res));
+			})*/    
+
 		if( window.sqlitePlugin)
-            if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
-             if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
-              if(!window.localStorage.getItem("AHistorial")){
+            //if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
+             //if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
+              //if(!window.localStorage.getItem("AHistorial")){
                     if($cordovaNetwork.getNetwork().toLowerCase().indexOf("wifi")>=0){
                                 $rootScope.UpdateHistorial=(new Date()).getTime();
                                 window.localStorage.setItem("UpdateHistorial",$rootScope.UpdateHistorial);
@@ -664,8 +672,8 @@ $scope.cambia_rango_auto=function(value){
                             $scope.getHistorial();
                         })
                 }
-            }
-              
+            //}
+             
 	}
 	
 	
@@ -681,21 +689,39 @@ $scope.cambia_rango_auto=function(value){
 				IdEvento:0
 				})
 		.success(function(data,status,header,config){
+				var f=0;
                  var d=[];
-			for(var i=0;i<data.length;i++){
-                 var arr = "("+($.map(JSON.parse(data[i]), function(el) { return el; })).join(",")+")"
-                 d.push(arr);
-                 
-                    }
-                 $cordovaSQLite.execute($rootScope.database, "INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES"+d.join(","), [])
+				 console.log("TAMAÑO: "+data.length)
+			for(var i=0,j=-1;i<data.length;i++){
+				var arr="";
+					if($rootScope.iOS) arr = "("+($.map(JSON.parse(data[i]), function(el) { return el; })).join(",")+")";
+					else arr = ($.map(JSON.parse(data[i]), function(el) { return el; })).join(",");
+                 	d.push(arr);
+			}
+					
+					var sql=""
+					if($rootScope.iOS)sql="INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES"+d.join(",");
+					else sql="INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES(?,?,?,?,?,?):"+d.join(":")
+					
+					 $cordovaSQLite.execute($rootScope.database, sql, [])
                  .then(function(res){
                        $rootScope.hideCargando();
                        window.localStorage.setItem("AHistorial",1);
                     },function(){
                        $rootScope.hideCargando();
-                       window.localStorage.setItem("AHistorial",1);
                        })
-                 
+				 /*}else{
+					 console.log("SUBTAMAÑO: "+d.length);
+					 for(var i=0;i<d.length;i++)
+					 var s=$cordovaSQLite.execute($rootScope.database, "INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES"+d[i].join(","), [])
+					 if(i==d.length-1)
+                 s.then(function(res){
+                       console.log(JSON.stringify(res));
+					   $rootScope.hideCargando();
+                       window.localStorage.setItem("AHistorial",1);
+                    },function(){
+                       })
+				 }*/
                  
 			})
 		.error(function(error,status,header,config){

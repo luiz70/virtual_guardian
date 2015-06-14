@@ -73,11 +73,10 @@ angular.module('starter')
 		//$ionicHistory.clearCache();
 	}
 	$scope.recupera=function(){
-		$location.path('/recuperar');
+            $location.path('/recuperar');
 	}
 	
 })
-	
 	
 	/*$scope.iniciaSesion=function(){
 		var tx="";
