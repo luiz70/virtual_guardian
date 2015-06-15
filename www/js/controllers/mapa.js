@@ -683,6 +683,8 @@ alert(1);
 			})
         });
 	}
+	$rootScope.notificacionTip=false;
+	
 	$scope.notificacionClick=function(evento){
 		switch(evento.Tipo){
 			case "1":
@@ -706,7 +708,15 @@ alert(1);
 			case "7":
 			$rootScope.alert($scope.idioma.notificaciones[8],$scope.idioma.notificaciones[10],function(){});
 			break;
+			case "8":
+			console.log(evento);
+			$rootScope.tipImg="http://45.40.137.37/documentos/notificaciones/"+evento.IdNotificacion+".png";
+			$rootScope.notificacionTip=true;
+			break;
 		}
+	}
+	$scope.notificacionEnd=function(){
+	$rootScope.notificacionTip=false;
 	}
 	$scope.buscaEnMapa=function(evento){
 		if($scope.Conexion(1)){

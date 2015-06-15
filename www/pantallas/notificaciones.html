@@ -8,7 +8,7 @@
         <ion-item class="item ng-hide" style="background: none;padding: 10px;height: 50px;text-align: center;" ng-show="cargandoN" >
       	<ion-spinner icon="android" class="spinner-dark"></ion-spinner>	  		
   		</ion-item>
-    	<ion-item class="item item-avatar notificacion" ng-repeat="notificacion in Notificaciones track by $index" ng-click="notificacionClick(notificacion)" style="padding-bottom: 2vh !important;" item-width=100% ng-hide="notificacion.Asunto==0 && notificacion.Tipo<5">
+    	<ion-item class="item item-avatar notificacion" ng-repeat="notificacion in Notificaciones track by $index" on-touch="notificacionClick(notificacion)" style="padding-bottom: 2vh !important;" item-width=100% ng-hide="notificacion.Asunto==0 && notificacion.Tipo<5" on-release="notificacionEnd()">
       		<img ng-src="img/icons/{{notificacion.Imagen}}.png">
       		<h2 style="  font-size: 3vh !important;  color: #fff;  text-overflow: ellipsis;white-space: nowrap;">{{notificacion.Titulo}}</h2>
       		<p style="  color: #BEBEBE;  text-transform: capitalize;" class="{{'notificacion'+notificacion.Tipo}}">{{notificacion.Subtitulo}}</p>

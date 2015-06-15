@@ -8,14 +8,7 @@
     	<div style="text-align: center;font-size: 3vh;width: 100%;color: #727272; line-height:3vh">
         	{{idioma.registro[23]}}
         </div>
-        <input class="input_registro input35vh" placeholder="{{idioma.registro[3]}}" ng-model="emailrec" type="email" maxlength="40" style="margin-top: 5vh;" ng-keydown="enterkey($event)" ng-blur="closekey()" ng-focus="showCover()">
-        
-        
-        <!--input class="input_registro" placeholder="{{idioma.registro[4]}}" ng-model="nuser.pass" tabindex="2" type="password">
-        <input class="input_registro" placeholder="{{idioma.registro[5]}}" ng-model="nuser.passc" tabindex="3" type="password">
-        <div style="text-align: center;font-size: 3vh;width: 90vw;color: #727272;bottom:5px;position:absolute" ng-click="aviso()">
-        {{idioma.registro[6]}}
-        </div-->
+        <input id="emrec" class="input_registro input35vh" placeholder="{{idioma.registro[3]}}" ng-model="emailr" type="email" maxlength="40" style="margin-top: 5vh;" ng-keydown="enterkey($event)" ng-blur="closekey()" ng-focus="showCover()">
     </div>
     <div id="login_pie">
     <button id="login_crear" class="login_pie" ng-click="continuarRec()">{{idioma.registro[24]}}</button>

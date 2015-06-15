@@ -653,6 +653,7 @@ $scope.cambia_rango_auto=function(value){
 		}
 		//window.localStorage.removeItem("AHistorial")
 	$scope.verificaHistorial=function(){
+		//problema en updatehistorial
 		if( window.sqlitePlugin)
             if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
              if(parseInt($rootScope.Usuario.IdSuscripcion)>1)

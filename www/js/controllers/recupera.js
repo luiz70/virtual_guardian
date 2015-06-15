@@ -6,6 +6,7 @@ angular.module('starter')
 		$location.path('/login');
 	}
 	$scope.continuarRec=function(){
+		$scope.emailrec=$("#emrec").val();
 		if($scope.emailrec=="")$rootScope.alert($scope.idioma.registro[26],$scope.idioma.registro[25],function(){});
 		else if(!$scope.evalid($scope.emailrec)) $rootScope.alert($scope.idioma.registro[26],$scope.idioma.registro[10],function(){});
 		else{
