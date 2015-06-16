@@ -714,17 +714,21 @@ alert(1);
             $scope.ontouch=false;
 	$scope.notificacionTouch=function(evento){
             if(parseInt(evento.Tipo)==8){
-            $scope.ontouch=true;
-            $timeout(function(){
-                     if($scope.ontouch){
+            
 			$rootScope.tipImg="http://45.40.137.37/documentos/notificaciones/"+evento.IdNotificacion+".png";
 			$rootScope.notificacionTip=true;
-                     }
-                     },1000);
             }
 	}
-            $scope.test=function(){
-            console.log("drag");
+            $scope.startTouch=function(evento){
+            if(parseInt(evento.Tipo)==8){
+				$scope.ontouch=true;
+			$("#barraNot"+evento.IdNotificacion).css("width","0px");
+			$("#barraNot"+evento.IdNotificacion).animate({
+				width:"100%"
+				},500,function(){
+				
+				})
+			}
             }
 	$scope.notificacionEnd=function(){
             $scope.ontouch=false;
