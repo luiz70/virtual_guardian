@@ -417,7 +417,7 @@ angular.module('starter')
 				//ENVIA A PAGINA A VER PAQUETES
 				$rootScope.abrePaquetes();
 				},$scope.idioma.general[13],$scope.idioma.general[14]);
-			}
+			}else $scope.verificaHistorial();
 			}
 			
 			
@@ -568,7 +568,7 @@ $scope.cambia_rango_auto=function(value){
             alert(1);
             }
 	
-}).controller("db",function($scope,$rootScope,$http,$cordovaSQLite,$cordovaNetwork){
+}).controller("db",function($scope,$rootScope,$http,$cordovaSQLite,$cordovaNetwork,$timeout){
 	
 	$rootScope.inicializaBaseLocal=function(){
               if($rootScope.iOS)$rootScope.database = window.sqlitePlugin.openDatabase({name: "Virtual.db", location:1});
@@ -651,19 +651,13 @@ $scope.cambia_rango_auto=function(value){
             funcion(err);
         });
 		}
+		//window.localStorage.removeItem("AHistorial")
 	$scope.verificaHistorial=function(){
-		console.log("ENTRA HISTORIAL");
-		/*$rootScope.sqlQuery("DELETE FROM EVENTOS WHERE IdEvento>=0",function(res){
-			console.log(JSON.stringify(res));
-			});
-		$rootScope.sqlQuery("MULTIINSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto) VALUES(?,?):3,2:4,2:5,2:6,2:7,2:8,2",function(res){
-			console.log(JSON.stringify(res));
-			})*/    
-
+		//problema en updatehistorial
 		if( window.sqlitePlugin)
-            //if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
-             //if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
-              //if(!window.localStorage.getItem("AHistorial")){
+            if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
+             if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
+              if(!window.localStorage.getItem("AHistorial")){
                     if($cordovaNetwork.getNetwork().toLowerCase().indexOf("wifi")>=0){
                                 $rootScope.UpdateHistorial=(new Date()).getTime();
                                 window.localStorage.setItem("UpdateHistorial",$rootScope.UpdateHistorial);
@@ -672,7 +666,7 @@ $scope.cambia_rango_auto=function(value){
                             $scope.getHistorial();
                         })
                 }
-            //}
+            }
              
 	}
 	
@@ -701,7 +695,7 @@ $scope.cambia_rango_auto=function(value){
 					
 					var sql=""
 					if($rootScope.iOS)sql="INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES"+d.join(",");
-					else sql="INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES(?,?,?,?,?,?):"+d.join(":")
+					else sql="MULTIINSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES(?,?,?,?,?,?):"+d.join(":")
 					
 					 $cordovaSQLite.execute($rootScope.database, sql, [])
                  .then(function(res){

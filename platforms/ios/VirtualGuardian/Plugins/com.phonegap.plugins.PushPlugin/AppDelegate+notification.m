@@ -50,6 +50,7 @@ NSMutableArray *locations;
 
 // This code will be called immediately after application:didFinishLaunchingWithOptions:. We need
 // to process notifications in cold-start situations
+
 - (void)createNotificationChecker:(NSNotification *)notification
 {
 	if (notification)
@@ -60,6 +61,7 @@ NSMutableArray *locations;
 	}
 }
 
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
     [pushHandler didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
@@ -69,8 +71,10 @@ NSMutableArray *locations;
     PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
     [pushHandler didFailToRegisterForRemoteNotificationsWithError:error];
 }
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     //revisa registro
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"regId"]){
         
@@ -130,6 +134,8 @@ NSMutableArray *locations;
     completionHandler(UIBackgroundFetchResultNoData);
     return;
 }
+
+
 -(BOOL)revisaPersonal:(NSDictionary *)userInfo{
     
    if ([CLLocationManager locationServicesEnabled]) {
@@ -139,6 +145,7 @@ NSMutableArray *locations;
         //We want to see all location updates, regardless of distance change
         locationManager.distanceFilter = 200.0;
         locationManager.delegate = self;
+       //funciona
        if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
            [locationManager requestWhenInUseAuthorization];
        }
@@ -147,10 +154,10 @@ NSMutableArray *locations;
         
         
         CLLocation *currentLocation=locationManager.location;
-        NSLog(@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
+        //NSLog(@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
         CLLocation *eventLoc=[[CLLocation alloc] initWithLatitude:[[userInfo objectForKey:@"Latitud"] doubleValue] longitude:[[userInfo objectForKey:@"Longitud"] doubleValue]];
         int dist=[self revisaDistancia:currentLocation:eventLoc];
-       NSLog(@"%d",dist);
+       //NSLog(@"%d",dist);
         if(dist<=[userInfo[@"RangoPersonal"] intValue] && dist>0)
         return dist;
         else return -1;
@@ -187,7 +194,7 @@ NSMutableArray *locations;
     // form fields are separated by an ampersand. Note the absence of a
     // leading ampersand.
     
-    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.virtual-guardian.com/portal/php/notificacionAndroid.php"]];
+    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://45.40.137.37/portal/php/notificacionAndroid.php"]];
     
     // Set the request's content type to application/x-www-form-urlencoded
     [postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -277,6 +284,7 @@ NSMutableArray *locations;
     NSString *currentLatitude = [[NSString alloc] initWithFormat:@"%g", newLocation.coordinate.latitude];
     NSLog(@"AppDelegate says: latitude: %@", currentLatitude);
 }
+
 /*- (void)locationManager: (CLLocationManager *)manager
     didUpdateToLocation: (CLLocation *)newLocation
            fromLocation: (CLLocation *)oldLocation
