@@ -514,7 +514,7 @@ $scope.cambia_rango_auto=function(value){
 	}
 	$scope.abreDate=function(val){
 
-		if($rootScope.iOS && !$rootScope.ipad){
+		if($rootScope.iOS && !$rootScope.ipad && $rootScope.Usuario.IdSuscripcion>1){
 			if(val==1){
 			var options = {
 			  date: $rootScope.filtros.Inicial,
@@ -542,9 +542,22 @@ $scope.cambia_rango_auto=function(value){
 			});
 			}
 		}
-            
+            if($rootScope.Usuario.IdSuscripcion==1){
+            $scope.confirm($rootScope.idioma.general[23],$rootScope.idioma.general[34],function(){
+                           //ENVIA A PAGINA A VER PAQUETES
+                           $rootScope.abrePaquetes();
+                           },$scope.idioma.general[13],$scope.idioma.general[14]);
+            }
 		
 	}
+            $scope.cambioFech=function(){
+            if(!$rootScope.filtros.Final)$rootScope.filtros.Final=new Date();
+            if(!$rootScope.filtros.Inicial){
+            var d=new Date();
+            d.setDate(d.getDate()-$rootScope.Usuario.Periodo);
+            $rootScope.filtros.Inicial=d;
+            }
+            }
 	$scope.abreTerminos=function(){
 		
 		$scope.openTerminos("pantallas/terminos.html");

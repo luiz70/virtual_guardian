@@ -36,7 +36,9 @@ angular.module('starter')
                     30:"Para resolver todas tus dudas sobre el uso de la aplicación hemos creado un recorrido por todas las funciones que virtual guardian te ofrece",
                     31:"¿Deseas verlo?",
                     32:"¿Quieres ver el recorrido de las funciones de la aplicación?",
-					33:"Guardando..."
+					33:"Guardando...",
+34:"La suscripción gratuita no permite modificar estas propiedades, adquiere una suscripcion completa en este momento y aprovecha al máximo Virtual Guardian.",
+35:"La suscripción gratuita no permite utilizar esta herramienta, adquiere una suscripcion completa en este momento y aprovecha al máximo Virtual Guardian."
 					
 				},
 				mapa:{

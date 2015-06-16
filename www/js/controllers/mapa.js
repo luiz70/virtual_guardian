@@ -471,10 +471,16 @@ alert(1);
 		$rootScope.showEventos();
 	}
 	$scope.vigilar=function(){
-			
 	if(!$scope.vigilando){
+        if($rootScope.Usuario.IdSuscripcion>1){
 		$scope.showCargando($scope.idioma.auto[3]);
 		$scope.getEventosAuto($scope.carroMarker);
+            }else{
+            $scope.confirm($rootScope.idioma.general[23],$rootScope.idioma.general[35],function(){
+                           //ENVIA A PAGINA A VER PAQUETES
+                           $rootScope.abrePaquetes();
+                           },$scope.idioma.general[13],$scope.idioma.general[14]);
+            }
 		}else{
 			
 			window.localStorage.removeItem("Auto");
@@ -729,6 +735,9 @@ alert(1);
 				
 				})
 			}
+            }
+            $scope.dragEnd=function(){
+            if(!$rootScope.notificacionTip)$scope.ontouch=false;
             }
 	$scope.notificacionEnd=function(){
             $scope.ontouch=false;
