@@ -708,12 +708,15 @@ alert(1);
 			case "7":
 			$rootScope.alert($scope.idioma.notificaciones[8],$scope.idioma.notificaciones[10],function(){});
 			break;
-			case "8":
+			
+		}
+	}
+	$scope.notificacionTouch=function(evento){
+		
 			console.log(evento);
 			$rootScope.tipImg="http://45.40.137.37/documentos/notificaciones/"+evento.IdNotificacion+".png";
 			$rootScope.notificacionTip=true;
-			break;
-		}
+			
 	}
 	$scope.notificacionEnd=function(){
 	$rootScope.notificacionTip=false;
