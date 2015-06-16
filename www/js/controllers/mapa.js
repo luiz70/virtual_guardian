@@ -711,14 +711,23 @@ alert(1);
 			
 		}
 	}
+            $scope.ontouch=false;
 	$scope.notificacionTouch=function(evento){
-		
-			console.log(evento);
+            if(parseInt(evento.Tipo)==8){
+            $scope.ontouch=true;
+            $timeout(function(){
+                     if($scope.ontouch){
 			$rootScope.tipImg="http://45.40.137.37/documentos/notificaciones/"+evento.IdNotificacion+".png";
 			$rootScope.notificacionTip=true;
-			
+                     }
+                     },1000);
+            }
 	}
+            $scope.test=function(){
+            console.log("drag");
+            }
 	$scope.notificacionEnd=function(){
+            $scope.ontouch=false;
 	$rootScope.notificacionTip=false;
 	}
 	$scope.buscaEnMapa=function(evento){
