@@ -148,7 +148,8 @@ position: absolute;
   bottom: 0px;
   left: 0px;
   right: 0px;
-  background: rgba(0, 0, 0, 0.6);
+  
+background: rgba(0, 0, 0, 0.8);
 }
 .btn_mapa_flotante{
 	  position: absolute;
@@ -234,7 +235,7 @@ position: absolute;
     text-align: center;
 	padding-top:50%;
 }
-.notificacion5, .notificacion6, .notificacion7{
+.notificacion5, .notificacion6, .notificacion7,.notificacion8{
     text-transform: initial !important;
 }
 .gmnoprint, .gm-style-cc{
@@ -334,6 +335,26 @@ div{
 }
 .recorridoFront{
 	z-index:100005;
+}
+.tapa{
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	z-index:2000;
+	
+}
+.animate-hide {
+  -webkit-transition: all ease 0.5s;
+  transition: all ease 0.5s;
+  opacity: 1;
+}
+
+.animate-hide.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0px 0px;
 }
 /*.popupActivo > .popup > .popup-buttons {
 position: absolute !important;

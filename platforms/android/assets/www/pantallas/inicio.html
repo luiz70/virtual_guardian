@@ -1,12 +1,14 @@
 <ion-pan nav-view-direction="enter" style="background:url(img/background.jpg); background-position:center; background-size:cover;overflow:hidden"  ng-controller="registro" ng-cloak >
 <ion-side-menus enable-menu-with-back-views="true" ng-controller="inicio" style="overflow:hidden">
 	<ion-side-menu-content edge-drag-threshold="false" drag-content="false" style="background:url(img/background.jpg); background-position:center; background-size:cover; height:100vh ;" >
-    <div class="ng-hide" style="position:absolute;top:0px;bottom:0px;left:0px;right:0px;background:rgba(0, 0, 0, 0.88);color:#fff;z-index:100000" ng-show="stepRecorrido==1">
-    <img src="img/Screenshot_2015-06-08-10-41-37.png" style="  width: 70vw;">
+   
+    <div class="ng-hide" style="position:absolute;top:0px;bottom:0px;left:0px;right:0px;background:rgba(0, 0, 0, 0.95);color:#fff;z-index:100000" ng-show="notificacionTip">
+    <img id="imgTip" ng-src={{tipImg}} style="  width: 80vw; position:absolute;top:0px;bottom:0px;left:0px;right:0px;margin:auto;">
     </div>
     	<ion-header-bar align-title="left" class="bar-dark" >
 			<div class="buttons" style="  width: 10vw;  max-width: 6vh;">
-				<button class="button button-icon icon ion-navicon especial" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" menu-toggle="left" ng-click="toggleLeftSideMenu()"></button>
+				<button class="button button-icon icon ion-navicon especial" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" menu-toggle="left" ng-click="toggleLeftSideMenu()" ng-hide="recorrido"></button>
+                <button class="button button-icon icon ion-navicon especial ng-hide" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" ng-show="recorrido"></button>
 			</div>
             <h1 class="title logo_barra"><img src="img/logo_blanco.png" height="100%" style="position:absolute;top:0px;bottom:0px"></h1>
 			<div class="buttons tabs-contenedor" >
@@ -28,6 +30,7 @@
                 </ion-tabs>
 			</div>
 		</ion-header-bar>
+        <button  class="ng-hide" style="position: absolute;top: 0vh;height: 8vh;padding: 1vh;left: 0vh;right: 0vh;font-size: 3vh;color: #fff;text-align: center; background-color: rgba(63, 62, 62, 0.97);z-index: 99; border:none;width:100vw" ng-show="recorrido" ng-click="closeRecorrido()">{{idioma.recorrido[60]}}</button>
         <ion-pan ng-controller="mapa">
         
 		<ion-nav-view name="inicioContent" style="top:0vh;bottom:0px;position:absolute;height:auto;" >
@@ -53,7 +56,7 @@
         
       </ion-pan>
       <div class="perfil_cover" class="animate-hide" style="top: 8vh;" ng-hide="!cargando"><ion-spinner icon="android" class="spinner-dark"></ion-spinner></div>
-        <div id="capa_menu" menu-close ng-click="toggleLeftSideMenu()" ></div>
+        <div id="capa_menu" on-touch="toggleLeftSideMenu()" ></div>
 	</ion-side-menu-content >
 	<ion-side-menu side="left" width="tamano" ng-controller="menu">
 		<ion-header-bar id="m1" class="bar-dark" style="height: 10vh !important;" ng-click="abreAjustesCuenta()">
@@ -104,7 +107,7 @@
      						{{filtros.Inicial.getDate()+"/"+idioma.meses[(filtros.Inicial.getMonth()+1)].substring(0,3)+"/"+filtros.Inicial.getFullYear()}}
                                 </span>
                         	</div>
-                            <input class="fechaMenu" type="date" ng-model="filtros.Inicial" ng-show="!iOS || ipad">
+                            <input class="fechaMenu" type="date" ng-model="filtros.Inicial" ng-show="(!iOS || ipad) && Usuario.IdSuscripcion>1" ng-change="cambioFech()" >
                         </ion-item>
                         
                         <ion-item class="item input_home" ng-click="abreDate(2)">
@@ -115,7 +118,7 @@
                           	{{filtros.Final.getDate()+"/"+idioma.meses[(filtros.Final.getMonth()+1)].substring(0,3)+"/"+filtros.Final.getFullYear()}}
                                 </span>
                         	</div>
-                            <input class="fechaMenu" type="date" ng-model="filtros.Final" ng-show="!iOS || ipad">
+                            <input class="fechaMenu" type="date" ng-model="filtros.Final" ng-show="(!iOS || ipad) && Usuario.IdSuscripcion>1" ng-change="cambioFech()">
                         </ion-item>
                         <!--ion-item class="item item-divider">
                             Estados
@@ -306,7 +309,7 @@
         			<i class="icon ion-information-circled" style="color: #ce932f;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[5]}}</div>
                 </ion-item>
-                 <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreHelp()">
+                 <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreHelp()" nav-direction="Enter">
                      <i class="icon ion-help-circled" style="color: #ce932f;"></i>
                      <div style="color: #fff;opacity: 1;">{{idioma.menu[27]}}</div>
                  </ion-item>

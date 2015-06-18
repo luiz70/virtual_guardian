@@ -1,6 +1,7 @@
 angular.module('starter')
-.controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover){
+.controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory){
 	$scope.onTab=function (id){
+		if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){
 		$rootScope.cargando=false;
 		$("#img_btn_1").attr("src","img/iconos/map.png");
 		$("#img_btn_2").attr("src","img/iconos/tasks.png");
@@ -8,9 +9,26 @@ angular.module('starter')
 		$("#img_btn_4").attr("src","img/iconos/car.png");
 		$("#img_btn_"+id).attr("src",$("#img_btn_"+id).attr("src").substr(0,$("#img_btn_"+id).attr("src").length-4)+"2.png");
 		$scope.slideTo(id)
+		}
+	}
+	$ionicHistory.nextViewOptions({
+     disableBack: true
+ });
+ $rootScope.tituloRecorrido=""
+	$rootScope.startRecorrido=function(val){
+		//bienvenida
+		
+			 $scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridoStart.html", {
+    		scope: $scope
+			}).then(function(popover) {
+				 $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
+    			$scope.popoverRec = popover;
+				$scope.popoverRec.show();
+				$(".popover-arrow").hide();
+  			});
 		
 	}
-	
+	if($rootScope.Usuario.Nuevo==1 && !window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.startRecorrido(1)},1000);
 	$scope.des=function(){
 		console.log($rootScope.filtros.Estados);
 	}
@@ -38,29 +56,154 @@ angular.module('starter')
 	if(window.localStorage.getArray("TipoEventos"))$scope.TipoEventos=window.localStorage.getArray("TipoEventos");
 	else $scope.TipoEventos=[];
 	
+	$rootScope.iniciaRecorrido=function(){
+		$scope.popoverRec.hide();
+		$scope.popoverRec=null;
+	window.localStorage.setItem("enRecorrido",1);
+	$location.path("/home");
+			$timeout(function(){
+					$location.path('/inicio');
+					
+				},1000);
+	}
 	//$rootScope.stepRecorrido=1
 	$rootScope.closeRecorrido=function(){
-		$rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
 			switch($rootScope.stepRecorrido){
 			case 0: $scope.popoverRec.hide();
+			$rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
+			});
 			break;
-			case 1:
+			default:
+			window.localStorage.removeItem("enRecorrido")
+			$scope.popoverRec.hide();;
+			$scope.popoverRec=null;
+			$location.path("/home");
+			$timeout(function(){
+					$location.path('/inicio');
+				},1000);
+				$rootScope.Usuario.Nuevo=0;
 			break;
 		}
 			
-			})
+			
 	
 	}
+	$rootScope.recorrido=false;
 	$rootScope.nextRecorrido=function(){
 		switch($rootScope.stepRecorrido){
-			case 0:$rootScope.stepRecorrido=1;
+			case 0:
+			//
+			$rootScope.stepRecorrido=1;
+				$rootScope.recorrido=true;
+			$scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridopop.html", {
+    		scope: $scope
+			}).then(function(popover) {
+				 $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
+    			$scope.popoverRec = popover;
+				$scope.popoverRec.show();
+				$(".popover-arrow").hide();
+			$("#popRecorrido").height('80vh')
+				
+				
+			  			});
+						$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[6];
+			//
+			
+
+  			
+			
+			//,{"IdEvento":"2","IdAsunto":"1","Latitud":"20.667641","Longitud":"-103.368622","Fecha":"2015-06-15","IdEstado":"14"}];
+			
+			break;
+			case 1: 
+			$rootScope.Eventos=[{"IdEvento":"1","IdAsunto":"1","Latitud":$rootScope.miubicacion.lat()+0.005,"Longitud":$rootScope.miubicacion.lng()+0.009}];
+			$rootScope.inicializaMapaRecorrido();
+			$("#recorrido1").removeClass("animate-hide");
+			$rootScope.inicializaMapaRecorrido();
 			$scope.popoverRec.hide();
-			$("#tab1").addClass("recorridoFront");
+			$rootScope.msj_map=true;
+			$("#msj_map").html($rootScope.idioma.recorrido[11]);
+			$("#recorrido1").addClass("ng-hide");
+			$rootScope.stepRecorrido=2;
 			break;
-			case 1:
+			case 2:
+			$scope.popoverRec.show();
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[8];
+			$rootScope.inicializaMapaRecorrido();
+			$rootScope.stepRecorrido=3;
 			break;
+			case 3:
+			$("#recorrido1").removeClass("animate-hide");
+			$rootScope.inicializaMapaRecorrido();
+			$scope.popoverRec.hide();
+			$rootScope.msj_map=true;
+			$("#msj_map").html($rootScope.idioma.recorrido[12]);
+			$("#recorrido2").addClass("ng-hide");
+			$("#tapa_pie").height("30px");
+			$rootScope.stepRecorrido=4;
+			break;
+			case 4:
+			$("#msj_map").html($rootScope.idioma.recorrido[13]);
+			$rootScope.stepRecorrido=5;
+			$("#tapa_pie").height("40px");
+			$("#tapa_pie").css("top","30px");
+			break;
+			case 5:
+			$("#tapa_pie").height("70px");
+			$("#tapa_pie").css("top","0px");
+			$scope.popoverRec.show();
+			$rootScope.msj_map=false;
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[15];
+			$rootScope.inicializaMapaRecorrido();
+			$rootScope.stepRecorrido=6;
+			break;
+			case 6:
+			$rootScope.onSPos({'coords':{'latitude':$rootScope.miubicacion.lat()-0.005,'longitude':$rootScope.miubicacion.lng()-0.009}});
+			$("#recorrido3").removeClass("animate-hide");
+			$rootScope.inicializaMapaRecorrido();
+			$scope.popoverRec.hide();
+			$rootScope.msj_map=true;
+			$("#msj_map").html($rootScope.idioma.recorrido[20]);
+			$("#recorrido3").addClass("ng-hide");
+			$("#msj_map").css( "bottom"," 8vh")
+  			$("#msj_map").css( "top"," auto");
+			$rootScope.stepRecorrido=7;
+			
+			break;
+			case 7:
+			$rootScope.stepRecorrido=8;
+			$("#msj_map").html($rootScope.idioma.recorrido[21]);
+			break;
+			case 8:$rootScope.stepRecorrido=9;
+			$scope.onTab(2);
+			$scope.popoverRec.show();
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[22];
+			break;
+			case 9:
+			$("#recorrido9").removeClass("animate-hide");
+			$rootScope.stepRecorrido=10;
+			$scope.onTab(3);
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[31];
+			break;
+			case 10:
+			$("#recorrido10").removeClass("animate-hide");
+			$rootScope.stepRecorrido=11;
+			$scope.onTab(4);
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[35];
+			break;
+			case 11:
+			$("#recorrido11").removeClass("animate-hide");
+			$rootScope.stepRecorrido=12;
+			$scope.onTab(1);
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[41];
+			break;
+			
 		}
 	}
+	//window.localStorage.removeItem("enRecorrido")
+	if(window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.nextRecorrido();
+	},500);
+	$rootScope.msj_map=false;
 	if(!window.localStorage.getArray("Estados"))
 	$http.get("http://www.virtual-guardian.com/api/estados")
 		.success(function(data,status,header,config){
@@ -188,12 +331,15 @@ angular.module('starter')
 			
 			$rootScope.notPendientes=0;
 			window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
+			if(!$rootScope.recorrido){
+				console.log(1);
 			var d=new Date();
 			if($rootScope.notPendientes>0 || $scope.fechaNotRef==null || ((d.getTime()-$scope.fechaNotRef.getTime())/60000)==30){
 				$scope.fechaNotRef=new Date();
 				
 				$rootScope.cargando=true;
 				$rootScope.doRefreshNotification();
+			}
 			}
 			break;
 			case 3:
@@ -260,6 +406,7 @@ angular.module('starter')
 	$("#home_flecha_notificaciones").removeClass("ion-chevron-up")
 	$("#home_flecha_notificaciones").addClass("ion-chevron-down")
 	if(!$ionicSideMenuDelegate.isOpen()){
+		
 		$scope.revisaUsuario();
 	   $("#capa_menu").show();
 	   $("#capa_menu").animate({
@@ -268,6 +415,7 @@ angular.module('starter')
 	   
 	   $rootScope.UsuarioTemporal = jQuery.extend(true, {}, $rootScope.Usuario);
    }else{
+	   $ionicSideMenuDelegate.toggleLeft(false);
 	   var sm=$scope.saveMenu()
 	   $("#capa_menu").animate({
 		   "opacity":"0"
@@ -313,7 +461,8 @@ angular.module('starter')
 	   delete $rootScope.UsuarioTemporal.NotEstados;
 	   delete $rootScope.UsuarioTemporal.NotTipos;
 	   delete $rootScope.UsuarioTemporal.Registro;
-            delete $rootScope.UsuarioTemporal.Extras;
+	   delete $rootScope.UsuarioTemporal.Nuevo;
+       delete $rootScope.UsuarioTemporal.Extras;
 	   console.log($rootScope.UsuarioTemporal);
 	   if(Object.keys($rootScope.UsuarioTemporal).length>1){
 		   
@@ -574,11 +723,9 @@ $scope.cambia_rango_auto=function(value){
             $scope.popup($rootScope.idioma.menu[27],template,function(){})*/
             
             $scope.confirm($rootScope.idioma.menu[27],$rootScope.idioma.general[32],function(){
-                              $scope.iniciaTutorial();
+                              $scope.toggleLeftSideMenu();
+							  $rootScope.startRecorrido(0);
             });
-            }
-            $scope.iniciaTutorial=function(){
-            alert(1);
             }
 	
 }).controller("db",function($scope,$rootScope,$http,$cordovaSQLite,$cordovaNetwork,$timeout){

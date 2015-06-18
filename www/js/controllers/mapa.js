@@ -5,10 +5,11 @@ angular.module('starter')
 	$rootScope.map;
 	$scope.marcadores=[];
 	$rootScope.mapCarro;
+	$rootScope.miubicacion;
 	$scope.infos;
 	$scope.panorama;
 	$scope.watchID;
-	$scope.ubicacionMarker;
+	$rootScope.ubicacionMarker;
 	$scope.carroMarker;
 	$scope.circuloRadio;
 	$scope.radio;
@@ -20,8 +21,8 @@ angular.module('starter')
 	$scope.Infobox=null;
 	$scope.selectedMarker=null;
 	$scope.markerLoaded=false;
+	
 	if(window.localStorage.getArray("Peligros"))$rootScope.Peligros=window.localStorage.getArray("Peligros");
- 	
 	$scope.createMap=function(){
             
 		$scope.first=0;
@@ -29,12 +30,25 @@ angular.module('starter')
 			$rootScope.sinMapa=true;
 			$rootScope.cargando=false;
 		})){
-			$scope.loadMaps();
+			if(!$rootScope.recorrido)$scope.loadMaps();
+			else initialize();
 		}
 		$scope.radio=$rootScope.Usuario.Rango;
 		if(window.localStorage.getArray("Auto"))$scope.vigilando=true;
 	}
+	$rootScope.inicializaMapaRecorrido=function(){
+		$scope.radio=$rootScope.Usuario.Rango;
+		$scope.dibujaRadio();
+		if($rootScope.stepRecorrido!=6)navigator.geolocation.getCurrentPosition($rootScope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });	
+		$scope.swit=true;
+		$rootScope.muestraEventos();
+		$scope.circuloRadio.setMap($rootScope.map);
+		$rootScope.ubicacionMarker.setDraggable((!$rootScope.recorrido) || $rootScope.stepRecorrido==1);
+		}
+		$scope.loaded=false;
 	initialize =function (){
+		$scope.loaded=true;
+		$rootScope.scriptMapa=true;
 		var e = document.createElement('script'); // use global document since Angular's $document is weak
             e.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js';
             document.body.appendChild(e);
@@ -45,39 +59,55 @@ angular.module('starter')
 			
 	}
     $scope.loadMaps=function(){
+		if(!$rootScope.scriptMapa){
 			var s = document.createElement('script'); // use global document since Angular's $document is weak
             s.src = 'https://maps.google.com/maps/api/js?key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs&sensor=false&libraries=drawing&callback=initialize';
             document.body.appendChild(s);
-			
+		}else initialize();
 			
 			
 			
     }
             $scope.initialize=function(){alert(1);}
 	$scope.revisaPos=function(){
-		navigator.geolocation.getCurrentPosition($scope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });	
+		if(!$rootScope.recorrido || $rootScope.stepRecorrido==7)
+		navigator.geolocation.getCurrentPosition($rootScope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });	
+		
 	}
 	$scope.revisaPosCarro=function(){
+		if(!$rootScope.recorrido)
 		if(!window.localStorage.getArray("Auto"))
-		navigator.geolocation.getCurrentPosition($scope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });
+		navigator.geolocation.getCurrentPosition($rootScope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });
 	}
-	$scope.onSPos=function(position){
-		$scope.ubicacionMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+	$rootScope.onSPos=function(position){
+		$rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+		$rootScope.ubicacionMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+		$rootScope.ubicacionMarker.setIcon($scope.getImgUbicacion($rootScope.ubicacionMarker.getPosition()));
 		$rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
-		$scope.circuloRadio.setCenter($scope.ubicacionMarker.getPosition());
+		$scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition());
 		$rootScope.showEventos();
         $rootScope.showToast($rootScope.idioma.mapa[4])
+		if($rootScope.stepRecorrido==7)$timeout(function(){
+				$rootScope.nextRecorrido();	
+				},500)
 	}
 	$scope.onErrorc=function(){
+		if(!$rootScope.recorrido)
 		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
+		else{
+		$timeout(function(){
+				$rootScope.nextRecorrido();	
+				},500)
+		}
 	}
-	$scope.onSPosc=function(position){
+	$rootScope.onSPosc=function(position){
 		$scope.carroMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 		$rootScope.mapCarro.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
         $rootScope.showToast($rootScope.idioma.mapa[4])
 		
 	}
 	$scope.onSuccess=function (position) {
+		$rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 		$rootScope.sinMapa=false;
 		var mapOptions = {
     		zoom: 12,
@@ -112,7 +142,7 @@ angular.module('starter')
 		
 	
 		google.maps.event.addListenerOnce($rootScope.map,"idle",function (){
-			$scope.setPosicion($rootScope.map, position.coords.latitude,position.coords.longitude)
+			$scope.setPosicion($rootScope.map, $rootScope.miubicacion.lat(),$rootScope.miubicacion.lng())
 			$rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 			$rootScope.showEventos();
 			$rootScope.cargando=false;
@@ -142,6 +172,7 @@ angular.module('starter')
 // onError Callback receives a PositionError object
 //
 $scope.showBarra=function(){
+	if(!$rootScope.recorrido || $rootScope.stepRecorrido==4)
 		$("#inicio_pie").animate({
 			"bottom":"0vh"
 		},500,function(){
@@ -153,6 +184,7 @@ $scope.hideBarra=function(){
 					},1000,function(){});
 }
  	$scope.onError=function(error) {
+		$rootScope.miubicacion=null;
 		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
 		if($scope.Conexion(1,function(){
 			$rootScope.sinMapa=true;
@@ -231,27 +263,35 @@ $scope.hideBarra=function(){
 			strokeOpacity: 0.6,
 			map: $rootScope.map,
 			radius:parseInt($scope.radio),
-			center:$scope.ubicacionMarker.getPosition(),
+			center:$rootScope.ubicacionMarker.getPosition(),
     		zIndex: 3,
     	}
 		$scope.circuloRadio = new google.maps.Circle(circleOptions);
 		}
 	//cambiaRadio(circuloRadio.getRadius());
 	}
-	$scope.setPosicion=function (map, lat,long) {
+	$scope.getImgUbicacion=function(position){
+		var img="";
+		if(position.lat()==$rootScope.miubicacion.lat() && position.lng()==$rootScope.miubicacion.lng())img='img/marcadores/ubicacion.png'
+		else img='img/marcadores/ubicacion_des.png'
 		var icono = {
-			url: 'img/marcadores/ubicacion.png',
+			url: img,
 			size: new google.maps.Size(20, 20),
 			origin: new google.maps.Point(0,0),
 			anchor: new google.maps.Point(10, 10),
 			scaledSize:new google.maps.Size(20, 20)
 		}
+		return icono;
+	}
+	$scope.setPosicion=function (map, lat,long) {
+		
 		var shape = {
 			coords: [0, 0, 0, 20, 20, 20, 20 , 0],
 			type: 'poly'
 		};
+		var icono=$scope.getImgUbicacion(new google.maps.LatLng(lat, long)); 
 		var myLatLng = new google.maps.LatLng(lat, long);
-		$scope.ubicacionMarker = new google.maps.Marker({
+		$rootScope.ubicacionMarker = new google.maps.Marker({
 			position: myLatLng,
 			map: $scope.map,
 			icon: icono,
@@ -259,19 +299,29 @@ $scope.hideBarra=function(){
 			zIndex: 4,
 			draggable:true
 		});
-		google.maps.event.addListener($scope.ubicacionMarker, 'mousedown', function() {
+		google.maps.event.addListener($rootScope.ubicacionMarker, 'mousedown', function() {
 			$scope.circuloRadio.setVisible(false);
 		});
-		google.maps.event.addListener($scope.ubicacionMarker, 'mouseup', function() {
-			$scope.circuloRadio.setCenter($scope.ubicacionMarker.getPosition());
+		google.maps.event.addListener($rootScope.ubicacionMarker, 'mouseup', function() {
+			$rootScope.ubicacionMarker.setIcon($scope.getImgUbicacion($rootScope.ubicacionMarker.getPosition()));
+			$scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition());
 			$scope.circuloRadio.setVisible(true);
 			$rootScope.showEventos();
+			if($rootScope.recorrido && $rootScope.stepRecorrido==2){
+				if($rootScope.ubicacionMarker.getPosition().lat()!=$rootScope.miubicacion.lat() || $rootScope.ubicacionMarker.getPosition().lng()!=$rootScope.miubicacion.lng()){
+				$timeout(function(){
+				$rootScope.nextRecorrido();	
+				},500)
+				}
+			}
 			//if($("#switch").is(':checked'))actualizaHoy()
 			//if(ubicacionMarker.getPosition().lat()!=miUbicacion.lat() || ubicacionMarker.getPosition().lng()!=miUbicacion.lng())ubicacion(0);
 		});
-		google.maps.event.addListener($scope.ubicacionMarker, "dblclick", function() {
-			$rootScope.map.setCenter($scope.ubicacionMarker.getPosition())
+		google.maps.event.addListener($rootScope.ubicacionMarker, "dblclick", function() {
+			if(!$rootScope.recorrido){
+			$rootScope.map.setCenter($rootScope.ubicacionMarker.getPosition())
 			$rootScope.map.setZoom(16);
+			}
 		});
 		$scope.dibujaRadio();
 		
@@ -279,7 +329,7 @@ $scope.hideBarra=function(){
 	/*$scope.$watch(
   		function() { return $scope.radio },
   		function(newValue, oldValue) {
-			if($scope.ubicacionMarker)
+			if($rootScope.ubicacionMarker)
     	//console.log(newValue);
 	});*/
 			 $scope.updateBar=function(val){
@@ -411,10 +461,13 @@ $scope.setMarcador=function (evento) {
     });
 	$scope.marcadores.push(marker);
 	google.maps.event.addListener(marker, "dblclick", function() {
+		if(!$rootScope.recorrido){
 		$rootScope.map.setCenter(marker.getPosition())
     	$rootScope.map.setZoom(16);
+		}
 	});
 	google.maps.event.addListener(marker, "click", function() {
+		if(!$rootScope.recorrido)
 		$scope.clickEvento(marker);
 	});
 }
@@ -463,8 +516,14 @@ alert(1);
 		$scope.swit=!$scope.swit;
 		if($scope.swit){
 			$scope.circuloRadio.setMap($rootScope.map);
-			$rootScope.map.setCenter($scope.ubicacionMarker.getPosition())
-			$scope.circuloRadio.setCenter($scope.ubicacionMarker.getPosition())
+			$rootScope.map.setCenter($rootScope.ubicacionMarker.getPosition())
+			$scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition())
+			if($rootScope.recorrido && $rootScope.stepRecorrido==5){
+				$rootScope.muestraEventos();
+				$timeout(function(){
+				$rootScope.nextRecorrido();	
+				},500)
+			}
 		}else{
 			$scope.circuloRadio.setMap(null);
 		}
@@ -588,12 +647,21 @@ alert(1);
             $scope.radioViejo=$scope.radio;
             }
             $scope.loadEventos=function(){
-            if($scope.radio!=$scope.radioViejo)$rootScope.showEventos();
-            
+				
+            if($scope.radio!=$scope.radioViejo)
+			if(!$rootScope.recorrido){
+				$rootScope.showEventos();
+				}else if($rootScope.stepRecorrido==4){
+					$rootScope.muestraEventos();
+					$timeout(function(){
+				$rootScope.nextRecorrido();	
+				},500)
+				}
             }
 	$rootScope.showEventos=function(toast){
+		
+		if(!$rootScope.recorrido){
             toast=toast || 0;
-            
 		//if($rootScope.Eventos.length>0)
 		if($scope.Conexion(1,function(){
 			$rootScope.cargando=false;
@@ -602,12 +670,23 @@ alert(1);
             $scope.getEventos();
             if(toast)$rootScope.showToast($rootScope.idioma.mapa[5]);
             }
+		}else if($rootScope.stepRecorrido==8){
+			if(toast)$rootScope.showToast($rootScope.idioma.mapa[5]);
+			$rootScope.Eventos.push({"IdEvento":"2","IdAsunto":"2","Latitud":$rootScope.miubicacion.lat()-0.003,"Longitud":$rootScope.miubicacion.lng()-0.002});
+			$rootScope.muestraEventos();
+			$timeout(function(){
+				$rootScope.nextRecorrido();	
+				},500)
+
+			
+		}
 	}
 	$rootScope.muestraEventos=function(){
+		
 	$scope.limpia();
 		for(var i=0; i<$rootScope.Eventos.length;i++)
 		if($scope.swit){
-			if($scope.cumpleRadio($rootScope.Eventos[i],$scope.ubicacionMarker,$scope.radio))$scope.setMarcador($rootScope.Eventos[i])
+			if($scope.cumpleRadio($rootScope.Eventos[i],$rootScope.ubicacionMarker,$scope.radio))$scope.setMarcador($rootScope.Eventos[i])
 		}else{
 			$scope.setMarcador($rootScope.Eventos[i]);
 		}
@@ -641,7 +720,7 @@ alert(1);
 			return a.join(",");
 		}
 	$scope.getEventos=function(){
-		
+		if(!$rootScope.recorrido){
 		if($scope.filtros.Estado){
 		var d2=$scope.filtros.Final;
 		var d=$scope.filtros.Inicial;
@@ -664,10 +743,10 @@ alert(1);
 		var rad=0;
 		if($scope.swit)rad=$scope.radio/1000;
             $rootScope.Eventos=[];
-            $rootScope.sqlGetEventos($scope.ubicacionMarker.getPosition().lat(),$scope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(ids){
+            $rootScope.sqlGetEventos($rootScope.ubicacionMarker.getPosition().lat(),$rootScope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(ids){
 		$http.post("http://www.virtual-guardian.com/api/eventosRadioMapa",{
-				Latitud:$scope.ubicacionMarker.getPosition().lat(),
-				Longitud:$scope.ubicacionMarker.getPosition().lng(),
+				Latitud:$rootScope.ubicacionMarker.getPosition().lat(),
+				Longitud:$rootScope.ubicacionMarker.getPosition().lng(),
 				FechaF:""+d2.getFullYear()+"-"+(d2.getMonth()+1)+"-"+d2.getDate(),
 				FechaI:""+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),
 				Radio:rad,
@@ -678,9 +757,10 @@ alert(1);
 		.success(function(data,status,header,config){
 			$rootScope.UpdateEvt=new Date();
 			for(var i=0;i<data.length;i++){
+				console.log(data);
                  $rootScope.sqlInsertEvento(JSON.parse(data[i]));
 			}
-                 if(data.length>0)$rootScope.sqlGetEventos($scope.ubicacionMarker.getPosition().lat(),$scope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(){});
+                 if(data.length>0)$rootScope.sqlGetEventos($rootScope.ubicacionMarker.getPosition().lat(),$rootScope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(){});
                  
 			
 			})
@@ -688,6 +768,7 @@ alert(1);
 			console.log(error);
 			})
         });
+		}
 	}
 	$rootScope.notificacionTip=false;
 	

@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	$rootScope.UpdateEvt=new Date();
         
         if(!window.localStorage.getItem("UpdateHistorial")){
-            $rootScope.UpdateHistorial=(new Date()).getTime();
+            $rootScope.UpdateHistorial=0;
             window.localStorage.setItem("UpdateHistorial",$rootScope.UpdateHistorial);
         }
         else $rootScope.UpdateHistorial=window.localStorage.getItem("UpdateHistorial");
@@ -46,6 +46,8 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
     if(window.localStorage.getArray("nPendientes")) $rootScope.notPendientes=window.localStorage.getArray("nPendientes");
 	else $rootScope.notPendientes=0;	
 	$rootScope.tabInicial=1;
+	$rootScope.scriptMapa=false;
+	$rootScope.startRecorrido=false;
 	$rootScope.platform=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
     $rootScope.ipad=(window.device.model.substring(0,4).toLowerCase()=="ipad");
@@ -55,8 +57,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	document.addEventListener("resume", $rootScope.onResume);
 	
 	
-	
-		if(!window.localStorage.getArray("Usuario")){
+	if(!window.localStorage.getArray("Usuario")){
 				$rootScope.Usuario=null;
 				$location.path('/login');
 				
@@ -70,7 +71,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 				//$rootScope.unregister();	
 				//if(pushNotification)registerNotification();
 			}
-	
+		
 
 	
 	
@@ -181,6 +182,23 @@ $rootScope.unregister=function(){
 	//guarda estado		
 	}
 })
+.controller("home",function($rootScope,$location){
+	/*if(!window.localStorage.getArray("Usuario")){
+				$rootScope.Usuario=null;
+				$location.path('/login');
+				
+		}else{
+			
+				$rootScope.Usuario=window.localStorage.getArray("Usuario");
+				console.log($rootScope.Usuario);
+				$location.path('/inicio');
+				
+				
+				//$rootScope.unregister();	
+				//if(pushNotification)registerNotification();
+			}
+	*/
+	})
 .config(function($stateProvider, $urlRouterProvider,$httpProvider,$ionicConfigProvider) {
  $ionicConfigProvider.views.maxCache(0);
         $ionicConfigProvider.views.swipeBackEnabled(false);
@@ -190,6 +208,7 @@ $rootScope.unregister=function(){
  $ionicConfigProvider.views.forwardCache(false);
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
 	$httpProvider.defaults.withCredentials = false;
+	
   $stateProvider
   .state('index', {
     url: "/",
@@ -264,6 +283,26 @@ $rootScope.unregister=function(){
 	  'vista-auto@inicio': {
         templateUrl: "pantallas/auto.html"
       }
+	}
+  })
+   .state('recorrido', {
+    url: "/recorrido",
+	views: {
+      '': {
+        templateUrl: "pantallas/recorrido/recorrido_home.html"
+      }/*,
+	  'vista-mapa@recorrido': {
+        templateUrl: "pantallas/recorrido/mapa.html"
+      },
+	  'vista-notificaciones@recorrido': {
+        templateUrl: "pantallas/notificaciones.html"
+      },
+	  'vista-personas@recorrido': {
+        templateUrl: "pantallas/personas.html"
+      },
+	  'vista-auto@recorrido': {
+        templateUrl: "pantallas/auto.html"
+      }*/
 	}
   })
   

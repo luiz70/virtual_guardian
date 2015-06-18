@@ -40,8 +40,6 @@ angular.module('starter')
 			console.log(data);
 			$scope.contrasena="";
 				$scope.hideCargando();
-				
-				
 				if(data.Id){
 				$rootScope.Usuario=data;
 				window.localStorage.setArray("Usuario",data);
