@@ -1,0 +1,27 @@
+
+  <!--ion-popover-view style="opacity: 1;  width: 80vw;  height: 80vh;  left: 0px;  right: 0px;  top: 0px;  bottom: 0px;  margin: auto;  position: absolute;">
+    <ion-header-bar>
+      <h1 class="title">Analisis de seguridad</h1>
+    </ion-header-bar>
+    <ion-content style="  padding-top: 40px;">
+    Estos son los eventos que han sucedido en la semana a menos de 3 km de tu auto
+
+    </ion-content>
+  </ion-popover-view-->
+
+<ion-popover-view id="popRecorrido" style="opacity: 1;  width: 90vw;  height: 50vh;  left: 0px;  right: 0px;  top: 0px;  bottom: 0px;  margin: auto;  position: absolute;  background: #F5F5F5;">
+	<div class="popup-head" style=" height: 7.5vh; ">
+		<h3 class="popup-title " >{{tituloRecorrido}}</h3>
+	</div>
+    <div class="popup-body ng-hide " style="" ng-show="!recorrido">
+    <img src="img/logo_negro.png" style="  height: 27vw;width: 67vw;">
+    	<div class="div25vh" style="  font-size: 3vh;overflow: hidden;height:auto !important;  margin-top: 2vh; line-height: 3.2vh;">{{idioma.recorrido[2]}}
+        </div>
+        
+    
+     </div>
+	<div class="popup-buttons" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;" nav-direction="enter"><!-- ngRepeat: button in buttons -->
+    	<button class="button ng-binding button-default ng-hide" ng-class="button.type || 'button-default'" ng-click="closeRecorrido()" style="  height: 100%;padding: 0px !important;" nav-direction="enter"  ng-show="!recorrido">{{idioma.recorrido[4]}}</button>
+        <button  nav-direction="enter" class="button ng-binding button-positive  ng-hide" ng-class="button.type || 'button-default'" ng-click="iniciaRecorrido()" style="  height: 100%;padding: 0px !important;" ng-show="!recorrido">{{idioma.recorrido[3]}}</button>
+     </div> 
+</ion-popover-view>

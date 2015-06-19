@@ -1,25 +1,27 @@
 angular.module('starter')
 .controller("notificaciones",function($scope,$http,$rootScope,$timeout){
+	
 	//VARIABLES
 	$scope.cargandoN=false;
 	$scope.isRefresh=false;
 	if(window.localStorage.getArray("Notificaciones")){
-		$scope.Notificaciones=window.localStorage.getArray("Notificaciones");
+		$rootScope.Notificaciones=window.localStorage.getArray("Notificaciones");
 		$scope.todasOld=false;
 		$scope.loadOlder=false;
 	}
 	else {
-		$scope.Notificaciones=[];
+		$rootScope.Notificaciones=[];
 		$scope.todasOld=true;
 		$scope.loadOlder=false;
 	}
+	
 			
 	$scope.refreshOlder=function(){
 		$rootScope.notPendientes=0;
 		window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
 		$scope.isRefresh=true;
 		$scope.todasOld=false;
-		var last=$scope.Notificaciones[$scope.Notificaciones.length-1].IdNotificacion;
+		var last=$rootScope.Notificaciones[$rootScope.Notificaciones.length-1].IdNotificacion;
 		$scope.loadOlder=true;
 		if($scope.Conexion()){
 			$http.post("http://www.virtual-guardian.com/api/notificaciones/refresh",{
@@ -51,10 +53,10 @@ angular.module('starter')
 							}
 						}
 					}
-					$scope.Notificaciones.push(tmp)
+					$rootScope.Notificaciones.push(tmp)
 				}
 				if(data.length<5)$scope.todasOld=true;
-				window.localStorage.setArray("Notificaciones",$scope.Notificaciones)
+				window.localStorage.setArray("Notificaciones",$rootScope.Notificaciones)
 				$scope.loadOlder=false;
 				$scope.isRefresh=false;
 			})
@@ -95,8 +97,8 @@ angular.module('starter')
 		if($scope.Conexion()){
 			$rootScope.cargando=true;
 			var last=0;
-			if($scope.Notificaciones.length>0){
-				last=$scope.Notificaciones[0].IdNotificacion;
+			if($rootScope.Notificaciones.length>0){
+				last=$rootScope.Notificaciones[0].IdNotificacion;
 				$rootScope.cargando=false;
 				if(!$scope.isRefresh)$scope.cargandoN=true;
 			}
@@ -107,7 +109,7 @@ angular.module('starter')
 			},{timeout:20000})
 			.success(function(data,status,header,config){
 				$scope.todasOld=false;
-				//$scope.Notificaciones=[];
+				//$rootScope.Notificaciones=[];
 				data.reverse();
 				for(var i=0;i<data.length;i++){
 					var tmp=JSON.parse(data[i])
@@ -132,12 +134,12 @@ angular.module('starter')
 							}
 						}
 					}
-					$scope.Notificaciones.unshift(tmp);
-					//if($scope.Notificaciones.length>0)
-					//else $scope.Notificaciones.push(tmp);
+					$rootScope.Notificaciones.unshift(tmp);
+					//if($rootScope.Notificaciones.length>0)
+					//else $rootScope.Notificaciones.push(tmp);
 				}
-				if($scope.Notificaciones.length==0)$scope.todasOld=true;
-				window.localStorage.setArray("Notificaciones",$scope.Notificaciones)
+				if($rootScope.Notificaciones.length==0)$scope.todasOld=true;
+				window.localStorage.setArray("Notificaciones",$rootScope.Notificaciones)
 				$rootScope.cargando=false;
 				$scope.cargandoN=false;
 				$scope.isRefresh=false;
