@@ -61,7 +61,7 @@
         <div class="list card" style ="margin:0px;  width: 100%;box-shadow:none;" ng-hide="!markerLoaded">
         
  <div class="item item-avatar" style="box-shadow:none;  z-index: 50; border: none;  height: 7vh;min-height: 0px;padding: 0.3vh; padding-left: 7vh;padding-bottom:0px">
-   <img src={{"img/marcadores/"+selectedMarker.data.IdAsunto+".png"}} style="opacity:1;  height: 90%;width: auto;left: 0.5vh;">
+   <img ng-src={{"img/marcadores/"+selectedMarker.data.IdAsunto?selectedMarker.data.IdAsunto:"1"+".png"}} style="opacity:1;  height: 90%;width: auto;left: 0.5vh;">
    <p style="  color: #000;  opacity: 1;  font-size: 3.3vh;height:3.4vh;line-height:3.4vh">{{selectedMarker.data.Info.Asunto}}</p>
    <p style="font-size: 2.5vh;text-transform: capitalize;height:3.5vh !important;line-height:2.5vh">{{selectedMarker.data.Info.Subtitulo}}</p>
    <button class="cerrar_info" style="position:absolute;top:0px;right:0px;width:5vh;height:5vh;padding:0px;background:none;border:none" ng-click="cargaInfoEvento(false)">

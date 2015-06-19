@@ -34,7 +34,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	}
 	$rootScope.Update=new Date();
 	$rootScope.UpdateEvt=new Date();
-        
+        //window.localStorage.removeItem("UpdateHistorial")
         if(!window.localStorage.getItem("UpdateHistorial")){
             $rootScope.UpdateHistorial=0;
             window.localStorage.setItem("UpdateHistorial",$rootScope.UpdateHistorial);
@@ -47,7 +47,6 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	else $rootScope.notPendientes=0;	
 	$rootScope.tabInicial=1;
 	$rootScope.scriptMapa=false;
-	$rootScope.startRecorrido=false;
 	$rootScope.platform=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
     $rootScope.ipad=(window.device.model.substring(0,4).toLowerCase()=="ipad");
@@ -285,26 +284,7 @@ $rootScope.unregister=function(){
       }
 	}
   })
-   .state('recorrido', {
-    url: "/recorrido",
-	views: {
-      '': {
-        templateUrl: "pantallas/recorrido/recorrido_home.html"
-      }/*,
-	  'vista-mapa@recorrido': {
-        templateUrl: "pantallas/recorrido/mapa.html"
-      },
-	  'vista-notificaciones@recorrido': {
-        templateUrl: "pantallas/notificaciones.html"
-      },
-	  'vista-personas@recorrido': {
-        templateUrl: "pantallas/personas.html"
-      },
-	  'vista-auto@recorrido': {
-        templateUrl: "pantallas/auto.html"
-      }*/
-	}
-  })
+   
   
   // if none of the above states are matched, use this as the fallback
 $urlRouterProvider.otherwise('/');

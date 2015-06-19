@@ -1,5 +1,6 @@
 angular.module('starter')
 .controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory){
+	
 	$scope.onTab=function (id){
 		if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){
 		$rootScope.cargando=false;
@@ -17,8 +18,10 @@ angular.module('starter')
  $rootScope.tituloRecorrido=""
 	$rootScope.startRecorrido=function(val){
 		//bienvenida
-		
-			 $scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridoStart.html", {
+		if($scope.Conexion(1,function(){
+			
+		})){
+			$scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridoStart.html", {
     		scope: $scope
 			}).then(function(popover) {
 				 $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
@@ -26,9 +29,10 @@ angular.module('starter')
 				$scope.popoverRec.show();
 				$(".popover-arrow").hide();
   			});
-		
+		}
 	}
 	if($rootScope.Usuario.Nuevo==1 && !window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.startRecorrido(1)},1000);
+	else $timeout(function(){$rootScope.isVigente();},1000);
 	$scope.des=function(){
 		console.log($rootScope.filtros.Estados);
 	}
@@ -88,8 +92,10 @@ angular.module('starter')
 			
 	
 	}
+	
 	$rootScope.recorrido=false;
 	$rootScope.nextRecorrido=function(){
+		
 		switch($rootScope.stepRecorrido){
 			case 0:
 			//
@@ -107,16 +113,12 @@ angular.module('starter')
 				
 			  			});
 						$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[6];
-			//
-			
-
-  			
-			
-			//,{"IdEvento":"2","IdAsunto":"1","Latitud":"20.667641","Longitud":"-103.368622","Fecha":"2015-06-15","IdEstado":"14"}];
 			
 			break;
-			case 1: 
-			$rootScope.Eventos=[{"IdEvento":"1","IdAsunto":"1","Latitud":$rootScope.miubicacion.lat()+0.005,"Longitud":$rootScope.miubicacion.lng()+0.009}];
+			case 1:
+			$rootScope.Eventos=[{"IdEvento":"1","IdAsunto":"1","Latitud":$rootScope.miubicacion.lat()+0.005,"Longitud":$rootScope.miubicacion.lng()+0.009}]; 
+			if($scope.Conexion()){
+			
 			$rootScope.inicializaMapaRecorrido();
 			$("#recorrido1").removeClass("animate-hide");
 			$rootScope.inicializaMapaRecorrido();
@@ -125,14 +127,21 @@ angular.module('starter')
 			$("#msj_map").html($rootScope.idioma.recorrido[11]);
 			$("#recorrido1").addClass("ng-hide");
 			$rootScope.stepRecorrido=2;
+			}else {
+				$("#recorrido1").addClass("ng-hide");
+			$rootScope.stepRecorrido=2;
+			$rootScope.nextRecorrido();
+			}
 			break;
 			case 2:
+			
 			$scope.popoverRec.show();
 			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[8];
 			$rootScope.inicializaMapaRecorrido();
 			$rootScope.stepRecorrido=3;
 			break;
 			case 3:
+			if($scope.Conexion()){
 			$("#recorrido1").removeClass("animate-hide");
 			$rootScope.inicializaMapaRecorrido();
 			$scope.popoverRec.hide();
@@ -141,6 +150,11 @@ angular.module('starter')
 			$("#recorrido2").addClass("ng-hide");
 			$("#tapa_pie").height("30px");
 			$rootScope.stepRecorrido=4;
+			}else{
+				$("#recorrido2").addClass("ng-hide");
+				$rootScope.stepRecorrido=5;
+			$rootScope.nextRecorrido();
+			}
 			break;
 			case 4:
 			$("#msj_map").html($rootScope.idioma.recorrido[13]);
@@ -158,6 +172,7 @@ angular.module('starter')
 			$rootScope.stepRecorrido=6;
 			break;
 			case 6:
+			if($scope.Conexion()){
 			$rootScope.onSPos({'coords':{'latitude':$rootScope.miubicacion.lat()-0.005,'longitude':$rootScope.miubicacion.lng()-0.009}});
 			$("#recorrido3").removeClass("animate-hide");
 			$rootScope.inicializaMapaRecorrido();
@@ -168,7 +183,11 @@ angular.module('starter')
 			$("#msj_map").css( "bottom"," 8vh")
   			$("#msj_map").css( "top"," auto");
 			$rootScope.stepRecorrido=7;
-			
+			}else{
+				$("#recorrido3").addClass("ng-hide");
+				$rootScope.stepRecorrido=8;
+				$rootScope.nextRecorrido();
+			}
 			break;
 			case 7:
 			$rootScope.stepRecorrido=8;
@@ -332,7 +351,6 @@ angular.module('starter')
 			$rootScope.notPendientes=0;
 			window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
 			if(!$rootScope.recorrido){
-				console.log(1);
 			var d=new Date();
 			if($rootScope.notPendientes>0 || $scope.fechaNotRef==null || ((d.getTime()-$scope.fechaNotRef.getTime())/60000)==30){
 				$scope.fechaNotRef=new Date();
@@ -425,7 +443,7 @@ angular.module('starter')
 	   if(!sm)$rootScope.showEventos();
 	   }else {
 		   if(!sm && window.localStorage.getArray("Filtros") )$rootScope.showEventos();
-	   window.localStorage.removeItem("Filtros");
+	   //window.localStorage.removeItem("Filtros");
 	   
 	   }
 	   if(sm)$rootScope.showEventos();
@@ -548,7 +566,6 @@ angular.module('starter')
 	}
 	
 	$rootScope.isVigente=function(){
-		
 		$http.get("http://www.virtual-guardian.com/api/vigencia/"+window.localStorage.getArray("Usuario").Id)
 		.success(function(data,status,header,config){
 			$rootScope.Update=new Date();
@@ -561,6 +578,15 @@ angular.module('starter')
 				if(window.device.platform=="iOS")$rootScope.registraiOS();
 				window.localStorage.setArray("Usuario",data);
 				$rootScope.Usuario=data;
+				
+				if($rootScope.Usuario.IdSuscripcion==1){
+				var d1=new Date();
+				var d2=new Date();
+				d2.setDate(d2.getDate()-$rootScope.Usuario.Periodo);
+				$rootScope.filtros.Inicial=d2;
+				$rootScope.filtros.Final=d1;
+				window.localStorage.setArray("Filtros",$rootScope.filtros);
+				}
 			if(data.Vigente=="0"){
 				$scope.confirm($scope.idioma.general[11],$scope.idioma.general[12],function(){
 				//ENVIA A PAGINA A VER PAQUETES
@@ -576,7 +602,7 @@ angular.module('starter')
 			})
 	}
 	
-	$rootScope.isVigente();
+	
 	$scope.Conexion=function(i,fun){
 		i=i || 0;
 		fun = fun || function(){};
@@ -736,12 +762,7 @@ $scope.cambia_rango_auto=function(value){
               $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS EVENTOS (IdEvento integer primary key, IdAsunto integer, Latitud real,Longitud real, Asunto text, Direccion text, IdEstado integer,Subtitulo text,Fecha integer,Municipio text, Colonia text, Calles text,FechaScreen text,Hora text)",function(res){
                                   
                 });
-             /* $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS NOTIFICACIONES (IdNotificacion integer primary key, IdEvento integer, IdAsunto integer,Asunto text, Distancia text, Fecha text, Hora text,Imagen text,Involucrado text, Latitud real, Longitud real,Titulo text, Subtitulo text, Tipo integer)",function(res){
-                                  
-                                  });
-              $rootScope.sqlQuery("CREATE TABLE IF NOT EXISTS PERSONAS (IdCliente integer primary key, Correo text, Lugar integer,Tipo Integer)",function(res){
-                                  
-                                  });*/
+            
 	}
               
               $rootScope.sqlInsertEvento=function(event){
@@ -811,7 +832,6 @@ $scope.cambia_rango_auto=function(value){
             funcion(err);
         });
 		}
-		//window.localStorage.removeItem("AHistorial")
 	$scope.verificaHistorial=function(){
 		//problema en updatehistorial
 		if( window.sqlitePlugin)
@@ -836,7 +856,7 @@ $scope.cambia_rango_auto=function(value){
               var d2=new Date();
               d2.setFullYear(d2.getFullYear()-2);
 		$http.post("http://www.virtual-guardian.com/api/historial",{
-				FechaI:"2010-01-01",//+d2.getFullYear()+"-"+(d2.getMonth()+1)+"-"+d2.getDate(),
+				FechaI:"2010-01-01",
 				FechaF:""+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),
 				Estados:"",
 				Asuntos:"",
@@ -864,18 +884,7 @@ $scope.cambia_rango_auto=function(value){
                     },function(){
                        $rootScope.hideCargando();
                        })
-				 /*}else{
-					 console.log("SUBTAMAÑO: "+d.length);
-					 for(var i=0;i<d.length;i++)
-					 var s=$cordovaSQLite.execute($rootScope.database, "INSERT OR REPLACE INTO EVENTOS(IdEvento,IdAsunto,Latitud,Longitud,Fecha,IdEstado) VALUES"+d[i].join(","), [])
-					 if(i==d.length-1)
-                 s.then(function(res){
-                       console.log(JSON.stringify(res));
-					   $rootScope.hideCargando();
-                       window.localStorage.setItem("AHistorial",1);
-                    },function(){
-                       })
-				 }*/
+				 
                  
 			})
 		.error(function(error,status,header,config){
@@ -890,24 +899,7 @@ $scope.cambia_rango_auto=function(value){
               $scope.rad2deg = function(radians) {
               return radians * 180 / Math.PI;
               };
-	/*$scope.getEventos=function(id){
-		$http.post("http://www.virtual-guardian.com/api/eventos",{
-				IdEvento:id
-				})
-		.success(function(data,status,header,config){
-			console.log(data.length);
-			for(var i=0;i<data.length;i++){
-				$rootScope.Eventos.push(JSON.parse(data[i]))
-			}
-			
-			//window.localStorage.setArray("Eventos",$rootScope.Eventos);
-			$rootScope.muestraEventos();
-			//console.log($rootScope.Eventos.length);
-			})
-		.error(function(error,status,header,config){
-			//console.log(error);
-			})
-	}*/
+	
 	$scope.buscaJson=function(js,key,str){
 		for(var i=0; i<js.length;i++){
 			if(js[i][key]==str)return js[i][key]
@@ -916,31 +908,10 @@ $scope.cambia_rango_auto=function(value){
 	}
 	
 	
-	/*$scope.getEventos=function(fechai,fechaf,estados,asuntos,id){
-		
-		$http.post("http://www.virtual-guardian.com/api/eventos",{
-				FechaI:fechai,
-				FechaF:fechaf,
-				Estados:estados,
-				Asuntos:asuntos,
-				IdEvento:id
-				})
-		.success(function(data,status,header,config){
-			for(var i=0;i<data.length;i++){
-				$rootScope.Eventos.push(JSON.parse(data[i]))
-			}
-			
-			window.localStorage.setArray("Eventos",$rootScope.Eventos)
-			
-			//console.log($rootScope.Eventos.length);
-			})
-		.error(function(error,status,header,config){
-			//console.log(error);
-			})
-	}*/
+	
 	
 })
 .controller("menu",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork){
 	
-	//$(".bar-dark").height($(".bar-dark").height());
+	
 })

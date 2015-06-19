@@ -30,16 +30,21 @@ angular.module('starter')
 			$rootScope.sinMapa=true;
 			$rootScope.cargando=false;
 		})){
-			if(!$rootScope.recorrido)$scope.loadMaps();
-			else initialize();
+			$scope.loadMaps();
+			
 		}
 		$scope.radio=$rootScope.Usuario.Rango;
 		if(window.localStorage.getArray("Auto"))$scope.vigilando=true;
 	}
 	$rootScope.inicializaMapaRecorrido=function(){
+		if($rootScope.miubicacion==null)$rootScope.miubicacion=new google.maps.LatLng(20.6737919,-103.3354131);
+		$rootScope.ubicacionMarker.setPosition($rootScope.miubicacion);
+		$rootScope.ubicacionMarker.setIcon($scope.getImgUbicacion($rootScope.ubicacionMarker.getPosition()));
+		$rootScope.map.setCenter($rootScope.miubicacion);
+		$scope.circuloRadio.setCenter($rootScope.miubicacion);
+		$rootScope.showEventos();
 		$scope.radio=$rootScope.Usuario.Rango;
 		$scope.dibujaRadio();
-		if($rootScope.stepRecorrido!=6)navigator.geolocation.getCurrentPosition($rootScope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });	
 		$scope.swit=true;
 		$rootScope.muestraEventos();
 		$scope.circuloRadio.setMap($rootScope.map);
@@ -757,7 +762,6 @@ alert(1);
 		.success(function(data,status,header,config){
 			$rootScope.UpdateEvt=new Date();
 			for(var i=0;i<data.length;i++){
-				console.log(data);
                  $rootScope.sqlInsertEvento(JSON.parse(data[i]));
 			}
                  if(data.length>0)$rootScope.sqlGetEventos($rootScope.ubicacionMarker.getPosition().lat(),$rootScope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(){});
