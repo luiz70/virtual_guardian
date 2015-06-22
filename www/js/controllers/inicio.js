@@ -816,7 +816,6 @@ $scope.cambia_rango_auto=function(value){
              $rootScope.sqlGetExtras=function(id,callback){
               if( window.sqlitePlugin){
               $rootScope.sqlQuery("SELECT Asunto,Subtitulo,Direccion,Municipio,FechaScreen as Fecha,Hora FROM EVENTOS WHERE IdEvento="+id,function(res){
-                                  console.log(res);
                                   callback(res.rows.item(0));
                                   
                                 })
