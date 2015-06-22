@@ -483,7 +483,8 @@ $scope.clickEvento=function (marker){
         $scope.selectedMarker=marker;
             
         $rootScope.sqlGetExtras(marker.data.IdEvento,function(res){
-            if(res.Asunto==null){
+                                console.log(res);
+            if(res==null || res.Asunto==null){
                 $http.get("http://www.virtual-guardian.com/api/evento/"+marker.data.IdEvento)
                 .success(function(data,status,header,config){
                     var d=data;

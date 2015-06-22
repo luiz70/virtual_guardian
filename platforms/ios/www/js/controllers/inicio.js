@@ -72,13 +72,16 @@ angular.module('starter')
 	}
 	//$rootScope.stepRecorrido=1
 	$rootScope.closeRecorrido=function(){
+            window.localStorage.removeItem("enRecorrido")
+            $rootScope.Usuario.Nuevo=0
+            window.localStorage.setArray("Usuario",$rootScope.Usuario)
 			switch($rootScope.stepRecorrido){
 			case 0: $scope.popoverRec.hide();
 			$rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
 			});
 			break;
 			default:
-			window.localStorage.removeItem("enRecorrido")
+			
 			$scope.popoverRec.hide();;
 			$scope.popoverRec=null;
 			$location.path("/home");
@@ -774,9 +777,12 @@ $scope.cambia_rango_auto=function(value){
                 });
 				  }
               }
-              $rootScope.sqlSaveExtras=function(event,id){
+              $rootScope.sqlSaveExtras=function(event,id,newone){
 				  if( window.sqlitePlugin)
-              $rootScope.sqlQuery("UPDATE EVENTOS SET Asunto='"+event.Asunto+"',Subtitulo='"+event.Subtitulo+"',Direccion='"+event.Direccion+"',Municipio='"+event.Municipio+"',FechaScreen='"+event.Fecha+"',Hora='"+event.Hora+"' WHERE IdEvento="+id,function(res){
+              if(newone)$rootScope.sqlQuery("INSERT INTO EVENTOS (Asunto,Subtitulo,Direccion,Municipio,FechaScreen,Hora,IdEvento) VALUES('"+event.Asunto+"','"+event.Subtitulo+"','"+event.Direccion+"','"+event.Municipio+"','"+event.Fecha+"','"+event.Hora+"','"+id+"')",function(res){
+                                            
+                                            });
+              else $rootScope.sqlQuery("UPDATE EVENTOS SET Asunto='"+event.Asunto+"',Subtitulo='"+event.Subtitulo+"',Direccion='"+event.Direccion+"',Municipio='"+event.Municipio+"',FechaScreen='"+event.Fecha+"',Hora='"+event.Hora+"' WHERE IdEvento="+id,function(res){
                                   
                     });
               
@@ -814,9 +820,9 @@ $scope.cambia_rango_auto=function(value){
 				  }else callback("");
               }
              $rootScope.sqlGetExtras=function(id,callback){
+              
               if( window.sqlitePlugin){
-              $rootScope.sqlQuery("SELECT Asunto,Subtitulo,Direccion,Municipio,FechaScreen as Fecha,Hora FROM EVENTOS WHERE IdEvento="+id,function(res){
-                                  console.log(res);
+              $rootScope.sqlQuery("SELECT IdEvento,Asunto,Subtitulo,Direccion,Municipio,FechaScreen as Fecha,Hora FROM EVENTOS WHERE IdEvento="+id,function(res){
                                   callback(res.rows.item(0));
                                   
                                 })
