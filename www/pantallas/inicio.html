@@ -60,7 +60,7 @@
 	</ion-side-menu-content >
 	<ion-side-menu side="left" width="tamano" ng-controller="menu">
 		<ion-header-bar id="m1" class="bar-dark" style="height: 10vh !important;" ng-click="abreAjustesCuenta()">
-			<div class="titulo_menu" style="  font-weight: 400;">{{Usuario.Correo}}</div>
+			<div class="titulo_menu" style="  font-weight: 400; text-overflow:ellipsis;white-space:nowrap;overflow:hidden">{{Usuario.Correo}}</div>
             <div class="titulo_menu" style="position:absolute !important; left:0px; bottom:0px;   font-size: 2.5vh !important;  color:#E9E9E9;">{{"Suscripción "+Usuario.Suscripcion.toLowerCase()}}</div>
 		</ion-header-bar>
         <div style="  position: absolute;top: 10vh;bottom: 0px;width: 100%;">

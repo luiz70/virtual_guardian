@@ -91,7 +91,7 @@ angular.module('starter')
 		$rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 		$scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition());
 		$rootScope.showEventos();
-        $rootScope.showToast($rootScope.idioma.mapa[4])
+        if(!$rootScope.recorrido || $rootScope.stepRecorrido==7)$rootScope.showToast($rootScope.idioma.mapa[4])
 		if($rootScope.stepRecorrido==7)$timeout(function(){
 				$rootScope.nextRecorrido();	
 				},500)
@@ -483,7 +483,7 @@ $scope.clickEvento=function (marker){
         $scope.selectedMarker=marker;
             
         $rootScope.sqlGetExtras(marker.data.IdEvento,function(res){
-			
+                                console.log(res);
             if(res==null || res.Asunto==null){
                 $http.get("http://www.virtual-guardian.com/api/evento/"+marker.data.IdEvento)
                 .success(function(data,status,header,config){
