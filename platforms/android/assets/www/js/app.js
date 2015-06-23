@@ -34,7 +34,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	}
 	$rootScope.Update=new Date();
 	$rootScope.UpdateEvt=new Date();
-        
+        //window.localStorage.removeItem("UpdateHistorial")
         if(!window.localStorage.getItem("UpdateHistorial")){
             $rootScope.UpdateHistorial=0;
             window.localStorage.setItem("UpdateHistorial",$rootScope.UpdateHistorial);
@@ -47,7 +47,6 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	else $rootScope.notPendientes=0;	
 	$rootScope.tabInicial=1;
 	$rootScope.scriptMapa=false;
-	$rootScope.startRecorrido=false;
 	$rootScope.platform=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
     $rootScope.ipad=(window.device.model.substring(0,4).toLowerCase()=="ipad");
@@ -113,8 +112,12 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 
         case 'message':
           // this is the actual push notification. its format depends on the data model from the push server
+		  console.log(JSON.stringify(notification));
           	if(notification.coldstart){
-				$rootScope.tabInicial=2;
+				if(notification.notificaciones>0){
+				$rootScope.notPendientes+=notification.notificaciones;
+				window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
+				}
 			}else if(notification.foreground){
 				if($ionicSlideBoxDelegate.currentIndex()!=1){
 				$rootScope.notPendientes+=notification.notificaciones;
@@ -125,7 +128,15 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 					$rootScope.doRefreshNotification();
 				}
 			}else if(notification.notificaciones>0){
-				$scope.onTab(2);
+				//$rootScope.onTab(2);
+				$rootScope.notPendientes+=notification.notificaciones;
+				window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
+			}
+			
+			for(var i=0;i<notification.notificaciones;i++){
+			if(notification["Notif"+i].Tipo=="8"){
+				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
+			}
 			}
           break;
 
@@ -149,9 +160,14 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 					$rootScope.doRefreshNotification();
 				}
             }else if(parseInt(notification.notificaciones)>0){
-            $scope.onTab(2);
+            $rootScope.onTab(2);
             }
-	
+			
+			for(var i=0;i<notification.notificaciones;i++){
+			/*if(notification["Notif"+i].Tipo=="8"){
+				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
+			}*/
+			}
 		  	
 		}
     });
@@ -285,26 +301,7 @@ $rootScope.unregister=function(){
       }
 	}
   })
-   .state('recorrido', {
-    url: "/recorrido",
-	views: {
-      '': {
-        templateUrl: "pantallas/recorrido/recorrido_home.html"
-      }/*,
-	  'vista-mapa@recorrido': {
-        templateUrl: "pantallas/recorrido/mapa.html"
-      },
-	  'vista-notificaciones@recorrido': {
-        templateUrl: "pantallas/notificaciones.html"
-      },
-	  'vista-personas@recorrido': {
-        templateUrl: "pantallas/personas.html"
-      },
-	  'vista-auto@recorrido': {
-        templateUrl: "pantallas/auto.html"
-      }*/
-	}
-  })
+   
   
   // if none of the above states are matched, use this as the fallback
 $urlRouterProvider.otherwise('/');

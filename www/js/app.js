@@ -112,8 +112,12 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 
         case 'message':
           // this is the actual push notification. its format depends on the data model from the push server
+		  console.log(JSON.stringify(notification));
           	if(notification.coldstart){
-				$rootScope.tabInicial=2;
+				if(notification.notificaciones>0){
+				$rootScope.notPendientes+=notification.notificaciones;
+				window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
+				}
 			}else if(notification.foreground){
 				if($ionicSlideBoxDelegate.currentIndex()!=1){
 				$rootScope.notPendientes+=notification.notificaciones;
@@ -124,7 +128,15 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 					$rootScope.doRefreshNotification();
 				}
 			}else if(notification.notificaciones>0){
-				$scope.onTab(2);
+				//$rootScope.onTab(2);
+				$rootScope.notPendientes+=notification.notificaciones;
+				window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
+			}
+			
+			for(var i=0;i<notification.notificaciones;i++){
+			if(notification["Notif"+i].Tipo=="8"){
+				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
+			}
 			}
           break;
 
@@ -148,9 +160,14 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 					$rootScope.doRefreshNotification();
 				}
             }else if(parseInt(notification.notificaciones)>0){
-            $scope.onTab(2);
+            $rootScope.onTab(2);
             }
-	
+			
+			for(var i=0;i<notification.notificaciones;i++){
+			/*if(notification["Notif"+i].Tipo=="8"){
+				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
+			}*/
+			}
 		  	
 		}
     });

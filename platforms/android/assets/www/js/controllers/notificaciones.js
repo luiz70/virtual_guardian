@@ -1,5 +1,6 @@
 angular.module('starter')
 .controller("notificaciones",function($scope,$http,$rootScope,$timeout){
+	
 	//VARIABLES
 	$scope.cargandoN=false;
 	$scope.isRefresh=false;

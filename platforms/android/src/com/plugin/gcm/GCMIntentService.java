@@ -163,6 +163,10 @@ public class GCMIntentService extends GCMBaseIntentService {
             			Notificaciones.add(extras);
         				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
                 	break;
+            		case 8://codigo
+            			Notificaciones.add(extras);
+        				if(!extras.getBoolean("foreground"))createNotificationAlerta(context, extras);
+                	break;
             	}
             }
                 
@@ -382,6 +386,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 			break;
 		case 4:icon=R.drawable.ic_notification_car;
 			break;
+		case 8:icon=R.drawable.ic_notification;
+		break;
 		}
 		Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),icon);
 		Notification summaryNotification;
@@ -408,7 +414,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 			pendientes="Tienes "+cuentaNot(extras.getString("Tipo"))+" notificaciones pendientes";
 			ticker="ALERTA Virtual Guardian!";
 		}
-			
+		if(Integer.parseInt(extras.getString("Tipo"))==8){
+			ticker="";
+			}
 			
 		// Create an InboxStyle notification
 		summaryNotification = new NotificationCompat.Builder(context)
@@ -437,6 +445,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 			if(Idioma.equalsIgnoreCase("español")){
 				ticker="ALERTA Virtual Guardian!";
 			}
+			if(Integer.parseInt(extras.getString("Tipo"))==8){
+				ticker="";
+				}
 			summaryNotification =
 					new NotificationCompat.Builder(context)
 						.setDefaults(defaults)

@@ -180,6 +180,11 @@ public class PushPlugin extends CordovaPlugin {
         super.onResume(multitasking);
         gForeground = true;
        List<Bundle> Notificaciones= GCMIntentService.clean(0);
+       Bundle extras= new Bundle();
+       extras.putBoolean("foreground", false);
+       extras.putBoolean("coldstart", false);
+       extras.putBoolean("resumed", false);
+       sendExtras(extras);
         
     }
 

@@ -7,11 +7,10 @@ $(".input_registro").focusin(function(e) {
 });
 })
 .controller("registro",function($scope,$http,$location,$ionicSlideBoxDelegate,$timeout,$rootScope){
-	window.localStorage.removeItem("Registro");
+	//window.localStorage.removeItem("Registro");
 	$timeout(function(){ 
 		$ionicSlideBoxDelegate.enableSlide(false);
 		if(window.localStorage.getArray("Registro")){
-			
 			$ionicSlideBoxDelegate.slide(1,1);
 			$scope.nuser=window.localStorage.getArray("Registro");
 		}
@@ -56,7 +55,7 @@ $(".input_registro").focusin(function(e) {
 		$http.post("http://www.virtual-guardian.com/api/registro",{
 				Correo:$scope.nuser.email,
 				Contrasena:$scope.nuser.pass,
-				Promo:$scope.nuser.promo,
+				Promo:$("#reg_pass3").val(),
 				})
 		.success(function(data,status,header,config){
 			$rootScope.hideCargando();
