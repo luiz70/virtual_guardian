@@ -792,10 +792,10 @@ alert(1);
 			$scope.buscaEnMapa(evento);
 			break;
 			case "5":
-			$scope.onTab(3);
+			$rootScope.onTab(3);
 			break;
 			case "6":
-			$scope.onTab(3);
+			$rootScope.onTab(3);
 			break;
 			case "7":
 			$rootScope.alert($scope.idioma.notificaciones[8],$scope.idioma.notificaciones[10],function(){});

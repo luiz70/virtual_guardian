@@ -1,7 +1,7 @@
 angular.module('starter')
 .controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory){
 	
-	$scope.onTab=function (id){
+	$rootScope.onTab=function (id){
 		if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){
 		$rootScope.cargando=false;
 		$("#img_btn_1").attr("src","img/iconos/map.png");
@@ -50,7 +50,7 @@ angular.module('starter')
 	$scope.pantallas=[true,false,false,true];
 	$timeout(function(){ 
 		$ionicSlideBoxDelegate.enableSlide(false); 
-		if($rootScope.tabInicial!=1)$scope.onTab($rootScope.tabInicial);
+		if($rootScope.tabInicial!=1)$rootScope.onTab($rootScope.tabInicial);
         
 	},300);
 	$scope.tamano=window.innerWidth*0.85;
@@ -197,26 +197,26 @@ angular.module('starter')
 			$("#msj_map").html($rootScope.idioma.recorrido[21]);
 			break;
 			case 8:$rootScope.stepRecorrido=9;
-			$scope.onTab(2);
+			$rootScope.onTab(2);
 			$scope.popoverRec.show();
 			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[22];
 			break;
 			case 9:
 			$("#recorrido9").removeClass("animate-hide");
 			$rootScope.stepRecorrido=10;
-			$scope.onTab(3);
+			$rootScope.onTab(3);
 			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[31];
 			break;
 			case 10:
 			$("#recorrido10").removeClass("animate-hide");
 			$rootScope.stepRecorrido=11;
-			$scope.onTab(4);
+			$rootScope.onTab(4);
 			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[35];
 			break;
 			case 11:
 			$("#recorrido11").removeClass("animate-hide");
 			$rootScope.stepRecorrido=12;
-			$scope.onTab(1);
+			$rootScope.onTab(1);
 			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[41];
 			break;
 			
@@ -665,27 +665,36 @@ $scope.cambia_rango_auto=function(value){
 	}
 	$scope.abreModalEstados=function(){
 		
-		if($rootScope.iOS)$scope.openSelect($rootScope.Usuario.Estados,true);
+		$scope.openSelect($rootScope.Usuario.Estados,true);
 	}
 	$scope.abreModalTipos=function(){
 		
-		if($rootScope.iOS)$scope.openSelect($rootScope.Usuario.Tipos,true);
+		$scope.openSelect($rootScope.Usuario.Tipos,true);
 	}
 	$scope.abreFiltrosEstados=function(){
-		if($rootScope.iOS)$scope.openSelect($rootScope.filtros.Estados,true);
+		$scope.openSelect($rootScope.filtros.Estados,true);
 	}
 	$scope.abreFiltrosTipos=function(){
 		
-		if($rootScope.iOS)$scope.openSelect($rootScope.filtros.Tipos,true);
+		$scope.openSelect($rootScope.filtros.Tipos,true);
 		
 	}
 	$scope.abrePeriodo=function(){
 		
-		if($rootScope.iOS){
+		
 			$scope.Usuario.Periodo=parseInt($scope.Usuario.Periodo);
 			$scope.openSelect($scope.Periodos,false);
-		}
-		
+				
+	}
+	$rootScope.TipPop=false;
+	$rootScope.muestraTip=function(tip){
+		$rootScope.tipImg="http://45.40.137.37/documentos/notificaciones/"+tip.IdNotificacion+".png";
+		$rootScope.notificacionTip=true;
+		$rootScope.TipPop=true;
+	}
+	$rootScope.cierraTipPop=function(){
+		$rootScope.TipPop=false;
+		$rootScope.notificacionTip=false;
 	}
 	$scope.ro=function(){
 		console.log($rootScope.Usuario.Periodo);

@@ -113,6 +113,7 @@ angular.module('starter')
 				data.reverse();
 				for(var i=0;i<data.length;i++){
 					var tmp=JSON.parse(data[i])
+                     
 					if(tmp.Subtitulo && tmp.Subtitulo.substring(0,2)==", ")tmp.Subtitulo=tmp.Subtitulo.substring(2);
 					tmp.Subtitulo=cleanutf(tmp.Subtitulo);
 					if(tmp.Titulo==""){

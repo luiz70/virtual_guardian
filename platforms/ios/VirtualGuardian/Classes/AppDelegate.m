@@ -63,6 +63,18 @@
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+    UILocalNotification *localNotif =[launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (localNotif) {
+        
+        NSLog(@"****** notifiation ******");
+        application.applicationIconBadgeNumber=11;
+    }
+    
+    
+    
+    
+    
+    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
 #if __has_feature(objc_arc)

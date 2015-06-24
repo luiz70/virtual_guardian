@@ -71,10 +71,10 @@ NSMutableArray *locations;
     PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
     [pushHandler didFailToRegisterForRemoteNotificationsWithError:error];
 }
-
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     //revisa registro
-    
+    NSLog(@"HOLA");
+    application.applicationIconBadgeNumber= 11;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"regId"]){
         
@@ -100,7 +100,7 @@ NSMutableArray *locations;
                     //avisauto
                     [self informa:userInfo :@"NotificaAuto":distAuto];
                 }else{
-                    if (appState == UIApplicationStateActive) {
+                   /* if (appState == UIApplicationStateActive) {
                         PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
                         pushHandler.notificaciones=pushHandler.notificaciones+1;
                         pushHandler.notificationMessage = userInfo;
@@ -109,7 +109,7 @@ NSMutableArray *locations;
                     } else {
                         [self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
                         self.launchNotification = userInfo;
-                    }
+                    }*/
                 }
                 break;
                 
@@ -121,9 +121,9 @@ NSMutableArray *locations;
                         pushHandler.isInline = YES;
                         [pushHandler notificationReceived];
                     } else {
-                        if([userInfo[@"Tipo"] intValue]<5)
+                        /*if([userInfo[@"Tipo"] intValue]<5)
                         [self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
-                        else [self setNotification:[userInfo objectForKey:@"Subtitulo"]:@"":[userInfo objectForKey:@"Titulo"]];
+                        else [self setNotification:[userInfo objectForKey:@"Subtitulo"]:@"":[userInfo objectForKey:@"Titulo"]];*/
                         self.launchNotification = userInfo;
                     }
                 break;
@@ -248,16 +248,24 @@ NSMutableArray *locations;
     NSLog(@"active");
     
     //zero badge
-    application.applicationIconBadgeNumber = 0;
+    
+    if(application.applicationIconBadgeNumber!=0){
+        application.applicationIconBadgeNumber= 0;
+        PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
+        pushHandler.notificaciones=pushHandler.notificaciones+1;
+        pushHandler.notificationMessage = self.launchNotification;
+        pushHandler.isInline = NO;
+        [pushHandler notificationReceived];
+    }
 
-    if (self.launchNotification) {
+    /*if (self.launchNotification) {
         NSLog(@"active");
         PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
 		
         pushHandler.notificationMessage = self.launchNotification;
         self.launchNotification = nil;
         [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
-    }
+    }*/
 }
 
 // The accessors use an Associative Reference since you can't define a iVar in a category
