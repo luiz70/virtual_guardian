@@ -222,7 +222,14 @@ $rootScope.unregister=function(){
  $ionicConfigProvider.platform.android.views.maxCache(0);
  $ionicConfigProvider.views.transition("ios");
  $ionicConfigProvider.views.forwardCache(false);
+ var headers = {
+				'Access-Control-Allow-Origin' : '*',
+				'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT',
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			};
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
+	$httpProvider.defaults.headers.post['Access-Control-Allow-Origin']='https://www.virtual-guardian.com';
 	$httpProvider.defaults.withCredentials = false;
 	
   $stateProvider

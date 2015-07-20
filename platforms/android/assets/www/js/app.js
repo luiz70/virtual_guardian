@@ -112,7 +112,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 
         case 'message':
           // this is the actual push notification. its format depends on the data model from the push server
-		  console.log(JSON.stringify(notification));
+		  
           	if(notification.coldstart){
 				if(notification.notificaciones>0){
 				$rootScope.notPendientes+=notification.notificaciones;
