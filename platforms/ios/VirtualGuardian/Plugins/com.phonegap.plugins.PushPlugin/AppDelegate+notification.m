@@ -91,25 +91,25 @@ NSMutableArray *locations;
             
                 if(distPersona>=0){
                 //avisaamigos
-                    [self informa:userInfo :@"NotificaAmigos":distPersona];
-                    if(distAuto>=0){
+                   // [self informa:userInfo :@"NotificaAmigos":distPersona];
+                    if(distAuto>=0 && [userInfo[@"NotificacionesAuto"] intValue]==1){
                         //avisauto
                         [self informa:userInfo :@"NotificaAuto":distAuto];
                     }
-                }else if(distAuto>=0){
+                }else if(distAuto>=0 && [userInfo[@"NotificacionesAuto"] intValue]==1){
                     //avisauto
                     [self informa:userInfo :@"NotificaAuto":distAuto];
                 }else{
-                   /* if (appState == UIApplicationStateActive) {
+                   if (appState == UIApplicationStateActive) {
                         PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
                         pushHandler.notificaciones=pushHandler.notificaciones+1;
                         pushHandler.notificationMessage = userInfo;
                         pushHandler.isInline = YES;
                         [pushHandler notificationReceived];
                     } else {
-                        [self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
+                     /*   [self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];*/
                         self.launchNotification = userInfo;
-                    }*/
+                    }
                 }
                 break;
                 
