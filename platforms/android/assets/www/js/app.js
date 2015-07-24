@@ -7,7 +7,7 @@ var pushNotification ;
 
 angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 
-.run(function($ionicPlatform,$rootScope,$location, $cordovaPush, $ionicHistory,$ionicSlideBoxDelegate,$timeout,$cordovaAppVersion){
+.run(function($ionicPlatform,$rootScope,$location, $cordovaPush, $ionicHistory,$ionicSlideBoxDelegate,$timeout,$cordovaAppVersion,$http){
 	var iosConfig = {
     "badge": true,
     "sound": true,
@@ -78,12 +78,19 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
   $rootScope.registraiOS=function(){
      if(window.cordova)$cordovaPush.register(iosConfig).then(function(deviceToken) {
       // Success -- send deviceToken to server, and store for future use
-	  $.post("http://www.virtual-guardian.com/movil/php.php",{funcion:"logIn_reg",Id:window.localStorage.getArray("Usuario").Id,Registro:deviceToken,Os:window.device.platform},function(data){
+	  /*$.post("https://www.virtual-guardian.com/movil/php.php",{funcion:"logIn_reg",Id:window.localStorage.getArray("Usuario").Id,Registro:deviceToken,Os:window.device.platform},function(data){
 		  $rootScope.Usuario.Registro=deviceToken;
 			   window.localStorage.setArray("Usuario",$rootScope.Usuario);
-			});/*$.post("http://www.virtual-guardian.com/movil/php.php",{funcion:"logIn_reg",Id:window.localStorage.getArray("Usuario").Id,Registro:deviceToken,Os:window.device.platform},function(data){
 			});*/
-      //$http.post("http://server.co/", {user: "Bob", tokenID: deviceToken})
+			$http.post("https://www.virtual-guardian.com/api/logIn_reg",{
+				Id:window.localStorage.getArray("Usuario").Id,
+				Registro:deviceToken,
+				Os:window.device.platform
+				})
+		.success(function(data,status,header,config){
+			$rootScope.Usuario.Registro=deviceToken;
+			window.localStorage.setArray("Usuario",$rootScope.Usuario);
+		})
     }, function(err) {
       alert("Registration error: " + err)
     });
@@ -103,10 +110,19 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
         case 'registered':
           if (notification.regid.length > 0 ) {
 			  if(notification.regid!=$rootScope.Usuario.Registro)
-           $.post("http://www.virtual-guardian.com/movil/php.php",{funcion:"logIn_reg",Id:window.localStorage.getArray("Usuario").Id,Registro:notification.regid,Os:window.device.platform},function(data){
+			  $http.post("https://www.virtual-guardian.com/api/logIn_reg",{
+				Id:window.localStorage.getArray("Usuario").Id,
+				Registro:notification.regid,
+				Os:window.device.platform
+				})
+		.success(function(data,status,header,config){
+			$rootScope.Usuario.Registro=notification.regid;
+			window.localStorage.setArray("Usuario",$rootScope.Usuario);
+		})
+          /* $.post("https://www.virtual-guardian.com/movil/php.php",{funcion:"logIn_reg",Id:window.localStorage.getArray("Usuario").Id,Registro:notification.regid,Os:window.device.platform},function(data){
 			   $rootScope.Usuario.Registro=notification.regid;
 			   window.localStorage.setArray("Usuario",$rootScope.Usuario);
-			});
+			});*/
           }
           break;
 
@@ -217,12 +233,19 @@ $rootScope.unregister=function(){
 	})
 .config(function($stateProvider, $urlRouterProvider,$httpProvider,$ionicConfigProvider) {
  $ionicConfigProvider.views.maxCache(0);
-        $ionicConfigProvider.views.swipeBackEnabled(false);
-        $ionicConfigProvider.platform.ios.views.maxCache(0);
+ $ionicConfigProvider.views.swipeBackEnabled(false);
+ $ionicConfigProvider.platform.ios.views.maxCache(0);
  $ionicConfigProvider.platform.android.views.maxCache(0);
  $ionicConfigProvider.views.transition("ios");
  $ionicConfigProvider.views.forwardCache(false);
+ var headers = {
+				'Access-Control-Allow-Origin' : '*',
+				'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT',
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			};
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
+	$httpProvider.defaults.headers.post['Access-Control-Allow-Origin']='https://www.virtual-guardian.com';
 	$httpProvider.defaults.withCredentials = false;
 	
   $stateProvider

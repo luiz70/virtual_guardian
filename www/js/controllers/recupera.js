@@ -11,7 +11,7 @@ angular.module('starter')
 		else if(!$scope.evalid($scope.emailrec)) $rootScope.alert($scope.idioma.registro[26],$scope.idioma.registro[10],function(){});
 		else{
 		$rootScope.showCargando($scope.idioma.general[1]);
-		$http.post("http://www.virtual-guardian.com/api/recupera",{
+		$http.post("https://www.virtual-guardian.com/api/recupera",{
 				Correo:$scope.emailrec,
 				})
 		.success(function(data,status,header,config){

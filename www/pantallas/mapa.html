@@ -42,11 +42,38 @@
           </div>
 </div>  
 </div>
-<button class="btn_mapa_flotante" ng-click="revisaPos()" ng-hide="sinMapa">
+<div class="buscadorDir ng-hide" ng-show="buscandoDireccion">
+<div class="divBuscaMapa">
+	<input id="textoBuscado" class="inputBuscaMapa" type="text" ng-model="textoB" ng-change="buscaLugar()" placeholder="{{idioma.mapa[8]}}" ng-keydown="searchEnter($event)"></input>
+	<i class="icon ion-close-round" style="position: absolute;float:right;font-size: 4vh; color: #363636;  top: 0px;bottom: 0px;margin: auto;height: 4vh;width: 5vh;text-align: center;" ng-click="ocultaBuscador()"></i>
+</div>
+	<ion-content class="searchLista"  has-bouncing="true">
+
+	<ion-list>
+    	<ion-item class="item" style="background: none;padding:5px;padding-top:8px;height: auto;text-align: center;border:none;  color: rgba(255, 255, 255, 0.71);
+  font-size: 3vh;" ng-show="!loadingPlaces  && resultadoLugares.length<1" >
+      		{{(textoBuscado.length==0)?idioma.mapa[6]:idioma.mapa[7]+textoBuscado+'"'}}	  		
+  		</ion-item>
+    	<ion-item class="item" style="background: none;padding: 10px;height: 50px;text-align: center;border:none" ng-show="loadingPlaces" >
+      		<ion-spinner icon="android" class="spinner-dark"></ion-spinner>	  		
+  		</ion-item>
+    	<ion-item class="item item-avatar lugaritem" ng-repeat="lugar in resultadoLugares" ng-click="lugarSeleccionado(lugar)" ng-hide="loadingPlaces">
+        	<img src="img/blank.png" style="  border-radius: 0px;  opacity: 0.9;background-color: #D17E26;-webkit-mask-image: url('{{lugar.icon}}');-webkit-mask-size: cover;" >
+      		<h2 style="  font-size: 3vh !important;  color: #fff; text-overflow:ellipsis; white-space:nowrap; ">{{lugar.name}}</h2>
+      		<p style="  color: #ce932f;">{{lugar.formatted_address}}</p>
+  		</ion-item>
+    </ion-list>
+</ion-content>
+</div>
+<button class="btn_mapa_flotante" ng-click="buscaEnMap()" ng-hide="sinMapa || recorrido">
+	<!--i class="icon ion-android-locate" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
+    <img src="img/iconos/buscar.png" width="100%" ></div>
+</button>
+<button class="btn_mapa_flotante btn_mapa_flotante2" style="top:15vh" ng-click="revisaPos()" ng-hide="sinMapa">
 	<!--i class="icon ion-android-locate" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
     <img src="img/iconos/position.png" width="100%" ></div>
 </button>
-<button class="btn_mapa_flotante btn_mapa_flotante2" style="top:15vh" ng-click="showEventos(1)" ng-hide="sinMapa">
+<button class="btn_mapa_flotante btn_mapa_flotante3" style="top:21vh"   ng-click="showEventos(1)" ng-hide="sinMapa">
 	<!--i class="icon ion-android-sync" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
     <img src="img/iconos/refresh.png" width="100%"></div>
 </button>

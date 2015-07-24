@@ -52,7 +52,7 @@ $(".input_registro").focusin(function(e) {
 		else if(!$scope.validac($scope.nuser.pass)) $rootScope.alert($scope.idioma.registro[1],$scope.idioma.registro[11],function(){});
 		else{
 		$rootScope.showCargando($scope.idioma.general[1]);
-		$http.post("http://www.virtual-guardian.com/api/registro",{
+		$http.post("https://www.virtual-guardian.com/api/registro",{
 				Correo:$scope.nuser.email,
 				Contrasena:$scope.nuser.pass,
 				Promo:$("#reg_pass3").val(),
@@ -72,7 +72,7 @@ $(".input_registro").focusin(function(e) {
 		break;
 		case 1: if($scope.nuser.codigo.length==5){
 		$rootScope.showCargando($scope.idioma.general[1]);
-		$http.post("http://www.virtual-guardian.com/api/registro/code",{
+		$http.post("https://www.virtual-guardian.com/api/registro/code",{
 				Correo:$scope.nuser.email,
 				Codigo:$scope.nuser.codigo
 				})
@@ -97,7 +97,7 @@ $(".input_registro").focusin(function(e) {
 	$scope.sendAgain=function(){
 		
 		$rootScope.showCargando($scope.idioma.general[1]);
-		$http.post("http://www.virtual-guardian.com/api/registro/resend",{
+		$http.post("https://www.virtual-guardian.com/api/registro/resend",{
 				Correo:$scope.nuser.email
 				})
 		.success(function(data,status,header,config){
@@ -110,7 +110,7 @@ $(".input_registro").focusin(function(e) {
 			})
 	}
 	$scope.cancelarR=function(){
-	$http.post("http://www.virtual-guardian.com/api/registro/clean",{
+	$http.post("https://www.virtual-guardian.com/api/registro/clean",{
 					Correo:$scope.nuser.email
 					})
 				.success(function(data,status,header,config){

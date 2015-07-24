@@ -581,7 +581,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	
 	private void informaAmigos(Bundle extras,int distancia){
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://45.40.137.37/portal/php/notificacionAndroid.php");
+		HttpPost httppost = new HttpPost("https://www.virtual-guardian.com/portal/php/notificacionAndroid.php");
 
 		try {
 		    // Add your data
@@ -603,7 +603,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	}
 	private void informaCarro(Bundle extras,int distancia){
 		HttpClient httpclient2 = new DefaultHttpClient();
-		HttpPost httppost2 = new HttpPost("http://45.40.137.37/portal/php/notificacionAndroid.php");
+		HttpPost httppost2 = new HttpPost("https://www.virtual-guardian.com/portal/php/notificacionAndroid.php");
 
 		try {
 		    // Add your data
