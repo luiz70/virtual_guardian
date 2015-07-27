@@ -11,7 +11,7 @@ angular.module('starter')
 					5:"Actualizar",
 					6:"Cancelar",
 					7:"Actualización de historial",
-					8:"<div style='font-size:2vh'>Para minimizar el consumo de datos móviles necesitamos descargar el historial de eventos desde una conexión WiFi.</div>¿Desea hacerlo en este momento?",
+					8:"<div style='font-size:2vh'>Para minimizar el consumo de datos móviles necesitamos descargar el historial de eventos desde una conexión WiFi. Esta operación puede tardar unos minutos.</div>¿Desea hacerlo en este momento?",
 					9:"Actualizando...",
 					10:"Su tranquilidad, nuestro territorio",
 					11:"Suscripción",
@@ -47,7 +47,10 @@ angular.module('starter')
 					2:"Hora:",
 					3:"Dirección:",
                     4:"¡Ubicación actualizada!",
-                    5:"¡Eventos actualizados!"
+                    5:"¡Eventos actualizados!",
+					6:"Escribe para buscar lugares",
+					7:'No hay resultados para "',
+					8:'Buscador de lugares'
 				},
 				cuenta:{
 					1:"Usuario",

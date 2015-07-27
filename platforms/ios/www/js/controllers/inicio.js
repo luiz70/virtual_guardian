@@ -227,7 +227,7 @@ angular.module('starter')
 	},500);
 	$rootScope.msj_map=false;
 	if(!window.localStorage.getArray("Estados"))
-	$http.get("http://www.virtual-guardian.com/api/estados")
+	$http.get("https://www.virtual-guardian.com/api/estados")
 		.success(function(data,status,header,config){
 			$scope.Estados=[];
 			for(var i=0;i<data.length;i++)
@@ -266,7 +266,7 @@ angular.module('starter')
 	}
 	
 	}
-	$http.get("http://www.virtual-guardian.com/api/tipoeventos")
+	$http.get("https://www.virtual-guardian.com/api/tipoeventos",{})
 		.success(function(data,status,header,config){
 			$scope.TipoEventos=[];
 			for(var i=0;i<data.length;i++)
@@ -291,7 +291,7 @@ angular.module('starter')
 		//$scope.ajustes=!$scope.ajustes;
             $scope.openTerminos("pantallas/cuenta.html");
 			
-			$http.get("http://www.virtual-guardian.com/api/perfilExtras/"+$rootScope.Usuario.Id)
+			$http.get("https://www.virtual-guardian.com/api/perfilExtras/"+$rootScope.Usuario.Id)
 		.success(function(data,status,header,config){
 			$rootScope.Usuario.Extras=data;
 			})
@@ -487,7 +487,7 @@ angular.module('starter')
 	   console.log($rootScope.UsuarioTemporal);
 	   if(Object.keys($rootScope.UsuarioTemporal).length>1){
 		   
-		   $http.post("http://www.virtual-guardian.com/api/ajustes/guarda",$rootScope.UsuarioTemporal)
+		   $http.post("https://www.virtual-guardian.com/api/ajustes/guarda",$rootScope.UsuarioTemporal)
 		   .success(function(data,status,header,config){
 			 window.localStorage.setArray("Usuario",$rootScope.Usuario);
 			})
@@ -506,7 +506,7 @@ angular.module('starter')
 		$scope.confirm($scope.idioma.menu[6],$scope.idioma.login[10],function(){
 		$scope.showCargando($scope.idioma.login[9]);
 			
-		$http.get("http://www.virtual-guardian.com/api/logout/"+window.localStorage.getArray("Usuario").Id)
+		$http.get("https://www.virtual-guardian.com/api/logout/"+window.localStorage.getArray("Usuario").Id)
 		.success(function(data,status,header,config){	
 			$scope.hideCargando();
 			$("#capa_menu").css("opacity","0");
@@ -532,7 +532,7 @@ angular.module('starter')
 		$rootScope.unregister();
 	}
 	$rootScope.abrePaquetes=function(){
-		window.open("https://www.virtual-guardian.com/paquetes.html","_system")
+		window.open("https://www.virtual-guardian.com/app.php#suscripciones","_system")
 	}
 	$rootScope.nuevaContra={uno:"",dos:""};
 	$rootScope.cambiarContra=function(){
@@ -547,7 +547,7 @@ angular.module('starter')
 		else if(!$scope.validac($rootScope.nuevaContra.uno)) $rootScope.alert($rootScope.idioma.cuenta[3],$scope.idioma.registro[11],function(){});
 		else {
 			$rootScope.showCargando($rootScope.idioma.general[33]);
-			$http.post("http://www.virtual-guardian.com/api/usuario/contrasena",{
+			$http.post("https://www.virtual-guardian.com/api/usuario/contrasena",{
 				Id:$rootScope.Usuario.Id,
 				Contra:$rootScope.nuevaContra.uno,
 				})
@@ -569,7 +569,7 @@ angular.module('starter')
 	}
 	
 	$rootScope.isVigente=function(){
-		$http.get("http://www.virtual-guardian.com/api/vigencia/"+window.localStorage.getArray("Usuario").Id)
+		$http.get("https://www.virtual-guardian.com/api/vigencia/"+window.localStorage.getArray("Usuario").Id)
 		.success(function(data,status,header,config){
 			$rootScope.Update=new Date();
 			if(data.Registro!=$rootScope.Usuario.Registro){
@@ -688,7 +688,7 @@ $scope.cambia_rango_auto=function(value){
 	}
 	$rootScope.TipPop=false;
 	$rootScope.muestraTip=function(tip){
-		$rootScope.tipImg="http://45.40.137.37/documentos/notificaciones/"+tip.IdNotificacion+".png";
+		$rootScope.tipImg="https://www.virtual-guardian.com/documentos/notificaciones/"+tip.IdNotificacion+".png";
 		$rootScope.notificacionTip=true;
 		$rootScope.TipPop=true;
 	}
@@ -849,6 +849,7 @@ $scope.cambia_rango_auto=function(value){
 		}
 	$scope.verificaHistorial=function(){
 		//problema en updatehistorial
+		
 		if( window.sqlitePlugin)
             if(((new Date()).getTime()-$rootScope.UpdateHistorial)/86400000>=10)
              if(parseInt($rootScope.Usuario.IdSuscripcion)>1)
@@ -870,7 +871,7 @@ $scope.cambia_rango_auto=function(value){
               var d=new Date();
               var d2=new Date();
               d2.setFullYear(d2.getFullYear()-2);
-		$http.post("http://www.virtual-guardian.com/api/historial",{
+		$http.post("https://www.virtual-guardian.com/api/historial",{
 				FechaI:"2010-01-01",
 				FechaF:""+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),
 				Estados:"",
@@ -881,7 +882,7 @@ $scope.cambia_rango_auto=function(value){
 				var f=0;
                  var d=[];
 				 console.log("TAMAÑO: "+data.length)
-			for(var i=0,j=-1;i<data.length;i++){
+			for(var i=0;i<data.length;i++){
 				var arr="";
 					if($rootScope.iOS) arr = "("+($.map(JSON.parse(data[i]), function(el) { return el; })).join(",")+")";
 					else arr = ($.map(JSON.parse(data[i]), function(el) { return el; })).join(",");

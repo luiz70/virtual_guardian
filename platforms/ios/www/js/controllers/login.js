@@ -31,7 +31,7 @@ angular.module('starter')
 		if(!$scope.email || $scope.contrasena.length<6)$rootScope.alert($rootScope.idioma.login[1],$rootScope.idioma.login[7],function(){});
 		else {
 		$scope.showCargando($scope.idioma.login[8]);
-			$http.post("http://www.virtual-guardian.com/api/login",{
+			$http.post("https://www.virtual-guardian.com/api/login",{
 				correo:$scope.email,
 				contra:$scope.contrasena
 				})
@@ -89,7 +89,7 @@ angular.module('starter')
 			alert(1);
 			})
 		.error(function(error,status,header,config){
-			alert(2);"http://www.virtual-guardian.com/movil/api.php"
+			alert(2);"https://www.virtual-guardian.com/movil/api.php"
 			})
 	$http.post("http://jsonplaceholder.typicode.com/posts",{
 		title:"hola",

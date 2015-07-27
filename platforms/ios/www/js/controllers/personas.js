@@ -15,7 +15,7 @@ angular.module('starter')
 		if($scope.Personas.length>0)$rootScope.cargando=false;
 		else $rootScope.cargando=true;
 		if($scope.Conexion()){
-		$http.get("http://www.virtual-guardian.com/api/personas/"+$rootScope.Usuario.Id,{timeout:20000})
+		$http.get("https://www.virtual-guardian.com/api/personas/"+$rootScope.Usuario.Id,{timeout:20000})
 		.success(function(data,status,header,config){
 			$scope.Personas=[];
 			for(var i=0;i<data.length;i++){
@@ -51,7 +51,7 @@ angular.module('starter')
 			else if(res=="")$scope.alert($scope.idioma.personas[1],$scope.idioma.registro[9],function(){});
 			else if(!$scope.evalid(res))$scope.alert($scope.idioma.personas[1],$scope.idioma.registro[10],function(){});
 			else{
-			$http.post("http://www.virtual-guardian.com/api/personas/add",{
+			$http.post("https://www.virtual-guardian.com/api/personas/add",{
 				Usuario:$rootScope.Usuario.Id,
 				Correo:res
 				})
@@ -78,7 +78,7 @@ angular.module('starter')
 		console.log(usr);
 		if($scope.Conexion(1)){
 			$scope.confirm($scope.idioma.personas[11],$scope.idioma.personas[12]+usr.Correo+"?",function(){
-			$http.post("http://www.virtual-guardian.com/api/personas/rem",{
+			$http.post("https://www.virtual-guardian.com/api/personas/rem",{
 				Usuario1:usr.IdCliente,
 				Usuario2:$rootScope.Usuario.Id
 				})
@@ -96,7 +96,7 @@ angular.module('starter')
 		if($scope.Conexion(1)){
 		$scope.confirm($scope.idioma.personas[13],$scope.idioma.personas[14]+usr.Correo+"?",function(){
 			
-			$http.post("http://www.virtual-guardian.com/api/personas/acp",{
+			$http.post("https://www.virtual-guardian.com/api/personas/acp",{
 				Usuario1:usr.IdCliente,
 				Usuario2:$rootScope.Usuario.Id
 				})
@@ -118,7 +118,7 @@ angular.module('starter')
 			Hora:"20:04"
 		}*/
 	
-	/*$http.get("http://www.virtual-guardian.com/api/notificaciones/"+window.localStorage.getArray("Usuario").Id)
+	/*$http.get("https://www.virtual-guardian.com/api/notificaciones/"+window.localStorage.getArray("Usuario").Id)
 		.success(function(data,status,header,config){
 			$scope.Personas=[];
 			for(var i=0;i<data.length;i++){
@@ -133,7 +133,7 @@ angular.module('starter')
 			
 			})
 	$scope.doRefresh=function(){
-		$http.get("http://www.virtual-guardian.com/api/notificaciones/"+window.localStorage.getArray("Usuario").Id)
+		$http.get("https://www.virtual-guardian.com/api/notificaciones/"+window.localStorage.getArray("Usuario").Id)
 		.success(function(data,status,header,config){
 			$scope.Personas=[];
 			for(var i=0;i<data.length;i++)

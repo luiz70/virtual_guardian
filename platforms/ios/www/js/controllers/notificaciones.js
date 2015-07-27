@@ -24,7 +24,7 @@ angular.module('starter')
 		var last=$rootScope.Notificaciones[$rootScope.Notificaciones.length-1].IdNotificacion;
 		$scope.loadOlder=true;
 		if($scope.Conexion()){
-			$http.post("http://www.virtual-guardian.com/api/notificaciones/refresh",{
+			$http.post("https://www.virtual-guardian.com/api/notificaciones/refresh",{
 				Id:window.localStorage.getArray("Usuario").Id,
 				Last:last,
 				Limit:5
@@ -102,7 +102,7 @@ angular.module('starter')
 				$rootScope.cargando=false;
 				if(!$scope.isRefresh)$scope.cargandoN=true;
 			}
-			$http.post("http://www.virtual-guardian.com/api/notificaciones",{
+			$http.post("https://www.virtual-guardian.com/api/notificaciones",{
 				Id:window.localStorage.getArray("Usuario").Id,
 				Last:last,
 				Limit:15
@@ -113,7 +113,6 @@ angular.module('starter')
 				data.reverse();
 				for(var i=0;i<data.length;i++){
 					var tmp=JSON.parse(data[i])
-                     
 					if(tmp.Subtitulo && tmp.Subtitulo.substring(0,2)==", ")tmp.Subtitulo=tmp.Subtitulo.substring(2);
 					tmp.Subtitulo=cleanutf(tmp.Subtitulo);
 					if(tmp.Titulo==""){

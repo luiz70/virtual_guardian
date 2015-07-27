@@ -195,6 +195,57 @@ font-weight: 600;
 border: none;
 opacity: 0.9;
 }
+.inputBuscaMapa{
+    position: relative;
+    width: 89vw;
+	float:left;
+    font-size: 3vh !important;
+    padding: 1vh !important;
+  	padding-right: 2vh;
+    padding-left: 2vh;
+    line-height: initial;
+	background:none;
+	border:none;
+}
+.divBuscaMapa{
+    position: absolute;
+    width: 98vw;
+    left: 1vw;
+  	top: 9vh;
+  border: solid 1px #9F9F9F;
+  border-radius: 2px;
+   background-color: rgba(255, 255, 255, 0.93);
+}
+.buscadorDir{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;    
+	left: 0px;    
+	right: 0px;    
+	
+    background-color: rgba(11, 11, 11, 0.95);    
+	z-index: 10;  
+}
+.searchLista{
+position: absolute !important;
+  
+top: 15vh !important;
+  left: 0px !important;
+  right: 0px !important;
+  
+bottom: 0vh !important;
+  padding: 1vh !important;
+}
+.lugaritem{
+  padding-top: 2vh !important;
+  padding-bottom: 1vh !important;
+  min-height: 0px !important;
+  background: rgba(255, 255, 255, 0.08);
+  text-align: left;
+  width: 100% !important;
+  border: none;
+  margin-bottom: 1vh;
+}
 
 @media all and (orientation:landscape) {
 #inicio_barra{
