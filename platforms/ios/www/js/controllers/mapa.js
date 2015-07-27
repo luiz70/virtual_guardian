@@ -103,9 +103,10 @@ angular.module('starter')
 				},500)
 	}
 	$scope.onErrorc=function(){
-		if(!$rootScope.recorrido)
+            if(!$rootScope.recorrido){
 		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
-		else{
+            
+            }else{
 		$timeout(function(){
 				$rootScope.nextRecorrido();	
 				},500)
@@ -211,13 +212,14 @@ $scope.hideBarra=function(){
 					},1000,function(){});
 }
  	$scope.onError=function(error) {
-		$rootScope.miubicacion=null;
+            $rootScope.miubicacion=new google.maps.LatLng(0,0);
+            $rootScope.cargando=false;
+		
 		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
 		if($scope.Conexion(1,function(){
 			$rootScope.sinMapa=true;
 			$rootScope.cargando=false;
 		})){
-			console.log("onerrorMaps");
 			$rootScope.sinMapa=false;
 		var mapOptions = {
     		zoom: 12,
