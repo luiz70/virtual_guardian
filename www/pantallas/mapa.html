@@ -44,7 +44,7 @@
 </div>
 <div class="buscadorDir ng-hide" ng-show="buscandoDireccion">
 <div class="divBuscaMapa">
-	<input id="textoBuscado" class="inputBuscaMapa" type="text" ng-model="textoB" ng-change="buscaLugar()" placeholder="{{idioma.mapa[8]}}" ng-keydown="searchEnter($event)"></input>
+	<input id="textoBuscado" class="inputBuscaMapa" type="text" ng-model="textoB" ng-change="buscaLugar()" placeholder="{{idioma.mapa[8]}}" ng-keydown="searchEnter($event)" ng-blur="cierrateclado()"></input>
 	<i class="icon ion-close-round" style="position: absolute;float:right;font-size: 4vh; color: #363636;  top: 0px;bottom: 0px;margin: auto;height: 4vh;width: 5vh;text-align: center;" ng-click="ocultaBuscador()"></i>
 </div>
 	<ion-content class="searchLista"  has-bouncing="true">

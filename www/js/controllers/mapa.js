@@ -431,12 +431,16 @@ $rootScope.buscaEnMap=function(){
 	},300,function(){
 		
 	$("#textoBuscado").focus();
-	cordova.plugins.Keyboard.show();
+	if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.show();
 	});
+}
+$scope.cierrateclado=function(){
+	if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.close();
+	else alert(1);
 }
 $scope.searchEnter=function(event){
 	if(event.keyCode==13){
-       cordova.plugins.Keyboard.close();
+       if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.close();
     }
 }
 
@@ -484,7 +488,7 @@ $scope.resultadosBusq=function(results, status) {
 	}
 $rootScope.ocultaBuscador=function(){
 	$scope.textoBuscado="";
-	cordova.plugins.Keyboard.close();
+	if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.close();
 	$("#textoBuscado").blur();
 	$("#textoBuscado").val("");
 	$(".buscadorDir")
