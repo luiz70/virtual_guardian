@@ -56,10 +56,10 @@
     	<ion-item class="item" style="background: none;padding: 10px;height: 50px;text-align: center;border:none" ng-show="loadingPlaces" >
       		<ion-spinner icon="android" class="spinner-dark"></ion-spinner>	  		
   		</ion-item>
-    	<ion-item class="item item-avatar lugaritem" ng-repeat="lugar in resultadoLugares" ng-click="lugarSeleccionado(lugar)" ng-hide="loadingPlaces">
-        	<img src="img/blank.png" style="  border-radius: 0px;  opacity: 0.9;background-color: #D17E26;-webkit-mask-image: url('{{lugar.icon}}');-webkit-mask-size: cover;" >
-      		<h2 style="  font-size: 3vh;  color: #fff; text-overflow:ellipsis; white-space:nowrap; " class="nombreLugar">{{lugar.name}}</h2>
-      		<p style="  color: #ce932f;">{{lugar.formatted_address}}</p>
+    	<ion-item class="item item-avatar lugaritem" ng-repeat="lugar in resultadoLugares" ng-click="lugarSeleccionado(lugar)" ng-hide="loadingPlaces" style="  padding-top: {{2*vh+'px'}} !important;padding-bottom: {{1*vh+'px'}} !important;margin-bottom: {{1*vh+'px'}};padding-left: {{15*vw+'px'}};">
+        	<img src="img/blank.png" style="width:{{9*vw+'px'}};left:{{2*vh+'px'}};border-radius: 0px;  opacity: 0.9;background-color: #D17E26;-webkit-mask-image: url('{{lugar.icon}}');-webkit-mask-size: cover;" >
+      		<h2 style="  font-size: {{3*vh+'px'}};  color: #fff; text-overflow:ellipsis; white-space:nowrap; " class="nombreLugar">{{lugar.name}}</h2>
+      		<p style="  color: #ce932f; font-size:{{2.4*vh+'px'}}; line-height:{{3*vh+'px'}}">{{lugar.formatted_address}}</p>
   		</ion-item>
     </ion-list>
 </ion-content>

@@ -13,6 +13,9 @@
 		font-size: 19px !important;
 		font-weight: 100 !important;
 }
+.nombreLugar{
+    font-size: 120% !important;
+}
 #avisopriv{
  bottom: 16vh !important;
 }

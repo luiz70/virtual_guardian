@@ -1,8 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-.nombreLugar{
-    font-size:3vh;
-}
+
 #inicio_barra{
 position: absolute;
 height: 8vh;

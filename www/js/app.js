@@ -47,6 +47,8 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	else $rootScope.notPendientes=0;	
 	$rootScope.tabInicial=1;
 	$rootScope.scriptMapa=false;
+	$rootScope.vh=window.innerHeight/100;
+	$rootScope.vw=window.innerWidth/100;
 	$rootScope.platform=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
     if($rootScope.iOS && window.cordova && window.cordova.plugins.Keyboard)window.cordova.plugins.Keyboard.disableScroll(true)
