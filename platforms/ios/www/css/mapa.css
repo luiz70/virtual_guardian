@@ -1,6 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
-
+.nombreLugar{
+    font-size:3vh;
+}
 #inicio_barra{
 position: absolute;
 height: 8vh;
@@ -194,6 +196,9 @@ bottom: 0px;
 font-weight: 600;
 border: none;
 opacity: 0.9;
+}
+#textoBuscado{
+font-size: 3vh ;
 }
 .inputBuscaMapa{
     position: relative;

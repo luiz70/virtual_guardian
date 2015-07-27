@@ -422,7 +422,7 @@ for(var i=0;i<$scope.points.length;i++)$scope.bnds=$scope.bnds.extend($scope.poi
 }
 $rootScope.buscaEnMap=function(){
 	$scope.resultadoLugares=[];
-            $("#textoBuscado").css("font-size",$("#textoBuscado").css("font-size")+" !important");
+   
 	$("#textoBuscado").val("");
 	$scope.textoBuscado="";
 	$(".buscadorDir").css("opacity",0);
@@ -432,12 +432,16 @@ $rootScope.buscaEnMap=function(){
 	},300,function(){
 		
 	$("#textoBuscado").focus();
+	 $("#textoBuscado").css("font-size",$("#textoBuscado").css("font-size"));
+	 $("#mensajeBuscador").css("font-size",$("#mensajeBuscador").css("font-size"));
+	 
+	
 	if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.show();
 	});
 }
 $scope.cierrateclado=function(){
 	if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.close();
-	else alert(1);
+	
 }
 $scope.searchEnter=function(event){
 	if(event.keyCode==13){

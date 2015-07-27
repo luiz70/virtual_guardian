@@ -49,7 +49,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	$rootScope.scriptMapa=false;
 	$rootScope.platform=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
-    if($rootScope.iOS)window.cordova.plugins.Keyboard.disableScroll(true)
+    if($rootScope.iOS && window.cordova && window.cordova.plugins.Keyboard)window.cordova.plugins.Keyboard.disableScroll(true)
     $rootScope.ipad=(window.device.model.substring(0,4).toLowerCase()=="ipad");
 	window.addEventListener('native.keyboardshow', keyboardShowHandler);
 	window.addEventListener('native.keyboardhide', keyboardHideHandler);
