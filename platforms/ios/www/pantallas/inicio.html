@@ -32,6 +32,45 @@
 			</div>
 		</ion-header-bar>
         <button  class="ng-hide" style="position: absolute;top: 0vh;height: 8vh;padding: 1vh;left: 0vh;right: 0vh;font-size: 3vh;color: #fff;text-align: center; background-color: rgba(63, 62, 62, 0.97);z-index: 99; border:none;width:100vw" ng-show="recorrido" ng-click="closeRecorrido()">{{idioma.recorrido[60]}}</button>
+        
+        
+        
+        
+        
+        
+        
+        <!--div class="buscadorDir ng-hide" ng-show="buscandoDireccion">
+<div class="divBuscaMapa">
+	<input id="textoBuscado" class="inputBuscaMapa" type="text" ng-model="textoB" ng-change="buscaLugar()" placeholder="{{idioma.mapa[8]}}" ng-keydown="searchEnter($event)"></input>
+	<i class="icon ion-close-round" style="position: absolute;float:right;font-size: 4vh; color: #363636;  top: 0px;bottom: 0px;margin: auto;height: 4vh;width: 5vh;text-align: center;" ng-click="ocultaBuscador()"></i>
+</div>
+	<ion-content class="searchLista"  has-bouncing="true">
+
+	<ion-list>
+    	<ion-item class="item" style="background: none;padding:5px;padding-top:8px;height: auto;text-align: center;border:none;  color: rgba(255, 255, 255, 0.71);
+  font-size: 3vh;" ng-show="!loadingPlaces  && resultadoLugares.length<1" >
+      		{{(textoBuscado.length==0)?idioma.mapa[6]:idioma.mapa[7]+textoBuscado+'"'}}	  		
+  		</ion-item>
+    	<ion-item class="item" style="background: none;padding: 10px;height: 50px;text-align: center;border:none" ng-show="loadingPlaces" >
+      		<ion-spinner icon="android" class="spinner-dark"></ion-spinner>	  		
+  		</ion-item>
+    	<ion-item class="item item-avatar lugaritem" ng-repeat="lugar in resultadoLugares" ng-click="lugarSeleccionado(lugar)" ng-hide="loadingPlaces">
+        	<img src="img/blank.png" style="  border-radius: 0px;  opacity: 0.9;background-color: #D17E26;-webkit-mask-image: url('{{lugar.icon}}');-webkit-mask-size: cover;" >
+      		<h2 style="  font-size: 3vh !important;  color: #fff; text-overflow:ellipsis; white-space:nowrap; ">{{lugar.name}}</h2>
+      		<p style="  color: #ce932f;">{{lugar.formatted_address}}</p>
+  		</ion-item>
+    </ion-list>
+</ion-content>
+</div-->
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <ion-pan ng-controller="mapa">
         
 		<ion-nav-view name="inicioContent" style="top:0vh;bottom:0px;position:absolute;height:auto;" >
