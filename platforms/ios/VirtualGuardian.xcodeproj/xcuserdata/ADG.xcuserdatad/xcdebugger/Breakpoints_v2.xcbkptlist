@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VirtualGuardian/Plugins/com.phonegap.plugins.PushPlugin/AppDelegate+notification.m"
-            timestampString = "456785268.689278"
+            timestampString = "459793508.456503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "-application:didReceiveRemoteNotification:fetchCompletionHandler:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VirtualGuardian/Plugins/com.phonegap.plugins.PushPlugin/AppDelegate+notification.m"
-            timestampString = "456785268.689278"
+            timestampString = "459793508.456503"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
             landmarkName = "@implementation AppDelegate(notification)"
             landmarkType = "3">
          </BreakpointContent>
