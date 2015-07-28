@@ -4661,7 +4661,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
  * --------------------------------------------------
  */
 .item {
-  border-color: #262525;
+  border-color: #1E1E1E;
   background-color: #fff;
   color: #FFFFFF;
   position: relative;
@@ -4671,7 +4671,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   padding: 16px;
   border-width: 1px;
   border-style: solid;
-  font-size: 2.5vh; 
+  font-size: 2.8vh; 
   /* padding-bottom: 2vh !important; */
 }
   .item h2 {

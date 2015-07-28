@@ -868,10 +868,12 @@ alert(1);
 		}
 	}
 	$rootScope.getTiposStr=function(buscar){
+		
 			var a=[];
 			for(var i=0; i<buscar.Tipos.length;i++)
 			if(!$rootScope.iOS || buscar.Tipos[i].Selected)a.push(buscar.Tipos[i].Id);
 			return a.join(",");
+		
 		}
 	$rootScope.getEstadosStr=function(buscar){
 			var a=[];
@@ -880,12 +882,14 @@ alert(1);
 			return a.join(",");
 		}
 		$rootScope.getNotTiposStr=function(buscar){
+			if(buscar.Tipos.length>0 && buscar.Tipos[0].Selected){
 			var a=[];
 			for(var i=0,j=0; i<$scope.TipoEventos.length;i++){
 			if((!$rootScope.iOS && $scope.TipoEventos[i].Id!=buscar.Tipos[j].Id) || ($rootScope.iOS && !buscar.Tipos[i].Selected))a.push($scope.TipoEventos[i].Id);
 			else j++;
 			}
 			return a.join(",");
+			}else return "";
 		}
 	$rootScope.getNotEstadosStr=function(buscar){
 			var a=[];
