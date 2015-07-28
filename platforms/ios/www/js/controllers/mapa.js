@@ -25,6 +25,7 @@ angular.module('starter')
 	$scope.searchBox;
 	$scope.textoBuscado="";
 	$scope.resultadoLugares=[];
+            $scope.ubicacionMarkerRes=null;
 
 	if(window.localStorage.getArray("Peligros"))$rootScope.Peligros=window.localStorage.getArray("Peligros");
 	$scope.createMap=function(){
@@ -338,8 +339,13 @@ $scope.hideBarra=function(){
 		});
 		google.maps.event.addListener($rootScope.ubicacionMarker, 'mousedown', function() {
 			$scope.circuloRadio.setVisible(false);
+            $scope.ubicacionMarkerRes=$rootScope.ubicacionMarker.getPosition();
 		});
 		google.maps.event.addListener($rootScope.ubicacionMarker, 'mouseup', function() {
+            if(!$scope.bnds.contains($rootScope.ubicacionMarker.getPosition())){
+                  $rootScope.ubicacionMarker.setPosition($scope.ubicacionMarkerRes);
+                  $rootScope.showToast($rootScope.idioma.mapa[9]);
+            }
 			$rootScope.ubicacionMarker.setIcon($scope.getImgUbicacion($rootScope.ubicacionMarker.getPosition()));
 			$scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition());
 			$scope.circuloRadio.setVisible(true);

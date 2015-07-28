@@ -50,7 +50,8 @@ angular.module('starter')
                     5:"¡Eventos actualizados!",
 					6:"Escribe para buscar lugares",
 					7:'No hay resultados para "',
-					8:'Buscador de lugares'
+					8:'Buscador de lugares',
+                    9:"¡Fuera de zona de cobertura!"
 				},
 				cuenta:{
 					1:"Usuario",
