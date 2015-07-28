@@ -1,6 +1,9 @@
 @charset "utf-8";
 /* CSS Document */
-
+:root {
+    --val:100px;
+    
+}
 #inicio_barra{
 position: absolute;
 height: 8vh;
@@ -210,6 +213,7 @@ font-size: 3vh ;
 	background:none;
 	border:none;
 }
+
 .divBuscaMapa{
     position: absolute;
     width: 98vw;
