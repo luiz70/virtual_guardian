@@ -524,7 +524,10 @@ angular.module('starter')
             
 				}
             }
-            $rootScope.showCover=function(){if($rootScope.iOS)$rootScope.keycover=true;}
+            $rootScope.showCover=function(){if($rootScope.iOS){
+            $("#input_prompt").css("font-size",$("#input_prompt").css("font-size"))
+            $rootScope.keycover=true;
+            }}
 	
 	$rootScope.showCargando = function(texto) {
     	$ionicLoading.show({
