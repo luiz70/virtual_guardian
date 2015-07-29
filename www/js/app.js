@@ -343,10 +343,12 @@ return function (input) {
 }
 })
 function keyboardShowHandler(e){
-    if(window.device.platform=="Android")$("#navview").height($("#navview").height()-e.keyboardHeight+20);
+    if(window.device.platform=="Android")
+        $("#navview").height($("#navview").height()-e.keyboardHeight+20);
                }
 function keyboardHideHandler(e){
-    if(window.device.platform=="Android")$("#navview").height("100vh");
+    if(window.device.platform=="Android")
+        $("#navview").height("100vh");
 }
 Storage.prototype.setArray = function(key, obj) {
     return this.setItem(key, JSON.stringify(obj))
