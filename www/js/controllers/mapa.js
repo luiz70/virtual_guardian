@@ -83,7 +83,8 @@ angular.module('starter')
 			
 			
     }
-            $scope.initialize=function(){alert(1);}
+    
+	$scope.initialize=function(){alert(1);}
 	$scope.revisaPos=function(){
 		if(!$rootScope.recorrido || $rootScope.stepRecorrido==7)
 		navigator.geolocation.getCurrentPosition($rootScope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:15000 });	
@@ -93,6 +94,9 @@ angular.module('starter')
 		if(!$rootScope.recorrido)
 		if(!window.localStorage.getArray("Auto"))
 		navigator.geolocation.getCurrentPosition($rootScope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:15000 });
+	}
+	$scope.revisaPrimeraPos=function(){
+		
 	}
 	$rootScope.onSPos=function(position){
 		$rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
@@ -175,6 +179,8 @@ angular.module('starter')
 		
 	
 		google.maps.event.addListenerOnce($rootScope.map,"idle",function (){
+			google.maps.event.trigger($rootScope.map, 'resize');
+			
 			$scope.revisaPos();
 			console.log($rootScope.map.getCenter());
 			$scope.setPosicion($rootScope.map, $rootScope.map.getCenter().lat(),$rootScope.map.getCenter().lng())
@@ -190,8 +196,10 @@ angular.module('starter')
 		$rootScope.mapCarro.setZoom(17);
 		if(window.localStorage.getArray("Auto")){
 			$scope.poscar=new google.maps.LatLng(window.localStorage.getArray("Auto").Latitud,window.localStorage.getArray("Auto").Longitud);
+		}else if(window.localStorage.getArray("lastloc")){
 		}
 		google.maps.event.addListenerOnce($rootScope.mapCarro,"idle",function (){//iniciaFiltro();}
+			google.maps.event.trigger($rootScope.mapCarro, 'resize');
 			$scope.revisaPosCarro()
 			$scope.setCarro($scope.poscar.lat(),$scope.poscar.lng())
 			$rootScope.mapCarro.setCenter($scope.poscar);

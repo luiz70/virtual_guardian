@@ -545,16 +545,18 @@ angular.module('starter')
 		var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);
 	}
+	$scope.alertPopup=null;
 	$rootScope.alert=function(titulo,texto,funcion){
 		/*if(navigator.notification)
 		navigator.notification.alert(texto,funcion, titulo,$rootScope.idioma.general[2]);
 		else alert(texto);*/
-		var alertPopup = $ionicPopup.alert({
+		if($scope.alertPopup)$scope.alertPopup.close();
+		$scope.alertPopup = $ionicPopup.alert({
      		title: titulo,
      		template: texto,
 			okText:$rootScope.idioma.general[2]
    		});
-   		alertPopup.then(function(res) {
+   		$scope.alertPopup.then(function(res) {
      		funcion();
    		});
 	}

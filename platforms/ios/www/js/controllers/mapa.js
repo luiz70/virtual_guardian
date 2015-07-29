@@ -34,6 +34,7 @@ angular.module('starter')
 		if($scope.Conexion(1,function(){
 			$rootScope.sinMapa=true;
 			$rootScope.cargando=false;
+			
 		})){
 			$scope.loadMaps();
 			
@@ -66,12 +67,14 @@ angular.module('starter')
             document.body.appendChild(e);
 			$rootScope.sinMapa=false;
 			$rootScope.cargando=true;
-			navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true,timeout:10000 });
+			//navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true,timeout:10000 });
+			$scope.onSuccess(20.6737919,-103.3354131)
 			
 			
 	}
     $scope.loadMaps=function(){
 		if(!$rootScope.scriptMapa){
+			
 			var s = document.createElement('script'); // use global document since Angular's $document is weak
             s.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp?key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs&sensor=false&libraries=places&callback=initialize';
             document.body.appendChild(s);
@@ -80,16 +83,20 @@ angular.module('starter')
 			
 			
     }
-            $scope.initialize=function(){alert(1);}
+    
+	$scope.initialize=function(){alert(1);}
 	$scope.revisaPos=function(){
 		if(!$rootScope.recorrido || $rootScope.stepRecorrido==7)
-		navigator.geolocation.getCurrentPosition($rootScope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });	
+		navigator.geolocation.getCurrentPosition($rootScope.onSPos, $scope.onErrorc,{enableHighAccuracy: true,timeout:15000 });	
 		
 	}
 	$scope.revisaPosCarro=function(){
 		if(!$rootScope.recorrido)
 		if(!window.localStorage.getArray("Auto"))
-		navigator.geolocation.getCurrentPosition($rootScope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:10000 });
+		navigator.geolocation.getCurrentPosition($rootScope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:15000 });
+	}
+	$scope.revisaPrimeraPos=function(){
+		
 	}
 	$rootScope.onSPos=function(position){
 		$rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
@@ -103,6 +110,7 @@ angular.module('starter')
 				$rootScope.nextRecorrido();	
 				},500)
 	}
+	$scope.mnsjNoGPS=false
 	$scope.onErrorc=function(){
             if(!$rootScope.recorrido){
 		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
@@ -119,12 +127,12 @@ angular.module('starter')
         $rootScope.showToast($rootScope.idioma.mapa[4])
 		
 	}
-	$scope.onSuccess=function (position) {
-		$rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+	$scope.onSuccess=function (lat,long) {
+		$rootScope.miubicacion=new google.maps.LatLng(0,0);
 		$rootScope.sinMapa=false;
 		var mapOptions = {
     		zoom: 12,
-			center:new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
+			center:new google.maps.LatLng(lat,long),
     		mapTypeControl: false,
     		panControl: false,
 	    	zoomControl: false,
@@ -171,24 +179,28 @@ angular.module('starter')
 		
 	
 		google.maps.event.addListenerOnce($rootScope.map,"idle",function (){
-			$scope.setPosicion($rootScope.map, $rootScope.miubicacion.lat(),$rootScope.miubicacion.lng())
-			$rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+			google.maps.event.trigger($rootScope.map, 'resize');
+			
+			$scope.revisaPos();
+			console.log($rootScope.map.getCenter());
+			$scope.setPosicion($rootScope.map, $rootScope.map.getCenter().lat(),$rootScope.map.getCenter().lng())
 			$rootScope.showEventos();
 			$rootScope.cargando=false;
 			$scope.hideBarra();
-			
-			
 		});
 		
-		$scope.poscar=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+		$scope.poscar=new google.maps.LatLng(lat,long);
 		$rootScope.mapCarro = new google.maps.Map(document.getElementById('auto_mapa'), mapOptions);
 		$rootScope.mapCarro.mapTypes.set('map_style', styledMap);
   		$rootScope.mapCarro.setMapTypeId('map_style');
 		$rootScope.mapCarro.setZoom(17);
 		if(window.localStorage.getArray("Auto")){
 			$scope.poscar=new google.maps.LatLng(window.localStorage.getArray("Auto").Latitud,window.localStorage.getArray("Auto").Longitud);
+		}else if(window.localStorage.getArray("lastloc")){
 		}
 		google.maps.event.addListenerOnce($rootScope.mapCarro,"idle",function (){//iniciaFiltro();}
+			google.maps.event.trigger($rootScope.mapCarro, 'resize');
+			$scope.revisaPosCarro()
 			$scope.setCarro($scope.poscar.lat(),$scope.poscar.lng())
 			$rootScope.mapCarro.setCenter($scope.poscar);
 		});
@@ -892,12 +904,14 @@ alert(1);
 			}else return "";
 		}
 	$rootScope.getNotEstadosStr=function(buscar){
+		if(buscar.Estados.length>0 && buscar.Estados[0].Selected){
 			var a=[];
 			for(var i=0,j=0; i<$scope.Estados.length;i++){
 			if((!$rootScope.iOS && $scope.Estados[i].Id!=buscar.Estados[j].Id) ||($rootScope.iOS && !buscar.Estados[i].Selected))a.push($scope.Estados[i].Id);
 			else j++;
 			}
 			return a.join(",");
+			}else return "";
 		}
 	$scope.getEventos=function(){
 		if(!$rootScope.recorrido){
