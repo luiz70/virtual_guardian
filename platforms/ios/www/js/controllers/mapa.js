@@ -94,9 +94,30 @@ angular.module('starter')
 		if(!$rootScope.recorrido)
 		if(!window.localStorage.getArray("Auto"))
 		navigator.geolocation.getCurrentPosition($rootScope.onSPosc, $scope.onErrorc,{enableHighAccuracy: true,timeout:15000 });
+
 	}
-	$scope.revisaPrimeraPos=function(){
-		
+            $scope.onErrorp=function(){
+            $rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
+
+            }
+	$scope.revisaPrimeraPos=function(position){
+            try{
+            google.maps.event.trigger($rootScope.map, 'resize');
+            }catch(err){}
+            try{
+            google.maps.event.trigger($rootScope.mapCarro, 'resize');
+            }catch(err){}
+            $rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            $rootScope.ubicacionMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            $rootScope.ubicacionMarker.setIcon($scope.getImgUbicacion($rootScope.ubicacionMarker.getPosition()));
+            $rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            $scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition());
+            $rootScope.showEventos();
+            if(window.localStorage.getArray("Auto")){
+            $scope.carroMarker.setPosition(new google.maps.LatLng(window.localStorage.getArray("Auto").Latitud,window.localStorage.getArray("Auto").Longitud));
+            }else $scope.carroMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            $rootScope.mapCarro.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+
 	}
 	$rootScope.onSPos=function(position){
 		$rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
@@ -179,13 +200,22 @@ angular.module('starter')
 		
 	
 		google.maps.event.addListenerOnce($rootScope.map,"idle",function (){
-			google.maps.event.trigger($rootScope.map, 'resize');
-			
-			$scope.revisaPos();
-			console.log($rootScope.map.getCenter());
-			$scope.setPosicion($rootScope.map, $rootScope.map.getCenter().lat(),$rootScope.map.getCenter().lng())
+            $timeout(function(){
+            $rootScope.cargando=false;
+            $scope.setPosicion($rootScope.map, $rootScope.map.getCenter().lat(),$rootScope.map.getCenter().lng())
 			$rootScope.showEventos();
-			$rootScope.cargando=false;
+                     try{
+            google.maps.event.trigger($rootScope.map, 'resize');
+                     }catch(err){}
+                     try{
+                     google.maps.event.trigger($rootScope.mapCarro, 'resize');
+                     }catch(err){}
+            navigator.geolocation.getCurrentPosition($scope.revisaPrimeraPos, $scope.onErrorp,{enableHighAccuracy: true,timeout:15000 });
+            },500);
+
+			
+			
+			
 			$scope.hideBarra();
 		});
 		
@@ -194,13 +224,12 @@ angular.module('starter')
 		$rootScope.mapCarro.mapTypes.set('map_style', styledMap);
   		$rootScope.mapCarro.setMapTypeId('map_style');
 		$rootScope.mapCarro.setZoom(17);
-		if(window.localStorage.getArray("Auto")){
+		if(window.localStorage.getArray("Auto") && $rootScope.Usuario.IdSuscripcion>1){
 			$scope.poscar=new google.maps.LatLng(window.localStorage.getArray("Auto").Latitud,window.localStorage.getArray("Auto").Longitud);
 		}else if(window.localStorage.getArray("lastloc")){
 		}
 		google.maps.event.addListenerOnce($rootScope.mapCarro,"idle",function (){//iniciaFiltro();}
-			google.maps.event.trigger($rootScope.mapCarro, 'resize');
-			$scope.revisaPosCarro()
+			
 			$scope.setCarro($scope.poscar.lat(),$scope.poscar.lng())
 			$rootScope.mapCarro.setCenter($scope.poscar);
 		});
@@ -209,7 +238,10 @@ angular.module('starter')
  	$scope.onWatch=function(position){
 		alert(1);
 	}
-
+            $rootScope.iniciaMapa=function(){
+            google.maps.event.trigger($rootScope.map, 'resize');
+            $rootScope.map.setCenter($scope.ubicacionMarker.getPosition());
+            }
 // onError Callback receives a PositionError object
 //
 $scope.showBarra=function(){
