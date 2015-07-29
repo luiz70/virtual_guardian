@@ -26,7 +26,8 @@
 #import <Foundation/Foundation.h>
 #import <Cordova/CDV.h>
 #import <Cordova/CDVPlugin.h>
-
+#import <PushKit/PushKit.h>
+#import <UIKit/UIKit.h>
 @interface PushPlugin : CDVPlugin
 {
     NSDictionary *notificationMessage;

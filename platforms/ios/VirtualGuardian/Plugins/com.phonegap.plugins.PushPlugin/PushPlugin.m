@@ -24,7 +24,10 @@
  */
 
 #import "PushPlugin.h"
-
+#import <PushKit/PushKit.h>
+#import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "AppDelegate+notification.h"
 @implementation PushPlugin
 
 @synthesize notificationMessage;
@@ -34,7 +37,7 @@
 @synthesize callbackId;
 @synthesize notificationCallbackId;
 @synthesize callback;
-
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 - (void)unregister:(CDVInvokedUrlCommand*)command;
 {
@@ -68,7 +71,14 @@
 - (void)register:(CDVInvokedUrlCommand*)command;
 {
 	self.callbackId = command.callbackId;
-
+    
+    /*voip*/
+    PKPushRegistry * voipRegistry = [[PKPushRegistry alloc] initWithQueue: dispatch_get_main_queue()];
+    // Set the registry's delegate to self
+    voipRegistry.delegate = self;
+    // Set the push type to VoIP
+    voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP]; // register
+    /**/
     NSMutableDictionary* options = [command.arguments objectAtIndex:0];
     notificaciones=0;
     UIUserNotificationType UserNotificationTypes = UIUserNotificationTypeNone;
@@ -118,17 +128,6 @@
     
     self.callback = [options objectForKey:@"ecb"];
     
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-    if ([[UIApplication sharedApplication]respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UserNotificationTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-    } else {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
-    }
-#else
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
-#endif
     
     if (notificationMessage)			// if there is a pending startup notification
     [self notificationReceived];	// go ahead and process it
@@ -197,9 +196,241 @@
         [results setValue:dev.model forKey:@"deviceModel"];
         [results setValue:dev.systemVersion forKey:@"deviceSystemVersion"];
 
-		[self successWithMessage:[NSString stringWithFormat:@"%@", token]];
+		//[self successWithMessage:[NSString stringWithFormat:@"%@", token]];
     #endif
 }
+- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials: (PKPushCredentials *)credentials forType:(NSString *)type {
+    
+    NSMutableDictionary *results = [NSMutableDictionary dictionary];
+    NSString *token = [[[[credentials.token description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                        stringByReplacingOccurrencesOfString:@">" withString:@""]
+                       stringByReplacingOccurrencesOfString: @" " withString: @""];
+    [results setValue:token forKey:@"deviceToken"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:token forKey:@"regId"];
+    [defaults synchronize];
+    
+#if !TARGET_IPHONE_SIMULATOR
+    // Get Bundle Info for Remote Registration (handy if you have more than one app)
+    [results setValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"] forKey:@"appName"];
+    [results setValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:@"appVersion"];
+    
+    // Check what Notifications the user has turned on.  We registered for all three, but they may have manually disabled some or all of them.
+    /*UIUserNotificationSettings *currentNotifSettings = [UIApplication sharedApplication].currentUserNotificationSettings;
+     UIUserNotificationType rntypes = currentNotifSettings.types;
+     if (rntypes == 0) {
+     rntypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+     }*/
+    NSUInteger rntypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+    
+    // Set the defaults to disabled unless we find otherwise...
+    NSString *pushBadge = @"disabled";
+    NSString *pushAlert = @"disabled";
+    NSString *pushSound = @"disabled";
+    
+    // Check what Registered Types are turned on. This is a bit tricky since if two are enabled, and one is off, it will return a number 2... not telling you which
+    // one is actually disabled. So we are literally checking to see if rnTypes matches what is turned on, instead of by number. The "tricky" part is that the
+    // single notification types will only match if they are the ONLY one enabled.  Likewise, when we are checking for a pair of notifications, it will only be
+    // true if those two notifications are on.  This is why the code is written this way
+    if(rntypes & UIUserNotificationTypeBadge){
+        pushBadge = @"enabled";
+    }
+    if(rntypes & UIUserNotificationTypeAlert) {
+        pushAlert = @"enabled";
+    }
+    if(rntypes & UIUserNotificationTypeSound) {
+        pushSound = @"enabled";
+    }
+    
+    [results setValue:pushBadge forKey:@"pushBadge"];
+    [results setValue:pushAlert forKey:@"pushAlert"];
+    [results setValue:pushSound forKey:@"pushSound"];
+    
+    // Get the users Device Model, Display Name, Token & Version Number
+    UIDevice *dev = [UIDevice currentDevice];
+    [results setValue:dev.name forKey:@"deviceName"];
+    [results setValue:dev.model forKey:@"deviceModel"];
+    [results setValue:dev.systemVersion forKey:@"deviceSystemVersion"];
+    
+    [self successWithMessage:[NSString stringWithFormat:@"%@", token]];
+#endif
+
+}
+// Handle incoming pushes
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
+    // Process the received push
+    UIApplication * application =[UIApplication sharedApplication];
+    //NSDictionary *userInfo=payload[@"dictionaryPayload"];
+    //
+    NSDictionary * userInfo= payload.dictionaryPayload;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:@"regId"]){
+        
+        
+        UIApplicationState appState = UIApplicationStateActive;
+        if ([application respondsToSelector:@selector(applicationState)]) {
+            appState = application.applicationState;
+        }
+        switch ([userInfo[@"Tipo"] intValue]) {
+            case 1:
+                ;
+                int distAuto=[self revisaAuto:userInfo];
+                int distPersona=[self revisaPersonal:userInfo];
+                
+               /* if(distPersona>=0){
+                    //avisaamigos
+                    // [self informa:userInfo :@"NotificaAmigos":distPersona];
+                    if(distAuto>=0 && [userInfo[@"NotificacionesAuto"] intValue]==1){
+                        //avisauto
+                        [self informa:userInfo :@"NotificaAuto":distAuto];
+                    }
+                }else if(distAuto>=0 && [userInfo[@"NotificacionesAuto"] intValue]==1){
+                    //avisauto
+                    [self informa:userInfo :@"NotificaAuto":distAuto];
+                }else{*/
+                    if (appState == UIApplicationStateActive) {
+                        
+                        notificaciones=notificaciones+1;
+                        notificationMessage = userInfo;
+                        isInline = YES;
+                        //[self notificationReceived];
+                    } else {
+                        [self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
+                        notificationMessage = userInfo;
+                    }
+                //}
+                break;
+                
+            default:
+                if (appState == UIApplicationStateActive) {
+                    notificaciones=notificaciones+1;
+                    notificationMessage = userInfo;
+                    isInline = YES;
+                    
+                    //[self notificationReceived];
+                } else {
+                    //if([userInfo[@"Tipo"] intValue]<5)
+                     [self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
+                     //else [self setNotification:[userInfo objectForKey:@"Subtitulo"]:@"":[userInfo objectForKey:@"Titulo"]];
+                    notificationMessage = userInfo;
+                }
+                break;
+        }
+        
+        
+    }
+    //completionHandler(UIBackgroundFetchResultNoData);
+    return;
+
+}
+
+-(BOOL)revisaPersonal:(NSDictionary *)userInfo{
+    
+    /*if ([CLLocationManager locationServicesEnabled]) {
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        
+        //We want to see all location updates, regardless of distance change
+        locationManager.distanceFilter = 200.0;
+        locationManager.delegate = self;
+        //funciona
+        if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [locationManager requestWhenInUseAuthorization];
+        }
+        [locationManager startUpdatingLocation];
+        
+        
+        
+        CLLocation *currentLocation=locationManager.location;
+        //NSLog(@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
+        CLLocation *eventLoc=[[CLLocation alloc] initWithLatitude:[[userInfo objectForKey:@"Latitud"] doubleValue] longitude:[[userInfo objectForKey:@"Longitud"] doubleValue]];
+        int dist=[self revisaDistancia:currentLocation:eventLoc];
+        //NSLog(@"%d",dist);
+        if(dist<=[userInfo[@"RangoPersonal"] intValue] && dist>0)
+            return dist;
+        else return -1;
+        [locationManager stopUpdatingLocation];
+        
+    } else {
+        return -1;
+    }*/
+    
+}
+-(int)revisaAuto:(NSDictionary *)userInfo{
+    /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:@"CarLatitud"]){
+        CLLocation *eventLoc=[[CLLocation alloc] initWithLatitude:[[userInfo objectForKey:@"Latitud"] doubleValue] longitude:[[userInfo objectForKey:@"Longitud"] doubleValue]];
+        CLLocation *carroLoc=[[CLLocation alloc] initWithLatitude:[[defaults objectForKey:@"CarLatitud"] doubleValue] longitude:[[defaults objectForKey:@"CarLongitud"] doubleValue]];
+        NSMutableDictionary *mutableDictionary = [userInfo mutableCopy];     //Make the dictionary mutable to change/add
+        mutableDictionary[@"Distancia"] = [NSString stringWithFormat:@"%d",[self revisaDistancia:carroLoc:eventLoc] ];
+        userInfo = mutableDictionary;
+        
+        if([userInfo[@"Distancia"] intValue]<=[userInfo[@"RangoAuto"] intValue]){
+            return [userInfo[@"Distancia"] intValue];
+        }
+        else return -1;
+    }else return -1;*/
+    
+}
+-(void) informa:(NSDictionary *) userInfo:(NSString *)funcion:(int) distancia{
+    NSString *post =[NSString stringWithFormat: @"IdEvento=%@&funcion=%@&IdUsuario=%@&Distancia=%d",userInfo[@"IdEvento"],funcion,userInfo[@"IdUsuario"],distancia ];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+    NSLog(post);
+    // In body data for the 'application/x-www-form-urlencoded' content type,
+    // form fields are separated by an ampersand. Note the absence of a
+    // leading ampersand.
+    
+    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://45.40.137.37/portal/php/notificacionAndroid.php"]];
+    
+    // Set the request's content type to application/x-www-form-urlencoded
+    [postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    // Designate the request a POST request and specify its body data
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setHTTPBody:[NSData dataWithBytes:[post UTF8String] length:strlen([post UTF8String])]];
+    
+    // Initialize the NSURLConnection and proceed as described in
+    // Retrieving the Contents of a URL
+    NSURLRequest *theRequest=[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.virtual-guardian.com/portal/php/notificacionAndroid.php"]
+                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                          timeoutInterval:60.0];
+    
+    // Create the NSMutableData to hold the received data.
+    // receivedData is an instance variable declared elsewhere.
+    NSMutableData *receivedData = [NSMutableData dataWithCapacity: 0];
+    
+    // create the connection with the request
+    // and start loading the data
+    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:postRequest delegate:self];
+    if (!theConnection) {
+        // Release the receivedData object.
+        receivedData = nil;
+        
+        
+        // Inform the user that the connection failed.
+    }
+}
+-(int)revisaDistancia:(CLLocation *) cord1:(CLLocation *)cord2{
+    
+    CLLocationDistance distance = [cord1 distanceFromLocation:cord2];
+    return distance;
+    
+}
+- (IBAction)setNotification:(NSString *)titulo: (NSString *)subtitulo:(NSString *) BigTitle {
+    notificaciones=notificaciones+1;
+    [UIApplication sharedApplication].applicationIconBadgeNumber++;
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+    localNotification.alertBody = [NSString stringWithFormat:@"%@: %@",titulo,subtitulo];
+    //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0.0"))localNotification.alertTitle=[NSString stringWithFormat:@"%@",BigTitle];
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    localNotification.applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
 
 - (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -231,7 +462,6 @@
 
         NSString * jsCallBack = [NSString stringWithFormat:@"%@(%@);", self.callback, jsonStr];
         [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
-        
         self.notificationMessage = nil;
         notificaciones=0;
     }

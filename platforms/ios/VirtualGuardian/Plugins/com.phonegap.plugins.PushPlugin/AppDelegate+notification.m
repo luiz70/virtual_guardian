@@ -71,10 +71,11 @@ NSMutableArray *locations;
     PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
     [pushHandler didFailToRegisterForRemoteNotificationsWithError:error];
 }
+
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     //revisa registro
-    NSLog(@"HOLA");
-    application.applicationIconBadgeNumber= 11;
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"regId"]){
         
@@ -134,8 +135,13 @@ NSMutableArray *locations;
     completionHandler(UIBackgroundFetchResultNoData);
     return;
 }
+// Handle incoming pushes
 
+-(BOOL)notificawv{
+    PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
+    [pushHandler notificationReceived];
 
+}
 -(BOOL)revisaPersonal:(NSDictionary *)userInfo{
     
    if ([CLLocationManager locationServicesEnabled]) {
@@ -252,9 +258,9 @@ NSMutableArray *locations;
     if(application.applicationIconBadgeNumber!=0){
         application.applicationIconBadgeNumber= 0;
         PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
-        pushHandler.notificaciones=pushHandler.notificaciones+1;
+        /*pushHandler.notificaciones=pushHandler.notificaciones+1;
         pushHandler.notificationMessage = self.launchNotification;
-        pushHandler.isInline = NO;
+        pushHandler.isInline = NO;*/
         [pushHandler notificationReceived];
     }
 
