@@ -854,8 +854,10 @@ alert(1);
   	var d = R * c;
 	return d.toFixed(3)*1000;                      //Retorna tres decimales
 }
-	$scope.createMap();
-	
+	//$scope.createMap();
+	$timeout(function(){
+		$scope.createMap();
+	},100);
 	$scope.limpia=function(){
 		$scope.cargaInfoEvento(false);
 		for( var i=0; i<$scope.marcadores.length;i++)

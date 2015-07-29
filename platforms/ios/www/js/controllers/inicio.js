@@ -123,7 +123,6 @@ angular.module('starter')
 			$rootScope.Eventos=[{"IdEvento":"1","IdAsunto":"1","Latitud":$rootScope.miubicacion.lat()+0.005,"Longitud":$rootScope.miubicacion.lng()+0.009}]; 
 			if($scope.Conexion()){
 			
-			$rootScope.inicializaMapaRecorrido();
 			$("#recorrido1").removeClass("animate-hide");
 			$rootScope.inicializaMapaRecorrido();
 			$scope.popoverRec.hide();
