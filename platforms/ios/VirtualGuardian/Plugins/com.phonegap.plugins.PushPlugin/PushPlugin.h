@@ -49,9 +49,8 @@
 
 - (void)register:(CDVInvokedUrlCommand*)command;
 - (void)carLocation:(CDVInvokedUrlCommand*)command;
-- (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
 - (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
-
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type;
 - (void)setNotificationMessage:(NSDictionary *)notification;
 - (void)notificationReceived;
 
