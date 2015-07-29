@@ -14,16 +14,23 @@ angular.module('starter')
   			});*/
             
 	}
-            $scope.enterapp=function(event){
+	
+	$scope.nextinput=function(event){
             if(event.keyCode==13){
-            $rootScope.keycover=false;
-            cordova.plugins.Keyboard.close();
+            $("#log_contrasena").focus();
+            }
+            }
+            
+			$scope.enterapp=function(event){
+            if(event.keyCode==13){
+            //$rootScope.keycover=false;
+            if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.close();
             $scope.iniciaSesion()
             }
             }
 	$("input").focusin(function(e) {
     	$("#log_email").css("font-size",$("#log_email").css("font-size"))
-		$("#log_contrasena").css("font-size",$("#log_contrasena").css("font-size"))
+	$("#log_contrasena").css("font-size",$("#log_contrasena").css("font-size"))
                        
 	});
 	$scope.StartSesion=function(){
