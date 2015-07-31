@@ -28,6 +28,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "AppDelegate+notification.h"
+#import "CDVBackgroundGeoLocation.h"
 
 @implementation PushPlugin
 
@@ -38,6 +39,8 @@
 @synthesize callbackId;
 @synthesize notificationCallbackId;
 @synthesize callback;
+@synthesize locationManager;
+
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 - (void)unregister:(CDVInvokedUrlCommand*)command;
@@ -49,6 +52,7 @@
 }
 - (void)carLocation:(CDVInvokedUrlCommand*)command;
 {
+    
     self.callbackId = command.callbackId;
     NSMutableDictionary* options = [command.arguments objectAtIndex:0];
     NSString *latitud = [options objectForKey:@"Latitud"];
@@ -196,10 +200,9 @@
                 ;
                 int distAuto=[self revisaAuto:userInfo];
                 int distPersona=[self revisaPersonal:userInfo];
-                
-               /* if(distPersona>=0){
+               if(distPersona>=0){
                     //avisaamigos
-                    // [self informa:userInfo :@"NotificaAmigos":distPersona];
+                     [self informa:userInfo :@"NotificaAmigos":distPersona];
                     if(distAuto>=0 && [userInfo[@"NotificacionesAuto"] intValue]==1){
                         //avisauto
                         [self informa:userInfo :@"NotificaAuto":distAuto];
@@ -207,7 +210,7 @@
                 }else if(distAuto>=0 && [userInfo[@"NotificacionesAuto"] intValue]==1){
                     //avisauto
                     [self informa:userInfo :@"NotificaAuto":distAuto];
-                }else{*/
+                }else{
                     if (appState == UIApplicationStateActive) {
                         
                         notificaciones=notificaciones+1;
@@ -218,7 +221,7 @@
                         [self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
                         notificationMessage = userInfo;
                     }
-                //}
+                }
                 break;
                 
             default:
@@ -243,9 +246,9 @@
 
 }
 
--(BOOL)revisaPersonal:(NSDictionary *)userInfo{
+-(int)revisaPersonal:(NSDictionary *)userInfo{
     
-    /*if ([CLLocationManager locationServicesEnabled]) {
+    if ([CLLocationManager locationServicesEnabled]) {
         locationManager = [[CLLocationManager alloc] init];
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         
@@ -261,22 +264,27 @@
         
         
         CLLocation *currentLocation=locationManager.location;
-        //NSLog(@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
+        if(currentLocation.coordinate.latitude){
+        //NSLog(@"lati:%f,longi:%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
         CLLocation *eventLoc=[[CLLocation alloc] initWithLatitude:[[userInfo objectForKey:@"Latitud"] doubleValue] longitude:[[userInfo objectForKey:@"Longitud"] doubleValue]];
         int dist=[self revisaDistancia:currentLocation:eventLoc];
         //NSLog(@"%d",dist);
         if(dist<=[userInfo[@"RangoPersonal"] intValue] && dist>0)
             return dist;
         else return -1;
-        [locationManager stopUpdatingLocation];
         
+        [locationManager stopUpdatingLocation];
+        }else{
+        [locationManager stopUpdatingLocation];
+            return -1;
+        }
     } else {
-        return -1;
-    }*/
+        return -2;
+    }
     
 }
 -(int)revisaAuto:(NSDictionary *)userInfo{
-    /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"CarLatitud"]){
         CLLocation *eventLoc=[[CLLocation alloc] initWithLatitude:[[userInfo objectForKey:@"Latitud"] doubleValue] longitude:[[userInfo objectForKey:@"Longitud"] doubleValue]];
         CLLocation *carroLoc=[[CLLocation alloc] initWithLatitude:[[defaults objectForKey:@"CarLatitud"] doubleValue] longitude:[[defaults objectForKey:@"CarLongitud"] doubleValue]];
@@ -288,7 +296,7 @@
             return [userInfo[@"Distancia"] intValue];
         }
         else return -1;
-    }else return -1;*/
+    }else return -1;
     
 }
 -(void) informa:(NSDictionary *) userInfo:(NSString *)funcion:(int) distancia{
@@ -301,7 +309,7 @@
     // form fields are separated by an ampersand. Note the absence of a
     // leading ampersand.
     
-    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://45.40.137.37/portal/php/notificacionAndroid.php"]];
+    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.virtual-guardian.com/portal/php/notificacionAndroid.php"]];
     
     // Set the request's content type to application/x-www-form-urlencoded
     [postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -312,7 +320,7 @@
     
     // Initialize the NSURLConnection and proceed as described in
     // Retrieving the Contents of a URL
-    NSURLRequest *theRequest=[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.virtual-guardian.com/portal/php/notificacionAndroid.php"]
+    NSURLRequest *theRequest=[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.virtual-guardian.com/portal/php/notificacionAndroid.php"]
                                               cachePolicy:NSURLRequestUseProtocolCachePolicy
                                           timeoutInterval:60.0];
     
@@ -442,5 +450,7 @@
     
     [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
 }
+
+
 
 @end

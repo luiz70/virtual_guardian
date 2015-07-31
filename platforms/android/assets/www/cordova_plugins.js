@@ -115,6 +115,27 @@ module.exports = [
     {
         "file": "plugins/nl.x-services.plugins.toast/test/tests.js",
         "id": "nl.x-services.plugins.toast.tests"
+    },
+    {
+        "file": "plugins/org.transistorsoft.cordova.background-geolocation/www/BackgroundGeoLocation.js",
+        "id": "org.transistorsoft.cordova.background-geolocation.BackgroundGeoLocation",
+        "clobbers": [
+            "plugins.backgroundGeoLocation"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+        "id": "cordova-plugin-dialogs.notification",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+        "id": "cordova-plugin-dialogs.notification_android",
+        "merges": [
+            "navigator.notification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -135,7 +156,9 @@ module.exports.metadata =
     "cordova-plugin-datepicker": "0.7.1",
     "org.apache.cordova.inappbrowser": "0.6.0",
     "cordova-sqlite-storage": "0.7.9",
-    "nl.x-services.plugins.toast": "2.1.0"
+    "nl.x-services.plugins.toast": "2.1.0",
+    "org.transistorsoft.cordova.background-geolocation": "0.3.6",
+    "cordova-plugin-dialogs": "1.1.1"
 }
 // BOTTOM OF METADATA
 });

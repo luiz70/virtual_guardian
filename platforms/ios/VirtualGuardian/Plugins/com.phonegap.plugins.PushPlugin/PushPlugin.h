@@ -28,6 +28,7 @@
 #import <Cordova/CDVPlugin.h>
 #import <PushKit/PushKit.h>
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 @interface PushPlugin : CDVPlugin
 {
     NSDictionary *notificationMessage;
@@ -42,7 +43,8 @@
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, copy) NSString *notificationCallbackId;
 @property (nonatomic, copy) NSString *callback;
-
+@property (nonatomic,copy) CLLocationManager *locationManager;
+@property (nonatomic,retain) NSString *DistanciaAuto;
 @property (nonatomic, strong) NSDictionary *notificationMessage;
 @property BOOL                          isInline;
 @property int notificaciones;

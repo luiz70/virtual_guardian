@@ -116,7 +116,6 @@ cordova.define("cordova-sqlite-storage.SQLitePlugin", function(require, exports,
     }
     this.addTransaction(new SQLitePluginTransaction(this, fn, error, success, true, false));
   };
-  
 
   SQLitePlugin.prototype.readTransaction = function(fn, error, success) {
     if (!this.openDBs[this.dbname]) {
