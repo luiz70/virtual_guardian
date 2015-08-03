@@ -185,9 +185,9 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
             }
 			
 			for(var i=0;i<notification.notificaciones;i++){
-			/*if(notification["Notif"+i].Tipo=="8"){
+			if(notification["Notif"+i].Tipo=="8"){
 				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
-			}*/
+			}
 			}
 		  	
 		}

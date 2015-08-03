@@ -88,13 +88,18 @@ color: #696666;
 background: #d08d33;
 border: none;
 color: #161616;
-width: 20vw;
+width: 30vw;
 height: 4.5vh;
 border-radius: 5px;
-float: left;
-margin-left: 40vw;
+float: none;
 margin-top: 3vh;
 	outline: none;
+    display:block !important;
+    margin-right:auto !important;
+    margin-left:auto !important;
+    width:auto !important;
+    padding-left:7vw;
+    padding-right:7vw;
 }
 #login_pie{
     width: 100vw;

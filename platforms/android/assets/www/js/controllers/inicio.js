@@ -112,17 +112,17 @@ angular.module('starter')
 				$scope.popoverRec.show();
 				$(".popover-arrow").hide();
 			$("#popRecorrido").height('80vh')
-				
+                    
 				
 			  			});
 						$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[6];
 			
 			break;
 			case 1:
+            if($rootScope.miubicacion.lat()==0)$rootScope.miubicacion=$rootScope.ubicacionMarker.getPosition();
 			$rootScope.Eventos=[{"IdEvento":"1","IdAsunto":"1","Latitud":$rootScope.miubicacion.lat()+0.005,"Longitud":$rootScope.miubicacion.lng()+0.009}]; 
 			if($scope.Conexion()){
 			
-			$rootScope.inicializaMapaRecorrido();
 			$("#recorrido1").removeClass("animate-hide");
 			$rootScope.inicializaMapaRecorrido();
 			$scope.popoverRec.hide();
@@ -346,7 +346,7 @@ angular.module('starter')
 		switch(i){
 			case 1:
 			try{
-			google.maps.event.trigger($rootScope.map, 'resize');
+                 $rootScope.iniciaMapa();
 			}catch(err){}
 			break;
 			case 2:
@@ -591,6 +591,8 @@ angular.module('starter')
 				window.localStorage.setArray("Filtros",$rootScope.filtros);
 				}
 			if(data.Vigente=="0"){
+                 window.localStorage.removeItem("Filtros");
+                 window.localStorage.removeItem("Auto");
 				$scope.confirm($scope.idioma.general[11],$scope.idioma.general[12],function(){
 				//ENVIA A PAGINA A VER PAQUETES
 				$rootScope.abrePaquetes();
