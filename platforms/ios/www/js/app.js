@@ -183,12 +183,11 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
             }else if(parseInt(notification.notificaciones)>0){
             $rootScope.onTab(2);
             }
-			
-			for(var i=0;i<notification.notificaciones;i++){
-			if(notification["Notif"+i].Tipo=="8"){
-				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
+			//for(var i=0;i<notification.notificaciones;i++){
+			if(notification.Tipo=="8"){
+				$timeout($rootScope.muestraTip(notification),1000);
 			}
-			}
+			//}
 		  	
 		}
     });
