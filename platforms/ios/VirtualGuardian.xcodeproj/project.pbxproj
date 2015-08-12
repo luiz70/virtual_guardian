@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0286E5362D33435D9958118C /* DatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B77228EBC34765955B3868 /* DatePicker.m */; };
 		096A485CE2024F22BF4EB90D /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = C16ADA30523341C1A79DE220 /* Toast.m */; };
@@ -71,6 +70,9 @@
 		D30A55DD4EB443C08523D0B3 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9161AEF1141D3BA3E1D7C /* CDVStatusBar.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		EA96CBB82B9E462F9739AB7F /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B0EFB4A09B44A983428C95 /* AppDelegate+notification.m */; };
+		8A72F13F3E1149C0AC6EEA46 /* InAppPurchase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7867559EEBAE4A1596A6D32F /* InAppPurchase.m */; };
+		725E064E692445AAA530E4A0 /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = B4AF9D08A51D4658A349BEF8 /* SKProduct+LocalizedPrice.m */; };
+		610F2508AC764B5BB518349A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CC11E972B4105A5FE4FDA /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +196,11 @@
 		F616A4085C764AD1B3A61702 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		FE1BDBC5B6A1410A9C5D7B72 /* CDVGlobalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVGlobalization.m; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; };
+		7867559EEBAE4A1596A6D32F /* InAppPurchase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "InAppPurchase.m"; path = "cc.fovea.cordova.purchase/InAppPurchase.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		B4AF9D08A51D4658A349BEF8 /* SKProduct+LocalizedPrice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "SKProduct+LocalizedPrice.m"; path = "cc.fovea.cordova.purchase/SKProduct+LocalizedPrice.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		CEE8010F180D4ACD9FA61E2C /* InAppPurchase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "InAppPurchase.h"; path = "cc.fovea.cordova.purchase/InAppPurchase.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		6829F0F4256940DFAA87A252 /* SKProduct+LocalizedPrice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SKProduct+LocalizedPrice.h"; path = "cc.fovea.cordova.purchase/SKProduct+LocalizedPrice.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		924CC11E972B4105A5FE4FDA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "StoreKit.framework"; path = "System/Library/Frameworks/StoreKit.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +218,7 @@
 				9452F802B32F4EBA8CB5AE2B /* AudioToolbox.framework in Frameworks */,
 				12868B60E6124101A94743F3 /* QuartzCore.framework in Frameworks */,
 				D1B0827DA6B348598AAA5D2A /* AVFoundation.framework in Frameworks */,
+				610F2508AC764B5BB518349A /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +301,7 @@
 				4F047DD1ED804CE3AC6E8677 /* AudioToolbox.framework */,
 				B52D8F61F339427FAD0EF48F /* QuartzCore.framework */,
 				208AF14642E8479694FDC2BC /* AVFoundation.framework */,
+				924CC11E972B4105A5FE4FDA /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -358,6 +367,10 @@
 				A7550A78B160466494AF5054 /* CDVNotification.h */,
 				599DAA7A2A1D4DB8A87D3926 /* CDVBackgroundGeoLocation.m */,
 				1332E24DB8C046148CF4599C /* CDVBackgroundGeoLocation.h */,
+				7867559EEBAE4A1596A6D32F /* InAppPurchase.m */,
+				B4AF9D08A51D4658A349BEF8 /* SKProduct+LocalizedPrice.m */,
+				CEE8010F180D4ACD9FA61E2C /* InAppPurchase.h */,
+				6829F0F4256940DFAA87A252 /* SKProduct+LocalizedPrice.h */,
 			);
 			name = Plugins;
 			path = VirtualGuardian/Plugins;
@@ -578,6 +591,8 @@
 				096A485CE2024F22BF4EB90D /* Toast.m in Sources */,
 				196D8299B6DC411D86E58757 /* CDVNotification.m in Sources */,
 				A451DAD57CCB40A39969B964 /* CDVBackgroundGeoLocation.m in Sources */,
+				8A72F13F3E1149C0AC6EEA46 /* InAppPurchase.m in Sources */,
+				725E064E692445AAA530E4A0 /* SKProduct+LocalizedPrice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

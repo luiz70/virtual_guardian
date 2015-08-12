@@ -124,6 +124,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cc.fovea.cordova.purchase/www/store-android.js",
+        "id": "cc.fovea.cordova.purchase.InAppBillingPlugin",
+        "clobbers": [
+            "store"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "id": "cordova-plugin-dialogs.notification",
         "merges": [
@@ -158,6 +165,7 @@ module.exports.metadata =
     "cordova-sqlite-storage": "0.7.9",
     "nl.x-services.plugins.toast": "2.1.0",
     "org.transistorsoft.cordova.background-geolocation": "0.3.6",
+    "cc.fovea.cordova.purchase": "3.11.0",
     "cordova-plugin-dialogs": "1.1.1"
 }
 // BOTTOM OF METADATA

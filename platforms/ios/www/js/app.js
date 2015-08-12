@@ -69,9 +69,34 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 			
 				$rootScope.Usuario=window.localStorage.getArray("Usuario");
 				console.log($rootScope.Usuario);
-				$location.path('/inicio');
-				
-				
+				//$location.path('/inicio');
+                       var IAP={list:["premium.mensual","premium.anual","familiar.anual"]};
+                       IAP.load=function (){
+                       if(!window.storekit){
+                       console.log("error")
+                       return;
+                       }
+                       
+                       storekit.init({
+                                     debug:true,
+                                     ready:IAP.onReady,
+                                     purchase:IAP.onPurchase,
+                                     restore: IAP.onRestore,
+                                     error: IAP.onError
+                       })
+                       }
+                       IAP.onReady=function (){
+                       storekit.load(IAP.list,function(products,invalidIds){
+                                     IAP.products=products;
+                                     IAP.loaded=true;
+                                     for(var i=0;i<invalidIds.length;i++)
+                                     console.log(invalidIds[i])
+                                     })
+                       }
+                       IAP.onPurchase=function (){alert(1)}
+                       IAP.onRestore=function (){alert(1)}
+                       IAP.onError=function (){alert(1)}
+                       IAP.load();
 				//$rootScope.unregister();	
 				//if(pushNotification)registerNotification();
 			}
