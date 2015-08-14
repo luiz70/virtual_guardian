@@ -32,7 +32,7 @@
                 <div style="width: 100%;text-align: center;color:#C1C1C1;float: left;margin-top: 1vh;font-size:3vh; padding-bottom:1vh">{{producto.Precio}}</div>
                 
         	</div>
-            <button style="width: 100%;margin-top: 2vh;background: #ce932f;border: none;padding: 1vh;font-size: 3vh;border-radius: 3px;font-weight: 700;" ng-hide="productoSeleccionado.Id==Usuario.IdSuscripcion" ng-click="comprarProducto()">{{idioma.cuenta[16]}}</button>
+            <button class="ng-hide" style="width: 100%;margin-top: 2vh;background: #ce932f;border: none;padding: 1vh;font-size: 3vh;border-radius: 3px;font-weight: 700;" ng-show="productoSeleccionado && productoSeleccionado.Id!=Usuario.IdSuscripcion" ng-click="comprarProducto()">{{idioma.cuenta[16]}}</button>
  		</div>
         <div class="animate-hide ng-hide" style="height: 100%; width: 100%; padding: 0px; position: absolute; top: 0px;left: 0px;" ng-show="cargandoCuenta"><ion-spinner icon="android" class="spinner-dark" style="    position: absolute; top: 0px; bottom: 0px;margin: auto;height: 28px;left: 0px;right: 0px;    width: 28px;"></ion-spinner></div>
     </div>
