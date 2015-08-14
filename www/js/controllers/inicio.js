@@ -287,17 +287,81 @@ angular.module('starter')
 			}
 	}
 	$scope.ajustes=false;
+	$rootScope.Productos=[];
+	$rootScope.productoSeleccionado=null;
+	$rootScope.seleccionaSuscripcion=function(producto){
+		//if(producto.Id!=$rootScope.Usuario.IdSuscripcion){
+	$rootScope.productoSeleccionado=producto
+		//}
+	}
+	$scope.compraDisponible=true;
+	$rootScope.comprarProducto=function(){
+		if($scope.compraDisponible){
+		$scope.compraDisponible=false;
+	console.log($rootScope.productoSeleccionado)
+		}
+	}
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
+		$scope.compraDisponible=true;
+		$rootScope.productoSeleccionado=null;
             $scope.openTerminos("pantallas/cuenta.html");
+			$rootScope.cargandoCuenta=true;
+		$http.get("https://www.virtual-guardian.com/api/tiposSuscripciones")
+		.success(function(data){
+			if(data[0].Id==1)data.shift();
+			var Ids=[]
+			$rootScope.Productos=data;
+			//for(var i=0;i<data.length;i++)
+			//Ids.push(data[i].IdProducto);
+			if(window.store){
+				/*console.log("entro a store");
+				store.init({
+					debug:true,
+					ready:function(){
+						console.log("entro a ready");
+						store.load(Ids,function(products,invalidIds){
+							console.log("entro a load");
+							console.log(JSON.stringify(products));
+							while(products.length>0){
+							var prd=products.push();
+							for(var i=0;i<$rootScope.Productos.length;i++)
+							if($rootScope.Productos.IdProducto==prd.id){
+								$rootScope.Productos.Precio=prd.price;
+								$rootScope.Productos.Descripcion=prd.description;
+							}
+							}
+							console.log($rootScope.Productos);
+							$rootScope.cargandoCuenta=false;
+						})
+					},
+					purchase:function(transactionId,ProductId){
+						console.log("ID: "+transactionId)
+					},
+					restore:function(originalTransactionId,ProductId){
+					
+					},
+					error:function(errorCode,errorText){
+					
+					}
+				})*/
+				for(var i=0;i<data.length;i++){
+				store.register({id:data[i].IdProducto,alias: "Suscripción "+data[i].Nombre,type: store.PAID_SUBSCRIPTION});
+				console.log(JSON.stringify(store.get(data[i].IdProducto)))
+				console.log(store.get(data[i].IdProducto))
+				}
+				
+			}else {
+				$rootScope.cargandoCuenta=false;
+			}
+			for(var i=0;i<$rootScope.Productos.length;i++)
+			if($rootScope.Productos[i].Id==$rootScope.Usuario.IdSuscripcion)$rootScope.productoSeleccionado=$rootScope.Productos[i];
 			
-			$http.get("https://www.virtual-guardian.com/api/perfilExtras/"+$rootScope.Usuario.Id)
-		.success(function(data,status,header,config){
-			$rootScope.Usuario.Extras=data;
-			})
-		.error(function(error,status,header,config){
-			})
+		})
+		
 	}
+	$rootScope.cargandoCuenta=false;
+	
 	$scope.revisaUsuario=function(){
 		var arr=[];
 		var t=[];
@@ -484,6 +548,7 @@ angular.module('starter')
 	   delete $rootScope.UsuarioTemporal.Registro;
 	   delete $rootScope.UsuarioTemporal.Nuevo;
        delete $rootScope.UsuarioTemporal.Extras;
+	   delete $rootScope.UsuarioTemporal.Codigo;
 	   console.log($rootScope.UsuarioTemporal);
 	   if(Object.keys($rootScope.UsuarioTemporal).length>1){
 		   

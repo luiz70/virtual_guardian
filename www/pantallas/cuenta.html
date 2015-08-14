@@ -1,10 +1,50 @@
 
 <ion-modal-view>
-    <ion-header-bar style="height:7vh;  background: none;">
-        <h1 class="title tituloModal" style="text-align:center"><i class="icon ion-person"></i>{{" "+idioma.menu[28]}}</h1>
+    <ion-header-bar style="height:7vh;  background: #222;border-bottom: solid 1px #323232;">
+        <h1 class="title tituloModal" style="text-align:center;color:#F4F4F4;font-size: 3.5vh !important;"><i class="icon ion-person" style=""></i>{{" "+idioma.menu[28]}}</h1>
     </ion-header-bar>
-    <ion-content style="top: 7vh;bottom: 8vh; padding:2vh;  padding-left: 4vh; padding-right: 4vh;" has-bouncing="true">
-    	<div class="texto_cuenta" style="font-size:3vh;margin-left:2px"><b  class="texto_cuenta" style="font-size:3vh"> {{idioma.cuenta[1]}}:</b> {{Usuario.Correo}}</div>
+    
+    <ion-content style="top: 7vh;bottom: 8vh; padding:2vh; background:#151515" has-bouncing="true">
+    
+    <ion-list >
+    <div style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%" >
+    <div style="float:left; width:100%; padding-bottom:1vh;border-bottom: solid 1px #464646;">
+    <div  style="float:left; color:#C1C1C1; font-size:2.5vh; margin-left:3px;display: block;margin-right: 10px;line-height: 4vh;">{{idioma.cuenta[1]}}</div>
+    <div  style="font-size: 3vh;color: #E5E5E5;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;position: relative;line-height: 3.5vh;    text-align: right;">{{Usuario.Correo.substr(0,1).toUpperCase()+Usuario.Correo.substr(1)}}</div>
+    </div>
+    <div style="float:left; width:100%; padding-top:1vh;    overflow: hidden;">
+    <div  style="float:left; color:#C1C1C1; font-size:2.5vh; margin-left:3px;display: block;margin-right: 10px;line-height: 4vh;">{{idioma.cuenta[2]}}</div>
+    <div  style="font-size: 3vh;color: #E5E5E5;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;position: relative; text-transform:capitalize;line-height: 3.5vh;    text-align: right;">{{Usuario.Suscripcion.toLowerCase()}}</div>
+    </div>
+    </div>
+     <div style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;min-height:20vh;    position: relative;">
+ 		<div class="animate-hide ng-hide animate-show" ng-show="!cargandoCuenta">
+        	<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase;padding-bottom: 1vh; border-bottom: solid 1px #474747;">
+            {{idioma.cuenta[15]}}
+            </div>
+        	<div style="float:left; width:33%;height:auto;{{producto.Id==Usuario.IdSuscripcion?'opacity:0.3;':''}}{{producto.Id%3==0?'border-right:solid 1px #474747;border-left:solid 1px #474747;':''}}margin-top:1vh;overflow:hidden;position: relative;" class={{productoSeleccionado.Id==producto.Id?'suscripcion-selected':''}} ng-repeat="producto in Productos" ng-click="seleccionaSuscripcion(producto)">
+            	<!--div style="width: 60%; margin-left:20%; margin-right:20%;border-radius: 100%;border: solid 2px #9E9E9E;overflow: hidden;padding: 2vh;float: left;margin-top: 2vh;">
+            	<img src="img/iconos/premium.png" style="width:100%">
+                
+                </div-->
+                <div style="width: 100%;text-align: center;color:#C1C1C1;float: left;font-size:3vh;padding-top:1vh">{{producto.Nombre}}</div>
+                <div style="width: 90%;margin-left:5%; margin-right:5%;text-align: center;color:#A3A3A3;float: left;margin-top: 1vh;font-size: 2.5vh!important; padding-bottom:1vh;  border-bottom: solid 1px #474747;">{{producto.Periodo}}</div>
+                <div style="width: 100%;text-align: center;color:#C1C1C1;float: left;margin-top: 1vh;font-size:3vh; padding-bottom:1vh">{{producto.Precio}}</div>
+                
+        	</div>
+            <button style="width: 100%;margin-top: 2vh;background: #ce932f;border: none;padding: 1vh;font-size: 3vh;border-radius: 3px;font-weight: 700;" ng-hide="productoSeleccionado.Id==Usuario.IdSuscripcion" ng-click="comprarProducto()">{{idioma.cuenta[16]}}</button>
+ 		</div>
+        <div class="animate-hide ng-hide" style="height: 100%; width: 100%; padding: 0px; position: absolute; top: 0px;left: 0px;" ng-show="cargandoCuenta"><ion-spinner icon="android" class="spinner-dark" style="    position: absolute; top: 0px; bottom: 0px;margin: auto;height: 28px;left: 0px;right: 0px;    width: 28px;"></ion-spinner></div>
+    </div>
+    <div style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh" >
+    <div style="float:left; width:100%;">
+    <div  style="font-size: 3vh;color: #C1C1C1;display: block;position: relative;line-height: 3.5vh;text-align: justify;">{{idioma.cuenta[14]}}</div>
+    <div class="texto_cuenta" style="font-size:3vh;margin-left:2px;  margin-top: 2vh; text-align: center; color:#E5E5E5"><b  class="texto_cuenta" style="font-size:3vh;">{{idioma.cuenta[13]}}:</b> {{Usuario.Codigo}}</div>
+    </div>
+    
+    </div>
+    </ion-list>
+    	<!--div class="texto_cuenta" style="font-size:3vh;margin-left:2px"><b  class="texto_cuenta" style="font-size:3vh"> {{idioma.cuenta[1]}}:</b> {{Usuario.Correo}}</div>
         <div class="texto_cuenta" style="font-size:3vh;margin-left:2px;margin-top:0.3vh;text-overflow: ellipsis;  white-space: nowrap;"><b  class="texto_cuenta" style="font-size:3vh;">{{idioma.cuenta[2]}}:</b> {{Usuario.Suscripcion.toLowerCase()}}</div>
         <div class="ng-hide" ng-show="Usuario.Extras.TipoSuscripcion>1">
         <div class="texto_cuenta" style="font-size:3vh;margin-left:2px;margin-top:0.5vh"><b class="texto_cuenta" style="font-size:3vh"> {{idioma.cuenta[10]}}:</b> {{Usuario.Extras.Inicio}}</div>
@@ -20,10 +60,10 @@
         </div>
         
         <div class="texto_cuenta" style="margin-top:1vh">{{idioma.cuenta[14]}}</div>
-        <div class="texto_cuenta" style="font-size:3vh;margin-left:2px;  margin-top: 1vh; text-align: center;"><b  class="texto_cuenta" style="font-size:3vh;">{{idioma.cuenta[13]}}:</b> {{Usuario.Extras.Promocion}}</div>
+        <div class="texto_cuenta" style="font-size:3vh;margin-left:2px;  margin-top: 1vh; text-align: center;"><b  class="texto_cuenta" style="font-size:3vh;">{{idioma.cuenta[13]}}:</b> {{Usuario.Extras.Promocion}}</div-->
         
     </ion-content >
-    <div class="popup-buttons popup-visible" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;"><!-- ngRepeat: button in buttons -->
+    <div class="popup-buttons popup-visible" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;padding: 5px;background-color: #151515;border-top: solid 1px #323232;"><!-- ngRepeat: button in buttons -->
         <button  class="button ng-binding button-positive texto_cuenta" ng-class="button.type || 'button-default'" ng-click="closeModalt()" style="  height: 100%;
             padding: 0px !important;font-size:3vh;">{{idioma.general[2]}}</button>
     </div>

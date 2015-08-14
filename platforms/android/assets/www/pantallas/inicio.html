@@ -99,9 +99,10 @@
         <div id="capa_menu" on-touch="toggleLeftSideMenu()" ></div>
 	</ion-side-menu-content >
 	<ion-side-menu side="left" width="tamano" ng-controller="menu">
-		<ion-header-bar id="m1" class="bar-dark" style="height: 10vh !important;" ng-click="abreAjustesCuenta()">
-			<div class="titulo_menu" style="  font-weight: 400; text-overflow:ellipsis;white-space:nowrap;overflow:hidden">{{Usuario.Correo}}</div>
-            <div class="titulo_menu" style="position:absolute !important; left:0px; bottom:0px;   font-size: 2.5vh !important;  color:#E9E9E9;">{{"Suscripción "+Usuario.Suscripcion.toLowerCase()}}</div>
+		<ion-header-bar id="m1" class="bar-dark" style="height: 10vh !important;" >
+        <div style="float: left;width: 9vh;height: 9vh; top: 0.5vh;left: 1vh;background-color: rgb(216, 216, 216);position: absolute;border: solid 2px #CE932F;border-radius: 100%;"> <img style="height: 90%;position: absolute;left: 0px;right: 0px;margin: auto; margin-top:5%" src="img/iconos/icono.png"></div>
+			<div class="titulo_menu" style="  font-weight: 400; text-overflow:ellipsis;white-space:nowrap;overflow:hidden;margin-left: 11vh !important;">{{Usuario.Correo.substr(0,1).toUpperCase()+Usuario.Correo.substr(1)}}</div>
+            <div class="titulo_menu" style="position:absolute !important; left:0px; bottom:0px;   font-size: 2.5vh !important;  color:#E9E9E9;margin-left: 11vh !important;">{{"Suscripción "+Usuario.Suscripcion.toLowerCase()}}</div>
 		</ion-header-bar>
         <div style="  position: absolute;top: 10vh;bottom: 0px;width: 100%;">
         <div style="width: 100%;height: 90vh;position: relative;" collapse="!ajustes">

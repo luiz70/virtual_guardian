@@ -99,17 +99,22 @@ top: 0px!important;
     margin: 0px !important;
   text-align: left !important;
   margin-left: 2vw !important;
-  font-size: 2.5vh !important;
+  
+    font-size: 3vh !important;
   height: 3.5vh !important;
   position: relative !important;
   float: left;
   
-    width: 200%;
+    /* width: 200%; */
   
     margin-top: 2vh !important;
   line-height: normal !important;
   font-weight: 300;
 }
+.suscripcion-selected{
+	    border: solid 2px #ce932f !important;
+    border-radius: 4px;
+	}
 #capa_menu{
 	z-index: 1000;
 	position:absolute;

@@ -69,34 +69,9 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 			
 				$rootScope.Usuario=window.localStorage.getArray("Usuario");
 				console.log($rootScope.Usuario);
-				//$location.path('/inicio');
-                       var IAP={list:["premium.mensual","premium.anual","familiar.anual"]};
-                       IAP.load=function (){
-                       if(!window.storekit){
-                       console.log("error")
-                       return;
-                       }
-                       
-                       storekit.init({
-                                     debug:true,
-                                     ready:IAP.onReady,
-                                     purchase:IAP.onPurchase,
-                                     restore: IAP.onRestore,
-                                     error: IAP.onError
-                       })
-                       }
-                       IAP.onReady=function (){
-                       storekit.load(IAP.list,function(products,invalidIds){
-                                     IAP.products=products;
-                                     IAP.loaded=true;
-                                     for(var i=0;i<invalidIds.length;i++)
-                                     console.log(invalidIds[i])
-                                     })
-                       }
-                       IAP.onPurchase=function (){alert(1)}
-                       IAP.onRestore=function (){alert(1)}
-                       IAP.onError=function (){alert(1)}
-                       IAP.load();
+				$location.path('/inicio');
+				
+				
 				//$rootScope.unregister();	
 				//if(pushNotification)registerNotification();
 			}
@@ -208,11 +183,12 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
             }else if(parseInt(notification.notificaciones)>0){
             $rootScope.onTab(2);
             }
-			//for(var i=0;i<notification.notificaciones;i++){
-			if(notification.Tipo=="8"){
-				$timeout($rootScope.muestraTip(notification),1000);
+			
+			for(var i=0;i<notification.notificaciones;i++){
+			/*if(notification["Notif"+i].Tipo=="8"){
+				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
+			}*/
 			}
-			//}
 		  	
 		}
     });

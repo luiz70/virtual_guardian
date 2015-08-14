@@ -16,7 +16,8 @@ int drawable icon 0x7f02000e
 int drawable notification 0x7f02000f
 int drawable screen 0x7f020010
 int raw audio 0x7f040000
-int string activity_name 0x7f050002
-int string app_name 0x7f050000
-int string launcher_name 0x7f050001
+int string activity_name 0x7f050003
+int string app_name 0x7f050001
+int string billing_key_param 0x7f050000
+int string launcher_name 0x7f050002
 int xml config 0x7f030000

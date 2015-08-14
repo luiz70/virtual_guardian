@@ -67,7 +67,9 @@ angular.module('starter')
 					11:"Vigencia suscripción",
 					12:"Ajustes de cuenta",
 					13:"Código",
-					14:"Comparte a tus amigos este código y gana un mes de suscripción completa por cada usuario que se registre."
+					14:"Comparte a tus amigos este código y gana un mes de suscripción completa por cada usuario que se registre.",
+					15:"Comprar suscripción",
+					16:"Comprar",
 					},
 				menu:{
 				1:"Filtros",
@@ -682,12 +684,12 @@ angular.module('starter')
             $scope.modalTerminos=null;
             $scope.openTerminos = function(m) {
             $scope.modalTerminos = $ionicModal.fromTemplateUrl(m, {
-                                                             scope: $scope,
-                                                             animation: 'slide-in-up'
-                                                             }).then(function(modal) {
-                                                                     $scope.modalTerminos = modal;
-                                                                     $scope.modalTerminos.show();
-                                                                     });
+               scope: $scope,
+               animation: 'slide-in-up'
+               }).then(function(modal) {
+                  $scope.modalTerminos = modal;
+                  $scope.modalTerminos.show();
+               });
             
             };
             $scope.closeModalt = function() {
