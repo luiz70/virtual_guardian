@@ -298,70 +298,83 @@ angular.module('starter')
 	$rootScope.comprarProducto=function(){
 		if($scope.compraDisponible){
 		$scope.compraDisponible=false;
-	console.log($rootScope.productoSeleccionado)
+            store.order($rootScope.productoSeleccionado.IdProducto)
 		}
 	}
+            
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
+            $scope.productosCargados=0;
 		$scope.compraDisponible=true;
 		$rootScope.productoSeleccionado=null;
             $scope.openTerminos("pantallas/cuenta.html");
+            if($rootScope.Productos.length==0)$scope.cargaProductosSQL();
 			$rootScope.cargandoCuenta=true;
-		$http.get("https://www.virtual-guardian.com/api/tiposSuscripciones")
-		.success(function(data){
-			if(data[0].Id==1)data.shift();
-			var Ids=[]
-			$rootScope.Productos=data;
-			//for(var i=0;i<data.length;i++)
-			//Ids.push(data[i].IdProducto);
-			if(window.store){
-				/*console.log("entro a store");
-				store.init({
-					debug:true,
-					ready:function(){
-						console.log("entro a ready");
-						store.load(Ids,function(products,invalidIds){
-							console.log("entro a load");
-							console.log(JSON.stringify(products));
-							while(products.length>0){
-							var prd=products.push();
-							for(var i=0;i<$rootScope.Productos.length;i++)
-							if($rootScope.Productos.IdProducto==prd.id){
-								$rootScope.Productos.Precio=prd.price;
-								$rootScope.Productos.Descripcion=prd.description;
-							}
-							}
-							console.log($rootScope.Productos);
-							$rootScope.cargandoCuenta=false;
-						})
-					},
-					purchase:function(transactionId,ProductId){
-						console.log("ID: "+transactionId)
-					},
-					restore:function(originalTransactionId,ProductId){
-					
-					},
-					error:function(errorCode,errorText){
-					
-					}
-				})*/
-				for(var i=0;i<data.length;i++){
-				store.register({id:data[i].IdProducto,alias: "Suscripción "+data[i].Nombre,type: store.PAID_SUBSCRIPTION});
-				console.log(JSON.stringify(store.get(data[i].IdProducto)))
-				console.log(store.get(data[i].IdProducto))
-				}
-				
+		
+            if(window.store){
+            if(!$scope.initStore)for(var i=0;i<$rootScope.Productos.length;i++){
+                 store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
+            
+            }
+            
+            
+                 
+                 store.error(function(err){
+                             console.log(err);
+                             $scope.$apply(function(){
+                                $rootScope.cargandoCuenta=false;
+                            })
+                             })
+            store.when('product').updated(function(producto){
+                                          if(producto.id!="application data"){
+                                          for(var s=0;s<$rootScope.Productos.length;s++)
+                                          if($rootScope.Productos[s].IdProducto==producto.id){
+                                          $scope.$apply(function(){
+                                                        $rootScope.Productos[s].Precio=producto.price;
+                                                        $rootScope.Productos[s].Data=producto;
+                                                        })
+                                          }
+                                          }
+       
+            })
+            if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
+            store.when('product').loaded(function(producto){
+                                            $scope.$apply(function(){
+                                                            $scope.productosCargados++;
+                                                            })
+                                              if($scope.productosCargados>=3)
+                                              $scope.$apply(function(){
+                                                            $rootScope.cargandoCuenta=false;
+                                                            })
+                                         
+                                              })
+            store.refresh();
+                 $scope.initStore=true
+                 
 			}else {
 				$rootScope.cargandoCuenta=false;
 			}
 			for(var i=0;i<$rootScope.Productos.length;i++)
 			if($rootScope.Productos[i].Id==$rootScope.Usuario.IdSuscripcion)$rootScope.productoSeleccionado=$rootScope.Productos[i];
 			
-		})
+		
 		
 	}
+            $scope.initStore=false
+               $scope.productosCargados=0;
 	$rootScope.cargandoCuenta=false;
 	
+            $scope.cargaProductosSQL=function(){
+            $rootScope.cargandoCuenta=true;
+            $http.get("https://www.virtual-guardian.com/api/tiposSuscripciones")
+            .success(function(data){
+                     if(data[0].Id==1)data.shift();
+                     var Ids=[]
+                     $rootScope.Productos=data;
+                     //$rootScope.cargandoCuenta=false;
+                     })
+            }
+            $scope.cargaProductosSQL();
 	$scope.revisaUsuario=function(){
 		var arr=[];
 		var t=[];
