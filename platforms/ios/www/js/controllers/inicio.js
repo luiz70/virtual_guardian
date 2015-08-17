@@ -296,9 +296,63 @@ angular.module('starter')
 	}
 	$scope.compraDisponible=true;
 	$rootScope.comprarProducto=function(){
+            store.refresh();
 		if($scope.compraDisponible){
-		$scope.compraDisponible=false;
+		$rootScope.showCargando("")
+            //if(!$rootScope.productoSeleccionado.Data.owned){
             store.order($rootScope.productoSeleccionado.IdProducto)
+            .then(function(product){
+                  
+                  })
+            .error(function(err){
+                   $timeout(function(){
+                            $rootScope.hideCargando()
+                            },1000)
+                   
+                   })
+            /*}else {
+            $rootScope.productoSeleccionado.Data.finish();
+            $rootScope.alert($rootScope.idioma.cuenta[17]+" "+$rootScope.productoSeleccionado.Nombre,$rootScope.idioma.cuenta[18].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Google").replace("SUSCRIPCION",$rootScope.productoSeleccionado.Nombre+" "+$rootScope.productoSeleccionado.Periodo).replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"),function(){})
+            //$scope.alert("comprado")
+            }*/
+            store.when("product").cancelled(function(product){
+                                            console.log("cancel")
+                                            $timeout(function(){
+                                                     $rootScope.hideCargando()
+                                                     },500)
+                                            })
+            /*store.when("product").approved(function(product){
+                                           console.log(product)
+                                            $timeout(function(){
+                                                     $rootScope.hideCargando()
+                                                     },500)
+                                            })*/
+            store.once("product").owned(function(product){
+                                                    ///$rootScope.hideCargando()
+                                        
+                                           })
+            store.once("product").initiated(function(product){
+                                            /*if(!product.canPurchase){
+                                            console.log("purchased")
+                                            product.finish()
+                                            
+                                            //$rootScope.hideCargando()
+                                            
+                                            }*/
+
+                                            
+                                            })
+            store.once("product").finished(function(product){
+                                            console.log("fin")
+                                            $timeout(function(){
+                                                     $rootScope.hideCargando()
+                                                     },500)
+                                            })
+            store.once("product").requested(function(product){
+                                            console.log("req")
+                                            
+                                            })
+
 		}
 	}
             
@@ -312,6 +366,7 @@ angular.module('starter')
 			$rootScope.cargandoCuenta=true;
 		
             if(window.store){
+            //window.store.verbosity=store.DEBUG;
             if(!$scope.initStore)for(var i=0;i<$rootScope.Productos.length;i++){
                  store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
             

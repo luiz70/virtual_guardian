@@ -70,6 +70,8 @@ angular.module('starter')
 					14:"Comparte a tus amigos este código y gana un mes de suscripción completa por cada usuario que se registre.",
 					15:"Comprar suscripción",
 					16:"Comprar",
+            17:"Suscripción",
+            18:"Esta cuenta de NOMBRE ya tiene una suscripcion SUSCRIPCION y no corresponde a este usuario de Virtual Guardian.<div style='font-size:2vh'>Cambia de CUENTA e intenta de nuevo.</div>"
 					},
 				menu:{
 				1:"Filtros",
