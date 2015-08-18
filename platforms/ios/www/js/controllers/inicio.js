@@ -290,15 +290,17 @@ angular.module('starter')
 	$rootScope.Productos=[];
 	$rootScope.productoSeleccionado=null;
 	$rootScope.seleccionaSuscripcion=function(producto){
+        
 		//if(producto.Id!=$rootScope.Usuario.IdSuscripcion){
 	$rootScope.productoSeleccionado=producto
 		//}
 	}
 	$scope.compraDisponible=true;
 	$rootScope.comprarProducto=function(){
-            store.refresh();
+            console.log($rootScope.productoSeleccionado.Data)
 		if($scope.compraDisponible){
 		$rootScope.showCargando("")
+            
             //if(!$rootScope.productoSeleccionado.Data.owned){
             store.order($rootScope.productoSeleccionado.IdProducto)
             .then(function(product){
@@ -321,24 +323,21 @@ angular.module('starter')
                                                      $rootScope.hideCargando()
                                                      },500)
                                             })
-            /*store.when("product").approved(function(product){
-                                           console.log(product)
-                                            $timeout(function(){
-                                                     $rootScope.hideCargando()
-                                                     },500)
-                                            })*/
-            store.once("product").owned(function(product){
-                                                    ///$rootScope.hideCargando()
-                                        
-                                           })
+            store.when("product").approved(function(product){
+                                           console.log("aproved");
+                                           
+                                            })
+            store.once("product").verified(function(product){
+                                           console.log("verified");
+                                        })
             store.once("product").initiated(function(product){
-                                            /*if(!product.canPurchase){
+                                            if(product.owned){
                                             console.log("purchased")
                                             product.finish()
                                             
                                             //$rootScope.hideCargando()
                                             
-                                            }*/
+                                            }
 
                                             
                                             })
@@ -358,10 +357,13 @@ angular.module('starter')
             
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
-            $scope.productosCargados=0;
-		$scope.compraDisponible=true;
-		$rootScope.productoSeleccionado=null;
+            
+		
             $scope.openTerminos("pantallas/cuenta.html");
+            }
+        $scope.abreAjustesPaquetes=function(){
+            $rootScope.productoSeleccionado=null;
+            $scope.productosCargados=0;
             if($rootScope.Productos.length==0)$scope.cargaProductosSQL();
 			$rootScope.cargandoCuenta=true;
 		
@@ -371,8 +373,8 @@ angular.module('starter')
                  store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
             
             }
-            
-            
+            store.validator="http://store.fovea.cc:1980/check-purchase"
+            //store.refresh();
                  
                  store.error(function(err){
                              console.log(err);
@@ -382,6 +384,7 @@ angular.module('starter')
                              })
             store.when('product').updated(function(producto){
                                           if(producto.id!="application data"){
+                                          console.log(producto);
                                           for(var s=0;s<$rootScope.Productos.length;s++)
                                           if($rootScope.Productos[s].IdProducto==producto.id){
                                           $scope.$apply(function(){
@@ -394,16 +397,20 @@ angular.module('starter')
             })
             if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
             store.when('product').loaded(function(producto){
+                                         
+                                         producto.verify()
+                                         
                                             $scope.$apply(function(){
                                                             $scope.productosCargados++;
                                                             })
                                               if($scope.productosCargados>=3)
                                               $scope.$apply(function(){
                                                             $rootScope.cargandoCuenta=false;
+                                                            
                                                             })
                                          
                                               })
-            store.refresh();
+            if(!$scope.initStore)store.refresh();
                  $scope.initStore=true
                  
 			}else {
@@ -429,7 +436,7 @@ angular.module('starter')
                      //$rootScope.cargandoCuenta=false;
                      })
             }
-            $scope.cargaProductosSQL();
+            //$scope.cargaProductosSQL();
 	$scope.revisaUsuario=function(){
 		var arr=[];
 		var t=[];
