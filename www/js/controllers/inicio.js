@@ -290,34 +290,112 @@ angular.module('starter')
 	$rootScope.Productos=[];
 	$rootScope.productoSeleccionado=null;
 	$rootScope.seleccionaSuscripcion=function(producto){
+        
 		//if(producto.Id!=$rootScope.Usuario.IdSuscripcion){
 	$rootScope.productoSeleccionado=producto
 		//}
 	}
+	
 	$scope.compraDisponible=true;
+	$rootScope.verPrecios=false;
+	$rootScope.cancelaSuscripcion=function(){
+		if($rootScope.OS=="iOS"){
+			window.open("https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions","_system")
+		}else{
+			window.open("https://play.google.com/store/apps/details?id=com.app.virtualguardian","_system")
+		}
+	}
+	$rootScope.muestraPrecPaq=function(){
+		 
+		$rootScope.verPrecios=!$rootScope.verPrecios;
+		if(!$("#contentPaquetes").hasClass("in")){
+			$("#paquetes_flecha").removeClass("ion-chevron-down")
+			$("#paquetes_flecha").addClass("ion-chevron-up")
+		}else{
+			$("#paquetes_flecha").removeClass("ion-chevron-up")
+			$("#paquetes_flecha").addClass("ion-chevron-down")
+		}
+		if($rootScope.verPrecios)$scope.abreAjustesPaquetes();
+	}
 	$rootScope.comprarProducto=function(){
+            console.log($rootScope.productoSeleccionado.Data)
 		if($scope.compraDisponible){
-		$scope.compraDisponible=false;
+		$rootScope.showCargando("")
+            
+            //if(!$rootScope.productoSeleccionado.Data.owned){
             store.order($rootScope.productoSeleccionado.IdProducto)
+            .then(function(product){
+                  
+                  })
+            .error(function(err){
+                   $timeout(function(){
+                            $rootScope.hideCargando()
+                            },1000)
+                   
+                   })
+            /*}else {
+            $rootScope.productoSeleccionado.Data.finish();
+            $rootScope.alert($rootScope.idioma.cuenta[17]+" "+$rootScope.productoSeleccionado.Nombre,$rootScope.idioma.cuenta[18].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Google").replace("SUSCRIPCION",$rootScope.productoSeleccionado.Nombre+" "+$rootScope.productoSeleccionado.Periodo).replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"),function(){})
+            //$scope.alert("comprado")
+            }*/
+            store.when("product").cancelled(function(product){
+                                            console.log("cancel")
+                                            $timeout(function(){
+                                                     $rootScope.hideCargando()
+                                                     },500)
+                                            })
+            store.when("product").approved(function(product){
+                                           console.log("aproved");
+                                           
+                                            })
+            store.once("product").verified(function(product){
+                                           console.log("verified");
+                                        })
+            store.once("product").initiated(function(product){
+                                            if(product.owned){
+                                            console.log("purchased")
+                                            product.finish()
+                                            
+                                            //$rootScope.hideCargando()
+                                            
+                                            }
+
+                                            
+                                            })
+            store.once("product").finished(function(product){
+                                            console.log("fin")
+                                            $timeout(function(){
+                                                     $rootScope.hideCargando()
+                                                     },500)
+                                            })
+            store.once("product").requested(function(product){
+                                            console.log("req")
+                                            
+                                            })
+
 		}
 	}
             
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
-            $scope.productosCargados=0;
-		$scope.compraDisponible=true;
-		$rootScope.productoSeleccionado=null;
+            
+		
             $scope.openTerminos("pantallas/cuenta.html");
+            }
+        $scope.abreAjustesPaquetes=function(){
+            $rootScope.productoSeleccionado=null;
+            $scope.productosCargados=0;
             if($rootScope.Productos.length==0)$scope.cargaProductosSQL();
 			$rootScope.cargandoCuenta=true;
 		
             if(window.store){
+            //window.store.verbosity=store.DEBUG;
             if(!$scope.initStore)for(var i=0;i<$rootScope.Productos.length;i++){
                  store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
             
             }
-            
-            
+            store.validator="http://store.fovea.cc:1980/check-purchase"
+            //store.refresh();
                  
                  store.error(function(err){
                              console.log(err);
@@ -327,6 +405,7 @@ angular.module('starter')
                              })
             store.when('product').updated(function(producto){
                                           if(producto.id!="application data"){
+                                          console.log(producto);
                                           for(var s=0;s<$rootScope.Productos.length;s++)
                                           if($rootScope.Productos[s].IdProducto==producto.id){
                                           $scope.$apply(function(){
@@ -339,16 +418,20 @@ angular.module('starter')
             })
             if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
             store.when('product').loaded(function(producto){
+                                         
+                                         producto.verify()
+                                         
                                             $scope.$apply(function(){
                                                             $scope.productosCargados++;
                                                             })
                                               if($scope.productosCargados>=3)
                                               $scope.$apply(function(){
                                                             $rootScope.cargandoCuenta=false;
+                                                            
                                                             })
                                          
                                               })
-            store.refresh();
+            if(!$scope.initStore)store.refresh();
                  $scope.initStore=true
                  
 			}else {
@@ -356,6 +439,7 @@ angular.module('starter')
 			}
 			for(var i=0;i<$rootScope.Productos.length;i++)
 			if($rootScope.Productos[i].Id==$rootScope.Usuario.IdSuscripcion)$rootScope.productoSeleccionado=$rootScope.Productos[i];
+			if(!$rootScope.productoSeleccionad)$rootScope.productoSeleccionado=$rootScope.Productos[0];
 			
 		
 		
@@ -366,6 +450,7 @@ angular.module('starter')
 	
             $scope.cargaProductosSQL=function(){
             $rootScope.cargandoCuenta=true;
+			
             $http.get("https://www.virtual-guardian.com/api/tiposSuscripciones")
             .success(function(data){
                      if(data[0].Id==1)data.shift();

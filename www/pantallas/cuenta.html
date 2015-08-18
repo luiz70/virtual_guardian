@@ -17,24 +17,39 @@
     <div  style="font-size: 3vh;color: #E5E5E5;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;position: relative; text-transform:capitalize;line-height: 3.5vh;    text-align: right;">{{Usuario.Suscripcion.toLowerCase()}}</div>
     </div>
     </div>
-     <div style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;min-height:20vh;    position: relative;">
- 		<div class="animate-hide ng-hide animate-show" ng-show="!cargandoCuenta">
-        	<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase;padding-bottom: 1vh; border-bottom: solid 1px #474747;">
-            {{idioma.cuenta[15]}}
+    <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion>1 " ng-click="cancelaSuscripcion()" >
+ 		
+        	<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" >
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; text-transform:uppercase; ">{{idioma.cuenta[19]}}</button>
+				<i  class="icon ion-chevron-right" style="font-size:3vh; float:right" ></i>
             </div>
-        	<div style="float:left; width:33%;height:auto;{{producto.Id==Usuario.IdSuscripcion?'opacity:0.3;':''}}{{producto.Id%3==0?'border-right:solid 1px #474747;border-left:solid 1px #474747;':''}}margin-top:1vh;overflow:hidden;position: relative;" class={{productoSeleccionado.Id==producto.Id?'suscripcion-selected':''}} ng-repeat="producto in Productos" ng-click="seleccionaSuscripcion(producto)">
-            	<!--div style="width: 60%; margin-left:20%; margin-right:20%;border-radius: 100%;border: solid 2px #9E9E9E;overflow: hidden;padding: 2vh;float: left;margin-top: 2vh;">
-            	<img src="img/iconos/premium.png" style="width:100%">
-                
-                </div-->
+     </div>
+     
+     <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative; " ng-show="Usuario.IdSuscripcion==1 || OS=='Android'">
+ 		
+        	<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-click="muestraPrecPaq()">
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; text-transform:uppercase; ">{{idioma.cuenta[15]}}</button>
+                <i id="paquetes_flecha" class="icon ion-chevron-down" style="font-size:3vh; float:right" ></i>
+            </div>
+            <div id="contentPaquetes" style="float:left;height:auto;border-top: solid 1px #464646;margin-top:1vh;padding-top:1vh;width:100%; overflow:hidden; position: relative;" collapse="!verPrecios">
+            <div style="min-height:16vh;float:left">
+            <div class="animate-hide ng-hide animate-show" ng-show="!cargandoCuenta" >
+            
+            <div style="float:left; width:33%;height:auto;{{producto.Id==Usuario.IdSuscripcion?'opacity:0.3;':''}}{{producto.Id%3==0?'border-right:solid 1px #474747;border-left:solid 1px #474747;':''}}margin-top:1vh;overflow:hidden;position: relative;" class={{productoSeleccionado.Id==producto.Id?'suscripcion-selected':''}} ng-repeat="producto in Productos" ng-click="seleccionaSuscripcion(producto)">
+            
                 <div style="width: 100%;text-align: center;color:#C1C1C1;float: left;font-size:3vh;padding-top:1vh">{{producto.Nombre}}</div>
                 <div style="width: 90%;margin-left:5%; margin-right:5%;text-align: center;color:#A3A3A3;float: left;margin-top: 1vh;font-size: 2.5vh!important; padding-bottom:1vh;  border-bottom: solid 1px #474747;">{{producto.Periodo}}</div>
                 <div style="width: 100%;text-align: center;color:#C1C1C1;float: left;margin-top: 1vh;font-size:3vh; padding-bottom:1vh">{{producto.Precio}}</div>
                 
         	</div>
-            <button style="width: 100%;margin-top: 2vh;background: #ce932f;border: none;padding: 1vh;font-size: 3vh;border-radius: 3px;font-weight: 700;" ng-hide="productoSeleccionado.Id==Usuario.IdSuscripcion" ng-click="comprarProducto()">{{idioma.cuenta[16]}}</button>
- 		</div>
-        <div class="animate-hide ng-hide" style="height: 100%; width: 100%; padding: 0px; position: absolute; top: 0px;left: 0px;" ng-show="cargandoCuenta"><ion-spinner icon="android" class="spinner-dark" style="    position: absolute; top: 0px; bottom: 0px;margin: auto;height: 28px;left: 0px;right: 0px;    width: 28px;"></ion-spinner></div>
+            <button class="ng-hide" style="width: 100%;margin-top: 2vh;background: #ce932f;border: none;padding: 1vh;font-size: 3vh;border-radius: 3px;font-weight: 700;" ng-show="!cargandoCuenta && true" id="productoSeleccionado.Id!=Usuario.IdSuscripcion" ng-click="comprarProducto()">{{idioma.cuenta[16]}}</button>
+            </div>
+            </div>
+             <div class="animate-hide ng-hide" style="height: 100%; width: 100%; padding: 0px; position: absolute; top: 1vh;left: 0px;" ng-show="cargandoCuenta"><ion-spinner icon="android" class="spinner-dark" style="    position: absolute; top: 0px; bottom: 0px;margin: auto;height: 28px;left: 0px;right: 0px;    width: 28px;"></ion-spinner></div>
+            </div>
+                    	
+ 		
+       
     </div>
     <div style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh" >
     <div style="float:left; width:100%;">
