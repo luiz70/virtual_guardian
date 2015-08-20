@@ -61,8 +61,12 @@ span{
 }
 .popup-buttons .button{
     font-size:16px !important;
-    height:25px !important;
+    height:auto !important;/*25px !important;*/
+    line-height:3.2vh !important;
     
+}
+.popup-container .popup{
+    width:90vw;
 }
 .btn_mapa_flotante{
     width:6vh !important;
