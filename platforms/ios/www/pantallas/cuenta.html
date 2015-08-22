@@ -17,22 +17,28 @@
     <div  style="font-size: 3vh;color: #E5E5E5;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;position: relative; text-transform:capitalize;line-height: 3.5vh;    text-align: right;">{{Usuario.Suscripcion.toLowerCase()}}</div>
     </div>
     </div>
-    <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion>1 " ng-click="cancelaSuscripcion()" >
+    <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion>1 " >
  		
-        	<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" >
+        	<div class="ng-hide" style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-show="OS==Usuario.OSRecibo && Usuario.TipoRecibo==1" ng-click="cancelaSuscripcion()" >
                 <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; text-transform:uppercase; ">{{idioma.cuenta[19]}}</button>
 				<i  class="icon ion-chevron-right" style="font-size:3vh; float:right" ></i>
             </div>
+            <div class="ng-hide" style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-show="OS!=Usuario.OSRecibo && Usuario.TipoRecibo==1" ng-click="" >
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; ">{{idioma.cuenta[22].replace("TIENDA",(Usuario.OSRecibo=="iOS")?"Apple":"Google").replace("NOMBRE",Usuario.OSRecibo)}}</button>
+            </div>
+            <div class="ng-hide" style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-show="Usuario.TipoRecibo>1" ng-click="" >
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; ">{{idioma.cuenta[23]}}</button>
+            </div>
      </div>
      
-     <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative; " ng-show="Usuario.IdSuscripcion==1 || OS=='Android'">
+     <div class="ng-hide" style="height:auto;min-height:20vh; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative; " ng-show="Usuario.IdSuscripcion==1 || OS=='Android'">
  		
-        	<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-click="muestraPrecPaq()">
+        	<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;">
                 <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; text-transform:uppercase; ">{{idioma.cuenta[15]}}</button>
                 <i id="paquetes_flecha" class="icon ion-chevron-down" style="font-size:3vh; float:right" ></i>
             </div>
-            <div id="contentPaquetes" style="float:left;height:auto;border-top: solid 1px #464646;margin-top:1vh;padding-top:1vh;width:100%; overflow:hidden; position: relative;" collapse="!verPrecios">
-            <div style="min-height:16vh;float:left">
+            <div id="contentPaquetes" style="float:left;height:auto;border-top: solid 1px #464646;margin-top:1vh;padding-top:1vh;width:100%; overflow:hidden; position: relative;" >
+            <div style="float:left">
             <div class="animate-hide ng-hide animate-show" ng-show="!cargandoCuenta" >
             
             <div style="float:left; width:33%;height:auto;{{producto.Id==Usuario.IdSuscripcion?'opacity:0.3;':''}}{{producto.Id%3==0?'border-right:solid 1px #474747;border-left:solid 1px #474747;':''}}margin-top:1vh;overflow:hidden;position: relative;" class={{productoSeleccionado.Id==producto.Id?'suscripcion-selected':''}} ng-repeat="producto in Productos" ng-click="seleccionaSuscripcion(producto)">

@@ -24,7 +24,7 @@ $rootScope.startRecorrido=function(val){
         $scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridoStart.html", {
         scope: $scope
         }).then(function(popover) {
-             $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
+            $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
             $scope.popoverRec = popover;
             $scope.popoverRec.show();
             $(".popover-arrow").hide();
@@ -314,11 +314,7 @@ $rootScope.muestraPrecPaq=function(){
     }else{
         $("#paquetes_flecha").removeClass("ion-chevron-up")
         $("#paquetes_flecha").addClass("ion-chevron-down")
-        if(window.store){
-        store.off(errorPrice)
-        store.off(errorPrice)
-        store.off(errorPrice)
-        }
+        
     }
     if($rootScope.verPrecios)$scope.abreAjustesPaquetes();
 }
@@ -330,8 +326,10 @@ $scope.cancelCompra=function(product){
         
 $scope.aproveCompra=function(product){
     console.log("aproved");
+            
     product.verify()
-    .done(function(producto){
+    .success(function(producto,data){
+             
         var trans=jQuery.extend(true, {}, producto.transaction);
         trans.Usuario=$rootScope.Usuario.Id;
         trans.Suscripcion=producto.id;
@@ -340,11 +338,13 @@ $scope.aproveCompra=function(product){
         .success(function(data){
             $rootScope.hideCargando()
             console.log(data);
+                 window.localStorage.setArray("Usuario",data);
+                 $rootScope.Usuario=data;
             $rootScope.alert(
                 $rootScope.idioma.cuenta[17]+" "+$rootScope.productoSeleccionado.Nombre,
                 $rootScope.idioma.cuenta[21],
                 function(){
-                    //refresh
+                    
                 })
             product.finish();
         })
@@ -365,18 +365,47 @@ $scope.finishCompra=function(product){
 }
             
 $rootScope.comprarProducto=function(){
-    if($scope.compraDisponible){
+            var producto=$rootScope.productoSeleccionado.Data;
+            producto.verify()
+            .success(function(product,purchaseData){
+                     console.log(purchaseData);
+                     /*if(purchaseData.Adquirido){
+                     if($rootScope.verPrecios){
+                     var sus=purchaseData.Last.IdProducto.split(".");
+                     sus[0]=sus[0].substr(0,1).toUpperCase()+sus[0].substr(1);
+                     $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[18].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Google").replace("SUSCRIPCION",sus[0]).replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"),function(){})
+                     $rootScope.muestraPrecPaq();
+                     $rootScope.cargandoCuenta=false;
+                     }
+                     }else{
+                     if(!purchaseData.Error)$rootScope.realizaCompra()
+                     else {
+                     if($rootScope.verPrecios)$rootScope.muestraPrecPaq();
+                     $rootScope.cargandoCuenta=false;
+                     $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[24].replace("TIENDA",(window.device.platform=="iOS")?"Apple":"Google"))
+                     }
+                     }*/
+                     })
+
+            }
+$rootScope.realizaCompra=function(){
+        
+        store.off($scope.errorPrecio);
+        store.off($scope.loadPrecio);
         $rootScope.showCargando("")
-        store.order($rootScope.productoSeleccionado.IdProducto)
-        .error(function(err){
-            $timeout(function(){
-                $rootScope.hideCargando()
-            },1000)
-        });
+        
         store.when($rootScope.productoSeleccionado.IdProducto).cancelled($scope.cancelCompra)
-        store.once($rootScope.productoSeleccionado.IdProducto).approved($scope.aproveCompra)
+            store.once($rootScope.productoSeleccionado.IdProducto).approved(function(product){
+                                                                            console.log(222);
+                                                                            })
         store.once($rootScope.productoSeleccionado.IdProducto).finished($scope.finishCompra)
-    }
+            console.log("cargando");
+            store.order($rootScope.productoSeleccionado.IdProducto)
+            .error(function(err){
+                   $timeout(function(){
+                            $rootScope.hideCargando()
+                            },1000)
+                   });
 }
         
 $scope.abreAjustesCuenta=function(){
@@ -392,18 +421,19 @@ $scope.abreAjustesPaquetes=function(){
         $scope.cargaProductosSQL();
     
     if(window.store){
-        store.off($scope.errorPrecio)
-        store.off($scope.updatePrecio)
-        store.off($scope.loadPrecio)
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.updatePrecio);
+            store.off($scope.errorPrecio);
+            store.off($scope.loadPrecio);
+        
         store.error($scope.errorPrecio)
         store.when('product').updated($scope.updatePrecio)
-        store.when('product').loaded($scope.loadPrecio)
-        if($rootScope.Productos[0].Data && $rootScope.Productos[0].Data.state=="approved")
-            $rootScope.cargandoCuenta=false;
+        store.when('product').updated($scope.loadPrecio)
+            
         store.refresh();
-        if(!$scope.initStore){
-            store.refresh();
-        }
+       if(store.producto)
         $scope.initStore=true
     }else {
         $rootScope.cargandoCuenta=false;
@@ -416,6 +446,7 @@ $scope.abreAjustesPaquetes=function(){
 }
             
 $scope.updatePrecio=function(producto){
+            console.log(1);
     if(producto.id!="application data"){
         //console.log(producto);
         for(var s=0;s<$rootScope.Productos.length;s++)
@@ -429,8 +460,8 @@ $scope.updatePrecio=function(producto){
 }
             
 $scope.loadPrecio=function(producto){
-    //producto.verify()
-    console.log(producto);
+            
+            
     $scope.$apply(function(){
         $scope.productosCargados++;
     })
@@ -472,7 +503,19 @@ $scope.cargaProductosSQL=function(){
                  store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
             }
             store.validator=function(product,callback){
-            callback(product)
+             
+             if(product.transaction.appStoreReceipt){
+             $http.post("https://www.virtual-guardian.com/api/validReceipt",{
+                        Recibo:product.transaction.appStoreReceipt
+                })
+             .success(function(data){
+                      
+                      callback(true,data);
+                      })
+             .error(function(data){
+                    callback(false,{Adquirido:false,Error:true});
+                    })
+             }else callback(true,{Adquirido:false,Error:true});
             }
         }
     })
@@ -574,6 +617,13 @@ $scope.slideHasChanged=function($index){
 //$("#home_ajustes_filtros").css('height', '0px')
 $scope.menuNotificaciones=false;
 $scope.menuAplicacion=false;
+            $scope.abrefiltrosMenu=function(){
+            if($rootScope.Usuario.IdSuscripcion>1)$scope.opcionMenu('filtros');
+            else $scope.confirm($scope.idioma.general[11],$scope.idioma.general[12],function(){
+                                //ENVIA A PAGINA A VER PAQUETES
+                                $rootScope.abrePaquetes();
+                                },$scope.idioma.general[13],$scope.idioma.general[14]);
+            }
 $scope.opcionMenu=function(s){
 if(!$("#home_ajustes_"+s).hasClass("collapsing")){
 if(!$("#home_ajustes_"+s).hasClass("in")){
@@ -754,6 +804,7 @@ $rootScope.cancelarCambioContra=function(){
 $rootScope.isVigente=function(){
     $http.get("https://www.virtual-guardian.com/api/perfil/"+window.localStorage.getArray("Usuario").Id)
     .success(function(data,status,header,config){
+             if(data.OSRecibo=="")data.OSRecibo=$rootScope.OS
         $rootScope.Update=new Date();
         if(data.Registro!=$rootScope.Usuario.Registro){
             $scope.alert($scope.idioma.general[23],$scope.idioma.general[24],function(){
@@ -865,10 +916,17 @@ $scope.abreFiltrosTipos=function(){
     
 }
 $scope.abrePeriodo=function(){
+            if($rootScope.Usuario.IdSuscripcion>1){
+            $scope.Usuario.Periodo=parseInt($scope.Usuario.Periodo);
+            $scope.openSelect($scope.Periodos,false);
+            }else $scope.confirm($scope.idioma.general[11],$scope.idioma.general[12],function(){
+                                //ENVIA A PAGINA A VER PAQUETES
+                                $rootScope.abrePaquetes();
+                                },$scope.idioma.general[13],$scope.idioma.general[14]);
+            
+
     
-    
-        $scope.Usuario.Periodo=parseInt($scope.Usuario.Periodo);
-        $scope.openSelect($scope.Periodos,false);
+        
             
 }
 $rootScope.TipPop=false;

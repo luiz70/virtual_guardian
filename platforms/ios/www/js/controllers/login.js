@@ -45,6 +45,7 @@ angular.module('starter')
 		.success(function(data,status,header,config){
 			//$scope.email="";
 			console.log(data);
+                 if(data.OSRecibo=="")data.OSRecibo=$rootScope.OS
 			$scope.contrasena="";
 				$scope.hideCargando();
 				if(data.Id){
