@@ -71,8 +71,7 @@ angular.module('starter')
 					15:"Comprar suscripción",
 					16:"Comprar",
             17:"Suscripción",
-            18:"Esta cuenta de NOMBRE ya tiene una suscripcion SUSCRIPCION y no corresponde a este usuario de Virtual Guardian.<div style='font-size:2vh'>Cambia de CUENTA e intenta de nuevo.</div>",
-			19:"Modificar Suscripción"
+            18:"Esta cuenta de NOMBRE ya tiene una suscripcion SUSCRIPCION y no corresponde a este usuario de Virtual Guardian.<div style='font-size:2vh'>Cambia de CUENTA e intenta de nuevo.</div>"
 					},
 				menu:{
 				1:"Filtros",

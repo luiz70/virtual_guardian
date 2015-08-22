@@ -290,38 +290,15 @@ angular.module('starter')
 	$rootScope.Productos=[];
 	$rootScope.productoSeleccionado=null;
 	$rootScope.seleccionaSuscripcion=function(producto){
-        
 		//if(producto.Id!=$rootScope.Usuario.IdSuscripcion){
 	$rootScope.productoSeleccionado=producto
 		//}
 	}
-	
 	$scope.compraDisponible=true;
-	$rootScope.verPrecios=false;
-	$rootScope.cancelaSuscripcion=function(){
-		if($rootScope.OS=="iOS"){
-			window.open("https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions","_system")
-		}else{
-			window.open("https://play.google.com/store/apps/details?id=com.app.virtualguardian","_system")
-		}
-	}
-	$rootScope.muestraPrecPaq=function(){
-		 
-		$rootScope.verPrecios=!$rootScope.verPrecios;
-		if(!$("#contentPaquetes").hasClass("in")){
-			$("#paquetes_flecha").removeClass("ion-chevron-down")
-			$("#paquetes_flecha").addClass("ion-chevron-up")
-		}else{
-			$("#paquetes_flecha").removeClass("ion-chevron-up")
-			$("#paquetes_flecha").addClass("ion-chevron-down")
-		}
-		if($rootScope.verPrecios)$scope.abreAjustesPaquetes();
-	}
 	$rootScope.comprarProducto=function(){
-            console.log($rootScope.productoSeleccionado.Data)
+            store.refresh();
 		if($scope.compraDisponible){
 		$rootScope.showCargando("")
-            
             //if(!$rootScope.productoSeleccionado.Data.owned){
             store.order($rootScope.productoSeleccionado.IdProducto)
             .then(function(product){
@@ -344,21 +321,24 @@ angular.module('starter')
                                                      $rootScope.hideCargando()
                                                      },500)
                                             })
-            store.when("product").approved(function(product){
-                                           console.log("aproved");
-                                           
-                                            })
-            store.once("product").verified(function(product){
-                                           console.log("verified");
-                                        })
+            /*store.when("product").approved(function(product){
+                                           console.log(product)
+                                            $timeout(function(){
+                                                     $rootScope.hideCargando()
+                                                     },500)
+                                            })*/
+            store.once("product").owned(function(product){
+                                                    ///$rootScope.hideCargando()
+                                        
+                                           })
             store.once("product").initiated(function(product){
-                                            if(product.owned){
+                                            /*if(!product.canPurchase){
                                             console.log("purchased")
                                             product.finish()
                                             
                                             //$rootScope.hideCargando()
                                             
-                                            }
+                                            }*/
 
                                             
                                             })
@@ -378,13 +358,10 @@ angular.module('starter')
             
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
-            
-		
-            $scope.openTerminos("pantallas/cuenta.html");
-            }
-        $scope.abreAjustesPaquetes=function(){
-            $rootScope.productoSeleccionado=null;
             $scope.productosCargados=0;
+		$scope.compraDisponible=true;
+		$rootScope.productoSeleccionado=null;
+            $scope.openTerminos("pantallas/cuenta.html");
             if($rootScope.Productos.length==0)$scope.cargaProductosSQL();
 			$rootScope.cargandoCuenta=true;
 		
@@ -394,8 +371,8 @@ angular.module('starter')
                  store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
             
             }
-            store.validator="http://store.fovea.cc:1980/check-purchase"
-            //store.refresh();
+            
+            
                  
                  store.error(function(err){
                              console.log(err);
@@ -405,7 +382,6 @@ angular.module('starter')
                              })
             store.when('product').updated(function(producto){
                                           if(producto.id!="application data"){
-                                          console.log(producto);
                                           for(var s=0;s<$rootScope.Productos.length;s++)
                                           if($rootScope.Productos[s].IdProducto==producto.id){
                                           $scope.$apply(function(){
@@ -418,28 +394,24 @@ angular.module('starter')
             })
             if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
             store.when('product').loaded(function(producto){
-                                         
-                                         producto.verify()
-                                         
                                             $scope.$apply(function(){
                                                             $scope.productosCargados++;
                                                             })
                                               if($scope.productosCargados>=3)
                                               $scope.$apply(function(){
                                                             $rootScope.cargandoCuenta=false;
-                                                            
                                                             })
                                          
                                               })
-            if(!$scope.initStore)store.refresh();
+            store.refresh();
                  $scope.initStore=true
                  
 			}else {
-				$rootScope.cargandoCuenta=false;
+				if($rootScope.Productos.length>0)$rootScope.cargandoCuenta=false;
 			}
 			for(var i=0;i<$rootScope.Productos.length;i++)
 			if($rootScope.Productos[i].Id==$rootScope.Usuario.IdSuscripcion)$rootScope.productoSeleccionado=$rootScope.Productos[i];
-			if(!$rootScope.productoSeleccionad)$rootScope.productoSeleccionado=$rootScope.Productos[0];
+			if($rootScope.productoSeleccionado==null)$rootScope.productoSeleccionado=$rootScope.Productos[0];
 			
 		
 		
@@ -450,7 +422,6 @@ angular.module('starter')
 	
             $scope.cargaProductosSQL=function(){
             $rootScope.cargandoCuenta=true;
-			
             $http.get("https://www.virtual-guardian.com/api/tiposSuscripciones")
             .success(function(data){
                      if(data[0].Id==1)data.shift();
