@@ -1,324 +1,307 @@
 angular.module('starter')
 .controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory){
-
-    $rootScope.onTab=function (id){
-            if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){
-                $rootScope.cargando=false;
-                $("#img_btn_1").attr("src","img/iconos/map.png");
-                $("#img_btn_2").attr("src","img/iconos/tasks.png");
-                $("#img_btn_3").attr("src","img/iconos/people.png");
-                $("#img_btn_4").attr("src","img/iconos/car.png");
-                $("#img_btn_"+id).attr("src",$("#img_btn_"+id).attr("src").substr(0,$("#img_btn_"+id).attr("src").length-4)+"2.png");
-                $scope.slideTo(id)
-            }
-    }
-            $ionicHistory.nextViewOptions({
- disableBack: true
-});
-$rootScope.tituloRecorrido=""
-$rootScope.startRecorrido=function(val){
-    //bienvenida
-    if($scope.Conexion(1,function(){
+	
+	$rootScope.onTab=function (id){
+		if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){
+		$rootScope.cargando=false;
+		$("#img_btn_1").attr("src","img/iconos/map.png");
+		$("#img_btn_2").attr("src","img/iconos/tasks.png");
+		$("#img_btn_3").attr("src","img/iconos/people.png");
+		$("#img_btn_4").attr("src","img/iconos/car.png");
+		$("#img_btn_"+id).attr("src",$("#img_btn_"+id).attr("src").substr(0,$("#img_btn_"+id).attr("src").length-4)+"2.png");
+		$scope.slideTo(id)
+		}
+	}
+	$ionicHistory.nextViewOptions({
+     disableBack: true
+ });
+ $rootScope.tituloRecorrido=""
+	$rootScope.startRecorrido=function(val){
+		//bienvenida
+		if($scope.Conexion(1,function(){
+			
+		})){
+			$scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridoStart.html", {
+    		scope: $scope
+			}).then(function(popover) {
+				 $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
+    			$scope.popoverRec = popover;
+				$scope.popoverRec.show();
+				$(".popover-arrow").hide();
+  			});
+		}
+	}
+	if($rootScope.Usuario.Nuevo==1 && !window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.startRecorrido(1)},1000);
+	else $timeout(function(){$rootScope.isVigente();},1000);
+	$scope.des=function(){
+		console.log($rootScope.filtros.Estados);
+	}
+	$scope.Periodos=[
+	{Nombre:$scope.idioma.periodos[7],Periodo:7},
+	{Nombre:$scope.idioma.periodos[30],Periodo:30},
+	{Nombre:$scope.idioma.periodos[180],Periodo:180},
+	{Nombre:$scope.idioma.periodos[365],Periodo:365}
+	]
+	if( window.sqlitePlugin)$rootScope.inicializaBaseLocal();
+	$rootScope.stepRecorrido=0;
+	$scope.fechaNotRef=null;
+	$scope.fechaPerRef=null;
+	$rootScope.cargando=true;
+	$scope.pantallas=[true,false,false,true];
+	$timeout(function(){ 
+		$ionicSlideBoxDelegate.enableSlide(false); 
+		if($rootScope.tabInicial!=1)$rootScope.onTab($rootScope.tabInicial);
         
-    })){
-        $scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridoStart.html", {
-        scope: $scope
-        }).then(function(popover) {
-            $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
-            $scope.popoverRec = popover;
-            $scope.popoverRec.show();
-            $(".popover-arrow").hide();
-        });
-    }
-}
-if($rootScope.Usuario.Nuevo==1 && !window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.startRecorrido(1)},1000);
-else $timeout(function(){$rootScope.isVigente();},1000);
-$scope.des=function(){
-    console.log($rootScope.filtros.Estados);
-}
-$scope.Periodos=[
-{Nombre:$scope.idioma.periodos[7],Periodo:7},
-{Nombre:$scope.idioma.periodos[30],Periodo:30},
-{Nombre:$scope.idioma.periodos[180],Periodo:180},
-{Nombre:$scope.idioma.periodos[365],Periodo:365}
-]
-if( window.sqlitePlugin)$rootScope.inicializaBaseLocal();
-$rootScope.stepRecorrido=0;
-$scope.fechaNotRef=null;
-$scope.fechaPerRef=null;
-$rootScope.cargando=true;
-$scope.pantallas=[true,false,false,true];
-$timeout(function(){ 
-    $ionicSlideBoxDelegate.enableSlide(false); 
-    if($rootScope.tabInicial!=1)$rootScope.onTab($rootScope.tabInicial);
-    
-},300);
-$scope.tamano=window.innerWidth*0.85;
-$("#capa_menu").hide();
-$scope.filtro={fechai:null,fechaf:null,estados:"",eventos:""};
-$scope.Estados=[];
-if(window.localStorage.getArray("TipoEventos"))$scope.TipoEventos=window.localStorage.getArray("TipoEventos");
-else $scope.TipoEventos=[];
-
-$rootScope.iniciaRecorrido=function(){
-    $scope.popoverRec.hide();
-    $scope.popoverRec=null;
-window.localStorage.setItem("enRecorrido",1);
-$location.path("/home");
-        $timeout(function(){
-                $location.path('/inicio');
-                
-            },1000);
-}
-//$rootScope.stepRecorrido=1
-$rootScope.closeRecorrido=function(){
-        window.localStorage.removeItem("enRecorrido")
-        $rootScope.Usuario.Nuevo=0
-        window.localStorage.setArray("Usuario",$rootScope.Usuario)
-        switch($rootScope.stepRecorrido){
-        case 0: $scope.popoverRec.hide();
-        $rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
-        });
-        break;
-        default:
-        
-        $scope.popoverRec.hide();;
-        $scope.popoverRec=null;
-        $location.path("/home");
-        $timeout(function(){
-                $location.path('/inicio');
-            },1000);
-            $rootScope.Usuario.Nuevo=0;
-        break;
-    }
-        
-        
-
-}
-
-$rootScope.recorrido=false;
-$rootScope.nextRecorrido=function(){
-    
-    switch($rootScope.stepRecorrido){
-        case 0:
-        //
-        $rootScope.stepRecorrido=1;
-            $rootScope.recorrido=true;
-        $scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridopop.html", {
-        scope: $scope
-        }).then(function(popover) {
-             $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
-            $scope.popoverRec = popover;
-            $scope.popoverRec.show();
-            $(".popover-arrow").hide();
-        $("#popRecorrido").height('80vh')
-                
-            
-                    });
-                    $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[6];
-        
-        break;
-        case 1:
-        if($rootScope.miubicacion.lat()==0)$rootScope.miubicacion=$rootScope.ubicacionMarker.getPosition();
-        $rootScope.Eventos=[{"IdEvento":"1","IdAsunto":"1","Latitud":$rootScope.miubicacion.lat()+0.005,"Longitud":$rootScope.miubicacion.lng()+0.009}]; 
-        if($scope.Conexion()){
-        
-        $("#recorrido1").removeClass("animate-hide");
-        $rootScope.inicializaMapaRecorrido();
-        $scope.popoverRec.hide();
-        $rootScope.msj_map=true;
-        $("#msj_map").html($rootScope.idioma.recorrido[11]);
-        $("#recorrido1").addClass("ng-hide");
-        $rootScope.stepRecorrido=2;
-        }else {
-            $("#recorrido1").addClass("ng-hide");
-        $rootScope.stepRecorrido=2;
-        $rootScope.nextRecorrido();
-        }
-        break;
-        case 2:
-        
-        $scope.popoverRec.show();
-        $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[8];
-        $rootScope.inicializaMapaRecorrido();
-        $rootScope.stepRecorrido=3;
-        break;
-        case 3:
-        if($scope.Conexion()){
-        $("#recorrido1").removeClass("animate-hide");
-        $rootScope.inicializaMapaRecorrido();
-        $scope.popoverRec.hide();
-        $rootScope.msj_map=true;
-        $("#msj_map").html($rootScope.idioma.recorrido[12]);
-        $("#recorrido2").addClass("ng-hide");
-        $("#tapa_pie").height("30px");
-        $rootScope.stepRecorrido=4;
-        }else{
-            $("#recorrido2").addClass("ng-hide");
-            $rootScope.stepRecorrido=5;
-        $rootScope.nextRecorrido();
-        }
-        break;
-        case 4:
-        $("#msj_map").html($rootScope.idioma.recorrido[13]);
-        $rootScope.stepRecorrido=5;
-        $("#tapa_pie").height("40px");
-        $("#tapa_pie").css("top","30px");
-        break;
-        case 5:
-        $("#tapa_pie").height("70px");
-        $("#tapa_pie").css("top","0px");
-        $scope.popoverRec.show();
-        $rootScope.msj_map=false;
-        $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[15];
-        $rootScope.inicializaMapaRecorrido();
-        $rootScope.stepRecorrido=6;
-        break;
-        case 6:
-        if($scope.Conexion()){
-        $rootScope.onSPos({'coords':{'latitude':$rootScope.miubicacion.lat()-0.005,'longitude':$rootScope.miubicacion.lng()-0.009}});
-        $("#recorrido3").removeClass("animate-hide");
-        $rootScope.inicializaMapaRecorrido();
-        $scope.popoverRec.hide();
-        $rootScope.msj_map=true;
-        $("#msj_map").html($rootScope.idioma.recorrido[20]);
-        $("#recorrido3").addClass("ng-hide");
-        $("#msj_map").css( "bottom"," 8vh")
-        $("#msj_map").css( "top"," auto");
-        $rootScope.stepRecorrido=7;
-        }else{
-            $("#recorrido3").addClass("ng-hide");
-            $rootScope.stepRecorrido=8;
-            $rootScope.nextRecorrido();
-        }
-        break;
-        case 7:
-        $rootScope.stepRecorrido=8;
-        $("#msj_map").html($rootScope.idioma.recorrido[21]);
-        break;
-        case 8:$rootScope.stepRecorrido=9;
-        $rootScope.onTab(2);
-        $scope.popoverRec.show();
-        $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[22];
-        break;
-        case 9:
-        $("#recorrido9").removeClass("animate-hide");
-        $rootScope.stepRecorrido=10;
-        $rootScope.onTab(3);
-        $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[31];
-        break;
-        case 10:
-        $("#recorrido10").removeClass("animate-hide");
-        $rootScope.stepRecorrido=11;
-        $rootScope.onTab(4);
-        $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[35];
-        break;
-        case 11:
-        $("#recorrido11").removeClass("animate-hide");
-        $rootScope.stepRecorrido=12;
-        $rootScope.onTab(1);
-        $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[41];
-        break;
-        
-    }
-}
-//window.localStorage.removeItem("enRecorrido")
-if(window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.nextRecorrido();
-},500);
-$rootScope.msj_map=false;
-if(!window.localStorage.getArray("Estados"))
-$http.get("https://www.virtual-guardian.com/api/estados")
-    .success(function(data,status,header,config){
-        $scope.Estados=[];
-        for(var i=0;i<data.length;i++)
-        $scope.Estados.push(JSON.parse(data[i]));
-        window.localStorage.setArray("Estados",$scope.Estados)
-        $scope.filtrosEstados=$scope.Estados
-        })
-    .error(function(error,status,header,config){
-        })
-else $scope.Estados=window.localStorage.getArray("Estados")
-
-
-if(!window.localStorage.getArray("Filtros")){
-var d1=new Date();
-var d2=new Date();
-d2.setDate(d2.getDate()-$rootScope.Usuario.Periodo);
-$rootScope.filtros={
-    Estado:false,
-    Inicial:d2,
-    Final:d1,
-    Estados:$scope.Estados,
-    Tipos:$scope.TipoEventos,
-    Periodo:{Nombre:$scope.idioma.periodos[$rootScope.Usuario.Periodo],Periodo:$rootScope.Usuario.Periodo}
-    
-}
-}else{
-    
-    var fil=window.localStorage.getArray("Filtros");
-    $rootScope.filtros={
-    Estado:fil.Estado,
-    Inicial:new Date(fil.Inicial),
-    Final:new Date(fil.Final),
-    Estados:fil.Estados,
-    Tipos:fil.Tipos,
-    Periodo:{Nombre:$scope.idioma.periodos[$rootScope.Usuario.Periodo],Periodo:$rootScope.Usuario.Periodo}
-}
-
-}
-$http.get("https://www.virtual-guardian.com/api/tipoeventos",{})
-    .success(function(data,status,header,config){
-        $scope.TipoEventos=[];
-        for(var i=0;i<data.length;i++)
-        $scope.TipoEventos.push(JSON.parse(data[i]));
-        window.localStorage.setArray("TipoEventos",$scope.TipoEventos)
-        if(!$rootScope.iOS)$rootScope.filtros.Tipos=$scope.TipoEventos;
-        })
-    .error(function(error,status,header,config){
-        })
-$scope.desactiva=function(val){
-    switch(val){
-        case 1:$rootScope.Usuario.NotificacionesEventos=(!$rootScope.Usuario.NotificacionesEventos)? 1 : 0;
-        break;
-        case 2:$rootScope.Usuario.NotificacionesPersonas=(!$rootScope.Usuario.NotificacionesPersonas)? 1 : 0;
-        break;
-        case 3:if($rootScope.Usuario.NotificacionesEventos==1)$rootScope.Usuario.NotificacionesAuto=(!$rootScope.Usuario.NotificacionesAuto)? 1 : 0;
-        break;
-        }
-}
-$scope.ajustes=false;
-$rootScope.Productos=[];
-$rootScope.productoSeleccionado=null;
-$rootScope.seleccionaSuscripcion=function(producto){
-    
-    //if(producto.Id!=$rootScope.Usuario.IdSuscripcion){
-$rootScope.productoSeleccionado=producto
-    //}
-}
-
-$scope.compraDisponible=true;
-$rootScope.verPrecios=false;
-$rootScope.cancelaSuscripcion=function(){
+	},300);
+	$scope.tamano=window.innerWidth*0.85;
+	$("#capa_menu").hide();
+	$scope.filtro={fechai:null,fechaf:null,estados:"",eventos:""};
+	$scope.Estados=[];
+	if(window.localStorage.getArray("TipoEventos"))$scope.TipoEventos=window.localStorage.getArray("TipoEventos");
+	else $scope.TipoEventos=[];
+	
+	$rootScope.iniciaRecorrido=function(){
+		$scope.popoverRec.hide();
+		$scope.popoverRec=null;
+	window.localStorage.setItem("enRecorrido",1);
+	$location.path("/home");
+			$timeout(function(){
+					$location.path('/inicio');
+					
+				},1000);
+	}
+	//$rootScope.stepRecorrido=1
+	$rootScope.closeRecorrido=function(){
+            window.localStorage.removeItem("enRecorrido")
+            $rootScope.Usuario.Nuevo=0
+            window.localStorage.setArray("Usuario",$rootScope.Usuario)
+			switch($rootScope.stepRecorrido){
+			case 0: $scope.popoverRec.hide();
+			$rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
+			});
+			break;
+			default:
+			
+			$scope.popoverRec.hide();;
+			$scope.popoverRec=null;
+			$location.path("/home");
+			$timeout(function(){
+					$location.path('/inicio');
+				},1000);
+				$rootScope.Usuario.Nuevo=0;
+			break;
+		}
+			
+			
+	
+	}
+	
+	$rootScope.recorrido=false;
+	$rootScope.nextRecorrido=function(){
+		
+		switch($rootScope.stepRecorrido){
+			case 0:
+			//
+			$rootScope.stepRecorrido=1;
+				$rootScope.recorrido=true;
+			$scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridopop.html", {
+    		scope: $scope
+			}).then(function(popover) {
+				 $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
+    			$scope.popoverRec = popover;
+				$scope.popoverRec.show();
+				$(".popover-arrow").hide();
+			$("#popRecorrido").height('80vh')
+                    
+				
+			  			});
+						$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[6];
+			
+			break;
+			case 1:
+            if($rootScope.miubicacion.lat()==0)$rootScope.miubicacion=$rootScope.ubicacionMarker.getPosition();
+			$rootScope.Eventos=[{"IdEvento":"1","IdAsunto":"1","Latitud":$rootScope.miubicacion.lat()+0.005,"Longitud":$rootScope.miubicacion.lng()+0.009}]; 
+			if($scope.Conexion()){
+			
+			$("#recorrido1").removeClass("animate-hide");
+			$rootScope.inicializaMapaRecorrido();
+			$scope.popoverRec.hide();
+			$rootScope.msj_map=true;
+			$("#msj_map").html($rootScope.idioma.recorrido[11]);
+			$("#recorrido1").addClass("ng-hide");
+			$rootScope.stepRecorrido=2;
+			}else {
+				$("#recorrido1").addClass("ng-hide");
+			$rootScope.stepRecorrido=2;
+			$rootScope.nextRecorrido();
+			}
+			break;
+			case 2:
+			
+			$scope.popoverRec.show();
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[8];
+			$rootScope.inicializaMapaRecorrido();
+			$rootScope.stepRecorrido=3;
+			break;
+			case 3:
+			if($scope.Conexion()){
+			$("#recorrido1").removeClass("animate-hide");
+			$rootScope.inicializaMapaRecorrido();
+			$scope.popoverRec.hide();
+			$rootScope.msj_map=true;
+			$("#msj_map").html($rootScope.idioma.recorrido[12]);
+			$("#recorrido2").addClass("ng-hide");
+			$("#tapa_pie").height("30px");
+			$rootScope.stepRecorrido=4;
+			}else{
+				$("#recorrido2").addClass("ng-hide");
+				$rootScope.stepRecorrido=5;
+			$rootScope.nextRecorrido();
+			}
+			break;
+			case 4:
+			$("#msj_map").html($rootScope.idioma.recorrido[13]);
+			$rootScope.stepRecorrido=5;
+			$("#tapa_pie").height("40px");
+			$("#tapa_pie").css("top","30px");
+			break;
+			case 5:
+			$("#tapa_pie").height("70px");
+			$("#tapa_pie").css("top","0px");
+			$scope.popoverRec.show();
+			$rootScope.msj_map=false;
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[15];
+			$rootScope.inicializaMapaRecorrido();
+			$rootScope.stepRecorrido=6;
+			break;
+			case 6:
+			if($scope.Conexion()){
+			$rootScope.onSPos({'coords':{'latitude':$rootScope.miubicacion.lat()-0.005,'longitude':$rootScope.miubicacion.lng()-0.009}});
+			$("#recorrido3").removeClass("animate-hide");
+			$rootScope.inicializaMapaRecorrido();
+			$scope.popoverRec.hide();
+			$rootScope.msj_map=true;
+			$("#msj_map").html($rootScope.idioma.recorrido[20]);
+			$("#recorrido3").addClass("ng-hide");
+			$("#msj_map").css( "bottom"," 8vh")
+  			$("#msj_map").css( "top"," auto");
+			$rootScope.stepRecorrido=7;
+			}else{
+				$("#recorrido3").addClass("ng-hide");
+				$rootScope.stepRecorrido=8;
+				$rootScope.nextRecorrido();
+			}
+			break;
+			case 7:
+			$rootScope.stepRecorrido=8;
+			$("#msj_map").html($rootScope.idioma.recorrido[21]);
+			break;
+			case 8:$rootScope.stepRecorrido=9;
+			$rootScope.onTab(2);
+			$scope.popoverRec.show();
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[22];
+			break;
+			case 9:
+			$("#recorrido9").removeClass("animate-hide");
+			$rootScope.stepRecorrido=10;
+			$rootScope.onTab(3);
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[31];
+			break;
+			case 10:
+			$("#recorrido10").removeClass("animate-hide");
+			$rootScope.stepRecorrido=11;
+			$rootScope.onTab(4);
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[35];
+			break;
+			case 11:
+			$("#recorrido11").removeClass("animate-hide");
+			$rootScope.stepRecorrido=12;
+			$rootScope.onTab(1);
+			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[41];
+			break;
+			
+		}
+	}
+	//window.localStorage.removeItem("enRecorrido")
+	if(window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.nextRecorrido();
+	},500);
+	$rootScope.msj_map=false;
+	if(!window.localStorage.getArray("Estados"))
+	$http.get("https://www.virtual-guardian.com/api/estados")
+		.success(function(data,status,header,config){
+			$scope.Estados=[];
+			for(var i=0;i<data.length;i++)
+			$scope.Estados.push(JSON.parse(data[i]));
+			window.localStorage.setArray("Estados",$scope.Estados)
+			$scope.filtrosEstados=$scope.Estados
+			})
+		.error(function(error,status,header,config){
+			})
+	else $scope.Estados=window.localStorage.getArray("Estados")
+	
+	
+	if(!window.localStorage.getArray("Filtros")){
+	var d1=new Date();
+	var d2=new Date();
+	d2.setDate(d2.getDate()-$rootScope.Usuario.Periodo);
+	$rootScope.filtros={
+		Estado:false,
+		Inicial:d2,
+		Final:d1,
+		Estados:$scope.Estados,
+		Tipos:$scope.TipoEventos,
+		Periodo:{Nombre:$scope.idioma.periodos[$rootScope.Usuario.Periodo],Periodo:$rootScope.Usuario.Periodo}
+		
+	}
+	}else{
+		
+		var fil=window.localStorage.getArray("Filtros");
+		$rootScope.filtros={
+		Estado:fil.Estado,
+		Inicial:new Date(fil.Inicial),
+		Final:new Date(fil.Final),
+		Estados:fil.Estados,
+		Tipos:fil.Tipos,
+		Periodo:{Nombre:$scope.idioma.periodos[$rootScope.Usuario.Periodo],Periodo:$rootScope.Usuario.Periodo}
+	}
+	
+	}
+	$http.get("https://www.virtual-guardian.com/api/tipoeventos",{})
+		.success(function(data,status,header,config){
+			$scope.TipoEventos=[];
+			for(var i=0;i<data.length;i++)
+			$scope.TipoEventos.push(JSON.parse(data[i]));
+			window.localStorage.setArray("TipoEventos",$scope.TipoEventos)
+			if(!$rootScope.iOS)$rootScope.filtros.Tipos=$scope.TipoEventos;
+			})
+		.error(function(error,status,header,config){
+			})
+	$scope.desactiva=function(val){
+		switch(val){
+			case 1:$rootScope.Usuario.NotificacionesEventos=(!$rootScope.Usuario.NotificacionesEventos)? 1 : 0;
+			break;
+			case 2:$rootScope.Usuario.NotificacionesPersonas=(!$rootScope.Usuario.NotificacionesPersonas)? 1 : 0;
+			break;
+			case 3:if($rootScope.Usuario.NotificacionesEventos==1)$rootScope.Usuario.NotificacionesAuto=(!$rootScope.Usuario.NotificacionesAuto)? 1 : 0;
+			break;
+			}
+	}
+	$scope.ajustes=false;
+	$rootScope.Productos=[];
+	$rootScope.productoSeleccionado=null;
+	$rootScope.seleccionaSuscripcion=function(producto){
+		//if(producto.Id!=$rootScope.Usuario.IdSuscripcion){
+	$rootScope.productoSeleccionado=producto
+		//}
+	}
+	$rootScope.cancelaSuscripcion=function(){
     if($rootScope.OS=="iOS"){
         window.open("https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions","_system")
     }else{
         window.open("https://play.google.com/store/apps/details?id=com.app.virtualguardian","_system")
     }
 }
-$rootScope.muestraPrecPaq=function(){
-        
-    $rootScope.verPrecios=!$rootScope.verPrecios;
-    if(!$("#contentPaquetes").hasClass("in")){
-        $("#paquetes_flecha").removeClass("ion-chevron-down")
-        $("#paquetes_flecha").addClass("ion-chevron-up")
-    }else{
-        $("#paquetes_flecha").removeClass("ion-chevron-up")
-        $("#paquetes_flecha").addClass("ion-chevron-down")
-        
-    }
-    if($rootScope.verPrecios)$scope.abreAjustesPaquetes();
-}
-$scope.cancelCompra=function(product){
+	$scope.cancelCompra=function(product){
     $timeout(function(){
         $rootScope.hideCargando()
     },500)
@@ -329,7 +312,6 @@ $scope.aproveCompra=function(product){
             
     product.verify()
     .success(function(producto,data){
-             
         var trans=jQuery.extend(true, {}, producto.transaction);
         trans.Usuario=$rootScope.Usuario.Id;
         trans.Suscripcion=producto.id;
@@ -351,100 +333,107 @@ $scope.aproveCompra=function(product){
         .error(function(error){
             product.finish();
         })
+             //}else product.finish();
     })
 }
             
 $scope.finishCompra=function(product){
-    console.log("fin")
-    store.off($scope.cancelCompra)
-    store.off($scope.finishCompra);
-    store.off($scope.aproveCompra);
+            console.log("fin")
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
     $timeout(function(){
         $rootScope.hideCargando()
     },500)
 }
-            
-$rootScope.comprarProducto=function(){
-            var producto=$rootScope.productoSeleccionado.Data;
+            $scope.errorCompra=function(err){
+            console.log("error")
+            $rootScope.productoSeleccionado.Data.finish();
+            }
+	$rootScope.comprarProducto=function(){
+        var producto=$rootScope.productoSeleccionado.Data;
+            $rootScope.showCargando($rootScope.idioma.cuenta[25].replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"))
             producto.verify()
             .success(function(product,purchaseData){
                      console.log(purchaseData);
-                     /*if(purchaseData.Adquirido){
-                     if($rootScope.verPrecios){
+                     $rootScope.hideCargando();
+                     if(purchaseData.Adquirido){
                      var sus=purchaseData.Last.IdProducto.split(".");
                      sus[0]=sus[0].substr(0,1).toUpperCase()+sus[0].substr(1);
                      $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[18].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Google").replace("SUSCRIPCION",sus[0]).replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"),function(){})
-                     $rootScope.muestraPrecPaq();
-                     $rootScope.cargandoCuenta=false;
-                     }
+                     
                      }else{
                      if(!purchaseData.Error)$rootScope.realizaCompra()
-                     else {
-                     if($rootScope.verPrecios)$rootScope.muestraPrecPaq();
-                     $rootScope.cargandoCuenta=false;
+                    else {
                      $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[24].replace("TIENDA",(window.device.platform=="iOS")?"Apple":"Google"))
                      }
-                     }*/
+                     }
                      })
-
-            }
-$rootScope.realizaCompra=function(){
-        
+	}
+      $rootScope.realizaCompra=function(){
+           
         store.off($scope.errorPrecio);
-        store.off($scope.loadPrecio);
+       store.off($scope.loadPrecio);
         $rootScope.showCargando("")
-        
-        store.when($rootScope.productoSeleccionado.IdProducto).cancelled($scope.cancelCompra)
-            store.once($rootScope.productoSeleccionado.IdProducto).approved(function(product){
-                                                                            console.log(222);
-                                                                            })
-        store.once($rootScope.productoSeleccionado.IdProducto).finished($scope.finishCompra)
-            console.log("cargando");
-            store.order($rootScope.productoSeleccionado.IdProducto)
+         store.order($rootScope.productoSeleccionado.IdProducto)
             .error(function(err){
+                   console.log(err);
                    $timeout(function(){
                             $rootScope.hideCargando()
                             },1000)
                    });
-}
-        
-$scope.abreAjustesCuenta=function(){
-    $rootScope.verPrecios=false;
-    $scope.openTerminos("pantallas/cuenta.html");
-}
+            store.when($rootScope.productoSeleccionado.IdProducto).error($scope.errorCompra);
+        store.when($rootScope.productoSeleccionado.IdProducto).cancelled($scope.cancelCompra)
+            store.once('product').approved($scope.aproveCompra);
             
-$scope.abreAjustesPaquetes=function(){
-    $rootScope.productoSeleccionado=null;
+        store.when($rootScope.productoSeleccionado.IdProducto).finished($scope.finishCompra)
+}      
+	$scope.abreAjustesCuenta=function(){
+		//$scope.ajustes=!$scope.ajustes;
+            $scope.openTerminos("pantallas/cuenta.html");
+            
+            $rootScope.productoSeleccionado=null;
     $scope.productosCargados=0;
-    $rootScope.cargandoCuenta=true;
+            $rootScope.cargandoCuenta=true;
+            if($rootScope.Usuario.IdSuscripcion==1 || $rootScope.OS=='Android')
+            $timeout(function(){
+    
     if($rootScope.Productos.length==0)
         $scope.cargaProductosSQL();
-    
-    if(window.store){
-            store.off($scope.cancelCompra)
-            store.off($scope.finishCompra);
-            store.off($scope.aproveCompra);
+		
+            if(window.store){
+            
+                     store.off($scope.cancelCompra)
+                     store.off($scope.finishCompra);
+                     store.off($scope.aproveCompra);
+                     store.off($scope.errorCompra);
             store.off($scope.updatePrecio);
             store.off($scope.errorPrecio);
             store.off($scope.loadPrecio);
         
         store.error($scope.errorPrecio)
         store.when('product').updated($scope.updatePrecio)
-        store.when('product').updated($scope.loadPrecio)
-            
+        store.when('product').loaded($scope.loadPrecio)
+                     store.once('product').approved(function(product){
+                                                    console.log("approved");
+                                                    product.finish();
+                                                    })
+        if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
         store.refresh();
-       if(store.producto)
+                     if(!$scope.initStore)store.refresh();
         $scope.initStore=true
-    }else {
-        $rootScope.cargandoCuenta=false;
-    }
-    for(var i=0;i<$rootScope.Productos.length;i++)
-        if($rootScope.Productos[i].Id==$rootScope.Usuario.IdSuscripcion)
-            $rootScope.productoSeleccionado=$rootScope.Productos[i];
-        if(!$rootScope.productoSeleccionad)
-            $rootScope.productoSeleccionado=$rootScope.Productos[0];
-}
-            
+                 
+			}else {
+				if($rootScope.Productos.length>0)$rootScope.cargandoCuenta=false;
+			}
+			for(var i=0;i<$rootScope.Productos.length;i++)
+			if($rootScope.Productos[i].Id==$rootScope.Usuario.IdSuscripcion)$rootScope.productoSeleccionado=$rootScope.Productos[i];
+			if($rootScope.productoSeleccionado==null)$rootScope.productoSeleccionado=$rootScope.Productos[0];
+			
+		
+                     },500);
+	}
 $scope.updatePrecio=function(producto){
             console.log(1);
     if(producto.id!="application data"){
@@ -460,7 +449,7 @@ $scope.updatePrecio=function(producto){
 }
             
 $scope.loadPrecio=function(producto){
-            
+            producto.finish();
             
     $scope.$apply(function(){
         $scope.productosCargados++;
@@ -485,8 +474,7 @@ $scope.errorPrecio=function(err){
             $rootScope.muestraPrecPaq();
         })
         
-}
-
+}	
 $scope.initStore=false
 $scope.productosCargados=0;
 $rootScope.cargandoCuenta=false;
@@ -503,7 +491,6 @@ $scope.cargaProductosSQL=function(){
                  store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
             }
             store.validator=function(product,callback){
-             
              if(product.transaction.appStoreReceipt){
              $http.post("https://www.virtual-guardian.com/api/validReceipt",{
                         Recibo:product.transaction.appStoreReceipt
@@ -716,6 +703,9 @@ $scope.saveMenu=function(){
    delete $rootScope.UsuarioTemporal.Nuevo;
    delete $rootScope.UsuarioTemporal.Extras;
    delete $rootScope.UsuarioTemporal.Codigo;
+            delete $rootScope.UsuarioTemporal.OSRecibo;
+            delete $rootScope.UsuarioTemporal.TipoRecibo;
+            delete $rootScope.UsuarioTemporal.Cambio;
    console.log($rootScope.UsuarioTemporal);
    if(Object.keys($rootScope.UsuarioTemporal).length>1){
        
