@@ -294,6 +294,13 @@ angular.module('starter')
 	$rootScope.productoSeleccionado=producto
 		//}
 	}
+	$rootScope.cancelaSuscripcion=function(){
+    if($rootScope.OS=="iOS"){
+        window.open("https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions","_system")
+    }else{
+        window.open("https://play.google.com/store/apps/details?id=com.app.virtualguardian","_system")
+    }
+}
 	$scope.cancelCompra=function(product){
     $timeout(function(){
         $rootScope.hideCargando()
