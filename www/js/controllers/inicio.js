@@ -294,117 +294,117 @@ angular.module('starter')
 	$rootScope.productoSeleccionado=producto
 		//}
 	}
-	$scope.compraDisponible=true;
+	$scope.cancelCompra=function(product){
+    $timeout(function(){
+        $rootScope.hideCargando()
+    },500)
+}
+        
+$scope.aproveCompra=function(product){
+    console.log("aproved");
+            
+    product.verify()
+    .success(function(producto,data){
+             
+        var trans=jQuery.extend(true, {}, producto.transaction);
+        trans.Usuario=$rootScope.Usuario.Id;
+        trans.Suscripcion=producto.id;
+        trans.Os=window.device.platform;
+        $http.post("https://www.virtual-guardian.com/api/guardaRecibo",trans)
+        .success(function(data){
+            $rootScope.hideCargando()
+            console.log(data);
+                 window.localStorage.setArray("Usuario",data);
+                 $rootScope.Usuario=data;
+            $rootScope.alert(
+                $rootScope.idioma.cuenta[17]+" "+$rootScope.productoSeleccionado.Nombre,
+                $rootScope.idioma.cuenta[21],
+                function(){
+                    
+                })
+            product.finish();
+        })
+        .error(function(error){
+            product.finish();
+        })
+    })
+}
+            
+$scope.finishCompra=function(product){
+    console.log("fin")
+    store.off($scope.cancelCompra)
+    store.off($scope.finishCompra);
+    store.off($scope.aproveCompra);
+    $timeout(function(){
+        $rootScope.hideCargando()
+    },500)
+}
 	$rootScope.comprarProducto=function(){
-            store.refresh();
-		if($scope.compraDisponible){
-		$rootScope.showCargando("")
-            //if(!$rootScope.productoSeleccionado.Data.owned){
-            store.order($rootScope.productoSeleccionado.IdProducto)
-            .then(function(product){
-                  
-                  })
+        var producto=$rootScope.productoSeleccionado.Data;
+            producto.verify()
+            .success(function(product,purchaseData){
+                     console.log(purchaseData);
+                     /*if(purchaseData.Adquirido){
+                     if($rootScope.verPrecios){
+                     var sus=purchaseData.Last.IdProducto.split(".");
+                     sus[0]=sus[0].substr(0,1).toUpperCase()+sus[0].substr(1);
+                     $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[18].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Google").replace("SUSCRIPCION",sus[0]).replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"),function(){})
+                     $rootScope.muestraPrecPaq();
+                     $rootScope.cargandoCuenta=false;
+                     }
+                     }else{
+                     if(!purchaseData.Error)$rootScope.realizaCompra()
+                     else {
+                     if($rootScope.verPrecios)$rootScope.muestraPrecPaq();
+                     $rootScope.cargandoCuenta=false;
+                     $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[24].replace("TIENDA",(window.device.platform=="iOS")?"Apple":"Google"))
+                     }
+                     }*/
+                     })
+	}
+      $rootScope.realizaCompra=function(){
+        
+        store.off($scope.errorPrecio);
+       // store.off($scope.loadPrecio);
+        $rootScope.showCargando("")
+         store.order($rootScope.productoSeleccionado.IdProducto)
             .error(function(err){
                    $timeout(function(){
                             $rootScope.hideCargando()
                             },1000)
-                   
-                   })
-            /*}else {
-            $rootScope.productoSeleccionado.Data.finish();
-            $rootScope.alert($rootScope.idioma.cuenta[17]+" "+$rootScope.productoSeleccionado.Nombre,$rootScope.idioma.cuenta[18].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Google").replace("SUSCRIPCION",$rootScope.productoSeleccionado.Nombre+" "+$rootScope.productoSeleccionado.Periodo).replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"),function(){})
-            //$scope.alert("comprado")
-            }*/
-            store.when("product").cancelled(function(product){
-                                            console.log("cancel")
-                                            $timeout(function(){
-                                                     $rootScope.hideCargando()
-                                                     },500)
-                                            })
-            /*store.when("product").approved(function(product){
-                                           console.log(product)
-                                            $timeout(function(){
-                                                     $rootScope.hideCargando()
-                                                     },500)
-                                            })*/
-            store.once("product").owned(function(product){
-                                                    ///$rootScope.hideCargando()
-                                        
-                                           })
-            store.once("product").initiated(function(product){
-                                            /*if(!product.canPurchase){
-                                            console.log("purchased")
-                                            product.finish()
-                                            
-                                            //$rootScope.hideCargando()
-                                            
-                                            }*/
+                   });
 
-                                            
-                                            })
-            store.once("product").finished(function(product){
-                                            console.log("fin")
-                                            $timeout(function(){
-                                                     $rootScope.hideCargando()
-                                                     },500)
-                                            })
-            store.once("product").requested(function(product){
-                                            console.log("req")
-                                            
-                                            })
-
-		}
-	}
-            
+        store.when($rootScope.productoSeleccionado.IdProducto).cancelled($scope.cancelCompra)
+            store.once($rootScope.productoSeleccionado.IdProducto).approved(function(product){
+                                                                            console.log(222);
+                                                                            })
+        store.once($rootScope.productoSeleccionado.IdProducto).finished($scope.finishCompra)
+}      
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
-            $scope.productosCargados=0;
-		$scope.compraDisponible=true;
-		$rootScope.productoSeleccionado=null;
             $scope.openTerminos("pantallas/cuenta.html");
-            if($rootScope.Productos.length==0)$scope.cargaProductosSQL();
-			$rootScope.cargandoCuenta=true;
+            $rootScope.productoSeleccionado=null;
+    $scope.productosCargados=0;
+    $rootScope.cargandoCuenta=true;
+    if($rootScope.Productos.length==0)
+        $scope.cargaProductosSQL();
 		
             if(window.store){
-            //window.store.verbosity=store.DEBUG;
-            if(!$scope.initStore)for(var i=0;i<$rootScope.Productos.length;i++){
-                 store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
             
-            }
-            
-            
-                 
-                 store.error(function(err){
-                             console.log(err);
-                             $scope.$apply(function(){
-                                $rootScope.cargandoCuenta=false;
-                            })
-                             })
-            store.when('product').updated(function(producto){
-                                          if(producto.id!="application data"){
-                                          for(var s=0;s<$rootScope.Productos.length;s++)
-                                          if($rootScope.Productos[s].IdProducto==producto.id){
-                                          $scope.$apply(function(){
-                                                        $rootScope.Productos[s].Precio=producto.price;
-                                                        $rootScope.Productos[s].Data=producto;
-                                                        })
-                                          }
-                                          }
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.updatePrecio);
+            store.off($scope.errorPrecio);
+            store.off($scope.loadPrecio);
+        
+        store.error($scope.errorPrecio)
+        store.when('product').updated($scope.updatePrecio)
+        store.when('product').updated($scope.loadPrecio)
+        if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
+        store.refresh();
        
-            })
-            if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
-            store.when('product').loaded(function(producto){
-                                            $scope.$apply(function(){
-                                                            $scope.productosCargados++;
-                                                            })
-                                              if($scope.productosCargados>=3)
-                                              $scope.$apply(function(){
-                                                            $rootScope.cargandoCuenta=false;
-                                                            })
-                                         
-                                              })
-            store.refresh();
-                 $scope.initStore=true
+        $scope.initStore=true
                  
 			}else {
 				if($rootScope.Productos.length>0)$rootScope.cargandoCuenta=false;
@@ -416,21 +416,82 @@ angular.module('starter')
 		
 		
 	}
-            $scope.initStore=false
-               $scope.productosCargados=0;
-	$rootScope.cargandoCuenta=false;
-	
-            $scope.cargaProductosSQL=function(){
-            $rootScope.cargandoCuenta=true;
-            $http.get("https://www.virtual-guardian.com/api/tiposSuscripciones")
-            .success(function(data){
-                     if(data[0].Id==1)data.shift();
-                     var Ids=[]
-                     $rootScope.Productos=data;
-                     //$rootScope.cargandoCuenta=false;
-                     })
+$scope.updatePrecio=function(producto){
+            console.log(1);
+    if(producto.id!="application data"){
+        //console.log(producto);
+        for(var s=0;s<$rootScope.Productos.length;s++)
+            if($rootScope.Productos[s].IdProducto==producto.id){
+                $scope.$apply(function(){
+                    $rootScope.Productos[s].Precio=producto.price;
+                    $rootScope.Productos[s].Data=producto;
+                })
             }
-            $scope.cargaProductosSQL();
+    }
+}
+            
+$scope.loadPrecio=function(producto){
+            
+            
+    $scope.$apply(function(){
+        $scope.productosCargados++;
+    })
+    if($scope.productosCargados>=3)
+        $scope.$apply(function(){
+            $rootScope.cargandoCuenta=false;
+        })
+}
+            
+$scope.errorPrecio=function(err){
+    console.log(err);
+    if(err.code==6777010){
+        $scope.$apply(function(){
+            $rootScope.cargandoCuenta=false;
+        })
+        $rootScope.alert($rootScope.idioma.cuenta[17]+" "+$rootScope.productoSeleccionado.Nombre,$rootScope.idioma.cuenta[20].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Play"),function(){})
+        $rootScope.hideCargando()
+    }
+    if(err.code==6777019 && $rootScope.verPrecios)
+        $scope.$apply(function(){
+            $rootScope.muestraPrecPaq();
+        })
+        
+}	
+$scope.initStore=false
+$scope.productosCargados=0;
+$rootScope.cargandoCuenta=false;
+$scope.cargaProductosSQL=function(){
+    $rootScope.cargandoCuenta=true;
+    $http.get("https://www.virtual-guardian.com/api/tiposSuscripciones")
+    .success(function(data){
+        if(data[0].Id==1)data.shift();
+        var Ids=[]
+        $rootScope.Productos=data;
+        if(window.store){
+             store.verbosity=0;
+            for(var i=0;i<$rootScope.Productos.length;i++){
+                 store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
+            }
+            store.validator=function(product,callback){
+             
+             if(product.transaction.appStoreReceipt){
+             $http.post("https://www.virtual-guardian.com/api/validReceipt",{
+                        Recibo:product.transaction.appStoreReceipt
+                })
+             .success(function(data){
+                      
+                      callback(true,data);
+                      })
+             .error(function(data){
+                    callback(false,{Adquirido:false,Error:true});
+                    })
+             }else callback(true,{Adquirido:false,Error:true});
+            }
+        }
+    })
+}
+$scope.cargaProductosSQL();
+
 	$scope.revisaUsuario=function(){
 		var arr=[];
 		var t=[];
