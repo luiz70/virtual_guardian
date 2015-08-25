@@ -302,6 +302,10 @@ angular.module('starter')
     }
 }
 	$scope.cancelCompra=function(product){
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
     $timeout(function(){
         $rootScope.hideCargando()
     },500)
@@ -309,9 +313,14 @@ angular.module('starter')
         
 $scope.aproveCompra=function(product){
     console.log("aproved");
-            
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
     product.verify()
     .success(function(producto,data){
+		console.log(JSON.stringify(producto));
+		//if($rootScope.OS="iOS"){
         var trans=jQuery.extend(true, {}, producto.transaction);
         trans.Usuario=$rootScope.Usuario.Id;
         trans.Suscripcion=producto.id;
@@ -329,11 +338,13 @@ $scope.aproveCompra=function(product){
                     
                 })
             product.finish();
+		
         })
         .error(function(error){
             product.finish();
         })
              //}else product.finish();
+			 //}
     })
 }
             
@@ -349,11 +360,18 @@ $scope.finishCompra=function(product){
 }
             $scope.errorCompra=function(err){
             console.log("error")
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
             $rootScope.productoSeleccionado.Data.finish();
             }
 	$rootScope.comprarProducto=function(){
         var producto=$rootScope.productoSeleccionado.Data;
             $rootScope.showCargando($rootScope.idioma.cuenta[25].replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"))
+            console.log(producto)
+			//if($rootScope.OS=="iOS" || ($rootScope.OS=="Android" &&))
+			if(producto.state!="approved")producto.state="approved";
             producto.verify()
             .success(function(product,purchaseData){
                      console.log(purchaseData);
@@ -364,12 +382,28 @@ $scope.finishCompra=function(product){
                      $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[18].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Google").replace("SUSCRIPCION",sus[0]).replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"),function(){})
                      
                      }else{
-                     if(!purchaseData.Error)$rootScope.realizaCompra()
+                     if(!purchaseData.Error)$rootScope.realizaCompra();
                     else {
                      $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[24].replace("TIENDA",(window.device.platform=="iOS")?"Apple":"Google"))
                      }
                      }
                      })
+					 .error(function(error){
+						 $rootScope.hideCargando();
+						 console.log("error verificacion")
+					$rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[24].replace("TIENDA",(window.device.platform=="iOS")?"Apple":"Google"))
+					})
+			/*else if($rootScope.OS=="Android"){
+				var valido=true;
+				for(var s=0;s<$rootScope.Productos.length;s++)
+				console.log(JSON.stringify($rootScope.Productos[s]));
+				//if(!$rootScope.Productos[s].Data.valid || $rootScope.Productos[s].Data.owned || !$rootScope.Productos[s].Data.canPurchase)valido=false;
+				$rootScope.hideCargando();
+				/*if(valido)$rootScope.realizaCompra();
+				else{
+				console.log(producto.transaction.signature);
+				}
+			}*/
 	}
       $rootScope.realizaCompra=function(){
            
@@ -389,53 +423,7 @@ $scope.finishCompra=function(product){
             
         store.when($rootScope.productoSeleccionado.IdProducto).finished($scope.finishCompra)
 }      
-	$scope.abreAjustesCuenta=function(){
-		//$scope.ajustes=!$scope.ajustes;
-            $scope.openTerminos("pantallas/cuenta.html");
-            
-            $rootScope.productoSeleccionado=null;
-    $scope.productosCargados=0;
-            $rootScope.cargandoCuenta=true;
-            if($rootScope.Usuario.IdSuscripcion==1 || $rootScope.OS=='Android')
-            $timeout(function(){
-    
-    if($rootScope.Productos.length==0)
-        $scope.cargaProductosSQL();
-		
-            if(window.store){
-            
-                     store.off($scope.cancelCompra)
-                     store.off($scope.finishCompra);
-                     store.off($scope.aproveCompra);
-                     store.off($scope.errorCompra);
-            store.off($scope.updatePrecio);
-            store.off($scope.errorPrecio);
-            store.off($scope.loadPrecio);
-        
-        store.error($scope.errorPrecio)
-        store.when('product').updated($scope.updatePrecio)
-        store.when('product').loaded($scope.loadPrecio)
-                     store.once('product').approved(function(product){
-                                                    console.log("approved");
-                                                    product.finish();
-                                                    })
-        if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
-        store.refresh();
-                     if(!$scope.initStore)store.refresh();
-        $scope.initStore=true
-                 
-			}else {
-				if($rootScope.Productos.length>0)$rootScope.cargandoCuenta=false;
-			}
-			for(var i=0;i<$rootScope.Productos.length;i++)
-			if($rootScope.Productos[i].Id==$rootScope.Usuario.IdSuscripcion)$rootScope.productoSeleccionado=$rootScope.Productos[i];
-			if($rootScope.productoSeleccionado==null)$rootScope.productoSeleccionado=$rootScope.Productos[0];
-			
-		
-                     },500);
-	}
 $scope.updatePrecio=function(producto){
-            console.log(1);
     if(producto.id!="application data"){
         //console.log(producto);
         for(var s=0;s<$rootScope.Productos.length;s++)
@@ -449,8 +437,7 @@ $scope.updatePrecio=function(producto){
 }
             
 $scope.loadPrecio=function(producto){
-            producto.finish();
-            
+           // producto.finish();
     $scope.$apply(function(){
         $scope.productosCargados++;
     })
@@ -461,7 +448,7 @@ $scope.loadPrecio=function(producto){
 }
             
 $scope.errorPrecio=function(err){
-    console.log(err);
+    console.log(JSON.stringify(err));
     if(err.code==6777010){
         $scope.$apply(function(){
             $rootScope.cargandoCuenta=false;
@@ -475,6 +462,51 @@ $scope.errorPrecio=function(err){
         })
         
 }	
+	$scope.abreAjustesCuenta=function(){
+		//$scope.ajustes=!$scope.ajustes;
+            $scope.openTerminos("pantallas/cuenta.html");
+            
+            $rootScope.productoSeleccionado=null;
+    $scope.productosCargados=0;
+            $rootScope.cargandoCuenta=true;
+            if($rootScope.Usuario.IdSuscripcion==1 ||($rootScope.Usuario.IdSuscripcion>1 && $rootScope.OS=='Android' && $rootScope.Usuario.OSRecibo=='Android'))
+            $timeout(function(){
+    
+    if($rootScope.Productos.length==0)
+        $scope.cargaProductosSQL();
+		
+            if(window.store){
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
+            store.off($scope.updatePrecio);
+            store.off($scope.errorPrecio);
+            store.off($scope.loadPrecio);
+        
+        store.error($scope.errorPrecio)
+        store.when('product').updated($scope.updatePrecio)
+        store.when('product').loaded($scope.loadPrecio)
+                    /* store.once('product').approved(function(product){
+                                                    console.log("approved");
+                                                    //product.finish();
+                                                    })*/
+        if($rootScope.Productos[0].Data)$rootScope.cargandoCuenta=false;
+        store.refresh();
+                    if(!$scope.initStore && $rootScope.OS=="iOS")store.refresh();
+        $scope.initStore=true
+                 
+			}else {
+				if($rootScope.Productos.length>0)$rootScope.cargandoCuenta=false;
+			}
+			for(var i=0;i<$rootScope.Productos.length;i++)
+			if($rootScope.Productos[i].Id==$rootScope.Usuario.IdSuscripcion)$rootScope.productoSeleccionado=$rootScope.Productos[i];
+			if($rootScope.productoSeleccionado==null)$rootScope.productoSeleccionado=$rootScope.Productos[0];
+			
+		
+                     },500);
+	}
+
 $scope.initStore=false
 $scope.productosCargados=0;
 $rootScope.cargandoCuenta=false;
@@ -491,19 +523,41 @@ $scope.cargaProductosSQL=function(){
                  store.register({id:$rootScope.Productos[i].IdProducto,alias: "Suscripción "+$rootScope.Productos[i].Nombre,type: store.PAID_SUBSCRIPTION});
             }
             store.validator=function(product,callback){
-             if(product.transaction.appStoreReceipt){
-             $http.post("https://www.virtual-guardian.com/api/validReceipt",{
-                        Recibo:product.transaction.appStoreReceipt
-                })
-             .success(function(data){
+			if($rootScope.OS=="iOS"){
+             	if(product.transaction.appStoreReceipt){
+             		$http.post("https://www.virtual-guardian.com/api/validReceipt",{
+                        Recibo:product.transaction.appStoreReceipt,
+						OS:$rootScope.OS,
+						Producto:product.id
+                	})
+             		.success(function(data){
                       
                       callback(true,data);
                       })
-             .error(function(data){
-                    callback(false,{Adquirido:false,Error:true});
+             		.error(function(data){
+                           console.log("fallo");
+                    	callback(false,{Adquirido:false,Error:true});
                     })
-             }else callback(true,{Adquirido:false,Error:true});
-            }
+             	}else callback(true,{Adquirido:false,Error:true});
+			 
+				}else  if($rootScope.OS=="Android"){
+					if(product.transaction==null)callback(true,{Adquirido:false,Error:false});
+					else {
+						$http.post("https://www.virtual-guardian.com/api/validReceipt",{
+							Recibo:product.transaction.purchaseToken,
+							OS:$rootScope.OS,
+							Producto:product.id
+						})
+						.success(function(data){
+							console.log(JSON.stringify(data));
+							 callback(true,data);
+						})
+						.error(function(data){
+							callback(false,{Adquirido:false,Error:true});
+						})
+					}
+				}
+			}
         }
     })
 }
