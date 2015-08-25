@@ -296,6 +296,7 @@ angular.module('starter')
 	}
 	$rootScope.cancelaSuscripcion=function(){
     if($rootScope.OS=="iOS"){
+            console.log("ios");
         window.open("https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions","_system")
     }else{
         window.open("https://play.google.com/store/apps/details?id=com.app.virtualguardian","_system")

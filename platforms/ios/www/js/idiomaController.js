@@ -78,7 +78,9 @@ angular.module('starter')
             22:"Tu suscripción fue comprada desde la tienda de TIENDA. Para modificar tu suscripcion es necesario que ingreses desde un telefono NOMBRE.",
             23:"Suscripción de cortesía.",
             24:"Se ha producido un error al conectarse con la tienda de TIENDA, intente más tarde.",
-            25:"Verificando CUENTA"
+            25:"Verificando CUENTA",
+            26:"Prueba gratuita de 30 días.",
+            27:"Ya cuentas con una suscripción, para adquirir una diferente necesitas cancelar tu suscripción actual."
 					},
 				menu:{
 				1:"Filtros",
@@ -262,7 +264,7 @@ angular.module('starter')
 					1:"No hay notificaciones recientes",
 					2:"Solicitud de personas",
 					3:" quiere agregarte a su lista de personas.",
-					4:" acepto tu solicitud de personas.",
+					4:" aceptó tu solicitud de personas.",
 					5:" a ",
 					6:" de ",
 					7:" de tu auto.",

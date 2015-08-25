@@ -18,20 +18,23 @@
     </div>
     </div>
      <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion>1 " >
- 		
-        	<div class="ng-hide" style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-show="OS==Usuario.OSRecibo && Usuario.TipoRecibo==1" ng-click="cancelaSuscripcion()" >
+ 		<div ng-click="cancelaSuscripcion()" class="ng-hide" ng-show="OS==Usuario.OSRecibo && Usuario.TipoRecibo==1" >
+        	<div  style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;border-bottom:solid 1px #474747;" >
                 <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; text-transform:uppercase; ">{{idioma.cuenta[19]}}</button>
 				<i  class="icon ion-chevron-right" style="font-size:3vh; float:right" ></i>
+                
+            </div>
+            <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:2.5vh; text-align:justify; width:100%">{{idioma.cuenta[27]}}</button>
             </div>
             <div class="ng-hide" style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-show="OS!=Usuario.OSRecibo && Usuario.TipoRecibo==1" ng-click="" >
                 <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; ">{{idioma.cuenta[22].replace("TIENDA",(Usuario.OSRecibo=="iOS")?"Apple":"Google").replace("NOMBRE",Usuario.OSRecibo)}}</button>
             </div>
             <div class="ng-hide" style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-show="Usuario.TipoRecibo>1" ng-click="" >
-                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; ">{{idioma.cuenta[23]}}</button>
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; ">{{(Usuario.TipoRecibo==2)?idioma.cuenta[26]:idioma.cuenta[23]}}</button>
             </div>
      </div>
      
-     <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;min-height:20vh;    position: relative;" ng-show="Usuario.IdSuscripcion==1 || OS=='Android'">
+     <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;min-height:20vh;    position: relative;" ng-show="Usuario.IdSuscripcion==1">
  		<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase;padding-bottom: 1vh; border-bottom: solid 1px #474747;">
             {{idioma.cuenta[15]}}
             </div>
