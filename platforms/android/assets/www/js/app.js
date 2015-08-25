@@ -52,6 +52,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	if(window.innerWidth<=320)$rootScope.small=true;
 	else $rootScope.small=false;
 	$rootScope.platform=window.device.platform;
+	$rootScope.OS=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
     if($rootScope.iOS && window.cordova && window.cordova.plugins.Keyboard)window.cordova.plugins.Keyboard.disableScroll(true)
     $rootScope.ipad=(window.device.model.substring(0,4).toLowerCase()=="ipad");
@@ -208,8 +209,8 @@ $rootScope.unregister=function(){
 	 
 	 })
 	 
-	 $ionicPlatform.on("volumedownbutton",function(){alert(1)});
-	 $ionicPlatform.on("volumeupbutton",function(){alert(2)});
+	 $ionicPlatform.on("volumedownbutton",function(){});
+	 $ionicPlatform.on("volumeupbutton",function(){});
 	 $rootScope.onResume=function(){
 	if(((new Date()).getTime()-$rootScope.Update.getTime())/60000>=30)$rootScope.isVigente();
 	if(((new Date()).getTime()-$rootScope.UpdateEvt.getTime())/60000>=15)$rootScope.showEventos();

@@ -155,7 +155,6 @@ public class IabHelper {
     // some fields on the getSkuDetails response bundle
     public static final String GET_SKU_DETAILS_ITEM_LIST = "ITEM_ID_LIST";
     public static final String GET_SKU_DETAILS_ITEM_TYPE_LIST = "ITEM_TYPE_LIST";
-    public static ArrayList<String> oldSkus;
 
     /**
      * Creates an instance. After creation, it will not yet be ready to use. You must perform
@@ -243,7 +242,7 @@ public class IabHelper {
                     }
                     logDebug("In-app billing version 3 supported for " + packageName);
 
-                    // check for v3 subscriptions support
+                    // check for v5 subscriptions support
                     response = mService.isBillingSupported(5, packageName, ITEM_TYPE_SUBS);
                     if (response == BILLING_RESPONSE_RESULT_OK) {
                         logDebug("Subscriptions AVAILABLE.");
@@ -402,9 +401,7 @@ public class IabHelper {
 
         try {
             logDebug("Constructing buy intent for " + sku + ", item type: " + itemType);
-            //Bundle buyIntentBundle = mService.getBuyIntent(3, mContext.getPackageName(), sku, itemType, extraData);
-            //ArrayList<String> oldSkus = new ArrayList<String>();
-            Bundle buyIntentBundle =  mService.getBuyIntentToReplaceSkus(5, mContext.getPackageName(), oldSkus, sku, itemType, extraData);
+            Bundle buyIntentBundle = mService.getBuyIntent(5, mContext.getPackageName(), sku, itemType, extraData);
             int response = getResponseCodeFromBundle(buyIntentBundle);
             if (response != BILLING_RESPONSE_RESULT_OK) {
                 logError("Unable to buy item, Error response: " + getResponseDesc(response));
@@ -849,15 +846,12 @@ public class IabHelper {
             if (!ownedItems.containsKey(RESPONSE_INAPP_ITEM_LIST)
                     || !ownedItems.containsKey(RESPONSE_INAPP_PURCHASE_DATA_LIST)
                     || !ownedItems.containsKey(RESPONSE_INAPP_SIGNATURE_LIST)) {
-            	oldSkus=new ArrayList<String> ();
                 logError("Bundle returned from getPurchases() doesn't contain required fields.");
                 return ERR_BAD_RESPONSE;
             }
-            
+
             ArrayList<String> ownedSkus = ownedItems.getStringArrayList(
                         RESPONSE_INAPP_ITEM_LIST);
-            oldSkus = ownedItems.getStringArrayList(
-                    RESPONSE_INAPP_ITEM_LIST);
             ArrayList<String> purchaseDataList = ownedItems.getStringArrayList(
                         RESPONSE_INAPP_PURCHASE_DATA_LIST);
             ArrayList<String> signatureList = ownedItems.getStringArrayList(

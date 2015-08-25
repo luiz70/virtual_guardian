@@ -16,7 +16,7 @@ angular.module('starter')
 					10:"Su tranquilidad, nuestro territorio",
 					11:"Suscripción",
 					12:"Su período de prueba ha finalizado, pero aún puede seguir utilizando Virtual Guardian en la versión limitada o contratar alguno de nuestros paquetes completos.",
-					13:"Ver paquetes",
+					13:"!Suscribirme!",
 					14:"Continuar limitado",
 					15:"Ver más...",
 					16:"Selecciona",
@@ -71,7 +71,14 @@ angular.module('starter')
 					15:"Comprar suscripción",
 					16:"Comprar",
             17:"Suscripción",
-            18:"Esta cuenta de NOMBRE ya tiene una suscripcion SUSCRIPCION y no corresponde a este usuario de Virtual Guardian.<div style='font-size:2vh'>Cambia de CUENTA e intenta de nuevo.</div>"
+            18:"Esta cuenta de NOMBRE ya tiene una suscripcion SUSCRIPCION y no corresponde a este usuario de Virtual Guardian. <span>Cambia de CUENTA e intenta de nuevo.</span>",
+			19:"Modificar Suscripción",
+            20:"Error al conectar con NOMBRE Store, no se realizo ningún cargo, revisa tu conexión a internet e intenta de nuevo.",
+            21:"Tu compra se ha realizado exitosamente.",
+            22:"Tu suscripción fue comprada desde la tienda de TIENDA. Para modificar tu suscripcion es necesario que ingreses desde un telefono NOMBRE.",
+            23:"Suscripción de cortesía.",
+            24:"Se ha producido un error al conectarse con la tienda de TIENDA, intente más tarde.",
+            25:"Verificando CUENTA"
 					},
 				menu:{
 				1:"Filtros",

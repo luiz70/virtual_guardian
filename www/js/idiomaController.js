@@ -77,7 +77,8 @@ angular.module('starter')
             21:"Tu compra se ha realizado exitosamente.",
             22:"Tu suscripción fue comprada desde la tienda de TIENDA. Para modificar tu suscripcion es necesario que ingreses desde un telefono NOMBRE.",
             23:"Suscripción de cortesía.",
-            24:"Se ha producido un error al conectarse con la tienda de TIENDA, intente más tarde."
+            24:"Se ha producido un error al conectarse con la tienda de TIENDA, intente más tarde.",
+            25:"Verificando CUENTA"
 					},
 				menu:{
 				1:"Filtros",
