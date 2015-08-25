@@ -370,7 +370,7 @@ $scope.finishCompra=function(product){
                      $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[18].replace("NOMBRE",(window.device.platform=="iOS")?"Apple":"Google").replace("SUSCRIPCION",sus[0]).replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"),function(){})
                      
                      }else{
-                     if(!purchaseData.Error)alert(1);//$rootScope.realizaCompra()
+                     if(!purchaseData.Error)$rootScope.realizaCompra();
                     else {
                      $rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[24].replace("TIENDA",(window.device.platform=="iOS")?"Apple":"Google"))
                      }
