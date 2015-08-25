@@ -376,6 +376,11 @@ $scope.finishCompra=function(product){
                      }
                      }
                      })
+					 .error(function(error){
+						 $rootScope.hideCargando();
+						 console.log("error verificacion")
+					$rootScope.alert($rootScope.idioma.cuenta[15],$rootScope.idioma.cuenta[24].replace("TIENDA",(window.device.platform=="iOS")?"Apple":"Google"))
+					})
 			/*else if($rootScope.OS=="Android"){
 				var valido=true;
 				for(var s=0;s<$rootScope.Productos.length;s++)
@@ -523,7 +528,7 @@ $scope.cargaProductosSQL=function(){
              	}else callback(true,{Adquirido:false,Error:true});
 			 
 				}else  if($rootScope.OS=="Android"){
-					if(product.transaction==null)callback(false,{Adquirido:false,Error:false});
+					if(product.transaction==null)callback(true,{Adquirido:false,Error:false});
 					else {
 						$http.post("https://www.virtual-guardian.com/api/validReceipt",{
 							Recibo:product.transaction.purchaseToken,
@@ -535,7 +540,6 @@ $scope.cargaProductosSQL=function(){
 							 callback(true,data);
 						})
 						.error(function(data){
-							console.log(JSON.stringify(data));
 							callback(false,{Adquirido:false,Error:true});
 						})
 					}
