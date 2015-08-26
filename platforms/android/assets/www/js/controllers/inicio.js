@@ -296,12 +296,17 @@ angular.module('starter')
 	}
 	$rootScope.cancelaSuscripcion=function(){
     if($rootScope.OS=="iOS"){
+            console.log("ios");
         window.open("https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions","_system")
     }else{
         window.open("https://play.google.com/store/apps/details?id=com.app.virtualguardian","_system")
     }
 }
 	$scope.cancelCompra=function(product){
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
     $timeout(function(){
         $rootScope.hideCargando()
     },500)
@@ -309,7 +314,10 @@ angular.module('starter')
         
 $scope.aproveCompra=function(product){
     console.log("aproved");
-            
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
     product.verify()
     .success(function(producto,data){
 		console.log(JSON.stringify(producto));
@@ -353,13 +361,18 @@ $scope.finishCompra=function(product){
 }
             $scope.errorCompra=function(err){
             console.log("error")
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
             $rootScope.productoSeleccionado.Data.finish();
             }
 	$rootScope.comprarProducto=function(){
         var producto=$rootScope.productoSeleccionado.Data;
             $rootScope.showCargando($rootScope.idioma.cuenta[25].replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"))
+            console.log(producto)
 			//if($rootScope.OS=="iOS" || ($rootScope.OS=="Android" &&))
-			if(producto.status!=store.APPROVED)producto.status=store.APPROVED;
+			if(producto.state!="approved")producto.state="approved";
             producto.verify()
             .success(function(product,purchaseData){
                      console.log(purchaseData);
@@ -523,6 +536,7 @@ $scope.cargaProductosSQL=function(){
                       callback(true,data);
                       })
              		.error(function(data){
+                           console.log("fallo");
                     	callback(false,{Adquirido:false,Error:true});
                     })
              	}else callback(true,{Adquirido:false,Error:true});

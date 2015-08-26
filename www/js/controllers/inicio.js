@@ -296,12 +296,17 @@ angular.module('starter')
 	}
 	$rootScope.cancelaSuscripcion=function(){
     if($rootScope.OS=="iOS"){
+            console.log("ios");
         window.open("https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions","_system")
     }else{
         window.open("https://play.google.com/store/apps/details?id=com.app.virtualguardian","_system")
     }
 }
 	$scope.cancelCompra=function(product){
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
     $timeout(function(){
         $rootScope.hideCargando()
     },500)
@@ -309,7 +314,10 @@ angular.module('starter')
         
 $scope.aproveCompra=function(product){
     console.log("aproved");
-            
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
     product.verify()
     .success(function(producto,data){
 		console.log(JSON.stringify(producto));
@@ -353,13 +361,18 @@ $scope.finishCompra=function(product){
 }
             $scope.errorCompra=function(err){
             console.log("error")
+            store.off($scope.cancelCompra)
+            store.off($scope.finishCompra);
+            store.off($scope.aproveCompra);
+            store.off($scope.errorCompra);
             $rootScope.productoSeleccionado.Data.finish();
             }
 	$rootScope.comprarProducto=function(){
         var producto=$rootScope.productoSeleccionado.Data;
             $rootScope.showCargando($rootScope.idioma.cuenta[25].replace("CUENTA",(window.device.platform=="iOS")?"AppleId":"GoogleId"))
+            console.log(producto)
 			//if($rootScope.OS=="iOS" || ($rootScope.OS=="Android" &&))
-			if(producto.status!=store.APPROVED)producto.status=store.APPROVED;
+			if(producto.state!="approved")producto.state="approved";
             producto.verify()
             .success(function(product,purchaseData){
                      console.log(purchaseData);
@@ -450,10 +463,50 @@ $scope.errorPrecio=function(err){
         })
         
 }	
+$rootScope.usuarioFamiliar= function(usuario){
+	if(usuario.Id==0){
+	$scope.prompt ($rootScope.idioma.cuenta[31],$rootScope.idioma.cuenta[32],"email",$rootScope.idioma.login[2],function(res){
+			if(res==$rootScope.Usuario.Correo)$scope.alert($scope.idioma.cuenta3[1],$scope.idioma.cuenta[33],function(){});
+			else if(res=="")$scope.alert($scope.idioma.personas[1],$scope.idioma.registro[9],function(){});
+			else if(!$scope.evalid(res))$scope.alert($scope.idioma.personas[1],$scope.idioma.registro[10],function(){});
+			else{
+			$http.post("https://www.virtual-guardian.com/api/personas/add",{
+				Usuario:$rootScope.Usuario.Id,
+				Correo:res
+				})
+		.success(function(data,status,header,config){
+			if(data.Id){
+				$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[4],function(){$scope.getPersonas();});
+				$scope.getPersonas();
+			}else{
+				if(data.type==1)$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[5],function(){});
+				else if(data.type==2){
+					if(data.tipo==0)$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[7],function(){});
+					else $scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[6],function(){});
+				}
+			}
+			})
+		.error(function(error,status,header,config){
+			console.log(error);
+			})
+			}
+			}) ;
+	}else {
+	//editar
+	}
+}
 	$scope.abreAjustesCuenta=function(){
 		//$scope.ajustes=!$scope.ajustes;
             $scope.openTerminos("pantallas/cuenta.html");
-            
+			if($rootScope.Usuario.IdSuscripcion==4){
+				$rootScope.cargandoVinculadas=true;
+            	//$rootScope.usuariosFamiliar=[{Id:1,Correo:"sistemas@keros.mx"},{Id:0,Correo:""},{Id:0,Correo:""}];
+				$http.get("https://www.virtual-guardian.com/api/vinculados/"+$rootScope.Usuario.Id)
+    			.success(function(data){
+					$rootScope.usuariosFamiliar=data;
+					$rootScope.cargandoVinculadas=false;
+				})
+			}
             $rootScope.productoSeleccionado=null;
     $scope.productosCargados=0;
             $rootScope.cargandoCuenta=true;
@@ -523,6 +576,7 @@ $scope.cargaProductosSQL=function(){
                       callback(true,data);
                       })
              		.error(function(data){
+                           console.log("fallo");
                     	callback(false,{Adquirido:false,Error:true});
                     })
              	}else callback(true,{Adquirido:false,Error:true});

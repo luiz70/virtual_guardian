@@ -38,6 +38,7 @@ import android.support.v4.app.NotificationCompat.WearableExtender;
 import android.support.v4.app.RemoteInput;
 import android.text.Html;
 import android.util.Log;
+import br.com.kots.mob.complex.preferences.ComplexPreferences;
 
 import com.app.virtualguardian.R;
 import com.google.android.gcm.GCMBaseIntentService;
@@ -119,7 +120,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 				
 			}
             if (extras.getString("Subtitulo") != null && extras.getString("Subtitulo").length() != 0) {
-            	
+        		ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(this, "notificaciones", MODE_PRIVATE);
+
             	switch(Integer.parseInt(extras.getString("Tipo"))){
             		case 1://Evento normal
             			int distancia=pingGps(extras.getString("Latitud"),extras.getString("Longitud"));
@@ -137,35 +139,51 @@ public class GCMIntentService extends GCMBaseIntentService {
         					extras.putBoolean("foreground",false);
         				}else {
                     		Notificaciones.add(extras);
+                    		complexPreferences.putObject("nots", Notificaciones);
+                    	    complexPreferences.commit();
                     		if(!extras.getBoolean("foreground"))createNotificationNormal(context, extras);
             			}
             		break;
             		case 2://Alerta personal
                 			Notificaciones.add(extras);
+                			complexPreferences.putObject("nots", Notificaciones);
+                    	    complexPreferences.commit();
                 			if(!extras.getBoolean("foreground"))createNotificationAlerta(context, extras);
                 	break;
             		case 3://Alerta personas
             				Notificaciones.add(extras);
+            				complexPreferences.putObject("nots", Notificaciones);
+                    	    complexPreferences.commit();
             				if(!extras.getBoolean("foreground"))createNotificationAlerta(context, extras);
                 	break;
             		case 4://Alerta auto
             			Notificaciones.add(extras);
+            			complexPreferences.putObject("nots", Notificaciones);
+                	    complexPreferences.commit();
         				if(!extras.getBoolean("foreground"))createNotificationAlerta(context, extras);
                 	break;
             		case 5://Solicitud
             			Notificaciones.add(extras);
+            			complexPreferences.putObject("nots", Notificaciones);
+                	    complexPreferences.commit();
         				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
                 	break;
             		case 6://Aceptado
             			Notificaciones.add(extras);
+            			complexPreferences.putObject("nots", Notificaciones);
+                	    complexPreferences.commit();
         				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
                 	break;
             		case 7://codigo
             			Notificaciones.add(extras);
+            			complexPreferences.putObject("nots", Notificaciones);
+                	    complexPreferences.commit();
         				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
                 	break;
             		case 8://codigo
             			Notificaciones.add(extras);
+            			complexPreferences.putObject("nots", Notificaciones);
+                	    complexPreferences.commit();
         				if(!extras.getBoolean("foreground"))createNotificationAlerta(context, extras);
                 	break;
             	}

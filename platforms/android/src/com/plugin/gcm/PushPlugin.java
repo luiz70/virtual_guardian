@@ -104,6 +104,7 @@ public class PushPlugin extends CordovaPlugin {
 				String Estatus = (String) jo.get("Estatus");
 				String Latitud = (String) jo.get("Latitud");
 				String Longitud = (String) jo.get("Longitud");
+				
 				SharedPreferences prefs = getApplicationContext().getSharedPreferences("com.app.virtualguardian", Context.MODE_PRIVATE);
 				if(Estatus.equals("1")){
 				prefs.edit().putString("Latitud", Latitud).apply();
