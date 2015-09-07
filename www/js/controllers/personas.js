@@ -119,7 +119,7 @@ angular.module('starter')
 			$rootScope.show($rootScope.idioma.personas[20],persona.Correo,$rootScope.idioma.cuenta[40],$rootScope.idioma.personas[19],function(){$scope.eliminaPersona(persona)},function(){},false)
 			//eliminar
 			else
-			$rootScope.show($rootScope.idioma.personas[20],persona.Correo,$rootScope.idioma.cuenta[40],$rootScope.idioma.personas[19],function(){$scope.eliminaPersona(persona)},function(){$scope.llamaPersona(persona)},false)
+			$rootScope.show($rootScope.idioma.personas[20],persona.Correo,$rootScope.idioma.cuenta[40],$rootScope.idioma.personas[19],function(){$scope.eliminaPersona(persona)},function(){$scope.llamaPersona(persona)},true)
 		}
 	
 		}
