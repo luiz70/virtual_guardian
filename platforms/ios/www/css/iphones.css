@@ -4,6 +4,7 @@
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
 	
 }
+
 /*iphone 5 5s */
 /* only screen and (min-device-width : 320px) and (max-device-width : 568px) and (orientation : portrait) */
 @media (max-width: 320px){
@@ -12,6 +13,9 @@
 	
 		font-size: 19px !important;
 		font-weight: 100 !important;
+}
+.popup-sub-title {
+    font-size: 3.5vh;
 }
 .nombreLugar{
     font-size: 120% !important;
@@ -54,7 +58,7 @@ div{
    bottom: 22vh !important;
 }
 .popup-title{
-    font-size:3.5vh !important;
+    font-size: 4vh !important;
 }
 span{
     font-size:3vh !important;
@@ -107,6 +111,7 @@ span{
 }
 #input_prompt{
     font-size:19px !important;
+    line-height: initial;
 }
 .input_prompt{
     font-size:19px !important;

@@ -33,6 +33,25 @@
                 <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; ">{{(Usuario.TipoRecibo==2)?idioma.cuenta[26]:idioma.cuenta[23]}}</button>
             </div>
      </div>
+     <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion==4" >
+ 		<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase;padding-bottom: 1vh; border-bottom: solid 1px #474747;">
+            {{idioma.cuenta[28]}}
+            </div>
+            <div class="ng-hide" ng-show="!cargandoVinculadas">
+            <button style="float: left;background: none;position: relative;border: none;padding: 1vh;padding-right: 6vh;cursor: initial;color: #C1C1C1;font-size: 3vh;width: 100%;text-align: left;background-color: rgba(255, 255, 255, 0.09);border-radius: 5px;margin-top: 1vh;" ng-repeat="usuario in usuariosFamiliar" ng-click="usuarioFamiliar(usuario)">
+                {{(usuario.Id!=0)?(usuario.Correo.substr(0,1).toUpperCase()+usuario.Correo.substr(1).toLowerCase()):idioma.cuenta[29]}} 
+                <div style="position:absolute;top:1vh;right:1vh;width:4vh;height:4vh;">
+                	<i class="{{(usuario.Id!=0)?'icon ion-android-create':'icon ion-plus'}}" style="font-size: 3vh;position: absolute;bottom: 0px;top: 0px;right: 1vh;height: 3vh;margin: auto;"></i>
+                </div>
+            </button>
+            <div class="ng-hide" style="width:100%; margin-top:2vh; color:#C1C1C1; font-size:2vh; text-transform:uppercase; float:left;" ng-show="Usuario.TipoRecibo>1" ng-click="" >
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#AFAEAE; font-size:2.5vh; line-height:2.8vh; text-align:justify">{{idioma.cuenta[30]}}</button>
+            </div>
+            </div>
+            <div class="ng-hide" ng-show="cargandoVinculadas" style="text-align: center;padding-top: 2vh;">
+            <ion-spinner icon="android" class="spinner-dark" style="    position: relative; top: 0px; bottom: 0px;margin: auto;height: 28px;left: 0px;right: 0px;    width: 28px;"></ion-spinner>
+            </div>
+     </div>
      
      <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;min-height:20vh;    position: relative;" ng-show="Usuario.IdSuscripcion==1">
  		<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase;padding-bottom: 1vh; border-bottom: solid 1px #474747;">

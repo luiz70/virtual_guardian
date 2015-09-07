@@ -80,7 +80,16 @@ angular.module('starter')
             24:"Se ha producido un error al conectarse con la tienda de TIENDA, intente más tarde.",
             25:"Verificando CUENTA",
             26:"Prueba gratuita de 30 días.",
-            27:"Ya cuentas con una suscripción, para adquirir una diferente necesitas cancelar tu suscripción actual."
+            27:"Ya cuentas con una suscripción, para adquirir una diferente necesitas cancelar tu suscripción actual.",
+			28:"Cuentas vinculadas",
+			29:"Agregar cuenta",
+			30:"Cualquier cambio en los usuarios vinculados tendra efecto 30 días despúes de realizado.",
+			31:"Vincular usuario",
+					32:"Introduce el correo electrónico del usuario que deseas agregar a tu Suscripción Familiar",
+					33:"No puedes agregar tu correo electrónico.",
+					34:" se han agregado correctamente a tus personas.",
+					35:" no es miembro de Virtual Guardian.",
+					36:" ya esta en tu lista de personas.",
 					},
 				menu:{
 				1:"Filtros",
