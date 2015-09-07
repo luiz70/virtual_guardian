@@ -15,7 +15,7 @@
 		font-weight: 100 !important;
 }
 .popup-sub-title {
-    font-size: 3.5vh;
+    font-size: 3vh;
 }
 .nombreLugar{
     font-size: 120% !important;
@@ -58,7 +58,7 @@ div{
    bottom: 22vh !important;
 }
 .popup-title{
-    font-size: 4vh !important;
+    font-size: 3.5vh !important;
 }
 span{
     font-size:3vh !important;
@@ -110,7 +110,7 @@ span{
     height: 7vh;
 }
 #input_prompt{
-    font-size:19px !important;
+    font-size: 18px !important;
     line-height: initial;
 }
 .input_prompt{

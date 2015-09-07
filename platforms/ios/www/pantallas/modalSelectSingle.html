@@ -2,7 +2,7 @@
     <ion-header-bar style="height:7vh;  background: none;">
       <h1 class="title tituloModal" style="text-align:center">{{idioma.general[16]}}</h1>
     </ion-header-bar>
-    <ion-content style="top: 7vh;bottom: 8vh;">
+    <ion-content style="top: 7vh;bottom: 9.5vh;">
     
       <ion-list>
       <ion-radio ng-repeat="opcion in opcionesModal" ng-model="Usuario.Periodo" ng-value="opcion.Periodo">{{opcion.Nombre}}</ion-radio>
@@ -15,8 +15,8 @@
             </label>
             </ion-list-->
     </ion-content>
-    <div class="popup-buttons" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;"><!-- ngRepeat: button in buttons -->
+     <div class="popup-buttons" style="max-height:9.5vh;height: auto; bottom: 0px; position: absolute; width: 100%; background-color: #FCFCFC;border-top: solid 1px #DDD;"><!-- ngRepeat: button in buttons -->
         <button  class="button ng-binding button-positive" ng-class="button.type || 'button-default'" ng-click="closeModal()" style="  height: 100%;
-  padding: 0px !important;">{{idioma.general[2]}}</button>
-     </div> 
+            padding: 1vh !important;">{{idioma.general[2]}}</button>
+    </div> 
   </ion-modal-view>

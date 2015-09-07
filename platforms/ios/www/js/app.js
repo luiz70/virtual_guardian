@@ -151,6 +151,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 				}
 			}else if(notification.notificaciones>0){
 				//$rootScope.onTab(2);
+				
 				$rootScope.notPendientes+=notification.notificaciones;
 				window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
 			}
@@ -158,6 +159,12 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 			for(var i=0;i<notification.notificaciones;i++){
 			if(notification["Notif"+i].Tipo=="8"){
 				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
+			}else if(notification["Notif"+i].Tipo=="10"){
+				$rootScope.PersonaLlamada={
+					Correo:"sistemas@keros.mx",
+					Llamando:false
+				}
+				$location.path("/llamada");
 			}
 			}
           break;
@@ -208,7 +215,9 @@ $rootScope.unregister=function(){
 	 $ionicHistory.clearHistory();
 	 
 	 })
-	 
+	 $ionicPlatform.registerBackButtonAction(function () {
+    	navigator.app.exitApp();
+		}, 100);
 	 $ionicPlatform.on("volumedownbutton",function(){});
 	 $ionicPlatform.on("volumeupbutton",function(){});
 	 $rootScope.onResume=function(){
@@ -232,10 +241,9 @@ $rootScope.unregister=function(){
 				$location.path('/inicio');
 				
 				
-				//$rootScope.unregister();	
-				//if(pushNotification)registerNotification();
-			}
-	*/
+				$rootScope.unregister();	
+				if(pushNotification)registerNotification();
+			}*/
 	})
 .config(function($stateProvider, $urlRouterProvider,$httpProvider,$ionicConfigProvider) {
  $ionicConfigProvider.views.maxCache(0);
@@ -276,6 +284,16 @@ $rootScope.unregister=function(){
 	views: {
       '': {
         templateUrl: "pantallas/login.html"
+      }
+	}
+    
+    //controller: 'idioma'
+  })
+   .state('llamada', {
+    url: "/llamada",
+	views: {
+      '': {
+        templateUrl: "pantallas/llamada.html"
       }
 	}
     

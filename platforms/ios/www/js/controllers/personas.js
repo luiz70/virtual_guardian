@@ -1,5 +1,5 @@
 angular.module('starter')
-.controller("personas",function($scope,$http,$rootScope,$timeout){
+.controller("personas",function($scope,$http,$rootScope,$timeout,$ionicBackdrop,$location){
 	if(window.localStorage.getArray("Personas")){
 		$scope.Personas=window.localStorage.getArray("Personas");
 	}
@@ -109,6 +109,25 @@ angular.module('starter')
 			
 		})
 		}
+		}
+		$scope.opcionesPersona=function (persona){
+	if(persona.Lugar && !persona.Tipo){
+		//aceptar
+		$rootScope.show($rootScope.idioma.personas[20],persona.Correo,$rootScope.idioma.cuenta[40],$rootScope.idioma.general[2],function(){$scope.eliminaPersona(persona)},function(){$scope.aceptaPersona(persona)},true)
+		}else{
+			if(!persona.Tipo)
+			$rootScope.show($rootScope.idioma.personas[20],persona.Correo,$rootScope.idioma.cuenta[40],$rootScope.idioma.personas[19],function(){$scope.eliminaPersona(persona)},function(){},false)
+			//eliminar
+			else
+			$rootScope.show($rootScope.idioma.personas[20],persona.Correo,$rootScope.idioma.cuenta[40],$rootScope.idioma.personas[19],function(){$scope.eliminaPersona(persona)},function(){$scope.llamaPersona(persona)},true)
+		}
+	
+		}
+		$scope.llamaPersona=function(persona){
+			persona.Llamando=true;
+			$rootScope.PersonaLlamada=persona;
+			$location.path('/llamada');
+			
 		}
 		/*{
 			Titulo:"Hallazgo en puebla",

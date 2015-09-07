@@ -72,10 +72,11 @@ angular.module('starter')
 	}
 	//$rootScope.stepRecorrido=1
 	$rootScope.closeRecorrido=function(){
-            window.localStorage.removeItem("enRecorrido")
+           // window.localStorage.removeItem("enRecorrido")
             $rootScope.Usuario.Nuevo=0
             window.localStorage.setArray("Usuario",$rootScope.Usuario)
-			switch($rootScope.stepRecorrido){
+$scope.popoverRec.hide();
+			/*switch($rootScope.stepRecorrido){
 			case 0: $scope.popoverRec.hide();
 			$rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
 			});
@@ -90,7 +91,7 @@ angular.module('starter')
 				},1000);
 				$rootScope.Usuario.Nuevo=0;
 			break;
-		}
+		}*/
 			
 			
 	
@@ -302,6 +303,20 @@ angular.module('starter')
         window.open("https://play.google.com/store/apps/details?id=com.app.virtualguardian","_system")
     }
 }
+$rootScope.cancelaSuscripcionFam=function(){
+	$scope.confirm($rootScope.idioma.cuenta[44],$rootScope.idioma.cuenta[45],function(res){
+	if(res){
+    $rootScope.showCargando("");
+	$http.get("https://www.virtual-guardian.com/api/familiar/cancel/"+$rootScope.Usuario.Id)
+	.success(function(data){
+		$rootScope.hideCargando();
+		window.localStorage.setArray("Usuario",data);
+        $rootScope.Usuario=data;
+		$scope.abreAjustesCuenta(false);
+	})
+	}
+	},$rootScope.idioma.general[2],$rootScope.idioma.general[6],function(){return true},true)
+}
 	$scope.cancelCompra=function(product){
             store.off($scope.cancelCompra)
             store.off($scope.finishCompra);
@@ -463,41 +478,107 @@ $scope.errorPrecio=function(err){
         })
         
 }	
+$rootScope.aceptaInvitacion=function(invitacion){
+	
+$scope.confirm($rootScope.idioma.cuenta[17]+" "+$rootScope.Productos[invitacion.Suscripcion-2].Nombre,$rootScope.idioma.cuenta[41]+invitacion.Correo,function(res){
+	invitacion.Accion=res;
+	invitacion.Usuario=$rootScope.Usuario.Id;
+	$rootScope.showCargando("");
+	$http.post("https://www.virtual-guardian.com/api/invitacion/res",invitacion)
+	.success(function(data){
+		$rootScope.hideCargando();
+		window.localStorage.setArray("Usuario",data);
+                 $rootScope.Usuario=data;
+				 $rootScope.Invitaciones=[]
+           $http.get("https://www.virtual-guardian.com/api/invitaciones/"+$rootScope.Usuario.Id)
+				.success(function(data){
+					if(!data.Error)
+					$rootScope.Invitaciones=data;
+				}) 
+	})
+	.error(function(err){
+	$rootScope.hideCargando();
+	})
+},$rootScope.idioma.general[2],$rootScope.idioma.cuenta[40],function(){return true},true)
+}
 $rootScope.usuarioFamiliar= function(usuario){
 	if(usuario.Id==0){
 	$scope.prompt ($rootScope.idioma.cuenta[31],$rootScope.idioma.cuenta[32],"email",$rootScope.idioma.login[2],function(res){
-			if(res==$rootScope.Usuario.Correo)$scope.alert($scope.idioma.cuenta3[1],$scope.idioma.cuenta[33],function(){});
-			else if(res=="")$scope.alert($scope.idioma.personas[1],$scope.idioma.registro[9],function(){});
+		if(res==$rootScope.Usuario.Correo)$scope.alert($scope.idioma.cuenta[31],$scope.idioma.cuenta[33],function(){});
+			else if(res=="")$scope.alert($scope.idioma.cuenta[31],$scope.idioma.cuenta[37],function(){});
 			else if(!$scope.evalid(res))$scope.alert($scope.idioma.personas[1],$scope.idioma.registro[10],function(){});
 			else{
-			$http.post("https://www.virtual-guardian.com/api/personas/add",{
+				$rootScope.showCargando("");
+			$http.post("https://www.virtual-guardian.com/api/familiar/add",{
 				Usuario:$rootScope.Usuario.Id,
 				Correo:res
 				})
 		.success(function(data,status,header,config){
+			$rootScope.hideCargando();
 			if(data.Id){
-				$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[4],function(){$scope.getPersonas();});
-				$scope.getPersonas();
+				$scope.alert($scope.idioma.cuenta[31],res+$scope.idioma.cuenta[34],function(){});
+					$rootScope.cargandoVinculadas=true;
+					$http.get("https://www.virtual-guardian.com/api/vinculados/"+$rootScope.Usuario.Id)
+    			.success(function(data){
+					$rootScope.usuariosFamiliar=data;
+					$rootScope.cargandoVinculadas=false;
+				})
+				
 			}else{
-				if(data.type==1)$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[5],function(){});
-				else if(data.type==2){
-					if(data.tipo==0)$scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[7],function(){});
-					else $scope.alert($scope.idioma.personas[1],res+$scope.idioma.personas[6],function(){});
-				}
+				if(data.type==1)$scope.alert($scope.idioma.cuenta[31],res+$scope.idioma.cuenta[35],function(){});
+				else if(data.type==2)$scope.alert($scope.idioma.cuenta[31],res+$scope.idioma.cuenta[36],function(){});
+				else if(data.type==4)$scope.alert($scope.idioma.cuenta[31],res+$scope.idioma.cuenta[46],function(){});
+				
 			}
 			})
 		.error(function(error,status,header,config){
 			console.log(error);
+			$rootScope.hideCargando();
 			})
 			}
 			}) ;
 	}else {
 	//editar
+	
+	if(usuario.Eliminado==0){
+	$scope.confirm($rootScope.idioma.cuenta[31],$rootScope.idioma.cuenta[47]+usuario.Correo+"?"+(usuario.Confirmado==1?"<div>"+$rootScope.idioma.cuenta[48]+"</div>":""),function(res){
+	if(res){
+		$rootScope.showCargando("");
+			$http.post("https://www.virtual-guardian.com/api/vinculados/cancel",{IdCliente:$rootScope.Usuario.Id,IdVinculado:usuario.Id,Confirmado:usuario.Confirmado})
+			.success(function(data){
+				$rootScope.hideCargando();
+				$http.get("https://www.virtual-guardian.com/api/vinculados/"+$rootScope.Usuario.Id)
+    			.success(function(data){
+					$rootScope.usuariosFamiliar=data;
+					$rootScope.cargandoVinculadas=false;
+				})
+			})
+
+	}
+	},$rootScope.idioma.general[2],$rootScope.idioma.general[6],function(){return true},true)
+	}else{
+	$rootScope.alert($rootScope.idioma.cuenta[31],$rootScope.idioma.cuenta[49]);
+	}
+
 	}
 }
-	$scope.abreAjustesCuenta=function(){
+
+	$scope.abreAjustesCuenta=function(ref){
+		ref=ref|true;
 		//$scope.ajustes=!$scope.ajustes;
-            $scope.openTerminos("pantallas/cuenta.html");
+            if(ref)$scope.openTerminos("pantallas/cuenta.html");
+			$rootScope.Invitaciones=[];
+			if($rootScope.Usuario.IdSuscripcion==1){
+				$http.get("https://www.virtual-guardian.com/api/invitaciones/"+$rootScope.Usuario.Id)
+				.success(function(data){
+					if(!data.Error)
+					$rootScope.Invitaciones=data;
+					else console.log(data);
+			//[{Id:0,Correo:"correo@sdfsdfsdfsdf.dsfsdfsdfsdfsdfdsf",Suscripcion:4}]
+				}).error(function(){
+					alert(2);
+				})
+			}
 			if($rootScope.Usuario.IdSuscripcion==4){
 				$rootScope.cargandoVinculadas=true;
             	//$rootScope.usuariosFamiliar=[{Id:1,Correo:"sistemas@keros.mx"},{Id:0,Correo:""},{Id:0,Correo:""}];
@@ -723,6 +804,8 @@ case "notificaciones":
     $scope.menuNotificaciones=!$scope.menuNotificaciones;
 break;
 case "filtros":
+	if(!$rootScope.filtros.Estado)$rootScope.setswit(false);
+	else $rootScope.setswit(true);
     $rootScope.filtros.Estado=!$rootScope.filtros.Estado;
 break;
 }
@@ -730,7 +813,9 @@ break;
 
 
 };
-
+$rootScope.logoInicio=function(){
+	$location.path('/llamada');
+}
 $rootScope.UsuarioTemporal=null;
 $scope.toggleLeftSideMenu = function() {
 $scope.menuNotificaciones=false;
@@ -756,11 +841,17 @@ if(!$ionicSideMenuDelegate.isOpen()){
    },200,function(){$("#capa_menu").hide();});
    if($scope.filtros.Estado){
    window.localStorage.setArray("Filtros",$scope.filtros);
-   if(!sm)$rootScope.showEventos();
+   //if(!sm){
+	   $rootScope.showEventos();
+   //}
    }else {
-       if(!sm && window.localStorage.getArray("Filtros") )$rootScope.showEventos();
+	   
+       if(!sm && window.localStorage.getArray("Filtros") ){
+		   $rootScope.showEventos();
+		   //sin filtros
+	   }
    //window.localStorage.removeItem("Filtros");
-   
+   window.localStorage.setArray("Filtros",$scope.filtros);
    }
    if(sm)$rootScope.showEventos();
 }
@@ -785,6 +876,7 @@ $scope.saveMenu=function(){
    else $rootScope.UsuarioTemporal.Tipos=$rootScope.getNotTiposStr($rootScope.Usuario);
    if($rootScope.getEstadosStr($rootScope.UsuarioTemporal)==$rootScope.getEstadosStr($rootScope.Usuario))delete $rootScope.UsuarioTemporal.Estados
    else $rootScope.UsuarioTemporal.Estados=$rootScope.getNotEstadosStr($rootScope.Usuario);
+   
    if($rootScope.UsuarioTemporal.Tiempo==$rootScope.Usuario.Tiempo)delete $rootScope.UsuarioTemporal.Tiempo
    else $rootScope.UsuarioTemporal.Tiempo=$rootScope.Usuario.Tiempo;
    delete $rootScope.UsuarioTemporal.Correo; 
@@ -801,6 +893,7 @@ $scope.saveMenu=function(){
             delete $rootScope.UsuarioTemporal.OSRecibo;
             delete $rootScope.UsuarioTemporal.TipoRecibo;
             delete $rootScope.UsuarioTemporal.Cambio;
+			 delete $rootScope.UsuarioTemporal.Titular;
    console.log($rootScope.UsuarioTemporal);
    if(Object.keys($rootScope.UsuarioTemporal).length>1){
        
@@ -989,14 +1082,14 @@ $scope.abreModalEstados=function(){
     $scope.openSelect($rootScope.Usuario.Estados,true);
 }
 $scope.abreModalTipos=function(){
-    
+    console.log(2)
     $scope.openSelect($rootScope.Usuario.Tipos,true);
 }
 $scope.abreFiltrosEstados=function(){
     $scope.openSelect($rootScope.filtros.Estados,true);
 }
 $scope.abreFiltrosTipos=function(){
-    
+    console.log(1)
     $scope.openSelect($rootScope.filtros.Tipos,true);
     
 }
@@ -1125,6 +1218,7 @@ $rootScope.inicializaBaseLocal=function(){
           
           }
           $rootScope.sqlGetEventos=function(Latitud,Longitud,FechaI,FechaF,Radio,Estados,Tipos,callback){
+			  
               if( window.sqlitePlugin){
           var arr=[];
           var st="";
@@ -1154,7 +1248,10 @@ $rootScope.inicializaBaseLocal=function(){
                               callback(ids.join(","));
                               $rootScope.muestraEventos();
                               })
-              }else callback("");
+              }else {
+				  callback("");
+				  $rootScope.muestraEventos();
+			  }
           }
          $rootScope.sqlGetExtras=function(id,callback){
           

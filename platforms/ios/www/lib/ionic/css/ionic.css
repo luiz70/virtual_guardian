@@ -125,7 +125,9 @@
 
 .ion-android-calendar:before {
   content: "\f2d1"; }
-
+.rotate:before{
+  -webkit-transform:rotate(136deg);
+}
 .ion-android-call:before {
   content: "\f2d2"; }
 
@@ -4509,24 +4511,45 @@ ion-tabs.tabs-color-active-dark .tab-item {
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both; }
   .popup-container .popup {
-    width: 70vw;
+    width: 90vw;
     max-width: 100%;
     max-height: 90%;
     border-radius: 0px;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 5px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -moz-flex;
-    display: -ms-flexbox;
+    display: 
+    
+    
+    
+    -webkit-box;
+    display: 
+    
+    
+    
+    -webkit-flex;
+    display: 
+    
+    
+    
+    -moz-box;
+    display: 
+    
+    
+    
+    -moz-flex;
+    display: 
+    
+    
+    
+    -ms-flexbox;
     display: flex;
     -webkit-box-direction: normal;
     -webkit-box-orient: vertical;
     -webkit-flex-direction: column;
     -moz-flex-direction: column;
     -ms-flex-direction: column;
-    flex-direction: column; }
+    flex-direction: column;
+    }
   .popup-container input, .popup-container textarea {
       background-color:#fff;
       
@@ -4561,7 +4584,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
 
 .popup-body {
   padding: 3%;
-  overflow: auto; 
+  overflow: auto;
   text-align: center;
   position: relative;
   width: 100%;
@@ -4591,9 +4614,9 @@ ion-tabs.tabs-color-active-dark .tab-item {
     flex: 1;
     display: block;
     border-radius: 2px;
-    line-height: 2vh;
+    line-height: 3vh;
     margin-right: 5px; 
-    font-size: 2vh;
+    font-size: 3vh;
     padding: 5px;
     height: auto;
 }
@@ -7540,8 +7563,8 @@ a.button {
   transition: none !important; }
 
 .slide-in-up {
-  -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0); }
+  -webkit-transform: translate3d(0, 100vh, 0);
+  transform: translate3d(0, 100vh, 0); }
 
 .slide-in-up.ng-enter, .slide-in-up > .ng-enter {
   -webkit-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 400ms;
