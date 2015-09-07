@@ -50,6 +50,9 @@ angular.module('starter')
 							}else if(tmp.Tipo==8){
 							tmp.Titulo=$scope.idioma.notificaciones[11];
 							tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[12];
+							}else if(tmp.Tipo==9){
+								tmp.Titulo=$scope.idioma.notificaciones[13];
+								tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[14];
 							}
 						}
 					}
@@ -131,6 +134,10 @@ angular.module('starter')
 							}else if(tmp.Tipo==8){
 								tmp.Titulo=$scope.idioma.notificaciones[11];
 							tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[12];
+							}
+							else if(tmp.Tipo==9){
+								tmp.Titulo=$scope.idioma.notificaciones[13];
+								tmp.Subtitulo=tmp.Involucrado+$scope.idioma.notificaciones[14];
 							}
 						}
 					}

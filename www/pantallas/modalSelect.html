@@ -1,18 +1,18 @@
-<ion-modal-view>
-    <ion-header-bar style="height:7vh;  background: none;">
+<ion-modal-view style="display: flex;flex-flow: column;height: 100%;">
+    <ion-header-bar style="height:7vh;  background: none;flex: 0 1 auto;">
         <h1 class="title tituloModal" style="text-align:center">{{idioma.general[16]}}</h1>
     </ion-header-bar>
-    <ion-content style="top: 7vh;bottom: 8vh;">
+    <ion-content style="top: 7vh;bottom: 9.5vh;">
         <ion-list>
             <label class="item item-radio ">
-                <input type="checkbox" name="radio-group" ng-model="false" ng-click="selectAll(true);" >
+                <input type="checkbox" name="radio-group"  ng-click="selectAll(true);" >
                     <div class="item-content" style="background:#424242;color:#fff;border-top:solid 1px #5e5e5e;text-align:center">
                         <span >{{idioma.menu[29]}}</span>
                     </div>
                     <i class="radio-icon disable-pointer-events icon ion-checkmark"></i>
                     </label>
             <label class="item item-radio " >
-                <input type="checkbox" name="radio-group" ng-model="false" ng-click="selectAll(false);">
+                <input type="checkbox" name="radio-group" ng-click="selectAll(false);">
                     <div class="item-content" style="background:#424242;color:#fff;border-top:solid 1px #5e5e5e;text-align:center">
                         <span >{{idioma.menu[30]}}</span>
                     </div>
@@ -30,8 +30,8 @@
         </ion-list>
         
     </ion-content>
-    <div class="popup-buttons" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;"><!-- ngRepeat: button in buttons -->
+    <div class="popup-buttons" style="max-height:9.5vh;height: auto; bottom: 0px; position: absolute; width: 100%; background-color: #FCFCFC;border-top: solid 1px #DDD;"><!-- ngRepeat: button in buttons -->
         <button  class="button ng-binding button-positive" ng-class="button.type || 'button-default'" ng-click="closeModal()" style="  height: 100%;
-            padding: 0px !important;">{{idioma.general[2]}}</button>
+            padding: 1vh !important;">{{idioma.general[2]}}</button>
     </div> 
-</ion-modal-view>
+</ion-modal-view >

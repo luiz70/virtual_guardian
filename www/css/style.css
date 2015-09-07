@@ -240,7 +240,7 @@ background: rgba(0, 0, 0, 0.8);
     text-align: center;
 	padding-top:50%;
 }
-.notificacion5, .notificacion6, .notificacion7,.notificacion8{
+.notificacion5, .notificacion6, .notificacion7,.notificacion8,.notificacion9{
     text-transform: initial !important;
 }
 .gmnoprint, .gm-style-cc{
@@ -360,6 +360,14 @@ div{
   line-height: 0;
   opacity: 0;
   padding: 0px 0px;
+}
+.callact{
+	background-color: rgb(208, 141, 51) !important;
+    color: #000 !important;
+}
+.callinact{
+	background-color: rgba(234, 231, 231, 0.3) !important;
+    color: #A1A1A1 !important;
 }
 /*.popupActivo > .popup > .popup-buttons {
 position: absolute !important;

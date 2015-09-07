@@ -13,7 +13,7 @@ angular.module('starter')
 	$scope.carroMarker;
 	$scope.circuloRadio;
 	$scope.radio;
-	$scope.swit=true;
+	$rootScope.switchMap={enable:true};
 	$scope.first=1;
 	$scope.vigilando=false;
 	$rootScope.Peligros=[];
@@ -51,7 +51,7 @@ angular.module('starter')
 		$rootScope.showEventos();
 		$scope.radio=$rootScope.Usuario.Rango;
 		$scope.dibujaRadio();
-		$scope.swit=true;
+		$rootScope.switchMap.enable=true;
 		$rootScope.muestraEventos();
 		$scope.circuloRadio.setMap($rootScope.map);
 		$rootScope.ubicacionMarker.setDraggable((!$rootScope.recorrido) || $rootScope.stepRecorrido==1);
@@ -197,8 +197,13 @@ angular.module('starter')
 		$rootScope.map.mapTypes.set('map_style', styledMap);
   		$rootScope.map.setMapTypeId('map_style');
 		//mapCarro = new google.maps.Map(document.getElementById('carro_mapa'), mapOptions);
+		google.maps.event.addListener($rootScope.map,"dragend",function (){
+			$rootScope.muestraEventos()
+		})
+		google.maps.event.addListener($rootScope.map,"zoom_changed",function (){
+			$rootScope.muestraEventos()
+		})
 		
-	
 		google.maps.event.addListenerOnce($rootScope.map,"idle",function (){
             $timeout(function(){
             $rootScope.cargando=false;
@@ -311,7 +316,12 @@ $scope.hideBarra=function(){
 			$scope.hideBarra();
 			
 		});
-		
+		google.maps.event.addListener($rootScope.map,"dragend",function (){
+			$rootScope.muestraEventos()
+		})
+		google.maps.event.addListener($rootScope.map,"zoom_changed",function (){
+			$rootScope.muestraEventos()
+		})
 		$scope.poscar=new google.maps.LatLng(20.6737919,-103.3354131);
 		$rootScope.mapCarro = new google.maps.Map(document.getElementById('auto_mapa'), mapOptions);
 		$rootScope.mapCarro.mapTypes.set('map_style', styledMap);
@@ -540,7 +550,7 @@ $scope.resultadosBusq=function(results, status) {
 		$rootScope.ubicacionMarker.setIcon($scope.getImgUbicacion(place.geometry.location));
 		$rootScope.map.setCenter(place.geometry.location);
 		$scope.circuloRadio.setCenter(place.geometry.location);
-		$rootScope.showEventos();
+	$rootScope.showEventos();
 		$rootScope.ocultaBuscador()
 	}
 $rootScope.ocultaBuscador=function(){
@@ -658,6 +668,9 @@ $scope.cargaInfoEvento=function(val){
 }	
 
 $scope.setMarcador=function (evento) {
+	 var myLatLng = new google.maps.LatLng(evento.Latitud, evento.Longitud);
+	if($rootScope.map.getBounds().contains(myLatLng)){
+	
 	var icono = {
    	url: 'img/marcadores/'+evento.IdAsunto+'.png',
    	size: new google.maps.Size(40, 49),
@@ -669,7 +682,7 @@ $scope.setMarcador=function (evento) {
     	coords: [0, 0, 0, 40, 49, 40, 49 , 0],
       	type: 'poly'
   	};
-    var myLatLng = new google.maps.LatLng(evento.Latitud, evento.Longitud);
+   
     var marker = new google.maps.Marker({
         position: myLatLng,
         map: $rootScope.map,
@@ -689,6 +702,7 @@ $scope.setMarcador=function (evento) {
 		if(!$rootScope.recorrido)
 		$scope.clickEvento(marker);
 	});
+	}
 }
 $scope.clickEvento=function (marker){
 	
@@ -733,21 +747,8 @@ alert(1);
 }
 
 	$scope.cambiaSwitch=function (){
-		$scope.swit=!$scope.swit;
-		if($scope.swit){
-			$scope.circuloRadio.setMap($rootScope.map);
-			$rootScope.map.setCenter($rootScope.ubicacionMarker.getPosition())
-			$scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition())
-			if($rootScope.recorrido && $rootScope.stepRecorrido==5){
-				$rootScope.muestraEventos();
-				$timeout(function(){
-				$rootScope.nextRecorrido();	
-				},500)
-			}
-		}else{
-			$scope.circuloRadio.setMap(null);
-		}
-		$rootScope.showEventos();
+		$rootScope.switchMap.enable=!$rootScope.switchMap.enable;
+		
 	}
 	$scope.vigilar=function(){
 	if(!$scope.vigilando){
@@ -880,8 +881,25 @@ alert(1);
 				},500)
 				}
             }
-	$rootScope.showEventos=function(toast){
+			
 		
+			$scope.$watch('switchMap.enable', function(newValue, oldValue) {
+				console.log(newValue);
+ 			if(newValue!=oldValue && newValue==false){
+			$scope.circuloRadio.setMap(null);
+			}
+			if(newValue!=oldValue && newValue==true){
+			$scope.updmap=true;
+			$scope.circuloRadio.setMap($rootScope.map);
+			$rootScope.map.setCenter($rootScope.ubicacionMarker.getPosition())
+			$scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition())
+			}
+			if($scope.updmap && $rootScope.ubicacionMarker){
+				$rootScope.showEventos();
+			}
+			});
+	$rootScope.showEventos=function(toast){
+		$rootScope.loadingEvents=true;
 		if(!$rootScope.recorrido){
             toast=toast || 0;
 		//if($rootScope.Eventos.length>0)
@@ -903,32 +921,34 @@ alert(1);
 			
 		}
 	}
+	$rootScope.loadingEvents=false;
 	$rootScope.muestraEventos=function(){
 		
 	$scope.limpia();
 		for(var i=0; i<$rootScope.Eventos.length;i++)
-		if($scope.swit){
+		if($rootScope.switchMap.enable){
 			if($scope.cumpleRadio($rootScope.Eventos[i],$rootScope.ubicacionMarker,$scope.radio))$scope.setMarcador($rootScope.Eventos[i])
 		}else{
 			$scope.setMarcador($rootScope.Eventos[i]);
 		}
+		$rootScope.loadingEvents=false;
 	}
 	$rootScope.getTiposStr=function(buscar){
 		
 			var a=[];
 			for(var i=0; i<buscar.Tipos.length;i++)
-			if(!$rootScope.iOS || buscar.Tipos[i].Selected)a.push(buscar.Tipos[i].Id);
+			if(buscar.Tipos[i].Selected)a.push(buscar.Tipos[i].Id);
 			return a.join(",");
 		
 		}
 	$rootScope.getEstadosStr=function(buscar){
 			var a=[];
 			for(var i=0; i<buscar.Estados.length;i++)
-			if(!$rootScope.iOS || buscar.Estados[i].Selected)a.push(buscar.Estados[i].Id);
+			if( buscar.Estados[i].Selected)a.push(buscar.Estados[i].Id);
 			return a.join(",");
 		}
 		$rootScope.getNotTiposStr=function(buscar){
-			if(buscar.Tipos.length>0 && buscar.Tipos[0].Selected){
+			if(buscar.Tipos.length>0 && (buscar.Tipos[0].Selected==false || buscar.Tipos[0].Selected)){
 			var a=[];
 			for(var i=0,j=0; i<$scope.TipoEventos.length;i++){
 			if((!$rootScope.iOS && $scope.TipoEventos[i].Id!=buscar.Tipos[j].Id) || ($rootScope.iOS && !buscar.Tipos[i].Selected))a.push($scope.TipoEventos[i].Id);
@@ -938,7 +958,7 @@ alert(1);
 			}else return "";
 		}
 	$rootScope.getNotEstadosStr=function(buscar){
-		if(buscar.Estados.length>0 && buscar.Estados[0].Selected){
+		if(buscar.Estados.length>0 && (buscar.Estados[0].Selected || buscar.Estados[0].Selected==false)){
 			var a=[];
 			for(var i=0,j=0; i<$scope.Estados.length;i++){
 			if((!$rootScope.iOS && $scope.Estados[i].Id!=buscar.Estados[j].Id) ||($rootScope.iOS && !buscar.Estados[i].Selected))a.push($scope.Estados[i].Id);
@@ -947,13 +967,17 @@ alert(1);
 			return a.join(",");
 			}else return "";
 		}
+		$rootScope.setswit=function (val){
+			$rootScope.switchMap.enable=val;
+		}
 	$scope.getEventos=function(){
 		if(!$rootScope.recorrido){
 		if($scope.filtros.Estado){
 		var d2=$scope.filtros.Final;
 		var d=$scope.filtros.Inicial;
-		if(!$scope.swit)var st=$rootScope.getEstadosStr($rootScope.filtros);
-		else var st="";
+		//if(!$rootScope.switchMap.enable)
+		var st=$rootScope.getEstadosStr($rootScope.filtros);
+		//else var st="";
 		var tp=$rootScope.getTiposStr($rootScope.filtros);
 		}else{
 		var d=new Date();
@@ -969,8 +993,9 @@ alert(1);
             d2.setMinutes(0);
             d2.setSeconds(0);
 		var rad=0;
-		if($scope.swit)rad=$scope.radio/1000;
+		if($rootScope.switchMap.enable)rad=$scope.radio/1000;
             $rootScope.Eventos=[];
+
             $rootScope.sqlGetEventos($rootScope.ubicacionMarker.getPosition().lat(),$rootScope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(ids){
 		$http.post("https://www.virtual-guardian.com/api/eventosRadioMapa",{
 				Latitud:$rootScope.ubicacionMarker.getPosition().lat(),
@@ -988,6 +1013,13 @@ alert(1);
                  $rootScope.sqlInsertEvento(JSON.parse(data[i]));
 			}
                  if(data.length>0)$rootScope.sqlGetEventos($rootScope.ubicacionMarker.getPosition().lat(),$rootScope.ubicacionMarker.getPosition().lng(),d,d2,rad,st,tp,function(){});
+				 if(!window.sqlitePlugin){
+					 
+					for(var i=0;i<data.length;i++){
+                 	$rootScope.Eventos.push(JSON.parse(data[i]));
+					}
+					$rootScope.muestraEventos();
+				 }
                  
 			
 			})
@@ -1022,6 +1054,9 @@ alert(1);
 			case "7":
 			$rootScope.alert($scope.idioma.notificaciones[8],$scope.idioma.notificaciones[10],function(){});
 			break;
+			case "9":
+			$scope.abreAjustesCuenta();
+			break;
 			
 		}
 	}
@@ -1051,16 +1086,20 @@ alert(1);
             $scope.ontouch=false;
 	$rootScope.notificacionTip=false;
 	}
+	$scope.updmap=true;
 	$scope.buscaEnMapa=function(evento){
 		if($scope.Conexion(1)){
-		$scope.swit=false;
+			$scope.updmap=false;
+			$rootScope.Eventos=[evento];
+		$rootScope.switchMap.enable=false;
 		$scope.limpia();
 		$scope.circuloRadio.setMap(null);
 		$scope.slideTo(1);
 		$timeout(function(){
+			$rootScope.map.setCenter( new google.maps.LatLng(evento.Latitud, evento.Longitud));
 			$scope.setMarcador(evento);
+		console.log(evento);
 		
-		$rootScope.map.setCenter($scope.marcadores[0].getPosition());
 		},300);
 		}else $scope.slideTo(1);
 		

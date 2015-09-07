@@ -53,6 +53,12 @@ angular.module('starter')
 					8:'Buscador de lugares',
                     9:"¡Fuera de zona de cobertura!"
 				},
+				llamada:{
+					1:"LLAMADA ENTRANTE",
+					2:"LLAMADA SALIENTE",
+					3:"Esperando respuesta...",
+					4:"..."
+					},
 				cuenta:{
 					1:"Usuario",
 					2:"Tipo de suscripción",
@@ -83,13 +89,28 @@ angular.module('starter')
             27:"Ya cuentas con una suscripción, para adquirir una diferente necesitas cancelar tu suscripción actual.",
 			28:"Cuentas vinculadas",
 			29:"Agregar cuenta",
-			30:"Cualquier cambio en los usuarios vinculados tendra efecto 30 días despúes de realizado.",
+			30:"Al agregar un usuario, este recibira una invitación para vincularse a tu suscripción.",
 			31:"Vincular usuario",
 					32:"Introduce el correo electrónico del usuario que deseas agregar a tu Suscripción Familiar",
-					33:"No puedes agregar tu correo electrónico.",
-					34:" se han agregado correctamente a tus personas.",
+					33:"No puedes agregar tu propia cuenta",
+					34:" se ha vinculado correctamente a tu suscripción.",
 					35:" no es miembro de Virtual Guardian.",
-					36:" ya esta en tu lista de personas.",
+					36:" no tiene una cuenta gratuita, debe cancelar sus sucripción actual para ser vinculado.",
+					37:"El correo electrónico es obligatorio.",
+					38:"Invitaciones",
+					39:"Selecciona para aceptar o cancelar",
+					40:"Eliminar",
+					41:"Invitación de ",
+					42:"Cancelar suscripción",
+					43:"Da click para abandonar la suscripción familiar a la que te han agregado.",
+					44:"Abandonar Suscripción",
+					45:"Al abandonar la suscripción volveras a la version limitada y el resto de los miembros seguiran recibiendo los beneficios.",
+					46:" ya esta vinculado en tu suscripción.",
+					47:"¿Deseas eliminar de tu suscripción a ",
+					48:"Este cambio se vera reflejado en 30 días.",
+					49:"Esta cuenta ya ha sido eliminada anteriormente, es necesario esperar para verlo reflejado."
+					
+					
 					},
 				menu:{
 				1:"Filtros",
@@ -121,7 +142,7 @@ angular.module('starter')
                 27:"Ayuda",
             28:"Mi cuenta",
             29:"Seleccionar todo",
-            30:"Desseleccionar todo"
+            30:"Desseleccionar todo",
 				},
 				recorrido:{
 					1:"¡Bienvenido!",
@@ -183,7 +204,8 @@ angular.module('starter')
 					57:"Radio auto: Este es un parámetro muy importante ya que te permite especificar la distancia a la que consideras que un evento puede poner a tu auto en peligro, por lo tanto la aplicación solo realizara alertas de auto cuando se encuentre a una distancia menor a la especificada.",
 					58:"Ajustes de cuenta",
 					59:"Aqui puedes ver información relacionada con tu suscripción, vigencia y cambiar tu contraseña.",
-					60:"Salir del recorrido"
+					60:"Salir del recorrido",
+					61:'Tu cuenta ha quedado activa, tendrás 30 días para usar la versión Premium de la aplicación.'
 
 					
 					
@@ -223,7 +245,9 @@ angular.module('starter')
 					15:" se ha eliminado de tu lista de personas",
 					16:" se ha aceptado en tu lista de personas",
 					17:"No has agregado personas",
-                    18:"Agregar persona"
+                    18:"Agregar persona",
+					19:"Llamar",
+					20:"Personas"
 				},
 				login:{
 					1:"Iniciar Sesión",
@@ -281,7 +305,9 @@ angular.module('starter')
 					9:" se registró con tu código de promoción.",
 					10:"Buenas noticias, ahora tienes un mes más de suscripción completa por invitar a tus amigos.",
 					11:"Tips Virtual Guardian",
-					12:"Para ver el tip manten pulsada la notificación."
+					12:"Para ver el tip manten pulsada la notificación.",
+					13:"Suscripción Familiar",
+					14:" quiere agregarte a su suscripción familiar.",
 				},
 				meses:{
 				1:"Enero",
@@ -582,8 +608,66 @@ angular.module('starter')
      		funcion();
    		});
 	}
-	$scope.confirm = function(titulo,pregunta,funcion,btn1,btn2,closable) {
+	$rootScope.show=function(titulo,text,btn1,btn2,fb1,fb2,tres){
+		var btns=[]
+		if(tres){
+			btns=[{ 
+    			text: $rootScope.idioma.general[6],
+    			type: 'button-default',
+    			onTap: function(){
+					$scope.confirmPopup.close(); 
+				}
+  			}, {
+    			text: btn1,
+    			type: 'button-positive',
+    			onTap: function(){
+				$timeout(function(){
+
+				fb1();
+				},300);
+				}
+  			}, {
+    			text: btn2,
+    			type: 'button-positive',
+    			onTap: function(){
+				$timeout(function(){
+
+				fb2();
+				},300);
+				}
+			}]
+		}else{
+			btns=[{ 
+    			text: $rootScope.idioma.general[6],
+    			type: 'button-default',
+    			onTap: function(){
+					$scope.confirmPopup.close();
+				}
+  			}, {
+    			text: btn1,
+    			type: 'button-positive',
+    			onTap: function(){
+					$timeout(function(){
+				fb1();
+				},300);
+				}
+  			}]
+		}
 		
+   		$scope.confirmPopup = $ionicPopup.confirm({
+     		title: titulo,
+     		template: "<div>"+text+"</div>"+
+			'<div id="botones_confirm"></div>'
+			
+			,
+			buttons: btns
+   		});
+		
+		
+   		
+ 	};
+	$scope.confirm = function(titulo,pregunta,funcion,btn1,btn2,closable,rtr) {
+		rtr=rtr || false
 		closable=closable||function(){return true};
 		btn1 = btn1 || $rootScope.idioma.general[2];
     	btn2 = btn2 || $rootScope.idioma.general[6];
@@ -615,10 +699,12 @@ angular.module('starter')
 		
    		$scope.confirmPopup.then(function(res) {
 			if(res) {
-				funcion();
 				$scope.confirmPopup.close();
+				funcion(res);
+				
 				
 			} else {
+				if(rtr)funcion(res);
 				 $scope.confirmPopup.close();
 			}
 		})
@@ -626,7 +712,7 @@ angular.module('starter')
 	
     $scope.prompt=function(title,subtitle,type,placeholder,funcion,valor){
 		valor=valor || "";
-	var myPopup = $ionicPopup.show({
+	$scope.proptPopup = $ionicPopup.show({
     template: '<input id="input_prompt" type="'+type+'" placeholder="'+placeholder+'" value="'+valor+'" ng-keydown="enterkey($event)"  ng-focus="showCover()" ng-blur="closekey()">',
     title: title,
     subTitle: subtitle,
@@ -647,9 +733,19 @@ angular.module('starter')
   			}]
     
   });
-  myPopup.then(function(res) {
+  $scope.proptPopup.then(function(res) {
 	  if(res){
-    funcion($("#input_prompt").val());
+		  $rootScope.showCargando("")
+		  var val =$("#input_prompt").val();
+		  $scope.proptPopup.close(); 
+		  $timeout(function(){
+			  
+    		funcion(val);
+			$rootScope.hideCargando();
+		  },500);
+	
+	  }else{
+		 $scope.proptPopup.close(); 
 	  }
   });
 	}
@@ -682,7 +778,8 @@ angular.module('starter')
 	
 	$scope.modalSelect = $ionicModal.fromTemplateUrl(m, {
     scope: $scope,
-    animation: 'slide-in-up'
+    animation: 'slide-in-up',
+			   backdropClickToClose:false
   }).then(function(modal) {
     $scope.modalSelect = modal;
 	$scope.modalSelect.show();
@@ -705,8 +802,10 @@ angular.module('starter')
             $scope.openTerminos = function(m) {
             $scope.modalTerminos = $ionicModal.fromTemplateUrl(m, {
                scope: $scope,
-               animation: 'slide-in-up'
+               animation: 'slide-in-up',
+			   backdropClickToClose:false
                }).then(function(modal) {
+				  
                   $scope.modalTerminos = modal;
                   $scope.modalTerminos.show();
                });
@@ -718,6 +817,7 @@ angular.module('starter')
             };
             //Cleanup the modal when we're done with it!
             $scope.$on('$destroy', function() {
+				
                        $scope.modalTerminos.remove();
                        });
 

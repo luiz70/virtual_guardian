@@ -125,7 +125,9 @@
 
 .ion-android-calendar:before {
   content: "\f2d1"; }
-
+.rotate:before{
+  -webkit-transform:rotate(136deg);
+}
 .ion-android-call:before {
   content: "\f2d2"; }
 
@@ -4591,9 +4593,9 @@ ion-tabs.tabs-color-active-dark .tab-item {
     flex: 1;
     display: block;
     border-radius: 2px;
-    line-height: 2vh;
+    line-height: 3vh;
     margin-right: 5px; 
-    font-size: 2vh;
+    font-size: 3vh;
     padding: 5px;
     height: auto;
 }
@@ -7540,8 +7542,8 @@ a.button {
   transition: none !important; }
 
 .slide-in-up {
-  -webkit-transform: translate3d(0, 100%, 0);
-  transform: translate3d(0, 100%, 0); }
+  -webkit-transform: translate3d(0, 100vh, 0);
+  transform: translate3d(0, 100vh, 0); }
 
 .slide-in-up.ng-enter, .slide-in-up > .ng-enter {
   -webkit-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 400ms;

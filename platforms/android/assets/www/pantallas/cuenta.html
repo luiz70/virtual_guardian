@@ -17,7 +17,25 @@
     <div  style="font-size: 3vh;color: #E5E5E5;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;position: relative; text-transform:capitalize;line-height: 3.5vh;    text-align: right;">{{Usuario.Suscripcion.toLowerCase()}}</div>
     </div>
     </div>
-     <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion>1 " >
+    <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion==1 && Invitaciones.length>0" >
+ 		<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase;padding-bottom: 1vh; border-bottom: solid 1px #474747;">
+            {{idioma.cuenta[38]}}
+            </div>
+            <div class="ng-hide" ng-show="!cargandoVinculadas">
+            <button style="float: left;background: none;position: relative;border: none;padding: 1vh;cursor: initial;font-size: 3vh;width: 100%;border-bottom: solid 1px #474747;text-align: left;padding-top: 1vh;padding-right:2vh;padding-left:2vh;background-color: #3B3B3B;" ng-repeat="invitacion in Invitaciones" ng-click="aceptaInvitacion(invitacion)">
+                <div style="width:100%;overflow:hidden;word-wrap: initial;text-overflow: ellipsis;margin-bottom:1vh; color: #ce932f;">{{(invitacion.Correo.substr(0,1).toUpperCase()+invitacion.Correo.substr(1).toLowerCase())}} </div>
+                <div style="width:100%;overflow:hidden;word-wrap: initial;text-overflow: ellipsis; color: #ce932f;">{{idioma.cuenta[17]+" "+Productos[invitacion.Suscripcion-2].Nombre}} </div>
+            </button>
+            <div class="ng-hide" style="width:100%; margin-top:2vh; color:#C1C1C1; font-size:2vh; text-transform:uppercase; float:left;" ng-show="Usuario.TipoRecibo>1" ng-click="" >
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#AFAEAE; font-size:2.5vh; line-height:2.8vh; text-align:justify">{{idioma.cuenta[39]}}</button>
+            </div>
+            </div>
+            <div class="ng-hide" ng-show="cargandoVinculadas" style="text-align: center;padding-top: 2vh;">
+            <ion-spinner icon="android" class="spinner-dark" style="    position: relative; top: 0px; bottom: 0px;margin: auto;height: 28px;left: 0px;right: 0px;    width: 28px;"></ion-spinner>
+            </div>
+     </div>
+    
+      <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion>1 " >
  		<div ng-click="cancelaSuscripcion()" class="ng-hide" ng-show="OS==Usuario.OSRecibo && Usuario.TipoRecibo==1" >
         	<div  style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;border-bottom:solid 1px #474747;" >
                 <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; text-transform:uppercase; ">{{idioma.cuenta[19]}}</button>
@@ -31,6 +49,37 @@
             </div>
             <div class="ng-hide" style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;" ng-show="Usuario.TipoRecibo>1" ng-click="" >
                 <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; ">{{(Usuario.TipoRecibo==2)?idioma.cuenta[26]:idioma.cuenta[23]}}</button>
+            </div>
+     </div>
+       <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion>1 && Usuario.Titular==0" >
+ 		<div ng-click="cancelaSuscripcionFam()">
+        	<div  style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase; float:left;border-bottom:solid 1px #474747;" >
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:3vh; text-transform:uppercase; ">{{idioma.cuenta[42]}}</button>
+				<i  class="icon ion-close-round" style="font-size:3vh; float:right" ></i>
+                
+            </div>
+            <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#C1C1C1; font-size:2.5vh; text-align:justify; width:100%">{{idioma.cuenta[43]}}</button>
+            </div>
+            
+            
+     </div>
+     <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion==4 && Usuario.Titular==1" >
+ 		<div style="width:100%; color:#C1C1C1; font-size:3vh; text-transform:uppercase;padding-bottom: 1vh; border-bottom: solid 1px #474747;">
+            {{idioma.cuenta[28]}}
+            </div>
+            <div class="ng-hide" ng-show="!cargandoVinculadas">
+            <button style="float: left;background: none;position: relative;border: none;padding: 1vh;padding-right: 6vh;cursor: initial;color: #C1C1C1;font-size: 3vh;width: 100%;text-align: left;background-color: rgba(255, 255, 255, 0.09);border-radius: 5px;margin-top: 1vh;" ng-repeat="usuario in usuariosFamiliar" ng-click="usuarioFamiliar(usuario)">
+                 <div style="width:100%;overflow:hidden;word-wrap: initial;text-overflow: ellipsis;">{{(usuario.Id!=0)?(usuario.Correo.substr(0,1).toUpperCase()+usuario.Correo.substr(1).toLowerCase()):idioma.cuenta[29]}} </div>
+                <div style="position:absolute;top:0.5vh;right:1vh;width:4vh;height:4vh;">
+                	<i class="{{(usuario.Id!=0)?(usuario.Eliminado!=1?'icon ion-close-round':'icon ion-clock'):'icon ion-plus'}}" style="font-size: 3vh;position: absolute;bottom: 0px;top: 0px;right: 1vh;height: 3vh;margin: auto;"></i>
+                </div>
+            </button>
+            <div class="ng-hide" style="width:100%; margin-top:2vh; color:#C1C1C1; font-size:2vh; text-transform:uppercase; float:left;" ng-show="Usuario.TipoRecibo>1" ng-click="" >
+                <button style="float:left;background: none;border: none;padding: 0px;cursor: initial; color:#AFAEAE; font-size:2.5vh; line-height:2.8vh; text-align:justify">{{idioma.cuenta[30]}}</button>
+            </div>
+            </div>
+            <div class="ng-hide" ng-show="cargandoVinculadas" style="text-align: center;padding-top: 2vh;">
+            <ion-spinner icon="android" class="spinner-dark" style="    position: relative; top: 0px; bottom: 0px;margin: auto;height: 28px;left: 0px;right: 0px;    width: 28px;"></ion-spinner>
             </div>
      </div>
      
@@ -54,7 +103,8 @@
  		</div>
         <div class="animate-hide ng-hide" style="height: 100%; width: 100%; padding: 0px; position: absolute; top: 3vh;left: 0px;" ng-show="cargandoCuenta"><ion-spinner icon="android" class="spinner-dark" style="    position: absolute; top: 0px; bottom: 0px;margin: auto;height: 28px;left: 0px;right: 0px;    width: 28px;"></ion-spinner></div>
     </div>
-    <div style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh" >
+    <!--CODIGO DE CUENTA-->
+    <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;margin-bottom: 4vh;" >
     <div style="float:left; width:100%;">
     <div  style="font-size: 3vh;color: #C1C1C1;display: block;position: relative;line-height: 3.5vh;text-align: justify;">{{idioma.cuenta[14]}}</div>
     <div class="texto_cuenta" style="font-size:3vh;margin-left:2px;  margin-top: 2vh; text-align: center; color:#E5E5E5"><b  class="texto_cuenta" style="font-size:3vh;">{{idioma.cuenta[13]}}:</b> {{Usuario.Codigo}}</div>
