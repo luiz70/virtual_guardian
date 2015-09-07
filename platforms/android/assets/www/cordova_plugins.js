@@ -131,6 +131,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.awokenwell.proximity/www/proximity.js",
+        "id": "org.awokenwell.proximity.proximity",
+        "clobbers": [
+            "navigator.proximity"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "id": "cordova-plugin-dialogs.notification",
         "merges": [
@@ -166,6 +173,7 @@ module.exports.metadata =
     "nl.x-services.plugins.toast": "2.1.0",
     "org.transistorsoft.cordova.background-geolocation": "0.3.6",
     "cc.fovea.cordova.purchase": "3.11.0",
+    "org.awokenwell.proximity": "0.2.1",
     "cordova-plugin-dialogs": "1.1.1"
 }
 // BOTTOM OF METADATA

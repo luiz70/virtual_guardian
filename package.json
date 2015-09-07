@@ -32,6 +32,10 @@
     {
       "locator": "https://github.com/whiteoctober/cordova-plugin-app-version.git",
       "id": "uk.co.whiteoctober.cordova.appversion"
+    },
+    {
+      "locator": "https://github.com/awoken-well/cordova-plugin-proximity.git",
+      "id": "org.awokenwell.proximity"
     }
   ],
   "cordovaPlatforms": [

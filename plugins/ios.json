@@ -87,6 +87,10 @@
                         {
                             "xml": "<feature name=\"InAppPurchase\"><param name=\"ios-package\" value=\"InAppPurchase\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Proximity\"><param name=\"ios-package\" value=\"CDVProximity\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -214,6 +218,9 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "cc.fovea.cordova.purchase": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "org.awokenwell.proximity": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },

@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0286E5362D33435D9958118C /* DatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B77228EBC34765955B3868 /* DatePicker.m */; };
 		096A485CE2024F22BF4EB90D /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = C16ADA30523341C1A79DE220 /* Toast.m */; };
@@ -75,6 +74,7 @@
 		D30A55DD4EB443C08523D0B3 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9161AEF1141D3BA3E1D7C /* CDVStatusBar.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		EA96CBB82B9E462F9739AB7F /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B0EFB4A09B44A983428C95 /* AppDelegate+notification.m */; };
+		E2C1CF42EE19424599E47997 /* CDVProximity.m in Sources */ = {isa = PBXBuildFile; fileRef = 354AEAF2AF65424D9756D0CA /* CDVProximity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,6 +205,8 @@
 		F616A4085C764AD1B3A61702 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		FE1BDBC5B6A1410A9C5D7B72 /* CDVGlobalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVGlobalization.m; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; };
+		354AEAF2AF65424D9756D0CA /* CDVProximity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVProximity.m"; path = "org.awokenwell.proximity/CDVProximity.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		88986FE56A924A84B94664E0 /* CDVProximity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVProximity.h"; path = "org.awokenwell.proximity/CDVProximity.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -377,6 +379,8 @@
 				B4AF9D08A51D4658A349BEF8 /* SKProduct+LocalizedPrice.m */,
 				CEE8010F180D4ACD9FA61E2C /* InAppPurchase.h */,
 				6829F0F4256940DFAA87A252 /* SKProduct+LocalizedPrice.h */,
+				354AEAF2AF65424D9756D0CA /* CDVProximity.m */,
+				88986FE56A924A84B94664E0 /* CDVProximity.h */,
 			);
 			name = Plugins;
 			path = VirtualGuardian/Plugins;
@@ -600,6 +604,7 @@
 				A451DAD57CCB40A39969B964 /* CDVBackgroundGeoLocation.m in Sources */,
 				8A72F13F3E1149C0AC6EEA46 /* InAppPurchase.m in Sources */,
 				725E064E692445AAA530E4A0 /* SKProduct+LocalizedPrice.m in Sources */,
+				E2C1CF42EE19424599E47997 /* CDVProximity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -121,4 +121,7 @@
     <feature name="InAppPurchase">
         <param name="ios-package" value="InAppPurchase" />
     </feature>
+    <feature name="Proximity">
+        <param name="ios-package" value="CDVProximity" />
+    </feature>
 </widget>

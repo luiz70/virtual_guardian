@@ -158,5 +158,14 @@
         "variables": {
             "BILLING_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvDVbU+e3X6MrQmyWiNcFeLoffur4VELxgnJwrkb49AC7u9skn53lb4cI+0Hz5l536T89mceX8/d1+Lic3MOPLz92xPQ7vSVQovVQPeGKmvd4MbxbDXJOKuHV2Pe1YiZx57LOKYzL0USPZPssdbIqBjHg0rF+i8HtcW7tAig5ODAv2vASRwfampLV4QqkmcZg8ZL4XROf52Ozrh7yvjYWz+73+ctww/VWmwZ1rW0QdP04vAm8DtfHfJ8lGuHlxXYaaSpP3IvF6lHxp7O892x1epPkBVke7/BgsnJpt59WNOM/P4y4VmCK/LAdnFCjN7SOGjLDmMe//n5b/BgxQiQb9wIDAQAB"
         }
+    },
+    "org.awokenwell.proximity": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/awoken-well/cordova-plugin-proximity.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
