@@ -16,8 +16,8 @@ angular.module('starter')
 	$scope.pc=null;
 	$scope.localStream=null;
 	$scope.offer=null;
-	$scope.webAudio = new WebAudioExtended();
-	$scope.webAudio.loadSound('audio/Shamisen-C4.wav');
+	//$scope.webAudio = new WebAudioExtended();
+	//$scope.webAudio.loadSound('audio/Shamisen-C4.wav');
   
 	$rootScope.realizarLlamada=function(){
 		$timeout(function(){
@@ -45,7 +45,7 @@ angular.module('starter')
 			opacity: '1'
   		}, 200, "linear", function() {});
 		},300);
-		$scope.inicializaCall()
+		//$scope.inicializaCall()
 	}
 	$scope.inicializaCall=function(){
 		$scope.webAudio.start();

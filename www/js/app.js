@@ -20,7 +20,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     
-  
+  	$rootScope.Usuario=window.localStorage.getArray("Usuario");
 	//if(navigator.splashscreen)
 	//navigator.splashscreen.show();
 	if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -62,7 +62,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	document.addEventListener("resume", $rootScope.onResume);
 	
 	
-	if(!window.localStorage.getArray("Usuario")){
+	if($rootScope.Usuario==null){
 				$rootScope.Usuario=null;
 				$location.path('/login');
 				
