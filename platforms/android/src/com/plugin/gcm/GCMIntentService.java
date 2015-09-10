@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,9 +32,13 @@ import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.NotificationCompat.WearableExtender;
@@ -54,6 +61,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	private static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
 	private static final String GROUP_KEY_EMAILS = "group_key_emails";
 	private String latitute;
+	private boolean Llamada=false;
 	  private String longitude;
 	  private String Idioma;
 	  private LocationManager locationManager;
@@ -72,7 +80,15 @@ public class GCMIntentService extends GCMBaseIntentService {
 		notificationManager.cancelAll();
 		return temp;
 	}
-	
+	public static boolean elimina(int v){
+		//if(Notificaciones.size()>0){
+		for(int i=0;i<Notificaciones.size();i++)
+			if(Notificaciones.get(i).getString("IdNotificacion").equalsIgnoreCase(""+v)){
+				Notificaciones.remove(i);
+				return true;
+			}
+		return false;
+	}
 	@Override
 	public void onRegistered(Context context, String regId) {
 
@@ -106,9 +122,11 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 	@Override
 	protected void onMessage(Context context, Intent intent) {
-		if(isRegistred(context)){
+		
+			if(isRegistred(context)){
 		Idioma=Locale.getDefault().getDisplayLanguage().toLowerCase();
 		Bundle extras = intent.getExtras();
+		if(!existeId(extras))
 		if (extras != null)
 		{
             if (PushPlugin.isInForeground()) {
@@ -121,7 +139,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 			}
             if (extras.getString("Subtitulo") != null && extras.getString("Subtitulo").length() != 0) {
         		//ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(this, "notificaciones", MODE_PRIVATE);
-
+            	
             	switch(Integer.parseInt(extras.getString("Tipo"))){
             		case 1://Evento normal
             			int distancia=pingGps(extras.getString("Latitud"),extras.getString("Longitud"));
@@ -192,6 +210,10 @@ public class GCMIntentService extends GCMBaseIntentService {
                 	    //complexPreferences.commit();
         				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
                 	break;
+            		case 10://llamada
+            			Notificaciones.add(extras);
+            			if(!extras.getBoolean("foreground"))createNotificationLlamada(context, extras);
+            		break;
             	}
             }
                 
@@ -205,6 +227,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	
 	public void createNotificationNormal(Context context, Bundle extras)
 	{ 
+		
 		String appName = getAppName(this);
 		Intent notificationIntent = new Intent(this, PushHandlerActivity.class);
 		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -227,10 +250,14 @@ public class GCMIntentService extends GCMBaseIntentService {
 		
 		// Issue the notification
 		notificationManager = NotificationManagerCompat.from(this);
-		Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notification);
+		Bitmap largeIcon;
+		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
+			largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
+		else largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notification);
 		Notification summaryNotification;
 		
 		//create de group of notif
+		Log.d("nots",""+cuentaNot(extras.getString("Tipo")));
 		if(cuentaNot(extras.getString("Tipo"))>1){
 			NotificationCompat.InboxStyle estilo= new NotificationCompat.InboxStyle();
 		
@@ -294,7 +321,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 						.build();
 		}
 		
-		notificationManager.cancel(Integer.parseInt(extras.getString("Tipo")));
+		//notificationManager.cancel(Integer.parseInt(extras.getString("Tipo")));
 		notificationManager.notify(Integer.parseInt(extras.getString("Tipo")), summaryNotification);
 		
 	}
@@ -374,7 +401,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		        .extend(wearableExtender)
 		        .setSound(Uri.parse("android.resource://"+ context.getPackageName() + "/" + R.raw.audio))
 		        .build();
-		notificationManager.cancel(Integer.parseInt(extras.getString("tipo")));
+		//notificationManager.cancel(Integer.parseInt(extras.getString("tipo")));
 		notificationManager.notify(Integer.parseInt(extras.getString("tipo")), summaryNotification);
 		
 	}
@@ -490,7 +517,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 						.build();
 		}
 		
-		notificationManager.cancel(Integer.parseInt(extras.getString("Tipo")));
+		//notificationManager.cancel(Integer.parseInt(extras.getString("Tipo")));
 		notificationManager.notify(Integer.parseInt(extras.getString("Tipo")), summaryNotification);
 		
 	}
@@ -545,10 +572,116 @@ public class GCMIntentService extends GCMBaseIntentService {
 						.build();
 		
 		
-		notificationManager.cancel(5);
+		//notificationManager.cancel(5);
 		notificationManager.notify(5, summaryNotification);
 		
 	}
+	public void createNotificationLlamada(Context context, Bundle extras)
+	{ 
+		String appName = getAppName(this);
+		Intent notificationIntent = new Intent(this, PushHandlerActivity.class);
+		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		notificationIntent.putExtra("pushBundle", extras);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		
+		Intent dimissIntent = new Intent(context, NotificationActivity.class);
+	    // This flag must be set on activities started from a notification.
+		dimissIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS); 
+		dimissIntent.putExtra("pushBundle", extras);
+	    // Return a pending intent to pass to the notification manager.
+	    PendingIntent dimiss= PendingIntent.getActivity(context,0, dimissIntent,PendingIntent.FLAG_NO_CREATE);
+////////////////////////alarma
+	    AlarmManager manager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);   
+        manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 90000, dimiss);  
+	    ///////////////////////////
+	
+		//DEFAULTS DE LA NOTIFICACION
+		int defaults = Notification.DEFAULT_ALL;
+		if (extras.getString("defaults") != null) {
+			try {
+				defaults = Integer.parseInt(extras.getString("defaults"));
+			} catch (NumberFormatException e) {}
+		}
+		NotificationCompat.Action colgar =
+		        new NotificationCompat.Action.Builder(R.drawable.cancel,
+		                "Rechazar", dimiss)
+		                //.addRemoteInput(remoteInput)
+		                .build();
+		NotificationCompat.Action contestar =
+		        new NotificationCompat.Action.Builder(R.drawable.phone,
+		                "Responder", contentIntent)
+		                //.addRemoteInput(remoteInput)
+		                .build();
+		List<NotificationCompat.Action> acciones=new ArrayList<NotificationCompat.Action> ();
+		acciones.add(colgar);
+		acciones.add(contestar);
+		//PROPIEDADES WEAR
+		Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.ic_background);
+		NotificationCompat.WearableExtender wearableExtender =
+		        new NotificationCompat.WearableExtender()
+		        .setBackground(background);
+		
+		// Issue the notification
+		String correo=extras.getString("Correo").toLowerCase();
+		correo=correo.substring(0, 1).toUpperCase()+correo.substring(1,correo.length());
+		notificationManager = NotificationManagerCompat.from(this);
+		Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
+		Notification summaryNotification;
+		//create de group of notif
+		
+			String ticker="Virtual Guardian Notification";
+			Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.audio);
+			long[] pattern = {800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800};
+			
+			AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+			 Uri ring = null;
+			switch (am.getRingerMode()) {
+			  case AudioManager.RINGER_MODE_SILENT:
+				  pattern=null;
+			    break;
+			  case AudioManager.RINGER_MODE_VIBRATE:
+				  
+			    break;
+			  case AudioManager.RINGER_MODE_NORMAL:
+				  ring=RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+			    break;
+			}
+			
+			if(Idioma.equalsIgnoreCase("español")){
+				ticker="Notificación Virtual Guardian";
+			}
+			summaryNotification =
+					new NotificationCompat.Builder(context)
+						.setSmallIcon(R.drawable.ic_call)
+						.setLargeIcon(largeIcon)
+						.setAutoCancel(true)
+						.setOngoing(true)
+						.setVibrate(pattern)
+						.setPriority(Notification.PRIORITY_MAX)
+						.setWhen(System.currentTimeMillis())
+						.setContentTitle(correo)
+						//.setTicker(ticker+"\n"+extras.getString("Titulo")+": "+extras.getString("Subtitulo"))
+						.setSound(ring)
+						.setLights(0xFFff0000, 500, 500)
+						.setContentText(extras.getString("Subtitulo"))
+						.setContentIntent(contentIntent)
+						.extend(wearableExtender)
+						.addAction(colgar)
+						.addAction(contestar)
+						.setCategory(Notification.CATEGORY_CALL)
+						.build();
+			
+		summaryNotification.audioAttributes= new AudioAttributes.Builder()
+        .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
+        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+        .build();
+		
+		
+		//notificationManager.cancel(5);
+		notificationManager.notify(10, summaryNotification);
+		
+	}
+	
 	public int pingCar(String lat,String lon,Bundle extras)
 	{ 
 		if(!lat.equals("") && !lon.equals("")){
@@ -647,10 +780,17 @@ public class GCMIntentService extends GCMBaseIntentService {
 		    // TODO Auto-generated catch block
 		}
 	}
+	private boolean existeId(Bundle extra){
+		boolean existe=false;
+		if(Notificaciones!=null)
+		for(int i=0;i<Notificaciones.size();i++)
+			if(Notificaciones.get(i).getString("IdNotificacion").equalsIgnoreCase(extra.getString("IdNotificacion")))return true;
+		return existe;
+	}
 	private int cuentaNot(String tipo){
 		int cont=0;
-		//for(int i=0;i<Notificaciones.size();i++)
-			//if(Notificaciones.get(i).getString("Tipo").equalsIgnoreCase(tipo))cont++;
+		for(int i=0;i<Notificaciones.size();i++)
+			if(Notificaciones.get(i).getString("Tipo").equalsIgnoreCase(tipo))cont++;
 		return cont;
 	}
 	private static String getAppName(Context context)

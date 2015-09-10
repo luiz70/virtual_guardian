@@ -72,7 +72,7 @@ angular.module('starter')
 		}
 	}
 	$scope.cuelgaCall=function(){
-		//$scope.proximitysensorWatchStop();
+		$scope.proximitysensorWatchStop();
 		$interval.cancel($scope.timer);
 		$scope.timer=null;
 		$scope.tiempoLlamada=0;
@@ -90,7 +90,7 @@ $scope.proximitysensorWatchStart= function(_scope, on_approch_callback) {
 		
 		$scope.intevalo=$interval(function(){
 			navigator.proximity.getProximityState($scope.successProx);
-		},3000);
+		},1000);
 		// Start watch timer to get proximity sensor value
     	/*var frequency = 100;
     	$scope.proximitysensor.id = window.setInterval(function() {

@@ -6,7 +6,19 @@ angular.module('starter')
 	$scope.tiempoLlamada=0;
 	$scope.timer=null;
 	$scope.roll=0;
-	
+	$scope.constraints = {
+    audio: true,
+    video: false
+  };
+  	$scope.audioTracks;
+	$scope.filteredStream
+	$scope.servers = null;
+	$scope.pc=null;
+	$scope.localStream=null;
+	$scope.offer=null;
+	$scope.webAudio = new WebAudioExtended();
+	$scope.webAudio.loadSound('audio/Shamisen-C4.wav');
+  
 	$rootScope.realizarLlamada=function(){
 		$timeout(function(){
 			navigator.proximity.enableSensor();
@@ -33,12 +45,90 @@ angular.module('starter')
 			opacity: '1'
   		}, 200, "linear", function() {});
 		},300);
+		$scope.inicializaCall()
+	}
+	$scope.inicializaCall=function(){
+		$scope.webAudio.start();
+  		navigator.mediaDevices.getUserMedia($scope.constraints)
+  		.then($scope.getToken)
+  		.catch($scope.getTokenFail);
+	}
+
+	$scope.getToken=function(stream) {
+		
+  		//renderLocallyCheckbox.disabled = false;
+  		$scope.audioTracks = stream.getAudioTracks();
+  		if ($scope.audioTracks.length === 1) {
+    		$scope.filteredStream = $scope.webAudio.applyFilter(stream);
+			$scope.pc = new webkitRTCPeerConnection($scope.servers); 
+    		//$scope.pc.onicecandidate = $scope.conectionDone;
+    		//pc2 = new webkitRTCPeerConnection(servers); // jscs:ignore requireCapitalizedConstructors
+    
+    //pc2.onicecandidate = iceCallback2;
+    //pc2.onaddstream = gotRemoteStream;
+			$scope.pc.addStream($scope.filteredStream);
+    		$scope.pc.createOffer($scope.tokenOwned);
+			stream.onended = function() {
+      		//encurso
+    		};
+			$scope.localStream = stream;
+  		} else {
+    		//invalid 
+    		stream.stop();
+  		}
+	}
+
+	$scope.getTokenFail=function(error) {
+  		//error
+		console.log(error);
+	}
+	$scope.tokenOwned=function(desc) {
+  		$scope.offer = new RTCSessionDescription({
+    		type: 'offer',
+    		sdp: $scope.forceOpus(desc.sdp)
+  		});
+	 	$scope.pc.setLocalDescription($scope.offer);
+		//console.log($rootScope.PersonaLlamada);
+		$scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,$scope.offer,function(data){
+		//enviado y en espera	
+		})
+	}
+$scope.conectionDone=function(event) {
+  /*if (res && event.candidate) {
+    pc2.addIceCandidate(new RTCIceCandidate(event.candidate),
+        onAddIceCandidateSuccess, onAddIceCandidateError);
+  }*/
+  
+}
+$scope.forceOpus=function (sdp) {
+  // Remove all other codecs (not the video codecs though).
+  sdp = sdp.replace(/m=audio (\d+) RTP\/SAVPF.*\r\n/g,
+      'm=audio $1 RTP/SAVPF 111\r\n');
+  sdp = sdp.replace(/a=rtpmap:(?!111)\d{1,3} (?!VP8|red|ulpfec).*\r\n/g, '');
+  return sdp;
+}
+	$scope.sendNotification=function(destino,origen,operacion,token,funcion){
+		
+		$http.post("https://www.virtual-guardian.com/api/llamar",{
+				IdDestino:destino,
+				IdOrigen:origen,
+				Operacion:operacion,
+				Token:token
+				})
+		.success(function(data){
+			console.log(data);
+			funcion(data);
+		})
+		.error(function(error){
+		console.log(error);
+		})
 	}
 	$rootScope.recibeLlamada=function(){
 		$scope.roll=2;
 	}
-	if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
-	else $rootScope.recibeLlamada();
+	//$timeout(function(){
+	
+	//},200);
 	$scope.contestarLlamada=function(){
 		$scope.enCurso=true;
 		$("#boton_colgar").animate({
@@ -72,7 +162,7 @@ angular.module('starter')
 		}
 	}
 	$scope.cuelgaCall=function(){
-		//$scope.proximitysensorWatchStop();
+		$scope.proximitysensorWatchStop();
 		$interval.cancel($scope.timer);
 		$scope.timer=null;
 		$scope.tiempoLlamada=0;
@@ -90,7 +180,7 @@ $scope.proximitysensorWatchStart= function(_scope, on_approch_callback) {
 		
 		$scope.intevalo=$interval(function(){
 			navigator.proximity.getProximityState($scope.successProx);
-		},3000);
+		},1000);
 		// Start watch timer to get proximity sensor value
     	/*var frequency = 100;
     	$scope.proximitysensor.id = window.setInterval(function() {
@@ -121,7 +211,8 @@ $scope.proximitysensorWatchStop = function(_scope) {
 };
 
 
-
+if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
+	else $scope.contestarLlamada();
 // .... after testing
 //proximitysensorWatchStop(proximitysensor);
 })

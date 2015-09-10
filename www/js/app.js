@@ -161,8 +161,9 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
 			}else if(notification["Notif"+i].Tipo=="10"){
 				$rootScope.PersonaLlamada={
-					Correo:"sistemas@keros.mx",
-					Llamando:false
+					Correo:notification["Notif"+i].Correo,
+					Llamando:false,
+					notificacion:notification["Notif"+i]
 				}
 				$location.path("/llamada");
 			}
