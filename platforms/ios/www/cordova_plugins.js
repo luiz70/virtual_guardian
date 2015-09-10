@@ -175,6 +175,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/com.dooble.phonertc/www/phonertc.js",
+        "id": "com.dooble.phonertc.PhoneRTC",
+        "clobbers": [
+            "cordova.plugins.phonertc"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "id": "cordova-plugin-dialogs.notification",
         "merges": [
@@ -204,6 +211,7 @@ module.exports.metadata =
     "org.transistorsoft.cordova.background-geolocation": "0.3.6",
     "cc.fovea.cordova.purchase": "3.11.0",
     "org.awokenwell.proximity": "0.2.1",
+    "com.dooble.phonertc": "2.0.1",
     "cordova-plugin-dialogs": "1.1.1"
 }
 // BOTTOM OF METADATA

@@ -36,6 +36,10 @@
     {
       "locator": "https://github.com/awoken-well/cordova-plugin-proximity.git",
       "id": "org.awokenwell.proximity"
+    },
+    {
+      "locator": "https://github.com/alongubkin/phonertc.git",
+      "id": "com.dooble.phonertc"
     }
   ],
   "cordovaPlatforms": [

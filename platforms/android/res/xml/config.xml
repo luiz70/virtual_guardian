@@ -119,4 +119,7 @@
     <feature name="Proximity">
         <param name="android-package" value="org.awokenwell.proximity.ProximitySensorListener" />
     </feature>
+    <feature name="PhoneRTCPlugin">
+        <param name="android-package" value="com.dooble.phonertc.PhoneRTCPlugin" />
+    </feature>
 </widget>

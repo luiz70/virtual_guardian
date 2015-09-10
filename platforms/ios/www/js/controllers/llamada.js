@@ -6,7 +6,21 @@ angular.module('starter')
 	$scope.tiempoLlamada=0;
 	$scope.timer=null;
 	$scope.roll=0;
-	
+            /*var config = {
+            isInitiator: true,
+            turn: {
+            host: 'turn:turn.example.com:3478',
+            username: 'test',
+            password: '123'
+            },
+            streams: {
+            audio: true,
+            video: false
+            }
+            }
+            */
+            //var session = new phonertc.Session(config);
+            
 	$rootScope.realizarLlamada=function(){
 		$timeout(function(){
 			navigator.proximity.enableSensor();

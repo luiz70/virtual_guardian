@@ -124,4 +124,7 @@
     <feature name="Proximity">
         <param name="ios-package" value="CDVProximity" />
     </feature>
+    <feature name="PhoneRTCPlugin">
+        <param name="ios-package" value="PhoneRTCPlugin" />
+    </feature>
 </widget>

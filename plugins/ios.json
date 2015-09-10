@@ -91,6 +91,10 @@
                         {
                             "xml": "<feature name=\"Proximity\"><param name=\"ios-package\" value=\"CDVProximity\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PhoneRTCPlugin\"><param name=\"ios-package\" value=\"PhoneRTCPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -100,7 +104,7 @@
                     "CoreLocation.framework": [
                         {
                             "xml": false,
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "SystemConfiguration.framework": [
@@ -112,28 +116,96 @@
                     "CoreGraphics.framework": [
                         {
                             "xml": false,
-                            "count": 2
+                            "count": 3
                         }
                     ],
                     "AudioToolbox.framework": [
                         {
                             "xml": true,
                             "count": 3
+                        },
+                        {
+                            "xml": false,
+                            "count": 1
                         }
                     ],
                     "QuartzCore.framework": [
                         {
                             "xml": false,
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "AVFoundation.framework": [
                         {
                             "xml": true,
                             "count": 1
+                        },
+                        {
+                            "xml": false,
+                            "count": 1
                         }
                     ],
                     "StoreKit.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "libc++.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "libstdc++.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "libsqlite3.0.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "OpenGLES.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "CoreVideo.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "CoreMedia.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "CoreAudio.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "AssetsLibrary.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "MobileCoreServices.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "GLKit.framework": [
                         {
                             "xml": false,
                             "count": 1
@@ -221,6 +293,9 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "org.awokenwell.proximity": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "com.dooble.phonertc": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },
