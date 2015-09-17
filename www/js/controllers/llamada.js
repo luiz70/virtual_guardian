@@ -1,27 +1,36 @@
 angular.module('starter')
-.controller("llamada",function($scope,$http,$rootScope,CordovaNetwork,$location,$interval,$timeout){
+.controller("llamada",function($scope,$http,$rootScope,CordovaNetwork,$location,$interval,$timeout,signaling,ContactsService){
 	$scope.enCurso=false;
 	$scope.silencio=false;
 	$scope.altavoz=false;
 	$scope.tiempoLlamada=0;
 	$scope.timer=null;
 	$scope.roll=0;
+	$scope.SocketOn=false;
+	$scope.MensajeLlamada="";
+	$scope.EstadoLlamada="";
 	$scope.constraints = {
     audio: true,
     video: false
   };
-  	$scope.audioTracks;
-	$scope.filteredStream
-	$scope.servers = null;
-	$scope.pc=null;
-	$scope.localStream=null;
-	$scope.offer=null;
-	//$scope.webAudio = new WebAudioExtended();
-	//$scope.webAudio.loadSound('audio/Shamisen-C4.wav');
+  	$scope.configCall = {
+    isInitiator: false,
+    turn: {
+        host: 'turn:45.40.137.37:5349',
+        username: 'virtualg',
+        password: '4138596'
+    },
+    streams: {
+        audio: true,
+        video: false
+    }
+}
   
 	$rootScope.realizarLlamada=function(){
+		$scope.MensajeLlamada=$rootScope.idioma.llamada[2];
+		$scope.EstadoLlamada=$rootScope.idioma.llamada[10];
 		$timeout(function(){
-			navigator.proximity.enableSensor();
+			if( navigator.proximity)navigator.proximity.enableSensor();
 		$scope.proximitysensorWatchStart($scope.proximitysensor);
 		},500)
 		$scope.roll=1;
@@ -45,68 +54,65 @@ angular.module('starter')
 			opacity: '1'
   		}, 200, "linear", function() {});
 		},300);
-		//$scope.inicializaCall()
+		$scope.iniciaCall();
 	}
-	$scope.inicializaCall=function(){
-		$scope.webAudio.start();
-  		navigator.mediaDevices.getUserMedia($scope.constraints)
-  		.then($scope.getToken)
-  		.catch($scope.getTokenFail);
+	$scope.iniciaCall=function(){
+		$scope.configCall.isInitiator=true;
+	$scope.loginSocket();
+	//else $scope.session = new phonertc.Session($scope.configCall);
 	}
+ 	$scope.loginSocket = function () {
+      //$scope.loading = true;
+      signaling.emit('login', $rootScope.Usuario.Id);
+	  
+    };
 
-	$scope.getToken=function(stream) {
+    signaling.on('login_error', function (message) {
+      	//$scope.loading = false;
+      	$scope.MensajeLlamada=$rootScope.idioma.llamada[5];
+	  	$timeout(function(){
+		  	$rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[7]+$rootScope.PersonaLlamada.Correo,function(){
+		  		$scope.cuelgaCall()
+	  		})
+		},3000);
+    });
+
+	signaling.on('disconnect', function (id) {
+		if($rootScope.SocketOn){
+			$rootScope.SocketOn=false;
+			$scope.MensajeLlamada=$rootScope.idioma.llamada[8];
+			$timeout(function(){
+		  	$rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[9],function(){
+		  		$scope.cuelgaCall()
+	  		})
+			},2000);
+		}
 		
-  		//renderLocallyCheckbox.disabled = false;
-  		$scope.audioTracks = stream.getAudioTracks();
-  		if ($scope.audioTracks.length === 1) {
-    		$scope.filteredStream = $scope.webAudio.applyFilter(stream);
-			$scope.pc = new webkitRTCPeerConnection($scope.servers); 
-    		//$scope.pc.onicecandidate = $scope.conectionDone;
-    		//pc2 = new webkitRTCPeerConnection(servers); // jscs:ignore requireCapitalizedConstructors
-    
-    //pc2.onicecandidate = iceCallback2;
-    //pc2.onaddstream = gotRemoteStream;
-			$scope.pc.addStream($scope.filteredStream);
-    		$scope.pc.createOffer($scope.tokenOwned);
-			stream.onended = function() {
-      		//encurso
-    		};
-			$scope.localStream = stream;
-  		} else {
-    		//invalid 
-    		stream.stop();
-  		}
-	}
-
-	$scope.getTokenFail=function(error) {
-  		//error
-		console.log(error);
-	}
-	$scope.tokenOwned=function(desc) {
-  		$scope.offer = new RTCSessionDescription({
-    		type: 'offer',
-    		sdp: $scope.forceOpus(desc.sdp)
-  		});
-	 	$scope.pc.setLocalDescription($scope.offer);
-		//console.log($rootScope.PersonaLlamada);
-		$scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,$scope.offer,function(data){
-		//enviado y en espera	
-		})
-	}
-$scope.conectionDone=function(event) {
-  /*if (res && event.candidate) {
-    pc2.addIceCandidate(new RTCIceCandidate(event.candidate),
-        onAddIceCandidateSuccess, onAddIceCandidateError);
-  }*/
-  
-}
-$scope.forceOpus=function (sdp) {
-  // Remove all other codecs (not the video codecs though).
-  sdp = sdp.replace(/m=audio (\d+) RTP\/SAVPF.*\r\n/g,
-      'm=audio $1 RTP/SAVPF 111\r\n');
-  sdp = sdp.replace(/a=rtpmap:(?!111)\d{1,3} (?!VP8|red|ulpfec).*\r\n/g, '');
-  return sdp;
-}
+	})
+	 signaling.on('messageReceived', function (user, message) {
+		 if(message=='conectado'){
+			 
+		 }
+		
+	 })
+    signaling.on('login_successful', function (users) {
+		
+      //ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
+	  $rootScope.SocketOn=true;
+	  if($scope.configCall.isInitiator){
+		$scope.EstadoLlamada=$rootScope.idioma.llamada[3];
+		  $scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,null,function(){
+		//esperando respuesta 
+		//empieza timer
+		//da linea 
+	  })
+	  }else {
+	  	//responde
+		//$scope.iniciaTimer();
+		signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
+	  }
+	  
+    });
 	$scope.sendNotification=function(destino,origen,operacion,token,funcion){
 		
 		$http.post("https://www.virtual-guardian.com/api/llamar",{
@@ -123,13 +129,18 @@ $scope.forceOpus=function (sdp) {
 		console.log(error);
 		})
 	}
-	$rootScope.recibeLlamada=function(){
-		$scope.roll=2;
-	}
-	//$timeout(function(){
-	
-	//},200);
+  
+	/*signaling.on('login_successful', function (users) {
+      ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
+      $rootScope.SocketUsers=users;
+	  $rootScope.SocketOn=true;
+	  $scope.configCall.isInitiator=true;
+	  //$scope.session = new phonertc.Session($scope.configCall);
+    });*/
+
 	$scope.contestarLlamada=function(){
+		$scope.MensajeLlamada=$rootScope.idioma.llamada[1];
+		$scope.EstadoLlamada=$rootScope.idioma.llamada[10];
 		$scope.enCurso=true;
 		$("#boton_colgar").animate({
     		width: '100vw',
@@ -145,11 +156,16 @@ $scope.forceOpus=function (sdp) {
 			height: '10vh',
 			opacity: '1'
   		}, 200, "linear", function() {});
-		$scope.iniciaTimer();
+		
+		$scope.configCall.isInitiator=false;
+		$scope.loginSocket();
 	}
 	$scope.iniciaTimer=function(){
 		$scope.timer=$interval(function() {
-           $scope.tiempoLlamada++;
+          $scope.$apply(function () {
+            $scope.tiempoLlamada++;
+       	 });
+		   
           }, 1000);
 	}
 	$scope.activaFuncion=function(val){
@@ -162,6 +178,8 @@ $scope.forceOpus=function (sdp) {
 		}
 	}
 	$scope.cuelgaCall=function(){
+		$rootScope.SocketOn=false;
+		signaling.disconnect()
 		$scope.proximitysensorWatchStop();
 		$interval.cancel($scope.timer);
 		$scope.timer=null;
@@ -176,7 +194,7 @@ $scope.forceOpus=function (sdp) {
 	$scope.proximitysensor = {};
 	$scope.intevalo=null
 $scope.proximitysensorWatchStart= function(_scope, on_approch_callback) {
-    if(navigator.proximity != null){
+    if(navigator.proximity && navigator.proximity != null){
 		
 		$scope.intevalo=$interval(function(){
 			navigator.proximity.getProximityState($scope.successProx);

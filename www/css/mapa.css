@@ -93,10 +93,11 @@ margin-top: 0px;
     background: none;
     border: none;
     padding: 0px;
-    font-size: 23px;
+    font-size: 21px;
     line-height: 0px;
     margin-top: 0.5vh;
     margin-left: 10px;
+    font-weight: 100;
 }
 .inicio_pie_mitad{
 	width: 100vw;
@@ -218,10 +219,10 @@ font-size: 3vh ;
     position: absolute;
     width: 98vw;
     left: 1vw;
-  	top: 9vh;
-  border: solid 1px #9F9F9F;
-  border-radius: 2px;
-   background-color: rgba(255, 255, 255, 0.93);
+    top: 11vh;
+    border: solid 1px #9F9F9F;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.93);
 }
 .buscadorDir{
     position: absolute;
@@ -236,7 +237,7 @@ font-size: 3vh ;
 .searchLista{
 position: absolute !important;
   
-top: 15vh !important;
+top: 17vh !important;
   left: 0px !important;
   right: 0px !important;
   

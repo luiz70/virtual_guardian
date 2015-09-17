@@ -1,5 +1,5 @@
 angular.module('starter')
-.controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory){
+.controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory,signaling,ContactsService){
 	
 	$rootScope.onTab=function (id){
 		if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){

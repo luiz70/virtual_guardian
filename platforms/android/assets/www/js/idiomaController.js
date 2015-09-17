@@ -108,7 +108,8 @@ angular.module('starter')
 					46:" ya esta vinculado en tu suscripción.",
 					47:"¿Deseas eliminar de tu suscripción a ",
 					48:"Este cambio se vera reflejado en 30 días.",
-					49:"Esta cuenta ya ha sido eliminada anteriormente, es necesario esperar para verlo reflejado."
+					49:"Esta cuenta ya ha sido eliminada anteriormente, es necesario esperar para verlo reflejado.",
+					
 					
 					
 					},

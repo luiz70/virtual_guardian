@@ -12,9 +12,12 @@
     <div  style="float:left; color:#C1C1C1; font-size:2.5vh; margin-left:3px;display: block;margin-right: 10px;line-height: 4vh;">{{idioma.cuenta[1]}}</div>
     <div  style="font-size: 3vh;color: #E5E5E5;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;position: relative;line-height: 3.5vh;    text-align: right;">{{Usuario.Correo.substr(0,1).toUpperCase()+Usuario.Correo.substr(1)}}</div>
     </div>
-    <div style="float:left; width:100%; padding-top:1vh;    overflow: hidden;">
+    <div style="float:left; width:100%; padding-top:1vh;    overflow: hidden; padding-bottom:1vh">
     <div  style="float:left; color:#C1C1C1; font-size:2.5vh; margin-left:3px;display: block;margin-right: 10px;line-height: 4vh;">{{idioma.cuenta[2]}}</div>
     <div  style="font-size: 3vh;color: #E5E5E5;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;position: relative; text-transform:capitalize;line-height: 3.5vh;    text-align: right;">{{Usuario.Suscripcion.toLowerCase()}}</div>
+    </div>
+    <div style="float:left; width:100%; padding-top:1vh;    overflow: hidden;border-top: solid 1px #464646;">
+    <button style="width: 100%;border: none;border-radius: 4px;padding: 1vh; background-color: #ce932f" ng-click="cambiarContra()">{{idioma.cuenta[3]}}</button>
     </div>
     </div>
     <div class="ng-hide" style="height:auto; background: #333;border-radius: 3px;padding: 2vh; float:left; width:100%;margin-top:2vh;position: relative;" ng-show="Usuario.IdSuscripcion==1 && Invitaciones.length>0" >

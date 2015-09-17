@@ -9,7 +9,7 @@
         <div style="color:#fff;  width: 100%; text-align: center;">{{idioma.general[4]}}</div>
     </div>
 </div>
-<div id="inicio_pie" class="bar bar-footer bar-dark" drag-content="true" ng-hide="sinMapa" on-touch="showBarra()" style="height: 75px !important;">
+<div id="inicio_pie" class="bar bar-footer bar-dark" drag-content="true" ng-hide="sinMapa" on-touch="showBarra()" style="height: 75px !important;-webkit-box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20);-moz-box-shadow: 0px -5px 6px -2px rgba(0,0,0,0.20); box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20)">
 <div id="tapa_pie" class="tapa ng-hide" ng-show="recorrido"></div>
 
     <div class="inicio_pie_mitad" style="height:30px;z-index:2;" >
@@ -23,10 +23,10 @@
     <label class="checkbox" style="z-index:2">
        <input type="checkbox" ng-model="switchMap.enable" >
      </label>
-     <div class="ng-hide" ng-show="!switchMap.enable" style="position:absolute;top:0px;left:0px;width:100%;height:75px;background:rgba(55, 55, 55, 0.84);;z-index:1"></div>
+     <div class="ng-hide" ng-show="!switchMap.enable" style="position:absolute;top:0px;left:0px;width:100%;height:75px;background:rgba(55, 55, 55, 0.84);z-index:1;    font-weight: 100;"></div>
     <!--ion-toggle toggle-class="toggle-energized" ng-model="swit">Airplane Mode</ion-toggle-->
     <!--ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm"  ng-change="switchRadio()"></ion-toggle-->
-    <button id="inicio_rango_label">{{idioma.menu[12]}} <span id="inicio_rango_numero" style="font-size: 23px !important;">{{radio | distance}}</span></button>
+    <button id="inicio_rango_label" style="font-weight: 100;">{{idioma.menu[12]}} <span id="inicio_rango_numero" style="font-size: 21px !important;">{{radio | distance}}</span></button>
    	</div> 
     <div class="inicio_pie_mitad" style="z-index:1">
     <!--div class="range">
@@ -35,10 +35,10 @@
  <i class="icon ion-volume-high"></i>
 </div-->
           <div class="item range range-energized inicio_barra_rango" on-touch="startRange()" on-release="loadEventos()" >
-            <i class="icon ion-android-remove" style="color:#FFFFFF; font-size:2vh"></i>
+            <i class="icon ion-android-remove" style="color:#FFFFFF; font-size:3vh"></i>
             <input id="inicio_barra_rango" type="range" name="volume" min="10" max="16000" step="1" style="height: 100%;
   margin: 0px;" ng-model="radio"  ng-change="updateBar(radio)">
-            <i class="icon ion-android-add" style="color:#FFFFFF; font-size:2vh"></i>
+            <i class="icon ion-android-add" style="color:#FFFFFF; font-size:3vh"></i>
             
           </div>
 </div>  
@@ -67,15 +67,15 @@
 </div>
 <button class="btn_mapa_flotante" ng-click="buscaEnMap()" ng-hide="sinMapa || recorrido">
 	<!--i class="icon ion-android-locate" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
-    <img src="img/iconos/buscar.png" width="100%" ></div>
+    <img src="img/blank.png" style="background-color: #191919;-webkit-mask-image: url('img/iconos/buscar.png');-webkit-mask-size: cover;    width: 100%;">
 </button>
-<button class="btn_mapa_flotante btn_mapa_flotante2" style="top:15vh" ng-click="revisaPos()" ng-hide="sinMapa">
+<button class="btn_mapa_flotante btn_mapa_flotante2" style="top:18vh" ng-click="revisaPos()" ng-hide="sinMapa">
 	<!--i class="icon ion-android-locate" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
-    <img src="img/iconos/position.png" width="100%" ></div>
+    <img src="img/blank.png"  style="background-color: #191919;-webkit-mask-image: url('img/iconos/position.png');-webkit-mask-size: cover;    width: 100%;">
 </button>
-<button class="btn_mapa_flotante btn_mapa_flotante3" style="top:21vh"   ng-click="showEventos(1)" ng-hide="sinMapa">
+<button class="btn_mapa_flotante btn_mapa_flotante3" style="top:25vh"   ng-click="showEventos(1)" ng-hide="sinMapa">
 	<!--i class="icon ion-android-sync" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
-    <img src="img/iconos/refresh.png" width="100%"></div>
+    <img src="img/blank.png"  style="background-color: #191919;-webkit-mask-image: url('img/iconos/refresh.png');-webkit-mask-size: cover;    width: 100%;">
 </button>
 </ion-pan>
 <div class="infobox-wrapper">

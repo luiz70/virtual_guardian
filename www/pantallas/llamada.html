@@ -2,7 +2,7 @@
 <ion-pane style="background:url(img/background.jpg); background-position:center; background-size:cover;" ng-controller="llamada" ng-cloak>
 	<div style="width:100%;height:auto;float:left;text-align: left;margin-top: 1vh;">
     	<img src="img/logo_blanco_keros.png" style="height: 8vh; float: left; margin-left: 2vh;">
-        <button style="float:right;margin-right:2vh;background:none; border:none; outline:none;height: 8vh;font-size: 3vh;color: #d08d33; text-transform:capitalize">{{roll==1?idioma.llamada[2]:idioma.llamada[1]}}</button>
+        <button style="float:right;margin-right:2vh;background:none; border:none; outline:none;height: 8vh;font-size: 3vh;color: #d08d33; text-transform:uppercase">{{MensajeLlamada}}</button>
     </div>
     <div style="width: 100%;height: auto;float: left;text-align: left;padding: 3vh;line-height: 6vh !important;font-size: 4vh !important;color: #DADADA;background-color: rgba(255, 255, 255, 0.05);padding-left: 8vh;padding-right: 5vw;text-overflow: ellipsis;overflow: hidden;word-wrap: initial; margin-top:1vh">
     <i class="icon ion-android-call" style="font-size: 4vh !important;margin-right: 1vh;color: #d08d33;position: absolute;left: 4vh;"></i>{{PersonaLlamada.Correo}}

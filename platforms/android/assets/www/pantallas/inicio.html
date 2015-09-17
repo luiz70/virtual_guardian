@@ -6,12 +6,12 @@
     <img id="imgTip" ng-src={{tipImg}} style="  width: 80vw; position:absolute;top:0px;bottom:0px;left:0px;right:0px;margin:auto;">
     <div class="eliminar_persona ng-hide" style="top:3px; width:6vh;height:6vh" ng-click="cierraTipPop()" ng-show="TipPop"><img src="img/iconos/cancel.png" width="100%"></div>
     </div>
-    	<ion-header-bar align-title="left" class="bar-dark" >
+    	<ion-header-bar align-title="left" class="bar-dark" style="-webkit-box-shadow:0px 5px 6px -2px rgba(0,0,0,0.30);-moz-box-shadow: 0px 5px 6px -2px rgba(0,0,0,0.30); box-shadow:0px 5px 6px -2px rgba(0,0,0,0.30)" >
 			<div class="buttons" style="  width: 10vw;  max-width: 6vh;">
 				<button class="button button-icon icon ion-navicon especial" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" menu-toggle="left" ng-click="toggleLeftSideMenu()" ng-hide="recorrido"></button>
                 <button class="button button-icon icon ion-navicon especial ng-hide" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" ng-show="recorrido"></button>
 			</div>
-            <h1 class="title logo_barra" ng-click="logoInicio();"><img src="img/logo_blanco.png" height="100%" style="position:absolute;top:0px;bottom:0px"></h1>
+            <h1 class="title logo_barra" ng-click="logoInicio();"><img src="img/logo_blanco.png" height="90%" style="position:absolute;top:0px;bottom:0px;margin: auto;"></h1>
 			<div class="buttons tabs-contenedor" >
                 <ion-tabs class="tabs-dark tabs-icon-only" style="max-width: 30vh; right: 0px;">
                     <a id="tab1" class="tab-item" ng-click="onTab(1)" >

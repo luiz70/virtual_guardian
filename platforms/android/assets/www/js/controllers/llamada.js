@@ -1,15 +1,31 @@
 angular.module('starter')
-.controller("llamada",function($scope,$http,$rootScope,CordovaNetwork,$location,$interval,$timeout){
+.controller("llamada",function($scope,$http,$rootScope,CordovaNetwork,$location,$interval,$timeout,signaling,ContactsService){
 	$scope.enCurso=false;
 	$scope.silencio=false;
 	$scope.altavoz=false;
 	$scope.tiempoLlamada=0;
 	$scope.timer=null;
 	$scope.roll=0;
-	
+	$scope.constraints = {
+    audio: true,
+    video: false
+  };
+  	$scope.configCall = {
+    isInitiator: false,
+    turn: {
+        host: 'turn:45.40.137.37:5349',
+        username: 'virtualg',
+        password: '4138596'
+    },
+    streams: {
+        audio: true,
+        video: false
+    }
+}
+  
 	$rootScope.realizarLlamada=function(){
 		$timeout(function(){
-			navigator.proximity.enableSensor();
+			if( navigator.proximity)navigator.proximity.enableSensor();
 		$scope.proximitysensorWatchStart($scope.proximitysensor);
 		},500)
 		$scope.roll=1;
@@ -33,12 +49,21 @@ angular.module('starter')
 			opacity: '1'
   		}, 200, "linear", function() {});
 		},300);
+		$scope.iniciaCall();
 	}
-	$rootScope.recibeLlamada=function(){
-		$scope.roll=2;
+	$scope.iniciaCall=function(){
+		$scope.configCall.isInitiator=true;
+	if(!$rootScope.SocketOn) $rootScope.loginSocket();
+	//else $scope.session = new phonertc.Session($scope.configCall);
 	}
-	if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
-	else $rootScope.recibeLlamada();
+	signaling.on('login_successful', function (users) {
+      ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
+      $rootScope.SocketUsers=users;
+	  $rootScope.SocketOn=true;
+	  $scope.configCall.isInitiator=true;
+	  //$scope.session = new phonertc.Session($scope.configCall);
+    });
+
 	$scope.contestarLlamada=function(){
 		$scope.enCurso=true;
 		$("#boton_colgar").animate({
@@ -86,7 +111,7 @@ angular.module('starter')
 	$scope.proximitysensor = {};
 	$scope.intevalo=null
 $scope.proximitysensorWatchStart= function(_scope, on_approch_callback) {
-    if(navigator.proximity != null){
+    if(navigator.proximity && navigator.proximity != null){
 		
 		$scope.intevalo=$interval(function(){
 			navigator.proximity.getProximityState($scope.successProx);
@@ -121,7 +146,8 @@ $scope.proximitysensorWatchStop = function(_scope) {
 };
 
 
-
+if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
+	else $scope.contestarLlamada();
 // .... after testing
 //proximitysensorWatchStop(proximitysensor);
 })

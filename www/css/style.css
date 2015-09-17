@@ -6,16 +6,16 @@
 }
 .bar-dark{
 	overflow:hidden;
-	height: 8vh !important;
+	height: 10vh !important;
 	padding:0px !important;
 	border: none;
 }
 .logo_barra{
 	/* margin: auto !important; */
-	margin-top:0.5vh !important;
-	height:7vh !important;
+	margin-top: 1.5vh !important;
+	height: 7vh !important;
 	right: 50vw !important;
-	left: 4vh !important; 
+	left: 4vh !important;
 	position: absolute !important;
 	width: 18vh !important;
 }
@@ -24,11 +24,11 @@
 }
 .tabs-dark{
 	top: 0px!important;
-  height: 100%!important;
-  position: absolute!important;
-  right: 1vh!important;
-  width: 100%!important;
-  border:none !important;
+	height: 100%!important;
+	position: absolute!important;
+	right: 1vh!important;
+	width: 100%!important;
+	border:none !important;
 }
 .tab-nav{
 top: 0px!important;
@@ -36,25 +36,21 @@ top: 0px!important;
   border:none !important;
 }
 .tab-item{
-	padding:1vh;
+	padding: 1vh;
 	position:relative;
 	border:none !important;
 	vertical-align: middle;
 }
 .img-boton{
 	  position: absolute;
-  
-  
 	  width: 9vw;
-  
 	  left: 1vh;
 	  height: 9vw;
 	  max-height: 6vh;
 	  top: 0px;
-  
 	  max-width: 6vh;
 	  bottom: 0px;
-  margin: auto;
+	  margin: auto;
 	  vertical-align: initial;
 }
 .tabs-contenedor{
@@ -158,14 +154,19 @@ background: rgba(0, 0, 0, 0.8);
 }
 .btn_mapa_flotante{
 	  position: absolute;
-  width: 5vh;
-  height: 5vh;
-  top: 9vh;
-  right: 1vh;
-	  background: rgba(3,3,3,0.8);
-  border: none;
+	  width: 6vh;
+	  height: 6vh;
+	  top: 11vh;
+	  right: 1vh;
+	  background: #E2A133;
+	  border: none;
 	  margin: 0px;
-	  padding: 0px;
+	  padding: 0.8vh;
+	  border-radius: 100%;
+	  -webkit-box-shadow: -5px 5px 6px -2px rgba(0,0,0,0.2);
+	  -moz-box-shadow: -5px 5px 6px -2px rgba(0,0,0,0.2);
+	  box-shadow: -5px 5px 6px -2px rgba(0,0,0,0.2);
+	  opacity: 0.95;
 }
 .rnumero{
 	  width: 6vh;

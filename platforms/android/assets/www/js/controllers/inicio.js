@@ -1,6 +1,24 @@
 angular.module('starter')
-.controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory){
+.controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory,signaling,ContactsService){
+	$rootScope.SocketOn=false;
+	$rootScope.SocketUsers=[];
+ 	$rootScope.loginSocket = function () {
+      //$scope.loading = true;
+      signaling.emit('login', $rootScope.Usuario.Id);
+    };
+
+    signaling.on('login_error', function (message) {
+      //$scope.loading = false;
+      
+    });
+
+    signaling.on('login_successful', function (users) {
+      ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
+      $rootScope.SocketUsers=users;
+	  $rootScope.SocketOn=true;
+    });
 	
+   $rootScope.loginSocket();
 	$rootScope.onTab=function (id){
 		if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){
 		$rootScope.cargando=false;

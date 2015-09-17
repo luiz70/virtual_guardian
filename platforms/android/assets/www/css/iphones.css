@@ -73,14 +73,14 @@ span{
     width:90vw;
 }
 .btn_mapa_flotante{
-    width:6vh !important;
-    height:6vh !important;
+    width: 7vh !important;
+    height: 7vh !important;
 }
 .btn_mapa_flotante2{
-    top:16vh !important;
+    top: 19vh !important;
 }
 .btn_mapa_flotante3{
-    top:23vh !important;
+    top: 27vh !important;
 }
 .item-icon-right{
     padding-right:40px !important;
@@ -109,7 +109,7 @@ span{
     font-size: 3.5vh;
     height: 7vh;
 }
-#input_prompt{
+#input_prompt, .input_prompt{
     font-size: 18px !important;
     line-height: initial;
 }

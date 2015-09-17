@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var pushNotification ;
 
-angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
+angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io'])
 
 .run(function($ionicPlatform,$rootScope,$location, $cordovaPush, $ionicHistory,$ionicSlideBoxDelegate,$timeout,$cordovaAppVersion,$http){
 	var iosConfig = {
@@ -20,7 +20,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     
-  
+  	$rootScope.Usuario=window.localStorage.getArray("Usuario");
 	//if(navigator.splashscreen)
 	//navigator.splashscreen.show();
 	if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -62,7 +62,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 	document.addEventListener("resume", $rootScope.onResume);
 	
 	
-	if(!window.localStorage.getArray("Usuario")){
+	if($rootScope.Usuario==null){
 				$rootScope.Usuario=null;
 				$location.path('/login');
 				
@@ -161,8 +161,9 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap'])
 				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
 			}else if(notification["Notif"+i].Tipo=="10"){
 				$rootScope.PersonaLlamada={
-					Correo:"sistemas@keros.mx",
-					Llamando:false
+					Correo:notification["Notif"+i].Correo,
+					Llamando:false,
+					notificacion:notification["Notif"+i]
 				}
 				$location.path("/llamada");
 			}
@@ -229,6 +230,17 @@ $rootScope.unregister=function(){
 	//guarda estado		
 	}
 })
+ .run(function (signaling) {
+    signaling.on('messageReceived', function (name, message) {
+      switch (message.type) {
+        case 'call':
+          if ($state.current.name === 'app.call') { return; }
+          
+          //ESTAN LLAMANDO$state.go('app.call', { isCalling: false, contactName: name });
+          break;
+      }
+    });
+ })
 .controller("home",function($rootScope,$location){
 	/*if(!window.localStorage.getArray("Usuario")){
 				$rootScope.Usuario=null;
@@ -361,6 +373,45 @@ return function (input) {
     }
 }
 })
+.factory('signaling', function (socketFactory) {
+    var socket = io.connect('https://www.virtual-guardian.com:3000');
+    
+    var socketFactory = socketFactory({
+      ioSocket: socket
+    });
+
+    return socketFactory;
+})
+.factory('ContactsService', function (signaling) {
+    var onlineUsers = [];
+
+    signaling.on('online', function (name) {
+      if (onlineUsers.indexOf(name) === -1) {
+        onlineUsers.push(name);
+      }
+    });
+
+    signaling.on('offline', function (name) {
+      var index = onlineUsers.indexOf(name);
+      if (index !== -1) {
+        onlineUsers.splice(index, 1);
+      }
+    });
+
+    return {
+      onlineUsers: onlineUsers,
+      setOnlineUsers: function (users, currentName) {
+        this.currentName = currentName;
+        
+        onlineUsers.length = 0;
+        users.forEach(function (user) {
+          if (user !== currentName) {
+            onlineUsers.push(user);
+          }
+        });
+      }
+    }
+  });
 function keyboardShowHandler(e){
     if(window.device.platform=="Android")
         $("#navview").height($("#navview").height()-e.keyboardHeight+20);
