@@ -546,12 +546,14 @@ $scope.buscaLugar=function(){
 	$scope.textoBuscado=$("#textoBuscado").val()
 	if($scope.textoBuscado){
 	if($scope.textoBuscado!=""){
-		$scope.searchBox.textSearch({query:$scope.textoBuscado,bounds:$scope.bnds},$scope.resultadosBusq);
+		//$scope.searchBox.radarSearch({location:$rootScope.ubicacionMarker.getPosition(),radius:50000,name:$scope.textoBuscado}, $scope.resultadosBusq);
+		$scope.searchBox.textSearch({query:$scope.textoBuscado,location:$rootScope.ubicacionMarker.getPosition(),radius:50000},$scope.resultadosBusq);
 	}else $scope.resultadoLugares=[];
 	} else $scope.loadingPlaces=false;
 	
 }
 $scope.resultadosBusq=function(results, status) {
+	console.log(results);
 		$scope.loadingPlaces=false;
 		var lugares=[];
 		if (status == google.maps.places.PlacesServiceStatus.OK) {

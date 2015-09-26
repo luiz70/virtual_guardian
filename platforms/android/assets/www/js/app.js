@@ -161,6 +161,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io
 				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
 			}else if(notification["Notif"+i].Tipo=="10"){
 				$rootScope.PersonaLlamada={
+					IdCliente:notification["Notif"+i].IdUsuario,
 					Correo:notification["Notif"+i].Correo,
 					Llamando:false,
 					notificacion:notification["Notif"+i]
@@ -193,10 +194,16 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io
             $rootScope.onTab(2);
             }
 			
-			for(var i=0;i<notification.notificaciones;i++){
-			/*if(notification["Notif"+i].Tipo=="8"){
-				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
-			}*/
+			if(notification.Tipo=="8"){
+				$timeout($rootScope.muestraTip(notification),1000);
+			}else if(notification.Tipo=="10"){
+				$rootScope.PersonaLlamada={
+					IdCliente:notification.IdUsuario,
+					Correo:notification.Correo,
+					Llamando:false,
+					notificacion:notification
+				}
+				$location.path("/llamada");
 			}
 		  	
 		}
@@ -374,7 +381,7 @@ return function (input) {
 }
 })
 .factory('signaling', function (socketFactory) {
-    var socket = io.connect('https://www.virtual-guardian.com:3000');
+    var socket = io.connect('http://www.virtual-guardian.com:8303', {secure: true});
     
     var socketFactory = socketFactory({
       ioSocket: socket

@@ -57,7 +57,13 @@ angular.module('starter')
 					1:"LLAMADA ENTRANTE",
 					2:"LLAMADA SALIENTE",
 					3:"Esperando respuesta...",
-					4:"..."
+					4:"...",
+					5:"Error en la llamada",
+					6:"Llamada",
+					7:"No se pudo contactar a ",
+					8:"Llamada terminada",
+					9:"Se ha terminado la llamada.",
+					10:"Conectando llamada..."
 					},
 				cuenta:{
 					1:"Usuario",

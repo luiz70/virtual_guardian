@@ -58,6 +58,7 @@ angular.module('starter')
 	}
 	$scope.iniciaCall=function(){
 		$scope.configCall.isInitiator=true;
+		
 	$scope.loginSocket();
 	//else $scope.session = new phonertc.Session($scope.configCall);
 	}
@@ -91,7 +92,8 @@ angular.module('starter')
 	})
 	 signaling.on('messageReceived', function (user, message) {
 		 if(message=='conectado'){
-			 
+			 alert(user);
+			 if($scope.configCall.isInitiator)signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
 		 }
 		
 	 })
@@ -189,7 +191,7 @@ angular.module('starter')
 	
 	
 	$scope.successProx=function(data){
-		console.log(data);
+	//console.log(data);
 	}
 	$scope.proximitysensor = {};
 	$scope.intevalo=null

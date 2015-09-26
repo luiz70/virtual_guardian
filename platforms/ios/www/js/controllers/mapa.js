@@ -1,5 +1,5 @@
 angular.module('starter')
-.controller("mapa",function($scope,$rootScope,$http,$ionicPopover,$timeout,$window,$ionicScrollDelegate){
+.controller("mapa",function($scope,$rootScope,$http,$ionicPopover,$timeout,$window,$ionicScrollDelegate,$interval){
 	
 	//VARIABLES
 	$rootScope.map;
@@ -24,9 +24,22 @@ angular.module('starter')
 	$scope.buscandoDireccion=false;
 	$scope.searchBox;
 	$scope.textoBuscado="";
+	$rootScope.movido=false;
 	$scope.resultadoLugares=[];
             $scope.ubicacionMarkerRes=null;
-
+	$interval(function(){
+		if(!$rootScope.movido)navigator.geolocation.getCurrentPosition($rootScope.onrPos, function(){},{enableHighAccuracy: true,timeout:15000 });
+			
+	},600000)
+	$rootScope.onrPos=function(position){
+		window.localStorage.setArray("location",{latitud:position.coords.latitude,longitud:position.coords.longitude})
+		$rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            $rootScope.ubicacionMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            $rootScope.ubicacionMarker.setIcon($scope.getImgUbicacion($rootScope.ubicacionMarker.getPosition()));
+            $rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            $scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition());
+	}
+		
 	if(window.localStorage.getArray("Peligros"))$rootScope.Peligros=window.localStorage.getArray("Peligros");
 	$scope.createMap=function(){
             
@@ -68,7 +81,13 @@ angular.module('starter')
 			$rootScope.sinMapa=false;
 			$rootScope.cargando=true;
 			//navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError,{enableHighAccuracy: true,timeout:10000 });
-			$scope.onSuccess(20.6737919,-103.3354131)
+			var pos=window.localStorage.getArray("location")
+			
+			if(window.localStorage.getArray("location")){
+				console.log(pos);
+				$rootScope.miubicacion=new google.maps.LatLng(pos.latitud,pos.longitud);
+				$scope.onSuccess(pos.latitud,pos.longitud)
+			}else $scope.onSuccess(20.6737919,-103.3354131)
 			
 			
 	}
@@ -101,6 +120,7 @@ angular.module('starter')
 
             }
 	$scope.revisaPrimeraPos=function(position){
+			window.localStorage.setArray("location",{latitud:position.coords.latitude,longitud:position.coords.longitude})
             try{
             google.maps.event.trigger($rootScope.map, 'resize');
             }catch(err){}
@@ -113,6 +133,7 @@ angular.module('starter')
             $rootScope.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
             $scope.circuloRadio.setCenter($rootScope.ubicacionMarker.getPosition());
             $rootScope.showEventos();
+			
             if(window.localStorage.getArray("Auto")){
             $scope.carroMarker.setPosition(new google.maps.LatLng(window.localStorage.getArray("Auto").Latitud,window.localStorage.getArray("Auto").Longitud));
             }else $scope.carroMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
@@ -120,6 +141,8 @@ angular.module('starter')
 
 	}
 	$rootScope.onSPos=function(position){
+		$rootScope.movido=false;
+		window.localStorage.setArray("location",{latitud:position.coords.latitude,longitud:position.coords.longitude})
 		$rootScope.miubicacion=new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 		$rootScope.ubicacionMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 		$rootScope.ubicacionMarker.setIcon($scope.getImgUbicacion($rootScope.ubicacionMarker.getPosition()));
@@ -149,7 +172,8 @@ angular.module('starter')
 		
 	}
 	$scope.onSuccess=function (lat,long) {
-		$rootScope.miubicacion=new google.maps.LatLng(0,0);
+		
+		if(!$rootScope.miubicacion)$rootScope.miubicacion=new google.maps.LatLng(0,0);
 		$rootScope.sinMapa=false;
 		var mapOptions = {
     		zoom: 12,
@@ -396,6 +420,7 @@ $scope.hideBarra=function(){
             $scope.ubicacionMarkerRes=$rootScope.ubicacionMarker.getPosition();
 		});
 		google.maps.event.addListener($rootScope.ubicacionMarker, 'mouseup', function() {
+			if( $rootScope.ubicacionMarker.getPosition().lat()!=$scope.ubicacionMarkerRes.lat() || $rootScope.ubicacionMarker.getPosition().lng()!=$scope.ubicacionMarkerRes.lng())$rootScope.movido=true;
             if(!$scope.bnds.contains($rootScope.ubicacionMarker.getPosition())){
                   $rootScope.ubicacionMarker.setPosition($scope.ubicacionMarkerRes);
                   $rootScope.showToast($rootScope.idioma.mapa[9]);
@@ -521,12 +546,14 @@ $scope.buscaLugar=function(){
 	$scope.textoBuscado=$("#textoBuscado").val()
 	if($scope.textoBuscado){
 	if($scope.textoBuscado!=""){
-		$scope.searchBox.textSearch({query:$scope.textoBuscado,bounds:$scope.bnds},$scope.resultadosBusq);
+		//$scope.searchBox.radarSearch({location:$rootScope.ubicacionMarker.getPosition(),radius:50000,name:$scope.textoBuscado}, $scope.resultadosBusq);
+		$scope.searchBox.textSearch({query:$scope.textoBuscado,location:$rootScope.ubicacionMarker.getPosition(),radius:50000},$scope.resultadosBusq);
 	}else $scope.resultadoLugares=[];
 	} else $scope.loadingPlaces=false;
 	
 }
 $scope.resultadosBusq=function(results, status) {
+	console.log(results);
 		$scope.loadingPlaces=false;
 		var lugares=[];
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -922,6 +949,7 @@ alert(1);
 		}
 	}
 	$rootScope.loadingEvents=false;
+	
 	$rootScope.muestraEventos=function(){
 		
 	$scope.limpia();

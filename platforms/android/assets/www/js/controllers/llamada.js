@@ -6,6 +6,9 @@ angular.module('starter')
 	$scope.tiempoLlamada=0;
 	$scope.timer=null;
 	$scope.roll=0;
+	$scope.SocketOn=false;
+	$scope.MensajeLlamada="";
+	$scope.EstadoLlamada="";
 	$scope.constraints = {
     audio: true,
     video: false
@@ -24,6 +27,8 @@ angular.module('starter')
 }
   
 	$rootScope.realizarLlamada=function(){
+		$scope.MensajeLlamada=$rootScope.idioma.llamada[2];
+		$scope.EstadoLlamada=$rootScope.idioma.llamada[10];
 		$timeout(function(){
 			if( navigator.proximity)navigator.proximity.enableSensor();
 		$scope.proximitysensorWatchStart($scope.proximitysensor);
@@ -53,18 +58,91 @@ angular.module('starter')
 	}
 	$scope.iniciaCall=function(){
 		$scope.configCall.isInitiator=true;
-	if(!$rootScope.SocketOn) $rootScope.loginSocket();
+		
+	$scope.loginSocket();
 	//else $scope.session = new phonertc.Session($scope.configCall);
 	}
-	signaling.on('login_successful', function (users) {
+ 	$scope.loginSocket = function () {
+      //$scope.loading = true;
+      signaling.emit('login', $rootScope.Usuario.Id);
+	  
+    };
+
+    signaling.on('login_error', function (message) {
+      	//$scope.loading = false;
+      	$scope.MensajeLlamada=$rootScope.idioma.llamada[5];
+	  	$timeout(function(){
+		  	$rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[7]+$rootScope.PersonaLlamada.Correo,function(){
+		  		$scope.cuelgaCall()
+	  		})
+		},3000);
+    });
+
+	signaling.on('disconnect', function (id) {
+		if($rootScope.SocketOn){
+			$rootScope.SocketOn=false;
+			$scope.MensajeLlamada=$rootScope.idioma.llamada[8];
+			$timeout(function(){
+		  	$rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[9],function(){
+		  		$scope.cuelgaCall()
+	  		})
+			},2000);
+		}
+		
+	})
+	 signaling.on('messageReceived', function (user, message) {
+		 if(message=='conectado'){
+			 alert(user);
+			 if($scope.configCall.isInitiator)signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
+		 }
+		
+	 })
+    signaling.on('login_successful', function (users) {
+		
+      //ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
+	  $rootScope.SocketOn=true;
+	  if($scope.configCall.isInitiator){
+		$scope.EstadoLlamada=$rootScope.idioma.llamada[3];
+		  $scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,null,function(){
+		//esperando respuesta 
+		//empieza timer
+		//da linea 
+	  })
+	  }else {
+	  	//responde
+		//$scope.iniciaTimer();
+		signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
+	  }
+	  
+    });
+	$scope.sendNotification=function(destino,origen,operacion,token,funcion){
+		
+		$http.post("https://www.virtual-guardian.com/api/llamar",{
+				IdDestino:destino,
+				IdOrigen:origen,
+				Operacion:operacion,
+				Token:token
+				})
+		.success(function(data){
+			console.log(data);
+			funcion(data);
+		})
+		.error(function(error){
+		console.log(error);
+		})
+	}
+  
+	/*signaling.on('login_successful', function (users) {
       ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
       $rootScope.SocketUsers=users;
 	  $rootScope.SocketOn=true;
 	  $scope.configCall.isInitiator=true;
 	  //$scope.session = new phonertc.Session($scope.configCall);
-    });
+    });*/
 
 	$scope.contestarLlamada=function(){
+		$scope.MensajeLlamada=$rootScope.idioma.llamada[1];
+		$scope.EstadoLlamada=$rootScope.idioma.llamada[10];
 		$scope.enCurso=true;
 		$("#boton_colgar").animate({
     		width: '100vw',
@@ -80,11 +158,16 @@ angular.module('starter')
 			height: '10vh',
 			opacity: '1'
   		}, 200, "linear", function() {});
-		$scope.iniciaTimer();
+		
+		$scope.configCall.isInitiator=false;
+		$scope.loginSocket();
 	}
 	$scope.iniciaTimer=function(){
 		$scope.timer=$interval(function() {
-           $scope.tiempoLlamada++;
+          $scope.$apply(function () {
+            $scope.tiempoLlamada++;
+       	 });
+		   
           }, 1000);
 	}
 	$scope.activaFuncion=function(val){
@@ -97,6 +180,8 @@ angular.module('starter')
 		}
 	}
 	$scope.cuelgaCall=function(){
+		$rootScope.SocketOn=false;
+		signaling.disconnect()
 		$scope.proximitysensorWatchStop();
 		$interval.cancel($scope.timer);
 		$scope.timer=null;
@@ -106,7 +191,7 @@ angular.module('starter')
 	
 	
 	$scope.successProx=function(data){
-		console.log(data);
+	//console.log(data);
 	}
 	$scope.proximitysensor = {};
 	$scope.intevalo=null

@@ -381,7 +381,7 @@ return function (input) {
 }
 })
 .factory('signaling', function (socketFactory) {
-    var socket = io.connect('https://www.virtual-guardian.com:3000');
+    var socket = io.connect('http://www.virtual-guardian.com:8303', {secure: true});
     
     var socketFactory = socketFactory({
       ioSocket: socket
