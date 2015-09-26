@@ -95,7 +95,7 @@ angular.module('starter')
                   switch(message){
                   case 'conectado':
                   if($scope.configCall.isInitiator)
-                        signaling.emit('sendMessage',$rootScope.Usuario.Id,"conectado");
+                        signaling.emit('sendMessage',user,"conectado");
                   
                   break;
                   case 'colgar':
