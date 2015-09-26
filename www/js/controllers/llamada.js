@@ -103,9 +103,9 @@ angular.module('starter')
 		
 	 })
     signaling.on('login_successful', function (users) {
-		console.log(2);
+		
       //ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
-	 /*$rootScope.SocketOn=true;
+	 $rootScope.SocketOn=true;
 	  if($scope.configCall.isInitiator){
 		$scope.EstadoLlamada=$rootScope.idioma.llamada[3];
 		  $scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,null,function(){
@@ -118,7 +118,7 @@ angular.module('starter')
 		//$scope.iniciaTimer();
 		signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
 	  }
-	  */
+	  
     });
 	$scope.inicioSesion=function(){
 		 
