@@ -187,6 +187,7 @@
 }
 // Handle incoming pushes
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
+    NSLog(@"hola");
     // Process the received push
     UIApplication * application =[UIApplication sharedApplication];
     //
@@ -227,7 +228,20 @@
                     }
                 }
                 break;
-                
+            case 10:
+                if (appState == UIApplicationStateActive) {
+                    notificaciones=notificaciones+1;
+                    notificationMessage = userInfo;
+                    isInline = YES;
+                    
+                    [self notificationReceived];
+                } else {
+                    //if([userInfo[@"Tipo"] intValue]<5)
+                    //[self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
+                    //else [self setNotification:[userInfo objectForKey:@"Subtitulo"]:@"":[userInfo objectForKey:@"Titulo"]];
+                    //notificationMessage = userInfo;
+                }
+                break;
             default:
                 if (appState == UIApplicationStateActive) {
                     notificaciones=notificaciones+1;
