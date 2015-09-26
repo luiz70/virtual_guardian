@@ -1,5 +1,6 @@
 angular.module('starter')
 .controller("llamada",function($scope,$http,$rootScope,CordovaNetwork,$location,$interval,$timeout,signaling,ContactsService){
+	signaling.removeAllListeners();
 	$scope.enCurso=false;
 	$scope.silencio=false;
 	$scope.altavoz=false;
@@ -64,18 +65,22 @@ angular.module('starter')
 	}
  	$scope.loginSocket = function () {
       //$scope.loading = true;
-      signaling.emit('login', $rootScope.Usuario.Id);
+      console.log(signaling);
+	  signaling.connect();
+	  signaling.emit('login', $rootScope.Usuario.Id);
 	  
     };
 
     signaling.on('login_error', function (message) {
       	//$scope.loading = false;
-      	$scope.MensajeLlamada=$rootScope.idioma.llamada[5];
+      	/*$scope.MensajeLlamada=$rootScope.idioma.llamada[5];
 	  	$timeout(function(){
 		  	$rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[7]+$rootScope.PersonaLlamada.Correo,function(){
 		  		$scope.cuelgaCall()
 	  		})
-		},3000);
+		},3000);*/
+		console.log(message);
+		
     });
 
 	signaling.on('disconnect', function (id) {
@@ -98,9 +103,9 @@ angular.module('starter')
 		
 	 })
     signaling.on('login_successful', function (users) {
-		
+		console.log(2);
       //ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
-	  $rootScope.SocketOn=true;
+	 /*$rootScope.SocketOn=true;
 	  if($scope.configCall.isInitiator){
 		$scope.EstadoLlamada=$rootScope.idioma.llamada[3];
 		  $scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,null,function(){
@@ -113,8 +118,11 @@ angular.module('starter')
 		//$scope.iniciaTimer();
 		signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
 	  }
-	  
+	  */
     });
+	$scope.inicioSesion=function(){
+		 
+	}
 	$scope.sendNotification=function(destino,origen,operacion,token,funcion){
 		
 		$http.post("https://www.virtual-guardian.com/api/llamar",{
@@ -143,7 +151,7 @@ angular.module('starter')
 	$scope.contestarLlamada=function(){
 		$scope.MensajeLlamada=$rootScope.idioma.llamada[1];
 		$scope.EstadoLlamada=$rootScope.idioma.llamada[10];
-		$scope.enCurso=true;
+		$scope.enCurso=true
 		$("#boton_colgar").animate({
     		width: '100vw',
 			borderRadius: '0px',
@@ -232,7 +240,11 @@ $scope.proximitysensorWatchStop = function(_scope) {
 
 
 if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
-	else $scope.contestarLlamada();
+	else {
+		if($rootScope.Persona.Llamada.Contestada){
+		$scope.contestarLlamada();
+		}
+	}
 // .... after testing
 //proximitysensorWatchStop(proximitysensor);
 })
