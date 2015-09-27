@@ -19,7 +19,9 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    
+                       window.onerror=function(message, url, line){
+                       console.log("Error: "+message+ " in "+url+" at line "+line);
+                       }
   	$rootScope.Usuario=window.localStorage.getArray("Usuario");
 	//if(navigator.splashscreen)
 	//navigator.splashscreen.show();

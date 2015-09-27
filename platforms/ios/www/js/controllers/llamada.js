@@ -12,9 +12,9 @@ angular.module('starter')
 	$scope.EstadoLlamada="";
             
   	$scope.configCall = {
-    isInitiator: false,
+    isInitiator: $rootScope.PersonaLlamada.Llamando,
     turn: {
-        host: 'turn:45.40.137.37:5349',
+        host:'turn:45.40.137.37:5349',
         username: 'virtualg',
         password: '4138596'
     },
@@ -23,6 +23,9 @@ angular.module('starter')
         video: false
     }
 }
+            //alert(JSON.stringify(window.cordova.plugins))
+           $scope.session = new window.cordova.plugins.phonertc.Session($scope.configCall);
+            
 	$rootScope.realizarLlamada=function(){
 		$scope.MensajeLlamada=$rootScope.idioma.llamada[2];
 		$scope.EstadoLlamada=$rootScope.idioma.llamada[10];
@@ -63,7 +66,6 @@ angular.module('starter')
       //$scope.loading = true;
 	  signaling.connect();
 	  signaling.emit('login', $rootScope.Usuario.Id);
-	  
     };
 
     signaling.on('login_error', function (message) {
@@ -99,15 +101,21 @@ angular.module('starter')
                   
                   break;
                   case 'colgar':
-                  cuelgaCall();
+                  $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[11],function(){
+                        $scope.cuelgaCall()
+                    })
                   break;
                   }
 		 
 		
 	 })
+            $scope.session.on('sendMessage',function(data){
+                              alert(2);
+                              })
     signaling.on('login_successful', function (users) {
       //ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
 	 $rootScope.SocketOn=true;
+                 
 	  if($scope.configCall.isInitiator){
 		$scope.EstadoLlamada=$rootScope.idioma.llamada[3];
 		  $scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,null,function(){
@@ -120,7 +128,8 @@ angular.module('starter')
 		//$scope.iniciaTimer();
 		signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
 	  }
-	  
+                 
+                 $scope.session.call();
     });
 	$scope.inicioSesion=function(){
 		 
@@ -170,7 +179,7 @@ angular.module('starter')
 			opacity: '1'
   		}, 200, "linear", function() {});
 		
-		
+           
             
             
 	}
@@ -194,12 +203,14 @@ angular.module('starter')
 	$scope.cuelgaCall=function(){
         signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"colgar");
 		$rootScope.SocketOn=false;
+        signaling.removeAllListeners();
 		signaling.disconnect()
 		$scope.proximitysensorWatchStop();
 		$interval.cancel($scope.timer);
 		$scope.timer=null;
 		$scope.tiempoLlamada=0;
 		$location.path('/inicio');
+            
 	}
 	
 	
@@ -248,6 +259,7 @@ if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
 	else {
             $scope.configCall.isInitiator=false;
             $scope.loginSocket();
+            
 		if($rootScope.PersonaLlamada.Contestada){
             $scope.contestarLlamada();
             }else{
