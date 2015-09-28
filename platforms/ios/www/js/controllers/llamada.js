@@ -108,7 +108,7 @@ angular.module('starter')
                     })
                   break;
                   case 'handshake':
-                  alert("handshake: "+data)
+                  //aalert("handshake: "+data)
                   $scope.session.receiveMessage(JSON.parse(data));
                   break;
                   
@@ -116,11 +116,13 @@ angular.module('starter')
 		 
 		
 	 })
+            
             $scope.session.on('answer', function(){
-                              alert("answered");
+                              //alert("answered");
+                              $scope.enCurso=true;
                               })
             $scope.session.on('sendMessage',function(data){
-                              alert(2);
+                              //alert(2);
                               signaling.emit('handshake',$scope.PersonaLlamada.IdCliente,"handshake",JSON.stringify(data));
                               })
     signaling.on('login_successful', function (users) {
@@ -213,6 +215,7 @@ angular.module('starter')
 		}
 	}
 	$scope.cuelgaCall=function(){
+            $scope.session.disconnect();
         signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"colgar");
 		$rootScope.SocketOn=false;
         signaling.removeAllListeners();
