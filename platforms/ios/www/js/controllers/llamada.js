@@ -92,12 +92,14 @@ angular.module('starter')
 		}
 		
 	})
-	 signaling.on('messageReceived', function (user, message) {
+	 signaling.on('messageReceived', function (user, message,data) {
                   
                   switch(message){
                   case 'conectado':
-                  if($scope.configCall.isInitiator)
+                  if($scope.configCall.isInitiator){
                         signaling.emit('sendMessage',user,"conectado");
+                        $scope.session.call();
+                  }
                   
                   break;
                   case 'colgar':
@@ -105,12 +107,21 @@ angular.module('starter')
                         $scope.cuelgaCall()
                     })
                   break;
+                  case 'handshake':
+                  alert("handshake: "+data)
+                  $scope.session.receiveMessage(JSON.parse(data));
+                  break;
+                  
                   }
 		 
 		
 	 })
+            $scope.session.on('answer', function(){
+                              alert("answered");
+                              })
             $scope.session.on('sendMessage',function(data){
                               alert(2);
+                              signaling.emit('handshake',$scope.PersonaLlamada.IdCliente,"handshake",JSON.stringify(data));
                               })
     signaling.on('login_successful', function (users) {
       //ContactsService.setOnlineUsers(users, $rootScope.Usuario.Id);
@@ -127,9 +138,10 @@ angular.module('starter')
 	  	//responde
 		//$scope.iniciaTimer();
 		signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
+                 $scope.session.call();
 	  }
                  
-                 $scope.session.call();
+                 
     });
 	$scope.inicioSesion=function(){
 		 
