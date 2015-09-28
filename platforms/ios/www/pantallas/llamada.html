@@ -9,7 +9,7 @@
     </div>
     <div style="float:left;width:100%; height:35vh;text-align: center;margin-top: 5vh;margin-bottom: 5vh;"><img src="img/uservirtual.png" style="height:100%">
     <div class="ng-hide" ng-show="enCurso" style="font-size: 4vh !important;color: #DBDBDB;margin-top: 2vh;" >{{tiempoLlamada | duracion}}</div>
-    <div class="ng-hide" ng-show="!enCurso" style="font-size: 4vh !important;color: #DBDBDB;margin-top: 2vh;" >{{idioma.llamada[3]}}</div>
+    <div class="ng-hide" ng-show="!enCurso" style="font-size: 4vh !important;color: #DBDBDB;margin-top: 2vh;" >{{EstadoLlamada}}</div>
     </div>
     
     
@@ -39,7 +39,7 @@
    	</div-->
     <div style="position:absolute;bottom:0px;width:100%;overflow:hidden">
     <div > 
-    	<div class="ng-hide " ng-show="enCurso || roll==1" style="width:33%; float:left;position:relative;text-align:right">
+    	<div class="ng-hide " ng-show="enCurso" style="width:33%; float:left;position:relative;text-align:right">
         <button  class="{{altavoz==false?'callbtn callinact':'callbtn callact'}}" style="width:0vh;height:0vh;background-color: #d08d33;border-radius: 100%;border:none;opacity:0" ng-click="activaFuncion(1)">
         <i class="icon ion-volume-medium" style="font-size: 6vh;"></i>
         </button>
@@ -49,7 +49,7 @@
         <i class="icon ion-android-microphone-off" style="font-size: 6vh;"></i>
         </button>
         </div-->
-        <div class="ng-hide "  ng-show="enCurso || roll==1" style="width:33%; float:right;position:relative;text-align:left">
+        <div class="ng-hide "  ng-show="enCurso" style="width:33%; float:right;position:relative;text-align:left">
         <button class="{{silencio==false?'callbtn callinact':'callbtn callact'}}" style="width:0vh;height:0vh;background-color: #d08d33;border-radius: 100%;border:none;opacity:0" ng-click="activaFuncion(2)">
         <i class="icon ion-android-microphone-off" style="font-size: 6vh;"></i>
         </button>

@@ -121,7 +121,9 @@ angular.module('starter')
                          })
             
             $scope.session.on('answer', function(){
+                              $scope.$apply(function(){
                               $scope.enCurso=true;
+                                            });
                               $scope.iniciaTimer();
                               })
             $scope.session.on('disconnect', function(){
@@ -210,14 +212,7 @@ angular.module('starter')
 		}else{
 			//mute
 			$scope.silencio=!$scope.silencio;
-            if($scope.silencio){
-            $scope.configCall.streams.audio=false;
-            $scope.session.renegotiate();
-            }else{
-            $scope.configCall.streams.audio=true;
-            $scope.session.renegotiate();
-            }
-		}
+        }
 	}
             
 	$scope.cuelgaCall=function(){
