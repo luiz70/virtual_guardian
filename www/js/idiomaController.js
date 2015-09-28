@@ -63,7 +63,8 @@ angular.module('starter')
 					7:"No se pudo contactar a ",
 					8:"Llamada terminada",
 					9:"Se ha terminado la llamada.",
-					10:"Conectando llamada..."
+					10:"Conectando llamada...",
+                    11:" ha terminado la llamada."
 					},
 				cuenta:{
 					1:"Usuario",

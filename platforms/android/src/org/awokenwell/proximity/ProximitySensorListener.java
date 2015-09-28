@@ -185,7 +185,7 @@ public class ProximitySensorListener extends CordovaPlugin implements SensorEven
         else {
             this.setStatus(ProximitySensorListener.ERROR_FAILED_TO_START);
         }
-        Log.d("SENSORx",""+ this.status);
+        Log.d("SENSORx","start");
         return this.status;
     }
 
@@ -196,6 +196,7 @@ public class ProximitySensorListener extends CordovaPlugin implements SensorEven
         if (this.status != ProximitySensorListener.STOPPED) {
             this.sensorManager.unregisterListener(this);
         }
+      Log.d("SENSORx","stop");
         this.setStatus(ProximitySensorListener.STOPPED);
     }
 

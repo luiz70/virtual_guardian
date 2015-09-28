@@ -19,7 +19,9 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    
+                       window.onerror=function(message, url, line){
+                       console.log("Error: "+message+ " in "+url+" at line "+line);
+                       }
   	$rootScope.Usuario=window.localStorage.getArray("Usuario");
 	//if(navigator.splashscreen)
 	//navigator.splashscreen.show();
@@ -110,36 +112,31 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io
 	
 	
 };
-	$rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
-		if(window.device.platform=="Android"){
-      switch(notification.event) {
-        case 'registered':
-          if (notification.regid.length > 0 ) {
-			  if(notification.regid!=$rootScope.Usuario.Registro)
-			  $http.post("https://www.virtual-guardian.com/api/logIn_reg",{
-				Id:window.localStorage.getArray("Usuario").Id,
-				Registro:notification.regid,
-				Os:window.device.platform
-				})
-		.success(function(data,status,header,config){
-			$rootScope.Usuario.Registro=notification.regid;
-			window.localStorage.setArray("Usuario",$rootScope.Usuario);
-		})
-          /* $.post("https://www.virtual-guardian.com/movil/php.php",{funcion:"logIn_reg",Id:window.localStorage.getArray("Usuario").Id,Registro:notification.regid,Os:window.device.platform},function(data){
-			   $rootScope.Usuario.Registro=notification.regid;
-			   window.localStorage.setArray("Usuario",$rootScope.Usuario);
-			});*/
-          }
+$rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
+    if(window.device.platform=="Android"){
+        switch(notification.event) {
+            case 'registered':
+               if (notification.regid.length > 0 ) {
+                    if(notification.regid!=$rootScope.Usuario.Registro)
+                    $http.post("https://www.virtual-guardian.com/api/logIn_reg",{
+                          Id:window.localStorage.getArray("Usuario").Id,
+                          Registro:notification.regid,
+                          Os:window.device.platform
+                    })
+                    .success(function(data,status,header,config){
+                        $rootScope.Usuario.Registro=notification.regid;
+                        window.localStorage.setArray("Usuario",$rootScope.Usuario);
+                    })
+               }
           break;
 
-        case 'message':
+          case 'message':
           // this is the actual push notification. its format depends on the data model from the push server
-		  
-          	if(notification.coldstart){
-				if(notification.notificaciones>0){
-				$rootScope.notPendientes+=notification.notificaciones;
-				window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
-				}
+           	if(notification.coldstart){
+               if(notification.notificaciones>0){
+                    $rootScope.notPendientes+=notification.notificaciones;
+                    window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
+               }
 			}else if(notification.foreground){
 				if($ionicSlideBoxDelegate.currentIndex()!=1){
 				$rootScope.notPendientes+=notification.notificaciones;
@@ -164,50 +161,56 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io
 					IdCliente:notification["Notif"+i].IdUsuario,
 					Correo:notification["Notif"+i].Correo,
 					Llamando:false,
-					notificacion:notification["Notif"+i]
+					notificacion:notification["Notif"+i],
+					Contestada:!notification["Notif"+i].foreground
 				}
 				$location.path("/llamada");
 			}
 			}
-          break;
+            break;
 
-        case 'error':
+            case 'error':
           
-          break;
+            break;
 
-        default:
+            default:
           
-          break;
-      }
-		}else{
-			if(notification.foreground){
+            break;
+        }
+    }else{
+        if(notification.Tipo=="8"){
+            $timeout($rootScope.muestraTip(notification),1000);
+        }
+        else if(notification.Tipo=="10"){
+               
+            $rootScope.PersonaLlamada={
+               IdCliente:notification.IdUsuario,
+               Correo:notification.Correo,
+               Llamando:false,
+               notificacion:notification,
+               Contestada:!notification.foreground
+            }
+            $location.path("/llamada");
+        }else
+        if(notification.foreground){
                 
 			if($ionicSlideBoxDelegate.currentIndex()!=1){
 				$rootScope.notPendientes+=parseInt(notification.notificaciones);
 				window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
-				}else{
-					$rootScope.notPendientes+=parseInt(notification.notificaciones);
-					$rootScope.cargando=true;
-					$rootScope.doRefreshNotification();
-				}
-            }else if(parseInt(notification.notificaciones)>0){
-            $rootScope.onTab(2);
+            }else{
+                $rootScope.notPendientes+=parseInt(notification.notificaciones);
+                $rootScope.cargando=true;
+                $rootScope.doRefreshNotification();
             }
-			
-			if(notification.Tipo=="8"){
-				$timeout($rootScope.muestraTip(notification),1000);
-			}else if(notification.Tipo=="10"){
-				$rootScope.PersonaLlamada={
-					IdCliente:notification.IdUsuario,
-					Correo:notification.Correo,
-					Llamando:false,
-					notificacion:notification
-				}
-				$location.path("/llamada");
-			}
+        
+        }else if(parseInt(notification.notificaciones)>0){
+               $rootScope.onTab(2);
+        }
+        
+        
 		  	
-		}
-    });
+    }
+});
 	
 $rootScope.unregister=function(){
 	$cordovaPush.unregister().then(function(result) {
@@ -237,7 +240,7 @@ $rootScope.unregister=function(){
 	//guarda estado		
 	}
 })
- .run(function (signaling) {
+ /*.run(function (signaling) {
     signaling.on('messageReceived', function (name, message) {
       switch (message.type) {
         case 'call':
@@ -247,7 +250,7 @@ $rootScope.unregister=function(){
           break;
       }
     });
- })
+ })*/
 .controller("home",function($rootScope,$location){
 	/*if(!window.localStorage.getArray("Usuario")){
 				$rootScope.Usuario=null;
@@ -381,8 +384,7 @@ return function (input) {
 }
 })
 .factory('signaling', function (socketFactory) {
-    var socket = io.connect('http://www.virtual-guardian.com:8303', {secure: true});
-    
+    var socket = io.connect('http://www.virtual-guardian.com:8303');
     var socketFactory = socketFactory({
       ioSocket: socket
     });
