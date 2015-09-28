@@ -83,6 +83,10 @@
                         {
                             "xml": "<feature name=\"PhoneRTCPlugin\"><param name=\"android-package\" value=\"com.dooble.phonertc.PhoneRTCPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AudioTogglePlugin\"><param name=\"android-package\" value=\"com.dooble.audiotoggle.AudioTogglePlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -166,7 +170,7 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\" />",
-                            "count": 1
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
@@ -273,6 +277,9 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "com.dooble.phonertc": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "com.dooble.audiotoggle": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },

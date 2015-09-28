@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		014D6BABAC834EF3801D3354 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAB179E5C364812BADFB9E7 /* libstdc++.dylib */; };
 		0286E5362D33435D9958118C /* DatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B77228EBC34765955B3868 /* DatePicker.m */; };
@@ -90,6 +89,7 @@
 		F48E7C398C8D432D987EB0D5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E32617FCD7341FEBEE1F83E /* CoreVideo.framework */; };
 		FA611693E82B4439B2CDD847 /* libPhoneRTC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0EF23E49F9C422B9060661C /* libPhoneRTC.a */; };
 		FAFA1E8302C649EBAA6FB837 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5078FE3345374E17BD9D33D3 /* OpenGLES.framework */; };
+		72BA56CE36E7475E95CEBCED /* AudioTogglePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FF0EBEB6AE4CD0837FBA3E /* AudioTogglePlugin.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -263,6 +263,8 @@
 		FE1BDBC5B6A1410A9C5D7B72 /* CDVGlobalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVGlobalization.m; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; };
 		FF9D01779E3944C9AA538A61 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; name = Config.swift; path = com.dooble.phonertc/Config.swift; sourceTree = "<group>"; };
 		FFD02F60084E4055A0EE85FE /* RTCSessionDescriptionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCSessionDescriptionDelegate.h; path = com.dooble.phonertc/RTCSessionDescriptionDelegate.h; sourceTree = "<group>"; };
+		41FF0EBEB6AE4CD0837FBA3E /* AudioTogglePlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "AudioTogglePlugin.m"; path = "com.dooble.audiotoggle/AudioTogglePlugin.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		845BA7CA5C3446DCB3256BBA /* AudioTogglePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AudioTogglePlugin.h"; path = "com.dooble.audiotoggle/AudioTogglePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -487,6 +489,8 @@
 				B6C9E2F767E04B7E8A78657D /* RTCVideoSource.h */,
 				98D77896FA994BC892671CD1 /* RTCVideoTrack.h */,
 				A8731526069A441680F2A278 /* Bridging-Header.h */,
+				41FF0EBEB6AE4CD0837FBA3E /* AudioTogglePlugin.m */,
+				845BA7CA5C3446DCB3256BBA /* AudioTogglePlugin.h */,
 			);
 			name = Plugins;
 			path = VirtualGuardian/Plugins;
@@ -569,8 +573,8 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftMigration = 700;
+				LastSwiftUpdateCheck = 700;
 				LastUpgradeCheck = 510;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
@@ -718,6 +722,7 @@
 				56EDFA841148474692C100DB /* Session.swift in Sources */,
 				AE8C24512D5B4B309B60037C /* Config.swift in Sources */,
 				4E054E7E08EF4F3A923EC4D0 /* SessionDescriptionDelegate.swift in Sources */,
+				72BA56CE36E7475E95CEBCED /* AudioTogglePlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

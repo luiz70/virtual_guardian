@@ -122,4 +122,7 @@
     <feature name="PhoneRTCPlugin">
         <param name="android-package" value="com.dooble.phonertc.PhoneRTCPlugin" />
     </feature>
+    <feature name="AudioTogglePlugin">
+        <param name="android-package" value="com.dooble.audiotoggle.AudioTogglePlugin" />
+    </feature>
 </widget>

@@ -40,7 +40,8 @@
     {
       "locator": "https://github.com/alongubkin/phonertc.git",
       "id": "com.dooble.phonertc"
-    }
+    },
+    "com.dooble.audiotoggle"
   ],
   "cordovaPlatforms": [
     "android",

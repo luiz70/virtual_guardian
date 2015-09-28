@@ -95,6 +95,10 @@
                         {
                             "xml": "<feature name=\"PhoneRTCPlugin\"><param name=\"ios-package\" value=\"PhoneRTCPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AudioTogglePlugin\"><param name=\"ios-package\" value=\"AudioTogglePlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -126,7 +130,7 @@
                         },
                         {
                             "xml": false,
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "QuartzCore.framework": [
@@ -142,7 +146,7 @@
                         },
                         {
                             "xml": false,
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "StoreKit.framework": [
@@ -296,6 +300,9 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "com.dooble.phonertc": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "com.dooble.audiotoggle": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },

@@ -182,6 +182,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/com.dooble.audiotoggle/www/audiotoggle.js",
+        "id": "com.dooble.audiotoggle.AudioToggle",
+        "clobbers": [
+            "AudioToggle"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "id": "cordova-plugin-dialogs.notification",
         "merges": [
@@ -212,6 +219,7 @@ module.exports.metadata =
     "cc.fovea.cordova.purchase": "3.11.0",
     "org.awokenwell.proximity": "0.2.1",
     "com.dooble.phonertc": "2.0.1",
+    "com.dooble.audiotoggle": "1.0.0",
     "cordova-plugin-dialogs": "1.1.1"
 }
 // BOTTOM OF METADATA

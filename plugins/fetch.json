@@ -176,5 +176,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "com.dooble.audiotoggle": {
+        "source": {
+            "type": "registry",
+            "id": "com.dooble.audiotoggle"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

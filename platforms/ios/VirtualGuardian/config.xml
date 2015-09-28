@@ -127,4 +127,7 @@
     <feature name="PhoneRTCPlugin">
         <param name="ios-package" value="PhoneRTCPlugin" />
     </feature>
+    <feature name="AudioTogglePlugin">
+        <param name="ios-package" value="AudioTogglePlugin" />
+    </feature>
 </widget>

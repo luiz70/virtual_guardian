@@ -124,7 +124,6 @@ angular.module('starter')
                               })
             $scope.session.on('disconnect', function(){
                               //alert("answered");
-                              if($scope.enCurso)
                               $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[11],function(){
                                                $scope.cuelgaCall()
                                                })
@@ -222,7 +221,9 @@ angular.module('starter')
 			$scope.silencio=!$scope.silencio;
 		}
 	}
+            
 	$scope.cuelgaCall=function(){
+            $scope.MensajeLlamada=$rootScope.idioma.llamada[8];
             $scope.enCurso=false;
         signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"colgar");
 		$rootScope.SocketOn=false;
