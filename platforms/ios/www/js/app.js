@@ -132,6 +132,7 @@ $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification
 
           case 'message':
           // this is the actual push notification. its format depends on the data model from the push server
+		  
            	if(notification.coldstart){
                if(notification.notificaciones>0){
                     $rootScope.notPendientes+=notification.notificaciones;
@@ -162,7 +163,7 @@ $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification
 					Correo:notification["Notif"+i].Correo,
 					Llamando:false,
 					notificacion:notification["Notif"+i],
-					Contestada:!notification["Notif"+i].foreground
+					Contestada:!notification.foreground
 				}
 				$location.path("/llamada");
 			}

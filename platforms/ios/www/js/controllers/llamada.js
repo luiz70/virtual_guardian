@@ -27,7 +27,7 @@ angular.module('starter')
             
 	$rootScope.realizarLlamada=function(){
 		$scope.MensajeLlamada=$rootScope.idioma.llamada[2];
-		$scope.EstadoLlamada=$rootScope.idioma.llamada[10];
+		$scope.EstadoLlamada=$rootScope.idioma.llamada[3];
 		$timeout(function(){
 			if( navigator.proximity)navigator.proximity.enableSensor();
 		$scope.proximitysensorWatchStart($scope.proximitysensor);
@@ -56,7 +56,13 @@ angular.module('starter')
 	}
 	$scope.iniciaCall=function(){
 		$scope.configCall.isInitiator=true;
-		
+            $scope.noAl=$timeout(function(){
+                
+                $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[12],function(){
+                  $scope.cuelgaCall()
+            })
+            
+            },10000)
 	$scope.loginSocket();
 	}
  	$scope.loginSocket = function () {
@@ -67,11 +73,10 @@ angular.module('starter')
 
     signaling.on('login_error', function (message) {
       	$scope.EstadoLlamada=$rootScope.idioma.llamada[5];
-	  	$timeout(function(){
+                 
 		  	$rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[7]+$rootScope.PersonaLlamada.Correo,function(){
 		  		$scope.cuelgaCall()
 	  		})
-		},3000);
     });
 
 	signaling.on('disconnect', function (id) {
@@ -123,7 +128,9 @@ angular.module('starter')
             $scope.session.on('answer', function(){
                               $scope.$apply(function(){
                               $scope.enCurso=true;
+                                            $timeout.cancel($scope.noAl);
                                             });
+								$scope.soundFile.pause();
                               $scope.iniciaTimer();
                               })
             $scope.session.on('disconnect', function(){
@@ -144,7 +151,31 @@ angular.module('starter')
 		$scope.EstadoLlamada=$rootScope.idioma.llamada[3];
 		  $scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,null,function(){
 		//da linea
-                })
+		AudioToggle.setAudioMode(AudioToggle.EARPIECE);
+		$scope.soundFile = document.createElement("audio");
+		$scope.soundFile.preload = "auto";
+
+		//Load the sound file (using a source element for expandability)
+		var src = document.createElement("source");
+		src.src = "audio/tono.mp3";
+		$scope.soundFile.appendChild(src);
+		$scope.soundFile.currentTime = 0.01;
+		//Load the audio tag
+		$scope.soundFile.loop=true
+		//It auto plays as a fallback
+		$scope.soundFile.load();
+		//$scope.soundFile.volume = 0.000000;
+		$scope.soundFile.play();
+
+               })
+                 $timeout.cancel($scope.noAl);
+                 $scope.noAl=$timeout(function(){
+                                      if($scope.soundFile)$scope.soundFile.pause();
+                                      $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[12],function(){
+                                                  $scope.cuelgaCall()     
+                                                       })
+                                      
+                                      },50000)
 	  }else {
     
         }
@@ -216,6 +247,7 @@ angular.module('starter')
 	}
             
 	$scope.cuelgaCall=function(){
+		
         $scope.EstadoLlamada=$rootScope.idioma.llamada[8];
         $scope.enCurso=false;
         signaling.emit('colgar',$rootScope.Usuario.Id,$rootScope.PersonaLlamada.IdCliente);
@@ -227,6 +259,7 @@ angular.module('starter')
 		$interval.cancel($scope.timer);
 		$scope.timer=null;
 		$scope.tiempoLlamada=0;
+            if($scope.soundFile)$scope.soundFile.pause();
 		$location.path('/inicio');
             
 	}
