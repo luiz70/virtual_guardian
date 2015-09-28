@@ -124,6 +124,7 @@ angular.module('starter')
                               })
             $scope.session.on('disconnect', function(){
                               //alert("answered");
+                              if($scope.enCurso)
                               $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[11],function(){
                                                $scope.cuelgaCall()
                                                })
@@ -146,8 +147,7 @@ angular.module('starter')
 	  }else {
 	  	//responde
 		//$scope.iniciaTimer();
-		signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
-                 $scope.session.call();
+		
 	  }
                  
                  
@@ -200,15 +200,16 @@ angular.module('starter')
 			opacity: '1'
   		}, 200, "linear", function() {});
 		
-           
+            signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
+            $scope.session.call();
             
             
 	}
 	$scope.iniciaTimer=function(){
 		$scope.timer=$interval(function() {
-          $scope.$apply(function () {
+          //$scope.$apply(function () {
             $scope.tiempoLlamada++;
-       	 });
+       	 //});
 		   
           }, 1000);
 	}
@@ -222,11 +223,14 @@ angular.module('starter')
 		}
 	}
 	$scope.cuelgaCall=function(){
-            
+            $scope.enCurso=false;
         signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"colgar");
 		$rootScope.SocketOn=false;
         signaling.removeAllListeners();
-		signaling.disconnect()
+            signaling.disconnect();
+            $scope.session.off('disconnect');
+            $scope.session.off('answer');
+            $scope.session.off('sendMessage');
         $scope.session.close();
 		$scope.proximitysensorWatchStop();
 		$interval.cancel($scope.timer);
