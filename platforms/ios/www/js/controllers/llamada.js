@@ -64,6 +64,7 @@ angular.module('starter')
 	}
  	$scope.loginSocket = function () {
       //$scope.loading = true;
+            signaling.disconnect();
 	  signaling.connect();
 	  signaling.emit('login', $rootScope.Usuario.Id);
     };
@@ -76,8 +77,7 @@ angular.module('starter')
 		  		$scope.cuelgaCall()
 	  		})
 		},3000);*/
-		console.log(message);
-		
+                 alert("error");
     });
 
 	signaling.on('disconnect', function (id) {
@@ -124,6 +124,7 @@ angular.module('starter')
                               })
             $scope.session.on('disconnect', function(){
                               //alert("answered");
+                              if($scope.enCurso)
                               $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[11],function(){
                                                $scope.cuelgaCall()
                                                })
@@ -216,6 +217,8 @@ angular.module('starter')
 		if(val==1){
 			//altavoz
 			$scope.altavoz=!$scope.altavoz;
+            if($scope.altavoz)window.cordova.plugins.AudioToggle.setAudioMode(window.cordova.plugins.AudioToggle.SPEAKER)
+            else window.cordova.plugins.AudioToggle.setAudioMode(window.cordova.plugins.AudioToggle.EARPIECE)
 		}else{
 			//mute
 			$scope.silencio=!$scope.silencio;
@@ -229,9 +232,9 @@ angular.module('starter')
 		$rootScope.SocketOn=false;
         signaling.removeAllListeners();
             signaling.disconnect();
-            $scope.session.off('disconnect');
+            /*$scope.session.off('disconnect');
             $scope.session.off('answer');
-            $scope.session.off('sendMessage');
+            $scope.session.off('sendMessage');*/
         $scope.session.close();
 		$scope.proximitysensorWatchStop();
 		$interval.cancel($scope.timer);
