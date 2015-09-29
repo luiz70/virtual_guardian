@@ -29,6 +29,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "AppDelegate+notification.h"
 #import "CDVBackgroundGeoLocation.h"
+#import <AudioToolbox/AudioServices.h>
+#import "MainViewController.h"
 
 @implementation PushPlugin
 
@@ -73,6 +75,8 @@
 {
 	self.callbackId = command.callbackId;
     notificaciones=0;
+    //MainViewController *add = [[MainViewController alloc] init];
+    //[add alert];
     
     
     NSMutableDictionary* options = [command.arguments objectAtIndex:0];
@@ -136,8 +140,34 @@
 
 - (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials: (PKPushCredentials *)credentials forType:(NSString *)type {
     UIApplication * application =[UIApplication sharedApplication];
+    
+    
+    UIMutableUserNotificationAction *notificationAction1 = [[UIMutableUserNotificationAction alloc] init];
+    notificationAction1.identifier = @"Accept";
+    notificationAction1.title = @"Responder";
+    notificationAction1.activationMode = UIUserNotificationActivationModeBackground;
+    notificationAction1.destructive = NO;
+    notificationAction1.authenticationRequired = NO;
+    
+    UIMutableUserNotificationAction *notificationAction2 = [[UIMutableUserNotificationAction alloc] init];
+    notificationAction2.identifier = @"Reject";
+    notificationAction2.title = @"Rechazar";
+    notificationAction2.activationMode = UIUserNotificationActivationModeBackground;
+    notificationAction2.destructive = YES;
+    notificationAction2.authenticationRequired = YES;
+    
+    UIMutableUserNotificationCategory *notificationCategory = [[UIMutableUserNotificationCategory alloc] init];
+    notificationCategory.identifier = @"call";
+    [notificationCategory setActions:@[notificationAction1,notificationAction2] forContext:UIUserNotificationActionContextDefault];
+    [notificationCategory setActions:@[notificationAction1,notificationAction2] forContext:UIUserNotificationActionContextMinimal];
+    
+    NSSet *categories = [NSSet setWithObjects:notificationCategory, nil];
+
+    
+    
+    
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
-        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:categories]];
     }
 
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
@@ -180,6 +210,7 @@
     [results setValue:dev.name forKey:@"deviceName"];
     [results setValue:dev.model forKey:@"deviceModel"];
     [results setValue:dev.systemVersion forKey:@"deviceSystemVersion"];
+    
     
     [self successWithMessage:[NSString stringWithFormat:@"%@", token]];
 #endif
@@ -230,16 +261,32 @@
                 break;
             case 10:
                 if (appState == UIApplicationStateActive) {
-                    notificaciones=notificaciones+1;
                     notificationMessage = userInfo;
                     isInline = YES;
                     
                     [self notificationReceived];
                 } else {
-                    //if([userInfo[@"Tipo"] intValue]<5)
-                    //[self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
-                    //else [self setNotification:[userInfo objectForKey:@"Subtitulo"]:@"":[userInfo objectForKey:@"Titulo"]];
-                    //notificationMessage = userInfo;
+                    //if([userInfo[@"Valid"] intValue]==1){
+                       // [self setCallNotification:[userInfo objectForKey:@"Correo"]: [userInfo objectForKey:@"Subtitulo"]:userInfo];
+                   // notificationMessage = userInfo;
+                    /*}else{
+                     notificationMessage = nil;
+                        UIApplication *app = [UIApplication sharedApplication];
+                        NSArray *eventArray = [app scheduledLocalNotifications];
+                        for (int i=0; i<[eventArray count]; i++)
+                        {
+                            UILocalNotification* oneEvent = [eventArray objectAtIndex:i];
+                            NSDictionary *userInfoCurrent = oneEvent.userInfo;
+                            NSString *uid=[NSString stringWithFormat:@"%@",[userInfoCurrent valueForKey:@"uid"]];
+                            NSLog(@"%d", [userInfoCurrent[@"Tipo"] intValue]);
+                            /*if ([uid isEqualToString:uidtodelete])
+                            {
+                                //Cancelling local notification
+                                [app cancelLocalNotification:oneEvent];
+                                break;
+                            }
+                        }
+                    }*/
                 }
                 break;
             default:
@@ -251,7 +298,7 @@
                     [self notificationReceived];
                 } else {
                     //if([userInfo[@"Tipo"] intValue]<5)
-                     [self setNotification:[userInfo objectForKey:@"Titulo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
+                     [self setNotification:[userInfo objectForKey:@"Correo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
                      //else [self setNotification:[userInfo objectForKey:@"Subtitulo"]:@"":[userInfo objectForKey:@"Titulo"]];
                     notificationMessage = userInfo;
                 }
@@ -375,6 +422,31 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
+- (IBAction)setCallNotification:(NSString *)titulo: (NSString *)subtitulo:(NSDictionary *) data {
+    //notificaciones=notificaciones+1;
+    //[UIApplication sharedApplication].applicationIconBadgeNumber++;
+   /* UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+    localNotification.alertBody = [NSString stringWithFormat:@"%@\n%@",titulo,subtitulo];
+    //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0.0"))localNotification.alertTitle=[NSString stringWithFormat:@"%@",BigTitle];
+    localNotification.userInfo=data;
+    localNotification.category=@"call";
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    localNotification.applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];*/
+    
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    MainViewController *rootViewController = window.rootViewController;
+    [rootViewController alert ];
+     
+    //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+    //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    //[self presentViewController:[UIApplication sharedApplication].keyWindow.rootViewController animated:YES completion:nil];
+}
+-(void) cleanCallNot
+{
+    NSLog(@"desaparece");
+}
 
 - (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -467,8 +539,50 @@
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
     
     [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
+    
 }
 
 
+
+@end
+@implementation TestViewController
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        // Uncomment to override the CDVCommandDelegateImpl used
+        // _commandDelegate = [[MainCommandDelegate alloc] initWithViewController:self];
+        // Uncomment to override the CDVCommandQueue used
+        // _commandQueue = [[MainCommandQueue alloc] initWithViewController:self];
+    }
+    return self;
+}
+
+-(void)loadView
+{
+    self.view = [[UIView alloc]initWithFrame:[UIScreen mainScreen].applicationFrame];
+    self.view.backgroundColor = [UIColor grayColor];
+    [self alert ];
+}
+- (void)alert {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"My Alert"
+                                                                   message:@"This is an alert."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 0) {
+        NSLog(@"OK Button is clicked");
+    }
+    else if(buttonIndex == 1) {
+        NSLog(@"Cancel Button is clicked");
+    }
+}
 
 @end

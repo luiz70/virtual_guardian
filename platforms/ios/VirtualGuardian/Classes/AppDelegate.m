@@ -67,7 +67,7 @@
     if (localNotif) {
         
         NSLog(@"****** notifiation ******");
-        application.applicationIconBadgeNumber=11;
+        //application.applicationIconBadgeNumber=11;
     }
     
     

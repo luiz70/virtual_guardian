@@ -126,10 +126,10 @@ angular.module('starter')
                          })
             
             $scope.session.on('answer', function(){
-                              $scope.$apply(function(){
+                              //$scope.$apply(function(){
                               $scope.enCurso=true;
                                             $timeout.cancel($scope.noAl);
-                                            });
+                                //});
 								$scope.soundFile.pause();
                               $scope.iniciaTimer();
                               })

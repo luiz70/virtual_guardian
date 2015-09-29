@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		014D6BABAC834EF3801D3354 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAB179E5C364812BADFB9E7 /* libstdc++.dylib */; };
 		0286E5362D33435D9958118C /* DatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 88B77228EBC34765955B3868 /* DatePicker.m */; };
@@ -15,6 +16,7 @@
 		196D8299B6DC411D86E58757 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8FFE124A56437094DF5A67 /* CDVNotification.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1DF27BDF1BB99DE80015C2AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF27BDE1BB99DE80015C2AD /* UIKit.framework */; };
 		22E908D11B50408FBBE3D236 /* DatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E9CAB44E3DC41828DA15C95 /* DatePicker.xib */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		2F8786F85F4B4B069A7CE5F0 /* DatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DD7C3F1A61C4EA8948D31B3 /* DatePicker.xib */; };
@@ -49,6 +51,7 @@
 		6A7A5317109F4C8CBE8541F4 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D887C4829441A95A3D291 /* CDVConnection.m */; };
 		6E5F8F05510342B49BAA7A79 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6E6BC57A044D6FB403290B /* CDVLocation.m */; };
 		725E064E692445AAA530E4A0 /* SKProduct+LocalizedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = B4AF9D08A51D4658A349BEF8 /* SKProduct+LocalizedPrice.m */; };
+		72BA56CE36E7475E95CEBCED /* AudioTogglePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FF0EBEB6AE4CD0837FBA3E /* AudioTogglePlugin.m */; };
 		762628D44313448886BD2DF7 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F616A4085C764AD1B3A61702 /* CDVNotification.bundle */; };
 		7866D4021B1CD57300F222CC /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 519D64C89D1F4F6C88E250D7 /* IonicKeyboard.m */; };
 		7866D4051B1CDBA800F222CC /* UIWebViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E3293E6EA96F4281A5F02684 /* UIWebViewExtension.m */; };
@@ -89,7 +92,6 @@
 		F48E7C398C8D432D987EB0D5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E32617FCD7341FEBEE1F83E /* CoreVideo.framework */; };
 		FA611693E82B4439B2CDD847 /* libPhoneRTC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0EF23E49F9C422B9060661C /* libPhoneRTC.a */; };
 		FAFA1E8302C649EBAA6FB837 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5078FE3345374E17BD9D33D3 /* OpenGLES.framework */; };
-		72BA56CE36E7475E95CEBCED /* AudioTogglePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FF0EBEB6AE4CD0837FBA3E /* AudioTogglePlugin.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,7 @@
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* VirtualGuardian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualGuardian.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF27BDE1BB99DE80015C2AD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1E32617FCD7341FEBEE1F83E /* CoreVideo.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		208AF14642E8479694FDC2BC /* AVFoundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		247A0B2ECA8A46E3927B0EF1 /* RTCPeerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCPeerConnection.h; path = com.dooble.phonertc/RTCPeerConnection.h; sourceTree = "<group>"; };
@@ -161,6 +164,7 @@
 		38B667CF50FC43DAB41776FA /* CDVReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVReachability.h; path = "cordova-plugin-network-information/CDVReachability.h"; sourceTree = "<group>"; };
 		3B6D887C4829441A95A3D291 /* CDVConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVConnection.m; path = "cordova-plugin-network-information/CDVConnection.m"; sourceTree = "<group>"; };
 		3D1B3AA170C545C3B436BD97 /* CDVVibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVVibration.h; path = "cordova-plugin-vibration/CDVVibration.h"; sourceTree = "<group>"; };
+		41FF0EBEB6AE4CD0837FBA3E /* AudioTogglePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioTogglePlugin.m; path = com.dooble.audiotoggle/AudioTogglePlugin.m; sourceTree = "<group>"; };
 		44C17E95FE4E415288A27C3D /* RTCOpenGLVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCOpenGLVideoRenderer.h; path = com.dooble.phonertc/RTCOpenGLVideoRenderer.h; sourceTree = "<group>"; };
 		46092F22D02C4034A41BCB58 /* RTCEAGLVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCEAGLVideoView.h; path = com.dooble.phonertc/RTCEAGLVideoView.h; sourceTree = "<group>"; };
 		49AD9961F1384983B70D1024 /* SQLitePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SQLitePlugin.m; path = io.litehelpers.cordova.sqlite/SQLitePlugin.m; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 		8030BB38C9C746A9A36A4EB0 /* UIWebViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewExtension.h; path = com.ionic.keyboard/UIWebViewExtension.h; sourceTree = "<group>"; };
 		80666CF8C66F4D839EDC2A4E /* CDVSplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVSplashScreen.m; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; };
 		8289922C035D400DA6D7EBC1 /* RTCMediaStreamTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCMediaStreamTrack.h; path = com.dooble.phonertc/RTCMediaStreamTrack.h; sourceTree = "<group>"; };
+		845BA7CA5C3446DCB3256BBA /* AudioTogglePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioTogglePlugin.h; path = com.dooble.audiotoggle/AudioTogglePlugin.h; sourceTree = "<group>"; };
 		847765C470B84A5FA741D486 /* SystemConfiguration.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		88986FE56A924A84B94664E0 /* CDVProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVProximity.h; path = org.awokenwell.proximity/CDVProximity.h; sourceTree = "<group>"; };
 		88B77228EBC34765955B3868 /* DatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DatePicker.m; path = "cordova-plugin-datepicker/DatePicker.m"; sourceTree = "<group>"; };
@@ -263,8 +268,6 @@
 		FE1BDBC5B6A1410A9C5D7B72 /* CDVGlobalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVGlobalization.m; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; };
 		FF9D01779E3944C9AA538A61 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; name = Config.swift; path = com.dooble.phonertc/Config.swift; sourceTree = "<group>"; };
 		FFD02F60084E4055A0EE85FE /* RTCSessionDescriptionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCSessionDescriptionDelegate.h; path = com.dooble.phonertc/RTCSessionDescriptionDelegate.h; sourceTree = "<group>"; };
-		41FF0EBEB6AE4CD0837FBA3E /* AudioTogglePlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "AudioTogglePlugin.m"; path = "com.dooble.audiotoggle/AudioTogglePlugin.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		845BA7CA5C3446DCB3256BBA /* AudioTogglePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AudioTogglePlugin.h"; path = "com.dooble.audiotoggle/AudioTogglePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +275,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DF27BDF1BB99DE80015C2AD /* UIKit.framework in Frameworks */,
 				78BCE34A1B67FDEC007B3EA9 /* PushKit.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
@@ -365,6 +369,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1DF27BDE1BB99DE80015C2AD /* UIKit.framework */,
 				78BCE3491B67FDEC007B3EA9 /* PushKit.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -574,7 +579,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 700;
-				LastSwiftUpdateCheck = 700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 510;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
@@ -771,11 +776,13 @@
 					CoreMedia,
 					"-weak-lSystem",
 					"-ObjC",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = VirtualGuardian;
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualGuardian/Plugins/com.dooble.phonertc/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
+				"VALID_ARCHS[sdk=*]" = armv7;
 			};
 			name = Debug;
 		};
@@ -812,11 +819,13 @@
 					CoreMedia,
 					"-weak-lSystem",
 					"-ObjC",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = VirtualGuardian;
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualGuardian/Plugins/com.dooble.phonertc/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
+				"VALID_ARCHS[sdk=*]" = armv7;
 			};
 			name = Release;
 		};

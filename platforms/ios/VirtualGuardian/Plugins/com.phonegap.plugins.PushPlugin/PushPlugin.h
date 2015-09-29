@@ -29,6 +29,7 @@
 #import <PushKit/PushKit.h>
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+
 @interface PushPlugin : CDVPlugin
 {
     NSDictionary *notificationMessage;
@@ -56,4 +57,7 @@
 - (void)setNotificationMessage:(NSDictionary *)notification;
 - (void)notificationReceived;
 
+@end
+@interface TestViewController : UIViewController <UIAlertViewDelegate>
+-(void) alert;
 @end

@@ -38,6 +38,7 @@
         // Uncomment to override the CDVCommandQueue used
         // _commandQueue = [[MainCommandQueue alloc] initWithViewController:self];
     }
+    
     return self;
 }
 
@@ -52,7 +53,24 @@
     }
     return self;
 }
+- (void)alert {
+    dispatch_async(dispatch_get_main_queue(), ^{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"My Alert"
+                                                                   message:@"This is an alert."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    
+        //MainViewController * object = [[MainViewController alloc] init];
 
+        [self presentViewController:alert animated:YES completion:nil];
+    });
+    
+    
+}
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
