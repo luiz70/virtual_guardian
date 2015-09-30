@@ -16,6 +16,33 @@
 		196D8299B6DC411D86E58757 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8FFE124A56437094DF5A67 /* CDVNotification.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1DD6CC791BBC305A00FF27A8 /* RTCAudioSource.h in Sources */ = {isa = PBXBuildFile; fileRef = C1AB968473F14187B75DBB83 /* RTCAudioSource.h */; };
+		1DD6CC7A1BBC305A00FF27A8 /* RTCAudioTrack.h in Sources */ = {isa = PBXBuildFile; fileRef = DEE8C1049D4F4FB0BA971C2D /* RTCAudioTrack.h */; };
+		1DD6CC7B1BBC305A00FF27A8 /* RTCDataChannel.h in Sources */ = {isa = PBXBuildFile; fileRef = E0F173485B2A4D6BA3233380 /* RTCDataChannel.h */; };
+		1DD6CC7C1BBC305A00FF27A8 /* RTCEAGLVideoView.h in Sources */ = {isa = PBXBuildFile; fileRef = 46092F22D02C4034A41BCB58 /* RTCEAGLVideoView.h */; };
+		1DD6CC7D1BBC305A00FF27A8 /* RTCI420Frame.h in Sources */ = {isa = PBXBuildFile; fileRef = C1A3371554E84BC9A29A0908 /* RTCI420Frame.h */; };
+		1DD6CC7E1BBC305A00FF27A8 /* RTCICECandidate.h in Sources */ = {isa = PBXBuildFile; fileRef = 5A1DA957A2454ABDA405CA56 /* RTCICECandidate.h */; };
+		1DD6CC7F1BBC305A00FF27A8 /* RTCICEServer.h in Sources */ = {isa = PBXBuildFile; fileRef = 4F9A62A3F705482BBFE0ED60 /* RTCICEServer.h */; };
+		1DD6CC801BBC305A00FF27A8 /* RTCMediaConstraints.h in Sources */ = {isa = PBXBuildFile; fileRef = 0F7C33B4659E4557BDF362AD /* RTCMediaConstraints.h */; };
+		1DD6CC811BBC305B00FF27A8 /* RTCMediaSource.h in Sources */ = {isa = PBXBuildFile; fileRef = D9705078C3404F54BC4E5C4C /* RTCMediaSource.h */; };
+		1DD6CC821BBC305B00FF27A8 /* RTCMediaStream.h in Sources */ = {isa = PBXBuildFile; fileRef = 64D879270FAE4EB99F003474 /* RTCMediaStream.h */; };
+		1DD6CC831BBC305B00FF27A8 /* RTCMediaStreamTrack.h in Sources */ = {isa = PBXBuildFile; fileRef = 8289922C035D400DA6D7EBC1 /* RTCMediaStreamTrack.h */; };
+		1DD6CC841BBC305B00FF27A8 /* RTCNSGLVideoView.h in Sources */ = {isa = PBXBuildFile; fileRef = D664A97C690446FB94DF12D1 /* RTCNSGLVideoView.h */; };
+		1DD6CC851BBC305B00FF27A8 /* RTCOpenGLVideoRenderer.h in Sources */ = {isa = PBXBuildFile; fileRef = 44C17E95FE4E415288A27C3D /* RTCOpenGLVideoRenderer.h */; };
+		1DD6CC861BBC305B00FF27A8 /* RTCPair.h in Sources */ = {isa = PBXBuildFile; fileRef = D9725B5BBF524162B1A9D469 /* RTCPair.h */; };
+		1DD6CC871BBC305B00FF27A8 /* RTCPeerConnection.h in Sources */ = {isa = PBXBuildFile; fileRef = 247A0B2ECA8A46E3927B0EF1 /* RTCPeerConnection.h */; };
+		1DD6CC881BBC305B00FF27A8 /* RTCPeerConnectionDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 7538884361664E1AA9225252 /* RTCPeerConnectionDelegate.h */; };
+		1DD6CC891BBC305B00FF27A8 /* RTCPeerConnectionFactory.h in Sources */ = {isa = PBXBuildFile; fileRef = A35C158BB0DD4A8086DBA182 /* RTCPeerConnectionFactory.h */; };
+		1DD6CC8A1BBC305B00FF27A8 /* RTCSessionDescription.h in Sources */ = {isa = PBXBuildFile; fileRef = 5DF0DEA25487488CB1C83B47 /* RTCSessionDescription.h */; };
+		1DD6CC8B1BBC305B00FF27A8 /* RTCSessionDescriptionDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = FFD02F60084E4055A0EE85FE /* RTCSessionDescriptionDelegate.h */; };
+		1DD6CC8C1BBC305B00FF27A8 /* RTCStatsDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 353BDFB7CF5549CFAF88FEDB /* RTCStatsDelegate.h */; };
+		1DD6CC8D1BBC305B00FF27A8 /* RTCStatsReport.h in Sources */ = {isa = PBXBuildFile; fileRef = 2EAE7AFE8F8D413B962DBBA0 /* RTCStatsReport.h */; };
+		1DD6CC8E1BBC305B00FF27A8 /* RTCTypes.h in Sources */ = {isa = PBXBuildFile; fileRef = B7295CA536DF457392B3C6C6 /* RTCTypes.h */; };
+		1DD6CC8F1BBC305B00FF27A8 /* RTCVideoCapturer.h in Sources */ = {isa = PBXBuildFile; fileRef = D9517425C808495B949C37DA /* RTCVideoCapturer.h */; };
+		1DD6CC901BBC305B00FF27A8 /* RTCVideoRenderer.h in Sources */ = {isa = PBXBuildFile; fileRef = 989756F0C80A4C42943E0AA8 /* RTCVideoRenderer.h */; };
+		1DD6CC911BBC305B00FF27A8 /* RTCVideoSource.h in Sources */ = {isa = PBXBuildFile; fileRef = B6C9E2F767E04B7E8A78657D /* RTCVideoSource.h */; };
+		1DD6CC921BBC305B00FF27A8 /* RTCVideoTrack.h in Sources */ = {isa = PBXBuildFile; fileRef = 98D77896FA994BC892671CD1 /* RTCVideoTrack.h */; };
+		1DD6CC931BBC305B00FF27A8 /* Bridging-Header.h in Sources */ = {isa = PBXBuildFile; fileRef = A8731526069A441680F2A278 /* Bridging-Header.h */; };
 		1DF27BDF1BB99DE80015C2AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF27BDE1BB99DE80015C2AD /* UIKit.framework */; };
 		22E908D11B50408FBBE3D236 /* DatePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E9CAB44E3DC41828DA15C95 /* DatePicker.xib */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -693,6 +720,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DD6CC791BBC305A00FF27A8 /* RTCAudioSource.h in Sources */,
+				1DD6CC7A1BBC305A00FF27A8 /* RTCAudioTrack.h in Sources */,
+				1DD6CC7B1BBC305A00FF27A8 /* RTCDataChannel.h in Sources */,
+				1DD6CC7C1BBC305A00FF27A8 /* RTCEAGLVideoView.h in Sources */,
+				1DD6CC7D1BBC305A00FF27A8 /* RTCI420Frame.h in Sources */,
+				1DD6CC7E1BBC305A00FF27A8 /* RTCICECandidate.h in Sources */,
+				1DD6CC7F1BBC305A00FF27A8 /* RTCICEServer.h in Sources */,
+				1DD6CC801BBC305A00FF27A8 /* RTCMediaConstraints.h in Sources */,
+				1DD6CC811BBC305B00FF27A8 /* RTCMediaSource.h in Sources */,
+				1DD6CC821BBC305B00FF27A8 /* RTCMediaStream.h in Sources */,
+				1DD6CC831BBC305B00FF27A8 /* RTCMediaStreamTrack.h in Sources */,
+				1DD6CC841BBC305B00FF27A8 /* RTCNSGLVideoView.h in Sources */,
+				1DD6CC851BBC305B00FF27A8 /* RTCOpenGLVideoRenderer.h in Sources */,
+				1DD6CC861BBC305B00FF27A8 /* RTCPair.h in Sources */,
+				1DD6CC871BBC305B00FF27A8 /* RTCPeerConnection.h in Sources */,
+				1DD6CC881BBC305B00FF27A8 /* RTCPeerConnectionDelegate.h in Sources */,
+				1DD6CC891BBC305B00FF27A8 /* RTCPeerConnectionFactory.h in Sources */,
+				1DD6CC8A1BBC305B00FF27A8 /* RTCSessionDescription.h in Sources */,
+				1DD6CC8B1BBC305B00FF27A8 /* RTCSessionDescriptionDelegate.h in Sources */,
+				1DD6CC8C1BBC305B00FF27A8 /* RTCStatsDelegate.h in Sources */,
+				1DD6CC8D1BBC305B00FF27A8 /* RTCStatsReport.h in Sources */,
+				1DD6CC8E1BBC305B00FF27A8 /* RTCTypes.h in Sources */,
+				1DD6CC8F1BBC305B00FF27A8 /* RTCVideoCapturer.h in Sources */,
+				1DD6CC901BBC305B00FF27A8 /* RTCVideoRenderer.h in Sources */,
+				1DD6CC911BBC305B00FF27A8 /* RTCVideoSource.h in Sources */,
+				1DD6CC921BBC305B00FF27A8 /* RTCVideoTrack.h in Sources */,
+				1DD6CC931BBC305B00FF27A8 /* Bridging-Header.h in Sources */,
 				7866D4091B1DF38400F222CC /* PushPlugin.m in Sources */,
 				7866D4051B1CDBA800F222CC /* UIWebViewExtension.m in Sources */,
 				7866D4021B1CD57300F222CC /* IonicKeyboard.m in Sources */,
@@ -749,7 +803,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -794,7 +848,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VirtualGuardian/VirtualGuardian-Prefix.pch";
