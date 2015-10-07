@@ -14,6 +14,7 @@
 		11D061A6CDEB426498D77FFD /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94D152B46F9C45E2A6AA213C /* Toast+UIView.m */; };
 		12868B60E6124101A94743F3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B52D8F61F339427FAD0EF48F /* QuartzCore.framework */; };
 		196D8299B6DC411D86E58757 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8FFE124A56437094DF5A67 /* CDVNotification.m */; };
+		1A1870841BC310C300448A81 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1870831BC310C300448A81 /* StoreKit.framework */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1DD6CC791BBC305A00FF27A8 /* RTCAudioSource.h in Sources */ = {isa = PBXBuildFile; fileRef = C1AB968473F14187B75DBB83 /* RTCAudioSource.h */; };
@@ -72,7 +73,6 @@
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		607634F450394830B94E9229 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 1209C363ECBC415FA8E29148 /* sqlite3.c */; };
 		609E25EB9B3E4C9397D4E933 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F53E5DCFC0C41E99200B3AF /* CDVLogger.m */; };
-		610F2508AC764B5BB518349A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924CC11E972B4105A5FE4FDA /* StoreKit.framework */; };
 		649D987299F34E999B0728BC /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DE0343C8CC4C6492EBE441 /* CoreAudio.framework */; };
 		6A3307690EFA4CABAC444DCA /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B39558D510B045BA94F4C780 /* libsqlite3.0.dylib */; };
 		6A7A5317109F4C8CBE8541F4 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D887C4829441A95A3D291 /* CDVConnection.m */; };
@@ -147,6 +147,7 @@
 		0F7C33B4659E4557BDF362AD /* RTCMediaConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTCMediaConstraints.h; path = com.dooble.phonertc/RTCMediaConstraints.h; sourceTree = "<group>"; };
 		1209C363ECBC415FA8E29148 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; name = sqlite3.c; path = "cordova-sqlite-storage/sqlite3.c"; sourceTree = "<group>"; };
 		1332E24DB8C046148CF4599C /* CDVBackgroundGeoLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVBackgroundGeoLocation.h; path = "org.transistorsoft.cordova.background-geolocation/CDVBackgroundGeoLocation.h"; sourceTree = "<group>"; };
+		1A1870831BC310C300448A81 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* VirtualGuardian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualGuardian.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -242,7 +243,6 @@
 		89D3DEADC69944C28C9F3C89 /* CDVGlobalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVGlobalization.h; path = "cordova-plugin-globalization/CDVGlobalization.h"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* VirtualGuardian-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "VirtualGuardian-Info.plist"; path = "../VirtualGuardian-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8F2492058EA045CB8E40C8D1 /* DatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatePicker.h; path = com.plugin.datepicker/DatePicker.h; sourceTree = "<group>"; };
-		924CC11E972B4105A5FE4FDA /* StoreKit.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		939481291AB44F9D9AD92F36 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVInAppBrowser.m; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.m; sourceTree = "<group>"; };
 		93D01E9ACF7B44978D361FD7 /* CDVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVConnection.h; path = "cordova-plugin-network-information/CDVConnection.h"; sourceTree = "<group>"; };
 		94D152B46F9C45E2A6AA213C /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Toast+UIView.m"; path = "nl.x-services.plugins.toast/Toast+UIView.m"; sourceTree = "<group>"; };
@@ -313,11 +313,11 @@
 				9452F802B32F4EBA8CB5AE2B /* AudioToolbox.framework in Frameworks */,
 				12868B60E6124101A94743F3 /* QuartzCore.framework in Frameworks */,
 				D1B0827DA6B348598AAA5D2A /* AVFoundation.framework in Frameworks */,
-				610F2508AC764B5BB518349A /* StoreKit.framework in Frameworks */,
 				FA611693E82B4439B2CDD847 /* libPhoneRTC.a in Frameworks */,
 				C99627C6DD9D405D9DB5EB98 /* libc++.dylib in Frameworks */,
 				014D6BABAC834EF3801D3354 /* libstdc++.dylib in Frameworks */,
 				6A3307690EFA4CABAC444DCA /* libsqlite3.0.dylib in Frameworks */,
+				1A1870841BC310C300448A81 /* StoreKit.framework in Frameworks */,
 				FAFA1E8302C649EBAA6FB837 /* OpenGLES.framework in Frameworks */,
 				F48E7C398C8D432D987EB0D5 /* CoreVideo.framework in Frameworks */,
 				B964D9B22BE74509B239D49C /* CoreMedia.framework in Frameworks */,
@@ -396,6 +396,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A1870831BC310C300448A81 /* StoreKit.framework */,
 				1DF27BDE1BB99DE80015C2AD /* UIKit.framework */,
 				78BCE3491B67FDEC007B3EA9 /* PushKit.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
@@ -406,7 +407,6 @@
 				4F047DD1ED804CE3AC6E8677 /* AudioToolbox.framework */,
 				B52D8F61F339427FAD0EF48F /* QuartzCore.framework */,
 				208AF14642E8479694FDC2BC /* AVFoundation.framework */,
-				924CC11E972B4105A5FE4FDA /* StoreKit.framework */,
 				C0EF23E49F9C422B9060661C /* libPhoneRTC.a */,
 				D999B9AB7F3740C48E79E06B /* libc++.dylib */,
 				2CAB179E5C364812BADFB9E7 /* libstdc++.dylib */,
@@ -615,6 +615,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -802,6 +805,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -833,6 +837,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = VirtualGuardian;
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualGuardian/Plugins/com.dooble.phonertc/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
@@ -876,6 +881,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = VirtualGuardian;
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "VirtualGuardian/Plugins/com.dooble.phonertc/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;

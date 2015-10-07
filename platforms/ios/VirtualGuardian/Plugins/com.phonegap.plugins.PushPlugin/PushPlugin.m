@@ -297,9 +297,9 @@
                     
                     [self notificationReceived];
                 } else {
-                    //if([userInfo[@"Tipo"] intValue]<5)
+                    if([userInfo[@"Tipo"] intValue]<5)
                      [self setNotification:[userInfo objectForKey:@"Correo"]:[userInfo objectForKey:@"Subtitulo"]:@"Virtual Guardian"];
-                     //else [self setNotification:[userInfo objectForKey:@"Subtitulo"]:@"":[userInfo objectForKey:@"Titulo"]];
+                     else [self setNotification:[userInfo objectForKey:@"Subtitulo"]:@"":[userInfo objectForKey:@"Titulo"]];
                     notificationMessage = userInfo;
                 }
                 break;

@@ -128,10 +128,11 @@ angular.module('starter')
             $scope.session.on('answer', function(){
                               //$scope.$apply(function(){
                               $scope.enCurso=true;
-                                            $timeout.cancel($scope.noAl);
+                                if($scope.noAl)$timeout.cancel($scope.noAl);
                                 //});
-								$scope.soundFile.pause();
+								if($scope.soundFile)$scope.soundFile.pause();
                               $scope.iniciaTimer();
+                              //alert(2);
                               })
             $scope.session.on('disconnect', function(){
                               if($scope.enCurso){
@@ -231,6 +232,7 @@ angular.module('starter')
 	}
 	$scope.iniciaTimer=function(){
 		$scope.timer=$interval(function() {
+                               
             $scope.tiempoLlamada++;
           }, 1000);
 	}

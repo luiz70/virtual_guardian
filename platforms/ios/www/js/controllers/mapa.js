@@ -116,7 +116,7 @@ angular.module('starter')
 
 	}
             $scope.onErrorp=function(){
-            $rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
+            //$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
 
             }
 	$scope.revisaPrimeraPos=function(position){
@@ -156,14 +156,14 @@ angular.module('starter')
 	}
 	$scope.mnsjNoGPS=false
 	$scope.onErrorc=function(){
-            if(!$rootScope.recorrido){
-		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
+           // if(!$rootScope.recorrido){
+		//$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
             
-            }else{
+          /*  }else{
 		$timeout(function(){
 				$rootScope.nextRecorrido();	
 				},500)
-		}
+		}*/
 	}
 	$rootScope.onSPosc=function(position){
 		$scope.carroMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
@@ -289,7 +289,7 @@ $scope.hideBarra=function(){
             $rootScope.miubicacion=new google.maps.LatLng(0,0);
             $rootScope.cargando=false;
 		
-		$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
+		//$rootScope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[29],function(){});
 		if($scope.Conexion(1,function(){
 			$rootScope.sinMapa=true;
 			$rootScope.cargando=false;
