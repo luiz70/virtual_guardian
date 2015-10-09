@@ -37,10 +37,10 @@
     NSString *notificationCallbackId;
     NSString *callback;
     int notificaciones;
-    
+    BOOL background;
     BOOL ready;
 }
-
+@property BOOL  background;
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, copy) NSString *notificationCallbackId;
 @property (nonatomic, copy) NSString *callback;

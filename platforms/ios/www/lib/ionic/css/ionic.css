@@ -6315,14 +6315,18 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
   /* hide any radio button inputs elements (the ugly circles) */
   position: absolute;
   left: -9999px; }
-  .item-radio input:checked ~ .item-content {
+  .item-radio input:checked + .item-content {
     /* style the item content when its checked */
     background: #f7f7f7; 
     padding: 12px 49px 12px 16px;
 }
-  .item-radio input:checked ~ .radio-icon {
+.item-radio input:checked ~ .radio-icon {
     /* show the checkmark icon when its checked */
     visibility: visible; }
+  .item-radio input:checked + .radio-icon {
+    /* show the checkmark icon when its checked */
+    visibility: visible !important;
+  }
 
 .platform-android.grade-b .item-radio, .platform-android.grade-c .item-radio {
   -webkit-animation: androidCheckedbugfix infinite 1s; }

@@ -53,6 +53,7 @@ angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io
 	$rootScope.vw=window.innerWidth/100;
 	if(window.innerWidth<=320)$rootScope.small=true;
 	else $rootScope.small=false;
+	if(!window.device)window.device={platform:"iOS",model:"ios 8.0"}
 	$rootScope.platform=window.device.platform;
 	$rootScope.OS=window.device.platform;
 	$rootScope.iOS=(window.device.platform=="iOS");
