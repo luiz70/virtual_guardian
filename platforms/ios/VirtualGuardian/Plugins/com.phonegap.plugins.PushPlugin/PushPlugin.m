@@ -42,6 +42,8 @@
 @synthesize notificationCallbackId;
 @synthesize callback;
 @synthesize locationManager;
+@synthesize callNotification;
+
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
@@ -143,23 +145,24 @@
     
     
     UIMutableUserNotificationAction *notificationAction1 = [[UIMutableUserNotificationAction alloc] init];
-    notificationAction1.identifier = @"Accept";
+    notificationAction1.identifier = @"aceptar";
     notificationAction1.title = @"Responder";
-    notificationAction1.activationMode = UIUserNotificationActivationModeBackground;
+    notificationAction1.activationMode = UIUserNotificationActivationModeForeground;
     notificationAction1.destructive = NO;
+    //notificationAction1.behavior=UIUserNotificationActionBehaviorDefault;
     notificationAction1.authenticationRequired = NO;
     
     UIMutableUserNotificationAction *notificationAction2 = [[UIMutableUserNotificationAction alloc] init];
-    notificationAction2.identifier = @"Reject";
+    notificationAction2.identifier = @"rechazar";
     notificationAction2.title = @"Rechazar";
     notificationAction2.activationMode = UIUserNotificationActivationModeBackground;
-    notificationAction2.destructive = YES;
-    notificationAction2.authenticationRequired = YES;
+    notificationAction2.destructive = NO;
+    notificationAction2.authenticationRequired = NO;
     
     UIMutableUserNotificationCategory *notificationCategory = [[UIMutableUserNotificationCategory alloc] init];
     notificationCategory.identifier = @"call";
-    [notificationCategory setActions:@[notificationAction1,notificationAction2] forContext:UIUserNotificationActionContextDefault];
-    [notificationCategory setActions:@[notificationAction1,notificationAction2] forContext:UIUserNotificationActionContextMinimal];
+    [notificationCategory setActions:@[notificationAction2,notificationAction1] forContext:UIUserNotificationActionContextDefault];
+    [notificationCategory setActions:@[notificationAction2,notificationAction1] forContext:UIUserNotificationActionContextMinimal];
     
     NSSet *categories = [NSSet setWithObjects:notificationCategory, nil];
 
@@ -216,9 +219,16 @@
 #endif
 
 }
+- (void)cancelcall{
+    NSLog(@"cancela");
+    notificationMessage = nil;
+}
+-(void)aceptcall{
+    NSLog(@"acepta");
+    [self notificationReceived];
+}
 // Handle incoming pushes
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
-    NSLog(@"hola");
     // Process the received push
     UIApplication * application =[UIApplication sharedApplication];
     //
@@ -260,33 +270,31 @@
                 }
                 break;
             case 10:
+                //notificationMessage = userInfo;
+                if(!inCall || [userInfo[@"Operacion"] intValue]==0){
+                    inCall=YES;
                 if (appState == UIApplicationStateActive) {
+                    if([userInfo[@"Operacion"] intValue]==1){
                     notificationMessage = userInfo;
                     isInline = YES;
                     
-                    [self notificationReceived];
+                        [self notificationReceived];
+                    }else inCall=false;
                 } else {
-                    //if([userInfo[@"Valid"] intValue]==1){
-                       // [self setCallNotification:[userInfo objectForKey:@"Correo"]: [userInfo objectForKey:@"Subtitulo"]:userInfo];
-                   // notificationMessage = userInfo;
-                    /*}else{
-                     notificationMessage = nil;
-                        UIApplication *app = [UIApplication sharedApplication];
-                        NSArray *eventArray = [app scheduledLocalNotifications];
-                        for (int i=0; i<[eventArray count]; i++)
-                        {
-                            UILocalNotification* oneEvent = [eventArray objectAtIndex:i];
-                            NSDictionary *userInfoCurrent = oneEvent.userInfo;
-                            NSString *uid=[NSString stringWithFormat:@"%@",[userInfoCurrent valueForKey:@"uid"]];
-                            NSLog(@"%d", [userInfoCurrent[@"Tipo"] intValue]);
-                            /*if ([uid isEqualToString:uidtodelete])
-                            {
-                                //Cancelling local notification
-                                [app cancelLocalNotification:oneEvent];
-                                break;
-                            }
-                        }
-                    }*/
+                    if([userInfo[@"Operacion"] intValue]==1){
+                       [self setCallNotification:[userInfo objectForKey:@"Correo"]: [userInfo objectForKey:@"Subtitulo"]:userInfo];
+                    notificationMessage = userInfo;
+                    /*[NSTimer scheduledTimerWithTimeInterval:30.0
+                                                     target:self
+                                                   selector:@selector(perdida)
+                                                   userInfo:notificationMessage
+                                                    repeats:NO];*/
+                    }else{
+                        [self perdida];
+                    }
+                }
+                }else{
+                //numeroocupado
                 }
                 break;
             default:
@@ -310,7 +318,24 @@
     return;
 
 }
+-(void)perdida {
+    //[UIApplication sharedApplication].applicationIconBadgeNumber--;
+    //[[UIApplication sharedApplication] cancelAllLocalNotifications];
+    //NSLog(@"%d",[callNotification.userInfo[@"Tipo"] intValue]);
+    [[UIApplication sharedApplication] cancelLocalNotification:callNotification];
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+    localNotification.alertBody = [NSString stringWithFormat:@"Llamada perdida de %@",callNotification.userInfo[@"Correo"]];
+    //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0.0"))localNotification.alertTitle=[NSString stringWithFormat:@"%@",BigTitle];
+    localNotification.soundName = @"none.wav";
+    localNotification.applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+     notificationMessage = nil;
+    callNotification=nil;
+    inCall=NO;
 
+}
 -(int)revisaPersonal:(NSDictionary *)userInfo{
     
     if ([CLLocationManager locationServicesEnabled]) {
@@ -424,20 +449,20 @@
 
 - (IBAction)setCallNotification:(NSString *)titulo: (NSString *)subtitulo:(NSDictionary *) data {
     //notificaciones=notificaciones+1;
-    //[UIApplication sharedApplication].applicationIconBadgeNumber++;
-   /* UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
-    localNotification.alertBody = [NSString stringWithFormat:@"%@\n%@",titulo,subtitulo];
-    //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0.0"))localNotification.alertTitle=[NSString stringWithFormat:@"%@",BigTitle];
-    localNotification.userInfo=data;
-    localNotification.category=@"call";
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.applicationIconBadgeNumber = 0;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];*/
+    [UIApplication sharedApplication].applicationIconBadgeNumber++;
+    callNotification = [[UILocalNotification alloc] init];
+    callNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+    callNotification.alertBody = [NSString stringWithFormat:@"%@ %@",subtitulo,titulo];
+    //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0.0"))localNotification.alertTitle=[NSString stringWithFormat:@"%@",titulo];
+    callNotification.userInfo=data;
+    callNotification.category=@"call";
+    callNotification.soundName = @"marimba.wav";
+    callNotification.alertAction=@"responder";
+    callNotification.applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] scheduleLocalNotification:callNotification];
     
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    MainViewController *rootViewController = window.rootViewController;
-    [rootViewController alert ];
+    
+    
      
     //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
     //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
@@ -545,44 +570,4 @@
 
 
 @end
-@implementation TestViewController
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        // Uncomment to override the CDVCommandDelegateImpl used
-        // _commandDelegate = [[MainCommandDelegate alloc] initWithViewController:self];
-        // Uncomment to override the CDVCommandQueue used
-        // _commandQueue = [[MainCommandQueue alloc] initWithViewController:self];
-    }
-    return self;
-}
 
--(void)loadView
-{
-    self.view = [[UIView alloc]initWithFrame:[UIScreen mainScreen].applicationFrame];
-    self.view.backgroundColor = [UIColor grayColor];
-    [self alert ];
-}
-- (void)alert {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"My Alert"
-                                                                   message:@"This is an alert."
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {}];
-    
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == 0) {
-        NSLog(@"OK Button is clicked");
-    }
-    else if(buttonIndex == 1) {
-        NSLog(@"Cancel Button is clicked");
-    }
-}
-
-@end

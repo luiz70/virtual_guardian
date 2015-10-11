@@ -184,7 +184,7 @@ $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification
         }
         else if(notification.Tipo=="10"){
                
-            $rootScope.PersonaLlamada={
+        $rootScope.PersonaLlamada={
                IdCliente:notification.IdUsuario,
                Correo:notification.Correo,
                Llamando:false,

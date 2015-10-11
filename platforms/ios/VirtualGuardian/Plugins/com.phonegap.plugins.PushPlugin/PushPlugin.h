@@ -39,6 +39,8 @@
     int notificaciones;
     BOOL background;
     BOOL ready;
+    BOOL inCall;
+    
 }
 @property BOOL  background;
 @property (nonatomic, copy) NSString *callbackId;
@@ -47,17 +49,18 @@
 @property (nonatomic,copy) CLLocationManager *locationManager;
 @property (nonatomic,retain) NSString *DistanciaAuto;
 @property (nonatomic, strong) NSDictionary *notificationMessage;
+@property (nonatomic,copy) UILocalNotification * callNotification;
 @property BOOL                          isInline;
 @property int notificaciones;
 
 - (void)register:(CDVInvokedUrlCommand*)command;
 - (void)carLocation:(CDVInvokedUrlCommand*)command;
+- (void)cancelcall;
+- (void)aceptcall;
 - (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type;
 - (void)setNotificationMessage:(NSDictionary *)notification;
 - (void)notificationReceived;
 
-@end
-@interface TestViewController : UIViewController <UIAlertViewDelegate>
--(void) alert;
+
 @end

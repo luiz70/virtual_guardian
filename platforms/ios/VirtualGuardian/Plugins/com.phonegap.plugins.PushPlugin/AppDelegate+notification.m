@@ -13,6 +13,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
+
 static char launchNotificationKey;
 
 CLLocationManager *locationManager;
@@ -66,6 +67,22 @@ NSMutableArray *locations;
     PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
     //[pushHandler didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler
+{
+    PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
+    if ([identifier isEqualToString:@"aceptar"])
+    {
+        [pushHandler aceptcall];
+        //[[FightManager sharedManager] fightLikeAnIdiot];
+    }
+    else if ([identifier isEqualToString:@"rechazar"])
+    {
+        [pushHandler cancelcall];
+        //[[FightManager sharedManager] surrenderLikeABaby];
+    }
+    
+    completionHandler();
+}
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     PushPlugin *pushHandler = [self getCommandInstance:@"PushPlugin"];
@@ -81,6 +98,23 @@ NSMutableArray *locations;
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
     NSLog(@"active");
+    /*SocketIOClient * socket = [[SocketIOClient alloc] initWithSocketURL:@"localhost:8080" opts:nil];
+    
+    [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"socket connected");
+    }];
+    
+    [socket on:@"currentAmount" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        double cur = [[data objectAtIndex:0] floatValue];
+        
+        [socket emitWithAck:@"canUpdate" withItems:@[@(cur)]](0, ^(NSArray* data) {
+            [socket emit:@"update" withItems:@[@{@"amount": @(cur + 2.50)}]];
+        });
+        
+        [ack with:@[@"Got your currentAmount, ", @"dude"]];
+    }];
+    
+    [socket connect];*/
     
     //zero badge
     
