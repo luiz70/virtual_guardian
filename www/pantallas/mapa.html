@@ -1,7 +1,7 @@
 <ion-pan ng-hide="!pantallas[0]" style="  position: absolute;  top: 0vh;  background: none;  bottom: 0vh;  height: auto;  width: 100vw;">
 <ion-content id="inicio_mapa" class="inicio_mapa"  data-tap-disabled="true" style="top:0px;" on-touch="hideBarra()" ng-mouseover="hideBarra()" ng-hide="sinMapa" >
 </ion-content> 
-<div style="position: absolute;top: 11vh;left: 1vh;padding: 1vh;padding-bottom: 0px;background-color: #3E3E3E;border-radius: 5px;opacity: 0.8;" class="ng-hide" ng-show="loadingEvents"> <ion-spinner icon="android" class="spinner-dark"></ion-spinner></div>
+<!--div style="position: absolute;top: 11vh;left: 1vh;padding: 1vh;padding-bottom: 0px;background-color: #3E3E3E;border-radius: 5px;opacity: 0.8;" class="ng-hide" ng-show="loadingEvents"> <ion-spinner icon="android" class="spinner-dark"></ion-spinner></div-->
 <div id="msj_map" class="ng-hide" style="position: absolute;top: 8vh;height: auto;background-color: rgba(255, 255, 255, 0.9);padding: 1vh;z-index: 1;margin-top: 1vh;left: 1vh;right: 1vh;-webkit-box-shadow: 0 0 8px #000;font-size:3vh; box-shadow: 2px 2px 2px #A0A0A0;text-align:center" ng-show="msj_map"></div>
 <div style="position: absolute;top: 8vh;width: 100%;bottom: 0vh;overflow: hidden;" class="ng-hide" ng-show="sinMapa" ng-click="Reload()">
     <div style="  width: 50vw;position: absolute;height: 50vw;top: 0px;bottom: 8vh;left: 0px;  right: 0px;  margin: auto;  opacity: 0.2;">

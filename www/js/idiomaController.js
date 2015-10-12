@@ -64,7 +64,8 @@ angular.module('starter')
 					8:"Llamada terminada",
 					9:"Se ha terminado la llamada.",
 					10:"Conectando llamada...",
-                    11:" ha terminado la llamada."
+                    11:" ha terminado la llamada.",
+                    12:"Usuario no disponible."
 					},
 				cuenta:{
 					1:"Usuario",
@@ -150,7 +151,7 @@ angular.module('starter')
                 27:"Ayuda",
             28:"Mi cuenta",
             29:"Seleccionar todo",
-            30:"Desseleccionar todo",
+            30:"Borrar selección",
 				},
 				recorrido:{
 					1:"¡Bienvenido!",
@@ -543,6 +544,7 @@ angular.module('starter')
 			}
 		
 	};
+            
 	$rootScope.cleanMemory=function(){
 	  	window.localStorage.removeItem("nPendientes");
             console.log("clean");

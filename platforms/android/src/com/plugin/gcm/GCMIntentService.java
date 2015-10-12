@@ -584,15 +584,15 @@ public class GCMIntentService extends GCMBaseIntentService {
 		notificationIntent.putExtra("pushBundle", extras);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		
-		Intent dimissIntent = new Intent(context, NotificationActivity.class);
+		Intent dimissIntent = new Intent(this, NotificationActivity.class);
 	    // This flag must be set on activities started from a notification.
 		dimissIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS); 
 		dimissIntent.putExtra("pushBundle", extras);
 	    // Return a pending intent to pass to the notification manager.
-	    PendingIntent dimiss= PendingIntent.getActivity(context,0, dimissIntent,PendingIntent.FLAG_NO_CREATE);
+	    PendingIntent dimiss= PendingIntent.getActivity(this,0, dimissIntent,PendingIntent.FLAG_CANCEL_CURRENT);
 ////////////////////////alarma
 	    AlarmManager manager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);   
-        manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 90000, dimiss);  
+        manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30000, dimiss);  
 	    ///////////////////////////
 	
 		//DEFAULTS DE LA NOTIFICACION
