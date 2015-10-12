@@ -284,11 +284,11 @@
                     if([userInfo[@"Operacion"] intValue]==1){
                        [self setCallNotification:[userInfo objectForKey:@"Correo"]: [userInfo objectForKey:@"Subtitulo"]:userInfo];
                     notificationMessage = userInfo;
-                    /*[NSTimer scheduledTimerWithTimeInterval:30.0
+                    [NSTimer scheduledTimerWithTimeInterval:25.0
                                                      target:self
                                                    selector:@selector(perdida)
                                                    userInfo:notificationMessage
-                                                    repeats:NO];*/
+                                                    repeats:NO];
                     }else{
                         [self perdida];
                     }
@@ -322,6 +322,7 @@
     //[UIApplication sharedApplication].applicationIconBadgeNumber--;
     //[[UIApplication sharedApplication] cancelAllLocalNotifications];
     //NSLog(@"%d",[callNotification.userInfo[@"Tipo"] intValue]);
+    if(callNotification){
     [[UIApplication sharedApplication] cancelLocalNotification:callNotification];
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
@@ -333,6 +334,7 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
      notificationMessage = nil;
     callNotification=nil;
+    }
     inCall=NO;
 
 }
