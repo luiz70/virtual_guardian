@@ -370,9 +370,6 @@ div{
 	background-color: rgba(234, 231, 231, 0.3) !important;
     color: #A1A1A1 !important;
 }
-.gmnoprint, .gm-style-cc, .gm-style > div + div {
-	opacity:0;
-}
 /*.popupActivo > .popup > .popup-buttons {
 position: absolute !important;
   bottom: 0px;
