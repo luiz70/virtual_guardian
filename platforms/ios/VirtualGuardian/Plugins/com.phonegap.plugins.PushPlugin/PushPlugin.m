@@ -279,7 +279,13 @@
                     isInline = YES;
                     
                         [self notificationReceived];
+                        
                     }else inCall=false;
+                    [NSTimer scheduledTimerWithTimeInterval:25.0
+                                                     target:self
+                                                   selector:@selector(perdida)
+                                                   userInfo:notificationMessage
+                                                    repeats:NO];
                 } else {
                     if([userInfo[@"Operacion"] intValue]==1){
                        [self setCallNotification:[userInfo objectForKey:@"Correo"]: [userInfo objectForKey:@"Subtitulo"]:userInfo];
