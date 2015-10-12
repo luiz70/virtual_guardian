@@ -211,12 +211,13 @@ angular.module('starter')
 $scope.cuelgaCall=function(){
     $timeout.cancel($scope.noAl);
     $scope.EstadoLlamada=$rootScope.idioma.llamada[8];
-    $scope.enCurso=false;
+    
     signaling.emit('colgar',$rootScope.Usuario.Id,$rootScope.PersonaLlamada.IdCliente);
     $rootScope.SocketOn=false;
     signaling.removeAllListeners();
     signaling.disconnect();
     if($scope.session && $scope.enCurso)$scope.session.close();
+    $scope.enCurso=false;
     $scope.proximitysensorWatchStop();
     $interval.cancel($scope.timer);
     $scope.timer=null;
