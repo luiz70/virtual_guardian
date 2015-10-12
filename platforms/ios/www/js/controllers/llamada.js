@@ -197,7 +197,7 @@ angular.module('starter')
           }, 1000);
 	}
 	$scope.activaFuncion=function(val){
-		if(val==1){
+		/*if(val==1){
 			$scope.altavoz=!$scope.altavoz;
             console.log($scope.altavoz);
             if($scope.altavoz)AudioToggle.setAudioMode(AudioToggle.SPEAKER)
@@ -205,7 +205,7 @@ angular.module('starter')
 		}else{
 			//mute
 			$scope.silencio=!$scope.silencio;
-        }
+        }*/
 	}
             
 $scope.cuelgaCall=function(){
@@ -216,12 +216,14 @@ $scope.cuelgaCall=function(){
     $rootScope.SocketOn=false;
     signaling.removeAllListeners();
     signaling.disconnect();
-    if($scope.session && $scope.enCurso)$scope.session.close();
+    if($scope.session)$scope.session.close();
+            $scope.session=null;
     $scope.enCurso=false;
     $scope.proximitysensorWatchStop();
     $interval.cancel($scope.timer);
     $scope.timer=null;
     $scope.tiempoLlamada=0;
+    AudioToggle.setAudioMode(AudioToggle.SPEAKER)
     //if($scope.soundFile)$scope.soundFile.pause();
     $location.path('/inicio');
 }

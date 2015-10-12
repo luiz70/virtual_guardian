@@ -40,6 +40,7 @@
     BOOL background;
     BOOL ready;
     BOOL inCall;
+    NSTimer *time;
     
 }
 @property BOOL  background;

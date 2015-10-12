@@ -222,10 +222,13 @@
 - (void)cancelcall{
     NSLog(@"cancela");
     notificationMessage = nil;
+    [self timerOff];
+    
 }
 -(void)aceptcall{
     NSLog(@"acepta");
     [self notificationReceived];
+    [self timerOff];
 }
 // Handle incoming pushes
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
@@ -281,16 +284,16 @@
                         [self notificationReceived];
                         
                     }else inCall=false;
-                    [NSTimer scheduledTimerWithTimeInterval:25.0
+                    /*time=[NSTimer scheduledTimerWithTimeInterval:25.0
                                                      target:self
                                                    selector:@selector(perdida)
                                                    userInfo:notificationMessage
-                                                    repeats:NO];
+                                                    repeats:NO];*/
                 } else {
                     if([userInfo[@"Operacion"] intValue]==1){
                        [self setCallNotification:[userInfo objectForKey:@"Correo"]: [userInfo objectForKey:@"Subtitulo"]:userInfo];
                     notificationMessage = userInfo;
-                    [NSTimer scheduledTimerWithTimeInterval:25.0
+                    time=[NSTimer scheduledTimerWithTimeInterval:25.0
                                                      target:self
                                                    selector:@selector(perdida)
                                                    userInfo:notificationMessage
@@ -330,19 +333,28 @@
     //NSLog(@"%d",[callNotification.userInfo[@"Tipo"] intValue]);
     if(callNotification){
     [[UIApplication sharedApplication] cancelLocalNotification:callNotification];
-    
+   
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
     localNotification.alertBody = [NSString stringWithFormat:@"Llamada perdida de %@",callNotification.userInfo[@"Correo"]];
     //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0.0"))localNotification.alertTitle=[NSString stringWithFormat:@"%@",BigTitle];
     localNotification.soundName = @"none.wav";
     localNotification.applicationIconBadgeNumber = 0;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+     if(notificationMessage != nil)[[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
      notificationMessage = nil;
     callNotification=nil;
     }
     inCall=NO;
+    
 
+}
+-(void)timerOff{
+    [[UIApplication sharedApplication] cancelLocalNotification:callNotification];
+    [time invalidate];
+    time = nil;
+    inCall=NO;
+    notificationMessage = nil;
+    callNotification=nil;
 }
 -(int)revisaPersonal:(NSDictionary *)userInfo{
     
@@ -518,6 +530,7 @@
         
         self.notificationMessage = nil;
         notificaciones=0;
+        [self timerOff];
     }
 }
 
