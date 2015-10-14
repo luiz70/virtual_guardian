@@ -151,7 +151,7 @@ angular.module('starter')
                 27:"Ayuda",
             28:"Mi cuenta",
             29:"Seleccionar todo",
-            30:"Desseleccionar todo",
+            30:"Borrar selección",
 				},
 				recorrido:{
 					1:"¡Bienvenido!",
@@ -544,6 +544,7 @@ angular.module('starter')
 			}
 		
 	};
+            
 	$rootScope.cleanMemory=function(){
 	  	window.localStorage.removeItem("nPendientes");
             console.log("clean");

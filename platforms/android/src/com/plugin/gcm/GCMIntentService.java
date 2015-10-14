@@ -211,9 +211,12 @@ public class GCMIntentService extends GCMBaseIntentService {
         				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
                 	break;
             		case 10://llamada
+            			//Log.d("RES",""+(extras.getString("Operacion")=="1"));
+            			if(Integer.parseInt(extras.getString("Operacion"))==1){
             			Notificaciones.add(extras);
             			if(!extras.getBoolean("foreground"))createNotificationLlamada(context, extras);
-            		break;
+            			}
+            			break;
             	}
             }
                 

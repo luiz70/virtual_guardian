@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var pushNotification ;
 
-angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io'])
+angular.module('starter', ['ionic', 'ngCordova','ui.bootstrap','btford.socket-io','ngIOS9UIWebViewPatch'])
 
 .run(function($ionicPlatform,$rootScope,$location, $cordovaPush, $ionicHistory,$ionicSlideBoxDelegate,$timeout,$cordovaAppVersion,$http){
 	var iosConfig = {
@@ -183,13 +183,12 @@ $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification
             $timeout($rootScope.muestraTip(notification),1000);
         }
         else if(notification.Tipo=="10"){
-               
             $rootScope.PersonaLlamada={
                IdCliente:notification.IdUsuario,
                Correo:notification.Correo,
                Llamando:false,
                notificacion:notification,
-               Contestada:!notification.foreground
+               Contestada:!Boolean(notification.foreground)
             }
             $location.path("/llamada");
         }else

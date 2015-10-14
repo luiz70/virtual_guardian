@@ -179,7 +179,7 @@ angular.module('starter')
                  
 	  if($scope.configCall.isInitiator){
 		$scope.EstadoLlamada=$rootScope.idioma.llamada[3];
-		signaling.emit('call', $rootScope.PersonaLlamada.IdCliente);
+		signaling.emit('call', $rootScope.PersonaLlamada.IdCliente,"");
 		 // $scope.sendNotification($rootScope.PersonaLlamada.IdCliente,$rootScope.Usuario.Id,1,null,function(){
 		//da linea
 		

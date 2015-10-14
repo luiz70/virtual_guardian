@@ -228,18 +228,80 @@ $scope.popoverRec.hide();
 	if(window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.nextRecorrido();
 	},500);
 	$rootScope.msj_map=false;
-	if(!window.localStorage.getArray("Estados"))
-	$http.get("https://www.virtual-guardian.com/api/estados")
-		.success(function(data,status,header,config){
-			$scope.Estados=[];
-			for(var i=0;i<data.length;i++)
-			$scope.Estados.push(JSON.parse(data[i]));
-			window.localStorage.setArray("Estados",$scope.Estados)
-			$scope.filtrosEstados=$scope.Estados
-			})
-		.error(function(error,status,header,config){
-			})
-	else $scope.Estados=window.localStorage.getArray("Estados")
+            /*if(!window.localStorage.getArray("Estados"))
+             $http.get("https://www.virtual-guardian.com/api/estados")
+             .success(function(data,status,header,config){
+             $scope.Estados=[];
+             for(var i=0;i<data.length;i++)
+             $scope.Estados.push(JSON.parse(data[i]));
+             window.localStorage.setArray("Estados",$scope.Estados)
+             $scope.filtrosEstados=$scope.Estados
+             
+             })
+             .error(function(error,status,header,config){
+             })
+             else $scope.Estados=window.localStorage.getArray("Estados")*/
+            $scope.Estados=[
+                            {Id:1,Nombre:"Aguascalientes",Selected:true},
+                            {Id:2,Nombre:"Baja California",Selected:true},
+                            {Id:3,Nombre:"Baja California Sur",Selected:true},
+                            {Id:4,Nombre:"Campeche",Selected:true},
+                            {Id:5,Nombre:"Coahuila",Selected:true},
+                            {Id:6,Nombre:"Colima",Selected:true},
+                            {Id:7,Nombre:"Chiapas",Selected:true},
+                            {Id:8,Nombre:"Chihuahua",Selected:true},
+                            {Id:9,Nombre:"Distrito Federal",Selected:true},
+                            {Id:10,Nombre:"Durango",Selected:true},
+                            {Id:11,Nombre:"Guanajuato",Selected:true},
+                            {Id:12,Nombre:"Guerrero",Selected:true},
+                            {Id:13,Nombre:"Hidalgo",Selected:true},
+                            {Id:14,Nombre:"Jalisco",Selected:true},
+                            {Id:15,Nombre:"México",Selected:true},
+                            {Id:16,Nombre:"Michoacán",Selected:true},
+                            {Id:17,Nombre:"Morelos",Selected:true},
+                            {Id:18,Nombre:"Nayarit",Selected:true},
+                            {Id:19,Nombre:"Nuevo León",Selected:true},
+                            {Id:20,Nombre:"Oaxaca",Selected:true},
+                            {Id:21,Nombre:"Puebla",Selected:true},
+                            {Id:22,Nombre:"Querétaro",Selected:true},
+                            {Id:23,Nombre:"Quintana Roo",Selected:true},
+                            {Id:24,Nombre:"San Luis Potosí",Selected:true},
+                            {Id:25,Nombre:"Sinaloa",Selected:true},
+                            {Id:26,Nombre:"Sonora",Selected:true},
+                            {Id:27,Nombre:"Tabasco",Selected:true},
+                            {Id:28,Nombre:"Tamaulipas",Selected:true},
+                            {Id:29,Nombre:"Tlaxcala",Selected:true},
+                            {Id:30,Nombre:"Veracruz",Selected:true},
+                            {Id:31,Nombre:"Yucatán",Selected:true},
+                            {Id:32,Nombre:"Zacatecas",Selected:true}]
+            window.localStorage.setArray("Estados",$scope.Estados)
+            $scope.filtrosEstados=$scope.Estados
+            
+            $rootScope.TipoEventos=[
+                                    {Id:1,Nombre:"Asalto",Selected:true},
+                                    {Id:2,Nombre:"Balacera",Selected:true},
+                                    {Id:3,Nombre:"Ejecución",Selected:true},
+                                    {Id:4,Nombre:"Explosión",Selected:true},
+                                    {Id:5,Nombre:"Hallazgo",Selected:true},
+                                    {Id:6,Nombre:"Movilización",Selected:true},
+                                    {Id:7,Nombre:"Persecución",Selected:true},
+                                    {Id:8,Nombre:"Bloqueo",Selected:true},
+                                    {Id:9,Nombre:"Robo",Selected:true},
+                                    {Id:10,Nombre:"Robo mercancía",Selected:true}
+                                    ];
+            window.localStorage.setArray("TipoEventos",$scope.TipoEventos)
+            //if(!$rootScope.iOS)$rootScope.filtros.Tipos=$scope.TipoEventos;
+            /*$http.get("https://www.virtual-guardian.com/api/tipoeventos",{})
+             .success(function(data,status,header,config){
+             $scope.TipoEventos=[];
+             for(var i=0;i<data.length;i++)
+             $scope.TipoEventos.push(JSON.parse(data[i]));
+             window.localStorage.setArray("TipoEventos",$scope.TipoEventos)
+             if(!$rootScope.iOS)$rootScope.filtros.Tipos=$scope.TipoEventos;
+             console.log(JSON.stringify($scope.TipoEventos));
+             })
+             .error(function(error,status,header,config){
+             })*/
 	
 	
 	if(!window.localStorage.getArray("Filtros")){
@@ -268,16 +330,7 @@ $scope.popoverRec.hide();
 	}
 	
 	}
-	$http.get("https://www.virtual-guardian.com/api/tipoeventos",{})
-		.success(function(data,status,header,config){
-			$scope.TipoEventos=[];
-			for(var i=0;i<data.length;i++)
-			$scope.TipoEventos.push(JSON.parse(data[i]));
-			window.localStorage.setArray("TipoEventos",$scope.TipoEventos)
-			if(!$rootScope.iOS)$rootScope.filtros.Tipos=$scope.TipoEventos;
-			})
-		.error(function(error,status,header,config){
-			})
+	
 	$scope.desactiva=function(val){
 		switch(val){
 			case 1:$rootScope.Usuario.NotificacionesEventos=(!$rootScope.Usuario.NotificacionesEventos)? 1 : 0;
@@ -689,6 +742,7 @@ $scope.cargaProductosSQL();
 $scope.revisaUsuario=function(){
     var arr=[];
     var t=[];
+            console.log($rootScope.Usuario.NotEstados);
     if($rootScope.Usuario.NotEstados!="")t=$rootScope.Usuario.NotEstados.split(",");
     $rootScope.Usuario.Estados=[];
     for(var i=0,j=0; i<$scope.Estados.length;i++)
@@ -874,10 +928,14 @@ $scope.saveMenu=function(){
    if($rootScope.UsuarioTemporal.RangoPersonal==$rootScope.Usuario.RangoPersonal)delete $rootScope.UsuarioTemporal.RangoPersonal
    else $rootScope.UsuarioTemporal.RangoPersonal=$rootScope.Usuario.RangoPersonal;
    if($rootScope.getTiposStr($rootScope.UsuarioTemporal)==$rootScope.getTiposStr($rootScope.Usuario))delete $rootScope.UsuarioTemporal.Tipos
-   else $rootScope.UsuarioTemporal.Tipos=$rootScope.getNotTiposStr($rootScope.Usuario);
-   if($rootScope.getEstadosStr($rootScope.UsuarioTemporal)==$rootScope.getEstadosStr($rootScope.Usuario))delete $rootScope.UsuarioTemporal.Estados
-   else $rootScope.UsuarioTemporal.Estados=$rootScope.getNotEstadosStr($rootScope.Usuario);
-   
+            else {$rootScope.UsuarioTemporal.Tipos=$rootScope.getNotTiposStr($rootScope.Usuario);
+            $rootScope.Usuario.NotTipos=$rootScope.getNotTiposStr($rootScope.Usuario)
+
+            }
+            if($rootScope.getEstadosStr($rootScope.UsuarioTemporal)==$rootScope.getEstadosStr($rootScope.Usuario))delete $rootScope.UsuarioTemporal.Estados
+            else {$rootScope.UsuarioTemporal.Estados=$rootScope.getNotEstadosStr($rootScope.Usuario);
+            $rootScope.Usuario.NotEstados=$rootScope.getNotEstadosStr($rootScope.Usuario)
+            }
    if($rootScope.UsuarioTemporal.Tiempo==$rootScope.Usuario.Tiempo)delete $rootScope.UsuarioTemporal.Tiempo
    else $rootScope.UsuarioTemporal.Tiempo=$rootScope.Usuario.Tiempo;
    delete $rootScope.UsuarioTemporal.Correo; 
@@ -895,11 +953,13 @@ $scope.saveMenu=function(){
             delete $rootScope.UsuarioTemporal.TipoRecibo;
             delete $rootScope.UsuarioTemporal.Cambio;
 			 delete $rootScope.UsuarioTemporal.Titular;
+            
    console.log($rootScope.UsuarioTemporal);
    if(Object.keys($rootScope.UsuarioTemporal).length>1){
        
        $http.post("https://www.virtual-guardian.com/api/ajustes/guarda",$rootScope.UsuarioTemporal)
        .success(function(data,status,header,config){
+                
          window.localStorage.setArray("Usuario",$rootScope.Usuario);
         })
     .error(function(error,status,header,config){
