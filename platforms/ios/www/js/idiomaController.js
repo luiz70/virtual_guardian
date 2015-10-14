@@ -65,7 +65,8 @@ angular.module('starter')
 					9:"Se ha terminado la llamada.",
 					10:"Conectando llamada...",
                     11:" ha terminado la llamada.",
-                    12:"Usuario no disponible."
+                    12:"Usuario no disponible.",
+                    13:" esta ocupado."
 					},
 				cuenta:{
 					1:"Usuario",

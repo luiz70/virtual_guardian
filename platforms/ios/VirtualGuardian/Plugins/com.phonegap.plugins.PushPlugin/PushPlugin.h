@@ -29,10 +29,12 @@
 #import <PushKit/PushKit.h>
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Socket_IO_Client_Swift/Socket_IO_Client_Swift-Swift.h>
 
 @interface PushPlugin : CDVPlugin
 {
     NSDictionary *notificationMessage;
+    NSDictionary *notificationMessageTemp;
     BOOL    isInline;
     NSString *notificationCallbackId;
     NSString *callback;
@@ -41,6 +43,9 @@
     BOOL ready;
     BOOL inCall;
     NSTimer *time;
+    SocketIOClient* socket;
+    BOOL SocketForeground;
+    BOOL SocketConected;
     
 }
 @property BOOL  background;
@@ -50,7 +55,9 @@
 @property (nonatomic,copy) CLLocationManager *locationManager;
 @property (nonatomic,retain) NSString *DistanciaAuto;
 @property (nonatomic, strong) NSDictionary *notificationMessage;
+@property (nonatomic, strong) NSDictionary *notificationMessageTemp;
 @property (nonatomic,copy) UILocalNotification * callNotification;
+@property (nonatomic,copy) SocketIOClient * socket;
 @property BOOL                          isInline;
 @property int notificaciones;
 

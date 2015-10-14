@@ -101,6 +101,14 @@ angular.module('starter')
             break;
         }
     })
+    signaling.on('colgaron',function(){
+                 $scope.cuelgaCall()
+                 $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[11],function(){});
+                 });
+    signaling.on('usuarioOcupado',function(user){
+                $scope.cuelgaCall()
+                    $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[13],function(){})
+                 });
     signaling.on('offline',function(user){
         if(user==$rootScope.PersonaLlamada.IdCliente){
             $scope.cuelgaCall()
@@ -113,6 +121,7 @@ angular.module('starter')
             $scope.enCurso=true;
             if($scope.noAl)$timeout.cancel($scope.noAl);
             //if($scope.soundFile)$scope.soundFile.pause();
+            AudioToggle.stopTone();
             $scope.iniciaTimer();
             //alert(2);
         })
@@ -153,12 +162,19 @@ angular.module('starter')
             $scope.EstadoLlamada=$rootScope.idioma.llamada[3];
             //if($scope.session)$scope.session.call();
             signaling.emit('call', $rootScope.PersonaLlamada.IdCliente,"");
+                 //AudioToggle.setAudioMode(AudioToggle.EARPIECE)
+                 AudioToggle.playTone();
             $scope.noAl=$timeout(function(){
                 $scope.cuelgaCall()
                 $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[12],function(){})
             },30000)
         }else {
-    		
+                 if($rootScope.PersonaLlamada.notificacion.foreground=="0"){
+                 $scope.contestarLlamada();
+                 }else{
+                 $scope.MensajeLlamada=$rootScope.idioma.llamada[1];
+                 $scope.EstadoLlamada=$rootScope.idioma.llamada[4];
+                 }
         }
     });
             
@@ -223,7 +239,9 @@ $scope.cuelgaCall=function(){
     $interval.cancel($scope.timer);
     $scope.timer=null;
     $scope.tiempoLlamada=0;
+    AudioToggle.stopTone();
     AudioToggle.setAudioMode(AudioToggle.SPEAKER)
+            
     //if($scope.soundFile)$scope.soundFile.pause();
     $location.path('/inicio');
 }
@@ -251,12 +269,7 @@ if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
 else {
     $scope.configCall.isInitiator=false;
     $scope.loginSocket();
-    if($rootScope.PersonaLlamada.notificacion.foreground=="0"){
-        $scope.contestarLlamada();
-    }else{
-        $scope.MensajeLlamada=$rootScope.idioma.llamada[1];
-        $scope.EstadoLlamada=$rootScope.idioma.llamada[4];
-    }
+    
 }
 // .... after testing
 //proximitysensorWatchStop(proximitysensor);

@@ -22,7 +22,8 @@
  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+@import Foundation;
+//@import SocketIO;
 #import "PushPlugin.h"
 #import <PushKit/PushKit.h>
 #import <UIKit/UIKit.h>
@@ -31,10 +32,17 @@
 #import "CDVBackgroundGeoLocation.h"
 #import <AudioToolbox/AudioServices.h>
 #import "MainViewController.h"
+//#import "SwiftIOObjc-Swift.h"
+//#import <SocketIO.framework/Headers/SocketIO-iOS.h>
+//#import "SocketIO-iOS.h"
+#import <Socket_IO_Client_Swift/Socket_IO_Client_Swift-Swift.h>
+
+
 
 @implementation PushPlugin
 
 @synthesize notificationMessage;
+@synthesize notificationMessageTemp;
 @synthesize notificaciones;
 @synthesize isInline;
 
@@ -43,6 +51,7 @@
 @synthesize callback;
 @synthesize locationManager;
 @synthesize callNotification;
+@synthesize socket;
 
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -220,10 +229,21 @@
 
 }
 - (void)cancelcall{
+    [UIApplication sharedApplication].applicationIconBadgeNumber--;
+    NSString * d=notificationMessage[@"IdUsuario"];
+    if(SocketConected)[ socket emit:@"colgar_movil" withItems:@[d]];
+    [NSTimer scheduledTimerWithTimeInterval:5.0
+                                     target:self
+                                   selector:@selector(kilsockCancela)
+                                   userInfo:notificationMessage
+                                    repeats:NO];
+    
+}
+-(void)kilsockCancela{
     NSLog(@"cancela");
     notificationMessage = nil;
     [self timerOff];
-    
+    if(socket)[socket close];
 }
 -(void)aceptcall{
     NSLog(@"acepta");
@@ -273,38 +293,12 @@
                 }
                 break;
             case 10:
-                //notificationMessage = userInfo;
-                if(!inCall || [userInfo[@"Operacion"] intValue]==0){
-                    inCall=YES;
-                if (appState == UIApplicationStateActive) {
-                    if([userInfo[@"Operacion"] intValue]==1){
-                    notificationMessage = userInfo;
-                    isInline = YES;
-                    
-                        [self notificationReceived];
-                        
-                    }else inCall=false;
-                    /*time=[NSTimer scheduledTimerWithTimeInterval:25.0
-                                                     target:self
-                                                   selector:@selector(perdida)
-                                                   userInfo:notificationMessage
-                                                    repeats:NO];*/
-                } else {
-                    if([userInfo[@"Operacion"] intValue]==1){
-                       [self setCallNotification:[userInfo objectForKey:@"Correo"]: [userInfo objectForKey:@"Subtitulo"]:userInfo];
-                    notificationMessage = userInfo;
-                    time=[NSTimer scheduledTimerWithTimeInterval:25.0
-                                                     target:self
-                                                   selector:@selector(perdida)
-                                                   userInfo:notificationMessage
-                                                    repeats:NO];
-                    }else{
-                        [self perdida];
-                    }
-                }
-                }else{
-                //numeroocupado
-                }
+                SocketForeground=(appState == UIApplicationStateActive);
+                notificationMessageTemp = userInfo;
+                if(!socket)[self socketInit];
+                [self socketConnect];
+                
+                
                 break;
             default:
                 if (appState == UIApplicationStateActive) {
@@ -327,24 +321,97 @@
     return;
 
 }
+-(void) notificaLlamada{
+    
+    NSDictionary * userInfo=notificationMessageTemp;
+    if (SocketForeground) {
+        isInline = YES;
+        notificationMessage = userInfo;
+        [self notificationReceived];
+    } else {
+        [self setCallNotification:[userInfo objectForKey:@"Correo"]: [userInfo objectForKey:@"Subtitulo"]:userInfo];
+            notificationMessage = userInfo;
+            time=[NSTimer scheduledTimerWithTimeInterval:25.0
+                                                  target:self
+                                                selector:@selector(lostcall)
+                                                userInfo:notificationMessage
+                                                 repeats:NO];
+    }
+    
+
+}
+-(void) socketConnect{
+    [socket close];
+    [socket connectWithTimeoutAfter: 5 withTimeoutHandler: ^{
+        [self socketOnError];
+    }];
+}
+
+-(void) socketOnConnect{
+    SocketConected=true;
+    NSLog(@"connected");
+    [ socket emit:@"listening" withItems:@[notificationMessageTemp[@"IdUsuario"]]];
+}
+-(void)isConnected:(NSArray *)data{
+    NSLog(@"isconected");
+    if([[data objectAtIndex:0] boolValue])[self notificaLlamada];
+}
+-(void)socketOnError{
+    NSLog(@"socket error");
+}
+
+-(void)socketOnDisconnect{
+    NSLog(@"socket disconect");
+    SocketConected=false;
+    [self perdida];
+    [self timerOff];
+    
+}
+-(void)socketOnEndCall{
+    NSLog(@"colgaroon");
+    [self perdida];
+    [self timerOff];
+}
+-(void) socketInit{
+    NSLog(@"initsocket");
+    SocketConected=false;
+    socket =[[SocketIOClient alloc] initWithSocketURL:@"http://www.virtual-guardian.com:8303" opts:@{@"log": @NO, @"connectParams": @{@"thing": @"value"}}];
+    
+    
+    [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        [self socketOnConnect];
+    }];
+    [socket on:@"disconnect" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        [self socketOnDisconnect];
+    }];
+    [socket on:@"error" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        [self socketOnError];
+    }];
+    [socket on:@"isConnected" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        [self isConnected:data];
+    }];
+    [socket on:@"colgaron" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        [self socketOnEndCall];
+    }];
+}
+-(void)lostcall {
+    [self perdida];
+    //avisa que no contesto
+}
 -(void)perdida {
-    //[UIApplication sharedApplication].applicationIconBadgeNumber--;
-    //[[UIApplication sharedApplication] cancelAllLocalNotifications];
-    //NSLog(@"%d",[callNotification.userInfo[@"Tipo"] intValue]);
     if(callNotification){
     [[UIApplication sharedApplication] cancelLocalNotification:callNotification];
    
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
     localNotification.alertBody = [NSString stringWithFormat:@"Llamada perdida de %@",callNotification.userInfo[@"Correo"]];
-    //if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0.0"))localNotification.alertTitle=[NSString stringWithFormat:@"%@",BigTitle];
     localNotification.soundName = @"none.wav";
     localNotification.applicationIconBadgeNumber = 0;
      if(notificationMessage != nil)[[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
      notificationMessage = nil;
     callNotification=nil;
+        [socket close];
     }
-    inCall=NO;
     
 
 }
@@ -456,6 +523,7 @@
     
 }
 - (IBAction)setNotification:(NSString *)titulo: (NSString *)subtitulo:(NSString *) BigTitle {
+    
     notificaciones=notificaciones+1;
     [UIApplication sharedApplication].applicationIconBadgeNumber++;
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
@@ -500,6 +568,7 @@
 
 - (void)notificationReceived {
     NSLog(@"Notification received");
+    if(socket)[socket close];
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     NSLog(@"%@",self.callback);
 

@@ -24,7 +24,6 @@
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
-
 #import "MainViewController.h"
 #import <UIKit/UIKit.h>
 @implementation MainViewController
@@ -39,6 +38,7 @@
         // _commandQueue = [[MainCommandQueue alloc] initWithViewController:self];
     }
     
+    //[[MPRemoteCommandCenter sharedCommandCenter].playCommand addTarget:self action:@selector(play)];
     return self;
 }
 
