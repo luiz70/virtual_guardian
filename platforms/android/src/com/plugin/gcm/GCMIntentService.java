@@ -1,6 +1,9 @@
 package com.plugin.gcm;
 
+import io.socket.* ;
+
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -211,11 +214,21 @@ public class GCMIntentService extends GCMBaseIntentService {
         				if(!extras.getBoolean("foreground"))createNotificationAmistad(context, extras);
                 	break;
             		case 10://llamada
-            			//Log.d("RES",""+(extras.getString("Operacion")=="1"));
+            			/*//Log.d("RES",""+(extras.getString("Operacion")=="1"));
             			if(Integer.parseInt(extras.getString("Operacion"))==1){
             			Notificaciones.add(extras);
             			if(!extras.getBoolean("foreground"))createNotificationLlamada(context, extras);
-            			}
+            			}*/
+            			SocketIO socket;
+					try {
+						socket = new SocketIO("http://www.virtual-guardian.com:8303/");
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						socket=null;
+					}
+					if(socket!=null){
+						connectSocket(socket);
+					}
             			break;
             	}
             }
@@ -227,7 +240,44 @@ public class GCMIntentService extends GCMBaseIntentService {
 			Log.d("NOTIFICATION","NO REG");
 		}
     }
-	
+	private void connectSocket(SocketIO socket){
+		socket.connect(new IOCallback() {
+            @Override
+            public void onMessage(JSONObject json, IOAcknowledge ack) {
+                try {
+                    System.out.println("Server said:" + json.toString(2));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onMessage(String data, IOAcknowledge ack) {
+                System.out.println("Server said: " + data);
+            }
+
+            @Override
+            public void onError(SocketIOException socketIOException) {
+                System.out.println("an Error occured");
+                socketIOException.printStackTrace();
+            }
+
+            @Override
+            public void onDisconnect() {
+                System.out.println("Connection terminated.");
+            }
+
+            @Override
+            public void onConnect() {
+                System.out.println("Connection established");
+            }
+
+            @Override
+            public void on(String event, IOAcknowledge ack, Object... args) {
+                System.out.println("Server triggered event '" + event + "'");
+            }
+		});
+	}
 	public void createNotificationNormal(Context context, Bundle extras)
 	{ 
 		

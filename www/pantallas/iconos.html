@@ -1,0 +1,21 @@
+
+<ion-modal-view style="background:url(img/background.jpg); background-position:center; background-size:cover;" ng-controller="login" ng-cloak>
+    <ion-header-bar style="height:7vh;  background: none; border:none; padding:0;    border-bottom: solid 3px #CE932F;" >
+        <h1 class="title tituloModal" style="text-align:center;color: #fff;font-size: 4vh !important;font-weight: 300;    height: 4vh !important;"><i class="icon ion-images" style="font-size:4vh !important"></i>{{"  "+idioma.menu[31]}}</h1>
+    </ion-header-bar>
+    <ion-content style="top: 7vh;bottom: 8vh;  padding: 2vh;  text-align: justify;" has-bouncing="true">
+        <ion-list>
+        <ion-item class="item item-avatar notificacion" style="padding-bottom: 0vh !important;border:none;border-bottom: solid 1px #424242;padding-top: 1vh !important;" item-width=100% ng-repeat="icono in idioma.iconos">
+      		<img ng-src="img/icons/{{icono.Imagen}}.png">
+      		<h2 style="  font-size: 3vh !important;  color: #fff;  text-overflow: ellipsis;white-space: nowrap;">{{icono.Nombre}}</h2>
+      		<p style="  color: #BEBEBE;     padding-top: 0 !important;" class="notificacion">{{icono.Descripcion}}</p>
+  		</ion-item>
+        
+        </ion-list>
+        
+    </ion-content >
+    <div class="popup-buttons popup-visible" style="  height: 8vh; bottom:0px;position: absolute;width: 100%;padding: 5px;"><!-- ngRepeat: button in buttons -->
+        <button  class="button ng-binding button-positive texto_cuenta" ng-class="button.type || 'button-default'" ng-click="closeModalt()" style="  height: 100%;
+            padding: 0px !important;font-size:3vh; background:#ce932f;color:#000">{{idioma.general[38]}}</button>
+    </div>
+</ion-modal-view>

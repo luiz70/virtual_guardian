@@ -1006,6 +1006,9 @@ $rootScope.abrePaquetes=function(){
     $scope.abreAjustesCuenta()
     //window.open("https://www.virtual-guardian.com/app.php#suscripciones","_system")
 }
+$rootScope.openLink=function(link){
+	window.open(link,"_system")
+	}
 $rootScope.nuevaContra={uno:"",dos:""};
 $rootScope.cambiarContra=function(){
     $rootScope.nuevaContra={uno:"",dos:""};
@@ -1227,15 +1230,17 @@ $scope.abreDate=function(val){
         $rootScope.filtros.Inicial=d;
         }
         }
+		
 $scope.abreTerminos=function(){
     
     $scope.openTerminos("pantallas/terminos.html");
 }
-$scope.abreInfor=function(){
-    var template='<div style=""><b>© Virtual Guardian 2015</b></div>'+
+$scope.abreIconos=function(){
+    /*var template='<div style=""><b>© Virtual Guardian 2015</b></div>'+
            ' <div style="margin-top: 3vh;">'+$rootScope.idioma.general[25]+'</div>'+
             '<div style=";margin-top: 3vh;">'+$rootScope.idioma.general[26]+'</div>'
-    $scope.popup($rootScope.idioma.general[27]+$rootScope.version,template,function(){})
+    $scope.popup($rootScope.idioma.general[27]+$rootScope.version,template,function(){})*/
+	$scope.openTerminos("pantallas/iconos.html");
 }
         $scope.abreHelp=function(){
         /*var template=' <div style="">'+$rootScope.idioma.general[30]+'</div>'+

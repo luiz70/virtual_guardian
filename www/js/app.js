@@ -183,13 +183,12 @@ $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification
             $timeout($rootScope.muestraTip(notification),1000);
         }
         else if(notification.Tipo=="10"){
-               
             $rootScope.PersonaLlamada={
                IdCliente:notification.IdUsuario,
                Correo:notification.Correo,
                Llamando:false,
                notificacion:notification,
-               Contestada:!notification.foreground
+               Contestada:!Boolean(notification.foreground)
             }
             $location.path("/llamada");
         }else

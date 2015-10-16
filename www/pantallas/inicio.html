@@ -11,7 +11,7 @@
 				<button class="button button-icon icon ion-navicon especial" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" menu-toggle="left" ng-click="toggleLeftSideMenu()" ng-hide="recorrido"></button>
                 <button class="button button-icon icon ion-navicon especial ng-hide" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" ng-show="recorrido"></button>
 			</div>
-            <h1 class="title logo_barra" ng-click="logoInicio();"><img src="img/logo_blanco.png" height="90%" style="position:absolute;top:0px;bottom:0px;margin: auto;"></h1>
+            <h1 class="title logo_barra" menu-toggle="left" ng-click="toggleLeftSideMenu();"><img src="img/logo_blanco.png" height="90%" style="position:absolute;top:0px;bottom:0px;margin: auto;"></h1>
 			<div class="buttons tabs-contenedor" >
                 <ion-tabs class="tabs-dark tabs-icon-only" style="max-width: 30vh; right: 0px;">
                     <a id="tab1" class="tab-item" ng-click="onTab(1)" >
@@ -342,22 +342,28 @@
         			<i class="icon ion-person" style="color: #ce932f;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.cuenta[12]}}</div>
                 </ion-item>
-                <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreTerminos()">
-        			<i class="icon ion-document-text" style="color: #ce932f;"></i>
-        			<div style="color: #fff;opacity: 1;">{{idioma.menu[4]}}</div>
+                
+                <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreIconos()">
+        			<i class="icon ion-images" style="color: #ce932f;"></i>
+        			<div style="color: #fff;opacity: 1;">{{idioma.menu[31]}}</div>
                 </ion-item>
-                 <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreInfor()">
+                 <!--ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreInfor()">
         			<i class="icon ion-information-circled" style="color: #ce932f;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[5]}}</div>
-                </ion-item>
+                </ion-item-->
                  <!--ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreHelp()" nav-direction="Enter">
                      <i class="icon ion-help-circled" style="color: #ce932f;"></i>
                      <div style="color: #fff;opacity: 1;">{{idioma.menu[27]}}</div>
                  </ion-item-->
-                 <ion-item nav-clear class="item item-icon-left item_menu_inicio" nav-direction="back" ng-click="cerrarSesion()" >
+                 <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreTerminos()">
+        			<i class="icon ion-information-circled" style="color: #ce932f;"></i>
+        			<div style="color: #fff;opacity: 1;">{{idioma.menu[4]}}</div>
+                </ion-item>
+                <ion-item nav-clear class="item item-icon-left item_menu_inicio" nav-direction="back" ng-click="cerrarSesion()" >
         			<i class="icon ion-power" style="color: #ce932f;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[6]}}</div>
                 </ion-item>
+                
 			</ion-list>
 		</ion-content>
         </div>
