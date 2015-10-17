@@ -9,6 +9,9 @@ exports.setAudioMode = function (mode) {
 exports.playTone = function () {
     cordova.exec(null, null, 'AudioTogglePlugin', 'playTone');
 };
+exports.playBye = function () {
+    cordova.exec(null, null, 'AudioTogglePlugin', 'playBye');
+};
 exports.stopTone = function () {
     cordova.exec(null, null, 'AudioTogglePlugin', 'stopTone');
 };

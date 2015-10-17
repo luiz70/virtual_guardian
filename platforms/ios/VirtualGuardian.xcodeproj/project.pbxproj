@@ -20,6 +20,7 @@
 		1A06C8BC1BCC302300480733 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F8F62FF679D31893056BBB /* Pods.framework */; };
 		1A1870841BC310C300448A81 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1870831BC310C300448A81 /* StoreKit.framework */; };
 		1A46FB0D1BCEA6DC00714FA4 /* callTone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A46FB0C1BCEA6DC00714FA4 /* callTone.wav */; settings = {ASSET_TAGS = (); }; };
+		1A46FB131BD2AA4900714FA4 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A46FB121BD2AA4900714FA4 /* beep.wav */; settings = {ASSET_TAGS = (); }; };
 		1ABF759B1BCC36DA003F2B1A /* Pods_VirtualGuardian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4112118DDB2B3BD84D046EB2 /* Pods_VirtualGuardian.framework */; };
 		1ABF759F1BCC43F2003F2B1A /* libCTWakeCommandParserDynamic.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABF759E1BCC43F2003F2B1A /* libCTWakeCommandParserDynamic.tbd */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -159,6 +160,7 @@
 		1A06C8AE1BCB193800480733 /* marimba.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = marimba.wav; path = VirtualGuardian/marimba.wav; sourceTree = "<group>"; };
 		1A1870831BC310C300448A81 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1A46FB0C1BCEA6DC00714FA4 /* callTone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = callTone.wav; path = VirtualGuardian/callTone.wav; sourceTree = "<group>"; };
+		1A46FB121BD2AA4900714FA4 /* beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = beep.wav; path = VirtualGuardian/beep.wav; sourceTree = "<group>"; };
 		1A74ABAD1BC875AE008A3EAE /* xcdebugger */ = {isa = PBXFileReference; lastKnownFileType = folder; name = xcdebugger; path = VirtualGuardian.xcodeproj/xcuserdata/ADG.xcuserdatad/xcdebugger; sourceTree = "<group>"; };
 		1ABF759E1BCC43F2003F2B1A /* libCTWakeCommandParserDynamic.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libCTWakeCommandParserDynamic.tbd; path = usr/lib/libCTWakeCommandParserDynamic.tbd; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 			children = (
 				1A06C8A91BCB174000480733 /* marimbal.wav */,
 				1A46FB0C1BCEA6DC00714FA4 /* callTone.wav */,
+				1A46FB121BD2AA4900714FA4 /* beep.wav */,
 				1A06C8AE1BCB193800480733 /* marimba.wav */,
 				1A06C8AA1BCB174000480733 /* none.wav */,
 				EB87FDF41871DAF40020F90C /* config.xml */,
@@ -711,6 +714,7 @@
 				7E7966E41810823500FA85AD /* icon-76.png in Resources */,
 				7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */,
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
+				1A46FB131BD2AA4900714FA4 /* beep.wav in Resources */,
 				30B4F30119D5E07200D9F7D8 /* Default-736h.png in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
