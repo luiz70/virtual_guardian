@@ -229,8 +229,8 @@ $rootScope.unregister=function(){
 	 $ionicPlatform.registerBackButtonAction(function () {
     	navigator.app.exitApp();
 		}, 100);
-	 $ionicPlatform.on("volumedownbutton",function(){});
-	 $ionicPlatform.on("volumeupbutton",function(){});
+	 //$ionicPlatform.on("volumedownbutton",function(){});
+	 //$ionicPlatform.on("volumeupbutton",function(){});
 	 $rootScope.onResume=function(){
 	if(((new Date()).getTime()-$rootScope.Update.getTime())/60000>=30)$rootScope.isVigente();
 	if(((new Date()).getTime()-$rootScope.UpdateEvt.getTime())/60000>=15)$rootScope.showEventos();

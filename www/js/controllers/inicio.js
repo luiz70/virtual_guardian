@@ -16,6 +16,7 @@ angular.module('starter')
 	$ionicHistory.nextViewOptions({
      disableBack: true
  });
+ 
  $rootScope.tituloRecorrido=""
 	$rootScope.startRecorrido=function(val){
 		//bienvenida

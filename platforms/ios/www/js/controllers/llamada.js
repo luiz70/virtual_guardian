@@ -222,10 +222,12 @@ angular.module('starter')
             else AudioToggle.setAudioMode(AudioToggle.EARPIECE)
 		}else{
 			//mute
+			if($scope.enCurso){
 			$scope.silencio=!$scope.silencio;
             if($scope.silencio)$scope.session.streams.audio = false;
             else $scope.session.streams.audio = true;
             $scope.session.renegotiate();
+			}
         }
 	}
             
@@ -238,8 +240,8 @@ $scope.cuelgaCall=function(){
     $rootScope.SocketOn=false;
     signaling.removeAllListeners();
     signaling.disconnect();
-    if($scope.session)$scope.session.close();
-            $scope.session=null;
+    if($scope.session && $scope.enCurso)$scope.session.close();
+    $scope.session=null;
     $scope.enCurso=false;
     $scope.proximitysensorWatchStop();
     $interval.cancel($scope.timer);

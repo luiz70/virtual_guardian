@@ -1075,9 +1075,15 @@ alert(1);
 			break;
 			case "5":
 			$rootScope.onTab(3);
+            $timeout(function(){
+                     $rootScope.getPersonas();
+            },500);
 			break;
 			case "6":
 			$rootScope.onTab(3);
+            $timeout(function(){
+                     $rootScope.getPersonas();
+                     },500);
 			break;
 			case "7":
 			$rootScope.alert($scope.idioma.notificaciones[8],$scope.idioma.notificaciones[10],function(){});

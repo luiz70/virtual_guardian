@@ -28,7 +28,7 @@ angular.module('starter')
 					22:"Desactivadas",
 					23:"Virtual Guardian",
 					24:"Alguien mas ha iniciado sesión con este usuario.<br>Inicie sesión de nuevo",
-					25:"Virtual Guardian y los logotipos de la aplicación son marcas comerciales de Red Guardian Virtual S.A. de C.V. Todos los derechos reservados.",
+					25:"Virtual Guardian es una marca comercial de Virtualapp S.A. de C.V. Todos los derechos reservados.",
 					26:"Virtual Guardian para dispositivos móviles fue creado con software de licencia abierta.",
 					27:"Versión ",
 					28:"Configuración GPS",
@@ -39,7 +39,10 @@ angular.module('starter')
 					33:"Guardando...",
 34:"La suscripción gratuita no permite modificar estas propiedades, adquiere una suscripcion completa en este momento y aprovecha al máximo Virtual Guardian.",
 35:"La suscripción gratuita no permite utilizar esta herramienta, adquiere una suscripcion completa en este momento y aprovecha al máximo Virtual Guardian.",
-36:"Salir"
+36:"Salir",
+37:"Virtualapp S.A. de C.V.",
+38:"Cerrar",
+39:"Virtual Guardian nunca guardará tu ubicación GPS, nuestros algoritmos de prevención de riesgos están creados para que solo tu teléfono conozca tu ubicación y esta nunca se envíe por internet a nuestros servidores o a otros usuarios, así que despreocúpate, nuestro objetivo es que estés protegido."
 					
 				},
 				mapa:{
@@ -65,7 +68,8 @@ angular.module('starter')
 					9:"Se ha terminado la llamada.",
 					10:"Conectando llamada...",
                     11:" ha terminado la llamada.",
-                    12:"Usuario no disponible."
+                    12:"Usuario no disponible.",
+                    13:" esta ocupado."
 					},
 				cuenta:{
 					1:"Usuario",
@@ -125,8 +129,8 @@ angular.module('starter')
 				1:"Filtros",
 				2:"Ajustes de aplicación",
 				3:"Ajustes de notificaciones",
-				4:"Términos y condiciones",
-				5:"Información",
+				4:"Acerca de",
+				5:"Términos y condiciones",
 				6:"Cerrar sesión",
 				7:"Fecha inicial:",
 				8:"Fecha final:",
@@ -152,7 +156,104 @@ angular.module('starter')
             28:"Mi cuenta",
             29:"Seleccionar todo",
             30:"Borrar selección",
+			31:"Iconos",
+			32:"Aviso de privacidad",
+			33:"Versión: "
 				},
+				iconos:[
+				{Nombre:"Asalto",
+				Descripcion:"Ataque con violencia (arma de fuego y/o arma blanca) a una o varias personas así como a establecimiento.",
+				Imagen:"1"
+				},
+				{Nombre:"Balacera",
+				Descripcion:"Intercambio de detonaciones de arma de fuego en contra de una o varias personas, o a establecimiento.",
+				Imagen:"2"
+				},
+				{Nombre:"Ejecución",
+				Descripcion:"Situación en la que le quitan la vida a una o varias personas, con arma de fuego o arma blanca.",
+				Imagen:"3"
+				},
+				{Nombre:"Explosión",
+				Descripcion:"Detonación de artefacto explosivo.",
+				Imagen:"4"
+				},
+				{Nombre:"Hallazgo",
+				Descripcion:"Descubrimiento de uno o varios cuerpos sin vida.",
+				Imagen:"5"
+				},
+				{Nombre:"Movilización",
+				Descripcion:"Movimiento de elementos de seguridad tras sucesos delictivoso.",
+				Imagen:"6"
+				},
+				{Nombre:"Persecución",
+				Descripcion:"Acto de perseguir a delincuentes tras hecho delictivo.",
+				Imagen:"7"
+				},
+				{Nombre:"Robo",
+				Descripcion:"Robo a establecimientos (casa, restaurantes, locales, etc) en donde no hubo violencia y no existen testigos de los hechos.",
+				Imagen:"8"
+				},
+				{Nombre:"Robo mercancía",
+				Descripcion:"Robo a vehículo que transporta mercancía en donde no hubo violencia y no existen testigos de los hechos.",
+				Imagen:"9"
+				},
+				{Nombre:"Tips Virtual Guardian",
+				Descripcion:"Icono utilizado para representar los consejos que Virtual Guardian te enviará para ayudarte a estar siempre protegido.",
+				Imagen:"img"
+				},
+				{Nombre:"Alerta personal",
+				Descripcion:"El evento notificado está cerca de ti, toma tus precauciones para evitar el peligro.",
+				Imagen:"ap"
+				},
+				{Nombre:"Alerta personas",
+				Descripcion:"El evento notificado está cerca de una de tus personas, asegúrate que se encuentre bien.",
+				Imagen:"aps"
+				},
+				{Nombre:"Alera auto",
+				Descripcion:"El evento notificado está cerca de tu auto, toma tus precauciones para evitar el peligro.",
+				Imagen:"aa"
+				},
+				{Nombre:"Solicitud de personas",
+				Descripcion:"Un usuario de Virtual Guardian te ha enviado o ha aceptado una solicitud de personas.",
+				Imagen:"sp"
+				},
+				{Nombre:"Mapa",
+				Descripcion:"Sección principal de la aplicación que te muestra el mapa de México con los eventos reportados.",
+				Imagen:"map"
+				},
+				{Nombre:"Notificaciónes",
+				Descripcion:"Sección de la aplicación que te permite revisar tus notificaciones recientes.",
+				Imagen:"tasks"
+				},
+				{Nombre:"Personas",
+				Descripcion:"Sección de la aplicación que te permite revisar tu lista de personas, agregar usuarios o llamar por internet.",
+				Imagen:"people"
+				},
+				{Nombre:"Auto",
+				Descripcion:"Sección de la aplicación que te permite ubicar tu auto y estar informado si algo sucede cerca de él.",
+				Imagen:"car"
+				},
+				{Nombre:"Menú",
+				Descripcion:"En el encontraras opciones para personalizar tu cuenta y revisar tu suscripción.",
+				Imagen:"menu"
+				},
+				{Nombre:"Ubicación",
+				Descripcion:"Este icono representa tu ubicación actual en el mapa.",
+				Imagen:"ubicacion"
+				},
+				{Nombre:"Buscar Lugares",
+				Descripcion:"Para buscar lugares comerciales en el mapa y revisar sus alrededores utiliza esta herramienta.",
+				Imagen:"rb"
+				},
+				{Nombre:"Actualizar ubicación",
+				Descripcion:"Para ajustar el mapa en tu ubicación actual, da clic en este icono.",
+				Imagen:"rgps"
+				},
+				{Nombre:"Actualizar eventos",
+				Descripcion:"Utiliza este botón para revisar si se han reportado eventos nuevos o actualizar la información del mapa.",
+				Imagen:"rr"
+				}
+				],
 				recorrido:{
 					1:"¡Bienvenido!",
 					2:"Te daremos un paseo por las secciones de la aplicación para que aproveches al máximo sus funciones.",
@@ -271,7 +372,7 @@ angular.module('starter')
 					10:"¿Desea cerrar su sesión?"
 				},registro:{
 					1:"Registro",
-					2:"Virtual Guardian no solicita información personal con el objetivo de brindarte la mayor protección y confidencialidad.",
+					2:"Virtual Guardian no solicita información personal con el objetivo de brindarte la mayor protección y confidencialidad. Nuestro sistema de prevención de riesgos utiliza un algoritmo que no necesita información personal para funcionar.",
 					3:"Correo Elecrónico",
 					4:"Contraseña",
 					5:"Repetir Contraseña",

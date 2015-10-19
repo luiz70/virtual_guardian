@@ -89,8 +89,9 @@ angular.module('starter')
                  $scope.EstadoLlamada=$rootScope.idioma.llamada[10];
                  if($scope.configCall.isInitiator){
                     signaling.emit('sendMessage',user,"conectado");
+                    $scope.session.call();
                  }
-                 $scope.session.call();
+                 
             break;
             case 'colgar':
                 $scope.cuelgaCall()
@@ -101,6 +102,14 @@ angular.module('starter')
             break;
         }
     })
+    signaling.on('colgaron',function(){
+                 $scope.cuelgaCall()
+                 $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[11],function(){});
+                 });
+    signaling.on('usuarioOcupado',function(user){
+                $scope.cuelgaCall()
+                    $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[13],function(){})
+                 });
     signaling.on('offline',function(user){
         if(user==$rootScope.PersonaLlamada.IdCliente){
             $scope.cuelgaCall()
@@ -113,6 +122,7 @@ angular.module('starter')
             $scope.enCurso=true;
             if($scope.noAl)$timeout.cancel($scope.noAl);
             //if($scope.soundFile)$scope.soundFile.pause();
+            AudioToggle.stopTone();
             $scope.iniciaTimer();
             //alert(2);
         })
@@ -153,12 +163,20 @@ angular.module('starter')
             $scope.EstadoLlamada=$rootScope.idioma.llamada[3];
             //if($scope.session)$scope.session.call();
             signaling.emit('call', $rootScope.PersonaLlamada.IdCliente,"");
+                 AudioToggle.setAudioMode(AudioToggle.EARPIECE)
+                 AudioToggle.playTone();
             $scope.noAl=$timeout(function(){
+                AudioToggle.playBye();
                 $scope.cuelgaCall()
                 $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[12],function(){})
             },30000)
         }else {
-    		
+                 if($rootScope.PersonaLlamada.notificacion.foreground=="0"){
+                 $scope.contestarLlamada();
+                 }else{
+                 $scope.MensajeLlamada=$rootScope.idioma.llamada[1];
+                 $scope.EstadoLlamada=$rootScope.idioma.llamada[4];
+                 }
         }
     });
             
@@ -184,9 +202,9 @@ angular.module('starter')
 			height: '10vh',
 			opacity: '1'
   		}, 200, "linear", function() {});
-		
+		$scope.session.call();
         signaling.emit('sendMessage',$rootScope.PersonaLlamada.IdCliente,"conectado");
-        //$scope.session.call();
+        
         //$scope.session.receiveMessage(JSON.parse($rootScope.notificacion.Token));
 	}
             
@@ -204,11 +222,17 @@ angular.module('starter')
             else AudioToggle.setAudioMode(AudioToggle.EARPIECE)
 		}else{
 			//mute
+			if($scope.enCurso){
 			$scope.silencio=!$scope.silencio;
+            if($scope.silencio)$scope.session.streams.audio = false;
+            else $scope.session.streams.audio = true;
+            $scope.session.renegotiate();
+			}
         }
 	}
             
 $scope.cuelgaCall=function(){
+    
     $timeout.cancel($scope.noAl);
     $scope.EstadoLlamada=$rootScope.idioma.llamada[8];
     
@@ -217,11 +241,15 @@ $scope.cuelgaCall=function(){
     signaling.removeAllListeners();
     signaling.disconnect();
     if($scope.session && $scope.enCurso)$scope.session.close();
+    $scope.session=null;
     $scope.enCurso=false;
     $scope.proximitysensorWatchStop();
     $interval.cancel($scope.timer);
     $scope.timer=null;
     $scope.tiempoLlamada=0;
+    AudioToggle.stopTone();
+    AudioToggle.setAudioMode(AudioToggle.SPEAKER)
+            
     //if($scope.soundFile)$scope.soundFile.pause();
     $location.path('/inicio');
 }
@@ -247,14 +275,9 @@ $scope.proximitysensorWatchStop = function(_scope) {
             
 if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
 else {
-    $scope.configCall.isInitiator=false;
+    $scope.session.isInitiator=false;
     $scope.loginSocket();
-    if($rootScope.PersonaLlamada.notificacion.foreground=="0"){
-        $scope.contestarLlamada();
-    }else{
-        $scope.MensajeLlamada=$rootScope.idioma.llamada[1];
-        $scope.EstadoLlamada=$rootScope.idioma.llamada[4];
-    }
+    
 }
 // .... after testing
 //proximitysensorWatchStop(proximitysensor);

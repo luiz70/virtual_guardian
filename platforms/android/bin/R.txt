@@ -19,6 +19,8 @@ int drawable notification 0x7f020011
 int drawable phone 0x7f020012
 int drawable screen 0x7f020013
 int raw audio 0x7f040000
+int raw beep 0x7f040001
+int raw calltone 0x7f040002
 int string activity_name 0x7f050003
 int string app_name 0x7f050001
 int string billing_key_param 0x7f050000
