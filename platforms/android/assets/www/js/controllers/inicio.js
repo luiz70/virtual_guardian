@@ -1144,11 +1144,12 @@ $scope.cambia_tiempo=function(){
 }
 $scope.abreModalEstados=function(){
     
-    $scope.openSelect($rootScope.Usuario.Estados,true);
+    $scope.openSelect($rootScope.Usuario.Estados,true,function(){alert(2)});
 }
 $scope.abreModalTipos=function(){
     console.log(2)
     $scope.openSelect($rootScope.Usuario.Tipos,true);
+	
 }
 $scope.abreFiltrosEstados=function(){
     $scope.openSelect($rootScope.filtros.Estados,true);

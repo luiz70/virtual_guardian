@@ -743,7 +743,7 @@ $scope.cargaProductosSQL();
 $scope.revisaUsuario=function(){
     var arr=[];
     var t=[];
-            console.log($rootScope.Usuario.NotEstados);
+            //console.log($rootScope.Usuario.NotEstados);
     if($rootScope.Usuario.NotEstados!="")t=$rootScope.Usuario.NotEstados.split(",");
     $rootScope.Usuario.Estados=[];
     for(var i=0,j=0; i<$scope.Estados.length;i++)
@@ -872,8 +872,10 @@ break;
 $rootScope.logoInicio=function(){
 	$location.path('/llamada');
 }
+ $scope.revisaUsuario();
 $rootScope.UsuarioTemporal=null;
 $scope.toggleLeftSideMenu = function() {
+	
 $scope.menuNotificaciones=false;
 $scope.menuAplicacion=false;
 $("#home_flecha_aplicacion").removeClass("ion-chevron-up")
@@ -928,7 +930,7 @@ $scope.saveMenu=function(){
    else $rootScope.UsuarioTemporal.RangoAuto=$rootScope.Usuario.RangoAuto;
    if($rootScope.UsuarioTemporal.RangoPersonal==$rootScope.Usuario.RangoPersonal)delete $rootScope.UsuarioTemporal.RangoPersonal
    else $rootScope.UsuarioTemporal.RangoPersonal=$rootScope.Usuario.RangoPersonal;
-   if($rootScope.getTiposStr($rootScope.UsuarioTemporal)==$rootScope.getTiposStr($rootScope.Usuario))delete $rootScope.UsuarioTemporal.Tipos
+  /* if($rootScope.getTiposStr($rootScope.UsuarioTemporal)==$rootScope.getTiposStr($rootScope.Usuario))delete $rootScope.UsuarioTemporal.Tipos
             else {$rootScope.UsuarioTemporal.Tipos=$rootScope.getNotTiposStr($rootScope.Usuario);
             $rootScope.Usuario.NotTipos=$rootScope.getNotTiposStr($rootScope.Usuario)
 
@@ -936,7 +938,9 @@ $scope.saveMenu=function(){
             if($rootScope.getEstadosStr($rootScope.UsuarioTemporal)==$rootScope.getEstadosStr($rootScope.Usuario))delete $rootScope.UsuarioTemporal.Estados
             else {$rootScope.UsuarioTemporal.Estados=$rootScope.getNotEstadosStr($rootScope.Usuario);
             $rootScope.Usuario.NotEstados=$rootScope.getNotEstadosStr($rootScope.Usuario)
-            }
+            }*/
+			delete $rootScope.UsuarioTemporal.Estados
+			delete $rootScope.UsuarioTemporal.Tipos
    if($rootScope.UsuarioTemporal.Tiempo==$rootScope.Usuario.Tiempo)delete $rootScope.UsuarioTemporal.Tiempo
    else $rootScope.UsuarioTemporal.Tiempo=$rootScope.Usuario.Tiempo;
    delete $rootScope.UsuarioTemporal.Correo; 
@@ -1143,12 +1147,68 @@ $scope.cambia_tiempo=function(){
         },$rootScope.Usuario.Tiempo);
 }
 $scope.abreModalEstados=function(){
-    
-    $scope.openSelect($rootScope.Usuario.Estados,true);
+    $rootScope.UsuarioTempo = jQuery.extend(true, {}, $rootScope.Usuario);
+    $scope.openSelect($rootScope.Usuario.Estados,true,function(){
+		
+		if($rootScope.getEstadosStr($rootScope.UsuarioTempo)!=$rootScope.getEstadosStr($rootScope.Usuario)){
+            
+		$rootScope.showCargando($scope.idioma.general[33]);
+		
+		$http.post("https://www.virtual-guardian.com/api/saveEstados",{
+				Id:window.localStorage.getArray("Usuario").Id,
+				Estados:$rootScope.getNotEstadosStr($rootScope.Usuario)
+			},{timeout:10000})
+			.success(function(data,status,header,config){
+				$rootScope.hideCargando();
+				if(data.Result==0){
+					$rootScope.alert($scope.idioma.general[40],$scope.idioma.general[41]);
+				}else{
+				 	$rootScope.Usuario.NotEstados=$rootScope.getNotEstadosStr($rootScope.Usuario)
+         			window.localStorage.setArray("Usuario",$rootScope.Usuario);
+				}
+			})
+			.error(function(error){
+				$rootScope.hideCargando();
+				$rootScope.alert($scope.idioma.general[40],$scope.idioma.general[41]);
+			})
+			
+		}else{
+		
+		}
+		});
+	
 }
 $scope.abreModalTipos=function(){
-    console.log(2)
-    $scope.openSelect($rootScope.Usuario.Tipos,true);
+	 $rootScope.UsuarioTempo = jQuery.extend(true, {}, $rootScope.Usuario);
+    $scope.openSelect($rootScope.Usuario.Tipos,true,function(){
+		
+		if($rootScope.getTiposStr($rootScope.UsuarioTempo)!=$rootScope.getTiposStr($rootScope.Usuario)){
+            
+		$rootScope.showCargando($scope.idioma.general[33]);
+		
+		$http.post("https://www.virtual-guardian.com/api/saveTipos",{
+				Id:window.localStorage.getArray("Usuario").Id,
+				Tipos:$rootScope.getNotTiposStr($rootScope.Usuario)
+			},{timeout:10000})
+			.success(function(data,status,header,config){
+				$rootScope.hideCargando();
+				if(data.Result==0){
+					$rootScope.alert($scope.idioma.general[40],$scope.idioma.general[41]);
+				}else{
+				 	$rootScope.Usuario.NotTipos=$rootScope.getNotTiposStr($rootScope.Usuario)
+         			window.localStorage.setArray("Usuario",$rootScope.Usuario);
+				}
+			})
+			.error(function(error){
+				$rootScope.hideCargando();
+				$rootScope.alert($scope.idioma.general[40],$scope.idioma.general[41]);
+			})
+			
+		}else{
+		
+		}
+		});
+	
 }
 $scope.abreFiltrosEstados=function(){
     $scope.openSelect($rootScope.filtros.Estados,true);

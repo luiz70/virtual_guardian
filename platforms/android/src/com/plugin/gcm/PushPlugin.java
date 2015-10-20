@@ -283,15 +283,17 @@ public class PushPlugin extends CordovaPlugin {
 		}
 		return null;
     }
-/*
- private static JSONObject convertBundleToJson(Bundle extras)
+
+ private static JSONObject convertBundleToJson2(Bundle extras)
     {
 		try
 		{
 			JSONObject json;
 			json = new JSONObject().put("event", "message");
-			json.put("Cantidad", ""+GCMIntentService.clean().size());
+			//json.put("Cantidad", ""+GCMIntentService.clean().size());
 			JSONObject jsondata = new JSONObject();
+			List<Bundle> Notificaciones= GCMIntentService.clean(1);
+			json.put("notificaciones", Notificaciones.size());
 			Iterator<String> it = extras.keySet().iterator();
 			//mando las notificaciones acumuladas
 			
@@ -354,7 +356,7 @@ public class PushPlugin extends CordovaPlugin {
 					}
 				}
 			} // while
-			json.put("payload", jsondata);
+			json.put("Notif0", jsondata);
 
 			Log.v(TAG, "extrasToJSON: " + json.toString());
 
@@ -367,7 +369,7 @@ public class PushPlugin extends CordovaPlugin {
 		return null;
     }
 
- * */
+
     public static boolean isInForeground()
     {
       return gForeground;

@@ -182,7 +182,7 @@ angular.module('starter')
 				Imagen:"5"
 				},
 				{Nombre:"Movilización",
-				Descripcion:"Movimiento de elementos de seguridad tras sucesos delictivoso.",
+				Descripcion:"Movimiento de elementos de seguridad tras sucesos delictivos.",
 				Imagen:"6"
 				},
 				{Nombre:"Persecución",
@@ -209,7 +209,7 @@ angular.module('starter')
 				Descripcion:"El evento notificado está cerca de una de tus personas, asegúrate que se encuentre bien.",
 				Imagen:"aps"
 				},
-				{Nombre:"Alera auto",
+				{Nombre:"Alerta auto",
 				Descripcion:"El evento notificado está cerca de tu auto, toma tus precauciones para evitar el peligro.",
 				Imagen:"aa"
 				},
@@ -234,7 +234,7 @@ angular.module('starter')
 				Imagen:"car"
 				},
 				{Nombre:"Menú",
-				Descripcion:"En el encontraras opciones para personalizar tu cuenta y revisar tu suscripción.",
+				Descripcion:"En el encontrarás opciones para personalizar tu cuenta y revisar tu suscripción.",
 				Imagen:"menu"
 				},
 				{Nombre:"Ubicación",
@@ -881,8 +881,9 @@ angular.module('starter')
 	  }
   });
 	}
-	
-  $scope.openSelect = function(opciones,multiple) {
+	$scope.funCloseM=function(){}
+  $scope.openSelect = function(opciones,multiple,funcion) {
+	  $scope.funCloseM=funcion || function(){};
 	$scope.opcionesModal=opciones;
 	if(multiple)m="pantallas/modalSelect.html"
 	else m="pantallas/modalSelectSingle.html"
@@ -901,9 +902,12 @@ angular.module('starter')
             for(var i=0;i<$scope.opcionesModal.length;i++)
             $scope.opcionesModal[i].Selected=val;
             }
+			
   $scope.closeModal = function() {
     $scope.modalSelect.hide();
 	$scope.modalSelect.remove();
+	$scope.funCloseM();
+	$scope.funCloseM=function(){}
   };
   //Cleanup the modal when we're done with it!
   $scope.$on('$destroy', function() {

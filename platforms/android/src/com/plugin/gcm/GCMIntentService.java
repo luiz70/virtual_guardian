@@ -1,6 +1,6 @@
 package com.plugin.gcm;
 
-import io.socket.* ;
+
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.emitter.Emitter.Listener;
+import com.github.nkzawa.socketio.client.Ack;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.IO.Options;
+import com.github.nkzawa.socketio.client.Socket;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -70,6 +77,11 @@ public class GCMIntentService extends GCMBaseIntentService {
 	  private LocationManager locationManager;
 	  private String provider;
 	  private static NotificationManagerCompat notificationManager;
+	  private Socket socket;
+	  private boolean _isConnected;
+	  private Bundle data;
+	  private Context cont;
+	  private boolean inCall=false;
 	
 	public GCMIntentService() {
 		super("GCMIntentService");
@@ -219,16 +231,13 @@ public class GCMIntentService extends GCMBaseIntentService {
             			Notificaciones.add(extras);
             			if(!extras.getBoolean("foreground"))createNotificationLlamada(context, extras);
             			}*/
-            			SocketIO socket;
-					try {
-						socket = new SocketIO("http://www.virtual-guardian.com:8303/");
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						socket=null;
-					}
-					if(socket!=null){
-						connectSocket(socket);
-					}
+            			if(!extras.getBoolean("foreground")){
+            			cont= context;
+            			data=extras;
+            			
+            			Connect();
+            			}else Notificaciones.add(extras);
+            			
             			break;
             	}
             }
@@ -240,44 +249,114 @@ public class GCMIntentService extends GCMBaseIntentService {
 			Log.d("NOTIFICATION","NO REG");
 		}
     }
-	private void connectSocket(SocketIO socket){
-		socket.connect(new IOCallback() {
-            @Override
-            public void onMessage(JSONObject json, IOAcknowledge ack) {
-                try {
-                    System.out.println("Server said:" + json.toString(2));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onMessage(String data, IOAcknowledge ack) {
-                System.out.println("Server said: " + data);
-            }
-
-            @Override
-            public void onError(SocketIOException socketIOException) {
-                System.out.println("an Error occured");
-                socketIOException.printStackTrace();
-            }
-
-            @Override
-            public void onDisconnect() {
-                System.out.println("Connection terminated.");
-            }
-
-            @Override
-            public void onConnect() {
-                System.out.println("Connection established");
-            }
-
-            @Override
-            public void on(String event, IOAcknowledge ack, Object... args) {
-                System.out.println("Server triggered event '" + event + "'");
-            }
-		});
+public void Connect(){
+		
+		/*if(_isConnected){
+			return;
+		}*/
+	
+		
+		try{
+        	
+			Options opts = new IO.Options();
+        	opts.port = 8303;
+        	opts.forceNew = true;
+        	//opts.reconnection = false;
+        	socket = IO.socket("http://www.virtual-guardian.com:8303",opts);
+		socket.connect();
+        	
+        	//OffListener();
+        	//OnConnect();
+        	socket.off(Socket.EVENT_CONNECT, onConnect);
+    		socket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+    		socket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectTimeout);         
+    		socket.off(Socket.EVENT_DISCONNECT, onDisconnect);
+    		socket.off(Socket.EVENT_MESSAGE, OnMessage);
+    		socket.off("isConnected", isConnected);
+    		socket.off(Socket.EVENT_RECONNECT, onReconnect);
+    		socket.off("colgaron", onEndCall);
+        	socket.on(Socket.EVENT_CONNECT, onConnect);
+    		socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+    		socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectTimeout);         
+    		socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
+    		socket.on(Socket.EVENT_RECONNECT, onReconnect);
+    		socket.on(Socket.EVENT_MESSAGE, OnMessage);
+    		socket.on("isConnected", isConnected);
+    		socket.on("colgaron", onEndCall);
+        	
+        } catch (Exception e) {
+        	Log.e("SOCKET", "Conextion expection", e);
+        }
 	}
+private Listener onConnect = new Emitter.Listener() {
+	@Override
+	public void call(Object... args) {       	  
+		_isConnected = true;
+		Log.d("SOCKET","CONNECTED");
+		socket.emit("listening", data.getString("IdUsuario"));
+		
+	}
+};
+private Listener onReconnect= new Emitter.Listener() {
+	@Override
+	public void call(Object... args) {    
+		Log.d("SOCKET","RECONECT");
+		_isConnected = false;  	  
+	}
+};
+private Listener onConnectError= new Emitter.Listener() {
+	@Override
+	public void call(Object... args) {    
+		Log.d("SOCKET","ERROR CONNECTED");
+		_isConnected = false;  	  
+	}
+};
+private Listener onConnectTimeout = new Emitter.Listener() {
+	@Override
+	public void call(Object... args) {  
+		Log.d("SOCKET","TIMEOUT CONNECTED");
+		_isConnected = false;  	  
+	}
+};
+private Listener onDisconnect = new Emitter.Listener() {
+	@Override
+	public void call(Object... args) {  
+		Log.d("Desconected","SOCKET");
+		_isConnected = false;
+		Perdida(); 	  
+	}
+};
+private Listener OnMessage = new Emitter.Listener() {
+	@Override
+	public void call(Object... args) { 
+		Log.d("SOCKET","MESSAGE");
+	}
+};
+private Listener onEndCall = new Emitter.Listener() {
+	@Override
+	public void call(Object... arg0) {
+		Perdida();
+	}
+};
+private void Perdida(){
+	NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    manager.cancel(10);
+    socket.disconnect();
+}
+private Listener isConnected = new Emitter.Listener() {
+	
+	
+	@Override
+	public void call(Object... arg0) {
+		// TODO Auto-generated method stub
+		
+		if((Boolean) arg0[0])
+			if(!data.getBoolean("foreground"))createNotificationLlamada(cont, data);
+		
+		
+	}
+};
+
 	public void createNotificationNormal(Context context, Bundle extras)
 	{ 
 		
