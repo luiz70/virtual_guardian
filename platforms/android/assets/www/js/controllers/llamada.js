@@ -171,15 +171,19 @@ angular.module('starter')
                 $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[12],function(){})
             },30000)
         }else {
+				signaling.emit('listening', $rootScope.PersonaLlamada.IdCliente);
                  if($rootScope.PersonaLlamada.notificacion.foreground=="0"){
                  $scope.contestarLlamada();
                  }else{
                  $scope.MensajeLlamada=$rootScope.idioma.llamada[1];
                  $scope.EstadoLlamada=$rootScope.idioma.llamada[4];
                  }
+				 
         }
     });
-            
+        signaling.on('isConnected', function (data) {   
+		console.log(data);
+		})
 	$scope.contestarLlamada=function(){
         $timeout(function(){
             if( navigator.proximity)navigator.proximity.enableSensor();
@@ -277,6 +281,7 @@ if($rootScope.PersonaLlamada.Llamando)$rootScope.realizarLlamada();
 else {
     $scope.session.isInitiator=false;
     $scope.loginSocket();
+	
     
 }
 // .... after testing

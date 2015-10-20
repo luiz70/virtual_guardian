@@ -42,7 +42,9 @@ angular.module('starter')
 36:"Salir",
 37:"Virtualapp S.A. de C.V.",
 38:"Cerrar",
-39:"Virtual Guardian nunca guardará tu ubicación GPS, nuestros algoritmos de prevención de riesgos están creados para que solo tu teléfono conozca tu ubicación y esta nunca se envíe por internet a nuestros servidores o a otros usuarios, así que despreocúpate, nuestro objetivo es que estés protegido."
+39:"Virtual Guardian nunca guardará tu ubicación GPS, nuestros algoritmos de prevención de riesgos están creados para que solo tu teléfono conozca tu ubicación y esta nunca se envíe por internet a nuestros servidores o a otros usuarios, así que despreocúpate, nuestro objetivo es que estés protegido.",
+40:"Error al guardar. ",
+41:"Revise su configuración de internet e intente de nuevo."
 					
 				},
 				mapa:{
@@ -883,7 +885,7 @@ angular.module('starter')
 	}
 	$scope.funCloseM=function(){}
   $scope.openSelect = function(opciones,multiple,funcion) {
-	  $scope.funCloseM=funcion || function(){};
+	  $scope.funCloseM=funcion || function(){return true};
 	$scope.opcionesModal=opciones;
 	if(multiple)m="pantallas/modalSelect.html"
 	else m="pantallas/modalSelectSingle.html"
