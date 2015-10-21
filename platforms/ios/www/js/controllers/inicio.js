@@ -740,7 +740,8 @@ $scope.cargaProductosSQL=function(){
 }
 $scope.cargaProductosSQL();
 
-$scope.revisaUsuario=function(){
+$scope.revisaUsuario=function(){}
+$scope.getUserEstados=function(){
     var arr=[];
     var t=[];
             //console.log($rootScope.Usuario.NotEstados);
@@ -753,7 +754,10 @@ $scope.revisaUsuario=function(){
             if($rootScope.iOS)arr.push({Nombre:$scope.Estados[i].Nombre,Selected:false,Id:$scope.Estados[i].Id});
         }else arr.push($rootScope.iOS?{Nombre:$scope.Estados[i].Nombre,Selected:true,Id:$scope.Estados[i].Id}:$scope.Estados[i]);
     $rootScope.Usuario.Estados=arr;
-    
+    return $rootScope.Usuario.Estados;
+}
+$scope.getUserTipos=function(){
+
     var arr2=[];
     var t2=[];
     if($rootScope.Usuario.NotTipos!="")t2=$rootScope.Usuario.NotTipos.split(",");
@@ -766,6 +770,8 @@ $scope.revisaUsuario=function(){
             if($rootScope.iOS)arr2.push({Nombre:$scope.TipoEventos[i].Nombre,Selected:false,Id:$scope.TipoEventos[i].Id});
         }else arr2.push($rootScope.iOS?{Nombre:$scope.TipoEventos[i].Nombre,Selected:true,Id:$scope.TipoEventos[i].Id}:$scope.TipoEventos[i]);
     $rootScope.Usuario.Tipos=arr2;
+	 return $rootScope.Usuario.Tipos;
+	
 }
 
 /*
@@ -884,7 +890,9 @@ $("#home_flecha_notificaciones").removeClass("ion-chevron-up")
 $("#home_flecha_notificaciones").addClass("ion-chevron-down")
 if(!$ionicSideMenuDelegate.isOpen()){
     
-    $scope.revisaUsuario();
+    $rootScope.Usuario.Estados=$scope.getUserEstados();
+	$rootScope.Usuario.Tipos=$scope.getUserTipos();
+	
    $("#capa_menu").show();
    $("#capa_menu").animate({
        "opacity":"1"
@@ -1147,6 +1155,9 @@ $scope.cambia_tiempo=function(){
         },$rootScope.Usuario.Tiempo);
 }
 $scope.abreModalEstados=function(){
+	$rootScope.Usuario.Estados=$scope.getUserEstados();
+	
+	console.log($rootScope.Usuario);
     $rootScope.UsuarioTempo = jQuery.extend(true, {}, $rootScope.Usuario);
     $scope.openSelect($rootScope.Usuario.Estados,true,function(){
 		
@@ -1179,6 +1190,7 @@ $scope.abreModalEstados=function(){
 	
 }
 $scope.abreModalTipos=function(){
+	$rootScope.Usuario.Tipos=$scope.getUserTipos();
 	 $rootScope.UsuarioTempo = jQuery.extend(true, {}, $rootScope.Usuario);
     $scope.openSelect($rootScope.Usuario.Tipos,true,function(){
 		

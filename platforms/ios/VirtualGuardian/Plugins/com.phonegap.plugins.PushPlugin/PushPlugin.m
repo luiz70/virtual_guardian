@@ -568,7 +568,7 @@
 
 - (void)notificationReceived {
     NSLog(@"Notification received");
-    if(socket)[socket close];
+    
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     NSLog(@"%@",self.callback);
 
@@ -600,6 +600,7 @@
         self.notificationMessage = nil;
         notificaciones=0;
         [self timerOff];
+        if(socket)[socket close];
     }
 }
 

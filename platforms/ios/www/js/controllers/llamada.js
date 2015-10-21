@@ -171,7 +171,7 @@ angular.module('starter')
                 $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.idioma.llamada[12],function(){})
             },30000)
         }else {
-				signaling.emit('listening', $rootScope.PersonaLlamada.IdCliente);
+                 signaling.emit('isConnected', $rootScope.PersonaLlamada.IdCliente);
                  if($rootScope.PersonaLlamada.notificacion.foreground=="0"){
                  $scope.contestarLlamada();
                  }else{
@@ -181,8 +181,12 @@ angular.module('starter')
 				 
         }
     });
-        signaling.on('isConnected', function (data) {   
-		console.log(data);
+        signaling.on('llamadaValida', function (data) {
+                     
+                     if(!data){
+                     $scope.cuelgaCall()
+                     $rootScope.alert($rootScope.idioma.llamada[6],$rootScope.PersonaLlamada.Correo+$rootScope.idioma.llamada[11],function(){});
+                     }
 		})
 	$scope.contestarLlamada=function(){
         $timeout(function(){

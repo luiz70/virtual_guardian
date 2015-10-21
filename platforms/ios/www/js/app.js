@@ -158,6 +158,8 @@ $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification
 			if(notification["Notif"+i].Tipo=="8"){
 				$timeout($rootScope.muestraTip(notification["Notif"+i]),1000);
 			}else if(notification["Notif"+i].Tipo=="10"){
+               $rootScope.notPendientes--;
+               window.localStorage.setArray("nPendientes",$rootScope.notPendientes);
 				$rootScope.PersonaLlamada={
 					IdCliente:notification["Notif"+i].IdUsuario,
 					Correo:notification["Notif"+i].Correo,
@@ -183,6 +185,8 @@ $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification
             $timeout($rootScope.muestraTip(notification),1000);
         }
         else if(notification.Tipo=="10"){
+               
+               
             $rootScope.PersonaLlamada={
                IdCliente:notification.IdUsuario,
                Correo:notification.Correo,
