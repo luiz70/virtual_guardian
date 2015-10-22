@@ -20,9 +20,10 @@ angular.module('starter')
  $rootScope.tituloRecorrido=""
 	$rootScope.startRecorrido=function(val){
 		//bienvenida
-		if($scope.Conexion(1,function(){
+		
+		/*if($scope.Conexion(1,function(){
 			
-		})){
+		})){*/
 			$scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridoStart.html", {
     		scope: $scope
 			}).then(function(popover) {
@@ -31,7 +32,7 @@ angular.module('starter')
 				$scope.popoverRec.show();
 				$(".popover-arrow").hide();
   			});
-		}
+		//}
 	}
 	if($rootScope.Usuario.Nuevo==1 && !window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.startRecorrido(1)},1000);
 	else $timeout(function(){$rootScope.isVigente();},1000);
@@ -65,35 +66,34 @@ angular.module('starter')
 	$rootScope.iniciaRecorrido=function(){
 		$scope.popoverRec.hide();
 		$scope.popoverRec=null;
-	window.localStorage.setItem("enRecorrido",1);
-	$location.path("/home");
-			$timeout(function(){
-					$location.path('/inicio');
-					
-				},1000);
+		$scope.openTerminos("pantallas/video.html");
 	}
 	//$rootScope.stepRecorrido=1
+	$rootScope.closeModald=function(){
+		 $scope.modalTerminos.hide();
+            $scope.modalTerminos.remove();
+			$rootScope.nextRecorrido();
+	}
 	$rootScope.closeRecorrido=function(){
            // window.localStorage.removeItem("enRecorrido")
-            $rootScope.Usuario.Nuevo=0
-            window.localStorage.setArray("Usuario",$rootScope.Usuario)
-$scope.popoverRec.hide();
-			/*switch($rootScope.stepRecorrido){
-			case 0: $scope.popoverRec.hide();
+            
+           
+			$rootScope.Usuario.Nuevo=0
+			window.localStorage.setArray("Usuario",$rootScope.Usuario)
+			 /*$scope.popoverRec.hide();
+ 			$scope.confirm($rootScope.idioma.menu[27],$rootScope.idioma.general[32],function(){
+                          //$scope.toggleLeftSideMenu();
+                          //$rootScope.startRecorrido(0);
+						  $scope.openTerminos("pantallas/video.html");
+        	});*/
+			switch($rootScope.stepRecorrido){
+			case 0: 
+			$scope.popoverRec.hide();
 			$rootScope.alert($scope.idioma.general[23],$scope.idioma.recorrido[5],function(){
 			});
 			break;
-			default:
 			
-			$scope.popoverRec.hide();;
-			$scope.popoverRec=null;
-			$location.path("/home");
-			$timeout(function(){
-					$location.path('/inicio');
-				},1000);
-				$rootScope.Usuario.Nuevo=0;
-			break;
-		}*/
+		}
 			
 			
 	
@@ -104,130 +104,21 @@ $scope.popoverRec.hide();
 		
 		switch($rootScope.stepRecorrido){
 			case 0:
-			//
-			$rootScope.stepRecorrido=1;
-				$rootScope.recorrido=true;
-			$scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridopop.html", {
-    		scope: $scope
-			}).then(function(popover) {
-				 $rootScope.tituloRecorrido=$rootScope.idioma.recorrido[1];
-    			$scope.popoverRec = popover;
-				$scope.popoverRec.show();
-				$(".popover-arrow").hide();
-			$("#popRecorrido").height('80vh')
-                    
+			if($rootScope.Usuario.Nuevo==1){
+			$scope.confirm($scope.idioma.menu[3],$scope.idioma.recorrido[62],function(){
+				$scope.abreModalEstados();
 				
-			  			});
-						$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[6];
+			},$scope.idioma.general[42],$scope.idioma.recorrido[63]);
+			$rootScope.Usuario.Nuevo=0
+			window.localStorage.setArray("Usuario",$rootScope.Usuario)
+		}
+			break;
 			
-			break;
-			case 1:
-            if($rootScope.miubicacion.lat()==0)$rootScope.miubicacion=$rootScope.ubicacionMarker.getPosition();
-			$rootScope.Eventos=[{"IdEvento":"1","IdAsunto":"1","Latitud":$rootScope.miubicacion.lat()+0.005,"Longitud":$rootScope.miubicacion.lng()+0.009}]; 
-			if($scope.Conexion()){
-			
-			$("#recorrido1").removeClass("animate-hide");
-			$rootScope.inicializaMapaRecorrido();
-			$scope.popoverRec.hide();
-			$rootScope.msj_map=true;
-			$("#msj_map").html($rootScope.idioma.recorrido[11]);
-			$("#recorrido1").addClass("ng-hide");
-			$rootScope.stepRecorrido=2;
-			}else {
-				$("#recorrido1").addClass("ng-hide");
-			$rootScope.stepRecorrido=2;
-			$rootScope.nextRecorrido();
-			}
-			break;
-			case 2:
-			
-			$scope.popoverRec.show();
-			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[8];
-			$rootScope.inicializaMapaRecorrido();
-			$rootScope.stepRecorrido=3;
-			break;
-			case 3:
-			if($scope.Conexion()){
-			$("#recorrido1").removeClass("animate-hide");
-			$rootScope.inicializaMapaRecorrido();
-			$scope.popoverRec.hide();
-			$rootScope.msj_map=true;
-			$("#msj_map").html($rootScope.idioma.recorrido[12]);
-			$("#recorrido2").addClass("ng-hide");
-			$("#tapa_pie").height("30px");
-			$rootScope.stepRecorrido=4;
-			}else{
-				$("#recorrido2").addClass("ng-hide");
-				$rootScope.stepRecorrido=5;
-			$rootScope.nextRecorrido();
-			}
-			break;
-			case 4:
-			$("#msj_map").html($rootScope.idioma.recorrido[13]);
-			$rootScope.stepRecorrido=5;
-			$("#tapa_pie").height("40px");
-			$("#tapa_pie").css("top","30px");
-			break;
-			case 5:
-			$("#tapa_pie").height("70px");
-			$("#tapa_pie").css("top","0px");
-			$scope.popoverRec.show();
-			$rootScope.msj_map=false;
-			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[15];
-			$rootScope.inicializaMapaRecorrido();
-			$rootScope.stepRecorrido=6;
-			break;
-			case 6:
-			if($scope.Conexion()){
-			$rootScope.onSPos({'coords':{'latitude':$rootScope.miubicacion.lat()-0.005,'longitude':$rootScope.miubicacion.lng()-0.009}});
-			$("#recorrido3").removeClass("animate-hide");
-			$rootScope.inicializaMapaRecorrido();
-			$scope.popoverRec.hide();
-			$rootScope.msj_map=true;
-			$("#msj_map").html($rootScope.idioma.recorrido[20]);
-			$("#recorrido3").addClass("ng-hide");
-			$("#msj_map").css( "bottom"," 8vh")
-  			$("#msj_map").css( "top"," auto");
-			$rootScope.stepRecorrido=7;
-			}else{
-				$("#recorrido3").addClass("ng-hide");
-				$rootScope.stepRecorrido=8;
-				$rootScope.nextRecorrido();
-			}
-			break;
-			case 7:
-			$rootScope.stepRecorrido=8;
-			$("#msj_map").html($rootScope.idioma.recorrido[21]);
-			break;
-			case 8:$rootScope.stepRecorrido=9;
-			$rootScope.onTab(2);
-			$scope.popoverRec.show();
-			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[22];
-			break;
-			case 9:
-			$("#recorrido9").removeClass("animate-hide");
-			$rootScope.stepRecorrido=10;
-			$rootScope.onTab(3);
-			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[31];
-			break;
-			case 10:
-			$("#recorrido10").removeClass("animate-hide");
-			$rootScope.stepRecorrido=11;
-			$rootScope.onTab(4);
-			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[35];
-			break;
-			case 11:
-			$("#recorrido11").removeClass("animate-hide");
-			$rootScope.stepRecorrido=12;
-			$rootScope.onTab(1);
-			$rootScope.tituloRecorrido=$rootScope.idioma.recorrido[41];
-			break;
 			
 		}
 	}
 	//window.localStorage.removeItem("enRecorrido")
-	if(window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.nextRecorrido();
-	},500);
+	
 	$rootScope.msj_map=false;
             /*if(!window.localStorage.getArray("Estados"))
              $http.get("https://www.virtual-guardian.com/api/estados")
@@ -740,7 +631,8 @@ $scope.cargaProductosSQL=function(){
 }
 $scope.cargaProductosSQL();
 
-$scope.revisaUsuario=function(){
+$scope.revisaUsuario=function(){}
+$scope.getUserEstados=function(){
     var arr=[];
     var t=[];
             //console.log($rootScope.Usuario.NotEstados);
@@ -753,7 +645,10 @@ $scope.revisaUsuario=function(){
             if($rootScope.iOS)arr.push({Nombre:$scope.Estados[i].Nombre,Selected:false,Id:$scope.Estados[i].Id});
         }else arr.push($rootScope.iOS?{Nombre:$scope.Estados[i].Nombre,Selected:true,Id:$scope.Estados[i].Id}:$scope.Estados[i]);
     $rootScope.Usuario.Estados=arr;
-    
+    return $rootScope.Usuario.Estados;
+}
+$scope.getUserTipos=function(){
+
     var arr2=[];
     var t2=[];
     if($rootScope.Usuario.NotTipos!="")t2=$rootScope.Usuario.NotTipos.split(",");
@@ -766,6 +661,8 @@ $scope.revisaUsuario=function(){
             if($rootScope.iOS)arr2.push({Nombre:$scope.TipoEventos[i].Nombre,Selected:false,Id:$scope.TipoEventos[i].Id});
         }else arr2.push($rootScope.iOS?{Nombre:$scope.TipoEventos[i].Nombre,Selected:true,Id:$scope.TipoEventos[i].Id}:$scope.TipoEventos[i]);
     $rootScope.Usuario.Tipos=arr2;
+	 return $rootScope.Usuario.Tipos;
+	
 }
 
 /*
@@ -884,7 +781,9 @@ $("#home_flecha_notificaciones").removeClass("ion-chevron-up")
 $("#home_flecha_notificaciones").addClass("ion-chevron-down")
 if(!$ionicSideMenuDelegate.isOpen()){
     
-    $scope.revisaUsuario();
+    $rootScope.Usuario.Estados=$scope.getUserEstados();
+	$rootScope.Usuario.Tipos=$scope.getUserTipos();
+	
    $("#capa_menu").show();
    $("#capa_menu").animate({
        "opacity":"1"
@@ -1147,6 +1046,9 @@ $scope.cambia_tiempo=function(){
         },$rootScope.Usuario.Tiempo);
 }
 $scope.abreModalEstados=function(){
+	$rootScope.Usuario.Estados=$scope.getUserEstados();
+	
+	console.log($rootScope.Usuario);
     $rootScope.UsuarioTempo = jQuery.extend(true, {}, $rootScope.Usuario);
     $scope.openSelect($rootScope.Usuario.Estados,true,function(){
 		
@@ -1179,6 +1081,7 @@ $scope.abreModalEstados=function(){
 	
 }
 $scope.abreModalTipos=function(){
+	$rootScope.Usuario.Tipos=$scope.getUserTipos();
 	 $rootScope.UsuarioTempo = jQuery.extend(true, {}, $rootScope.Usuario);
     $scope.openSelect($rootScope.Usuario.Tipos,true,function(){
 		
@@ -1309,8 +1212,9 @@ $scope.abreIconos=function(){
         $scope.popup($rootScope.idioma.menu[27],template,function(){})*/
         
         $scope.confirm($rootScope.idioma.menu[27],$rootScope.idioma.general[32],function(){
-                          $scope.toggleLeftSideMenu();
-                          $rootScope.startRecorrido(0);
+                          //$scope.toggleLeftSideMenu();
+                          //$rootScope.startRecorrido(0);
+						  $scope.openTerminos("pantallas/video.html");
         });
         }
 

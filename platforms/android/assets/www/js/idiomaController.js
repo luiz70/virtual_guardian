@@ -44,7 +44,8 @@ angular.module('starter')
 38:"Cerrar",
 39:"Virtual Guardian nunca guardará tu ubicación GPS, nuestros algoritmos de prevención de riesgos están creados para que solo tu teléfono conozca tu ubicación y esta nunca se envíe por internet a nuestros servidores o a otros usuarios, así que despreocúpate, nuestro objetivo es que estés protegido.",
 40:"Error al guardar. ",
-41:"Revise su configuración de internet e intente de nuevo."
+41:"Revise su configuración de internet e intente de nuevo.",
+42:"Si",
 					
 				},
 				mapa:{
@@ -317,7 +318,9 @@ angular.module('starter')
 					58:"Ajustes de cuenta",
 					59:"Aqui puedes ver información relacionada con tu suscripción, vigencia y cambiar tu contraseña.",
 					60:"Salir del recorrido",
-					61:'Tu cuenta ha quedado activa, tendrás 30 días para usar la versión Premium de la aplicación.'
+					61:'Tu cuenta ha quedado activa, tendrás 30 días para usar la versión Premium de la aplicación.',
+					62:"¿Quieres seleccionar los estados de los que te interesa recibir notificaciones?",
+					63:"Después",
 
 					
 					

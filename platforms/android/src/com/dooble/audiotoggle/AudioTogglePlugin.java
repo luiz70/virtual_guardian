@@ -105,10 +105,12 @@ public class AudioTogglePlugin extends CordovaPlugin {
 	return true;
 	}
 	public boolean stopTone(){
+		if(mp!=null){
 		mp.stop();
 		mp.reset();
         mp.release();
         mp=null;
+		}
 	return true;
 	}
 	public boolean setAudioMode(String mode) {

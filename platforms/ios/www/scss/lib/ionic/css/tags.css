@@ -1,0 +1,98 @@
+@charset "utf-8";
+/* CSS Document */
+.titulo_tag{
+    text-align: center;
+    font-size: 3vh;
+}
+.tag_box_participante{
+    height: auto;
+    width: 40%;
+    float: left;
+    position: relative;
+}
+.tag_box_deporte{
+    height: 10vh;
+    width: 20%;
+    float: left;
+    position: relative;
+}
+
+.tag_deporte{
+    width: 7vh;  
+    height: 7vh;
+    background: none;
+    border: none;
+    padding: 1vw;
+    overflow: hidden;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    position: absolute;
+    bottom: 0px;
+}
+.tag_profile_mini{
+    border-radius: 100%;
+    border-left: solid #E07019;
+    border-top: solid #97AF09;
+    border-right: solid #97AF09;
+    border-bottom: solid #E07019;
+    opacity: 0.7;
+    padding: 2px;
+}
+.tag_picture_reto{
+    border-radius: 100%;
+    border: solid 0.8vh #E07019;
+    height: 100%;
+}
+.tag_reto_nombre{
+    width: 100%;
+    text-align: center;
+    font-size: 2vh;
+    opacity: 0.8;
+}
+.tag_reto_img{
+    width: 90%;  
+    background: none;
+    margin-left: 5%;
+    border: none;
+    padding: 1vw;
+    overflow: hidden;
+}
+.share_facebook_btn{
+    width: 12vw;
+    position: absolute;
+    right: 1vw;
+    top: 0px;
+    bottom: 0px;
+    height: 12vw;
+    margin: auto;
+    opacity: 0.6;
+}
+.tag_fecha_hora{
+	position: absolute;
+
+	top: 0px;
+
+	margin-top: 0px;
+	text-align: right;
+right: 16px;
+	opacity: 0.8;
+	width: 100%;
+}
+.tag_location_btn{
+    width: 8vw;
+    position: absolute;
+    left: 1vw;
+    top: 0px;
+    bottom: 0px;
+    height: 8vw;
+    margin: auto;
+    margin-left: 0px;
+    opacity: 0.5;
+}
+.apoyando{
+	color: #97AF09;
+}
+.noApoyando{
+	color:#444;
+}

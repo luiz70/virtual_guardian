@@ -349,9 +349,11 @@ private Listener isConnected = new Emitter.Listener() {
 	@Override
 	public void call(Object... arg0) {
 		// TODO Auto-generated method stub
-		
+		Notificaciones.add(data);
 		if((Boolean) arg0[0])
-			if(!data.getBoolean("foreground"))createNotificationLlamada(cont, data);
+			if(!data.getBoolean("foreground")){
+				createNotificationLlamada(cont, data);
+			}
 		
 		
 	}
@@ -720,6 +722,7 @@ private Listener isConnected = new Emitter.Listener() {
 	    // This flag must be set on activities started from a notification.
 		dimissIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS); 
 		dimissIntent.putExtra("pushBundle", extras);
+//		dimissIntent.putSocket( socket);
 	    // Return a pending intent to pass to the notification manager.
 	    PendingIntent dimiss= PendingIntent.getActivity(this,0, dimissIntent,PendingIntent.FLAG_CANCEL_CURRENT);
 ////////////////////////alarma

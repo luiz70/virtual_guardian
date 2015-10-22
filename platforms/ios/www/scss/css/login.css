@@ -1,0 +1,151 @@
+@charset "utf-8";
+/* CSS Document */
+
+.contenedor_seccion{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+	background-image:url(../img/background.jpg);
+	background-position:center;
+	background-size:cover;
+}
+#login_logo{
+    position: relative;
+    width: 100%;
+    height: 20vh;
+    float: left;
+    margin-top: 15vh;
+}
+#login_logo_img{
+    position: absolute;
+    width: 80vw;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+}
+#login_input{
+    position: relative;
+
+    float: left;
+    width: 100vw;
+    height: 20vh;
+    border-radius: 5px;
+    margin-top: 10vh;
+}
+.login_input_bg{
+	width: 70%;
+
+	margin-left: 15%;
+	font-size: 2.5vh;
+
+
+	overflow: hidden;
+	border-radius: 5px;
+border: none;
+background: rgba(255,255,255,0.1);
+
+	color: #A9A9A9;
+outline: none;
+}
+.login_titulo{
+width: 100%;
+text-align: center;
+font-size: 4vh;
+color: #d08d33;
+height: 4.5vh;
+margin-bottom: 2vh;
+line-height: 4.5vh;
+}
+.login_input{
+float: right;
+background: none;
+border: none;
+width: 60vw;
+height: 6.5vh;
+padding-top: 0.5vh;
+padding-left: 1vw;
+outline: none;
+padding-right: 1vw;
+}
+.login_fa{
+	float:left;
+	width: 10vw;
+
+	height: 6.5vh;
+	padding-top: 1.5vh;
+
+	padding-bottom: 1.5vh;
+text-align: center;
+font-size: 3vh;
+color: #696666;
+}
+.login_boton{
+	font-size: 2.5vh;
+background: #d08d33;
+border: none;
+color: #161616;
+width: 30vw;
+height: 4.5vh;
+border-radius: 5px;
+float: none;
+margin-top: 3vh;
+	outline: none;
+    display:block !important;
+    margin-right:auto !important;
+    margin-left:auto !important;
+    width:auto !important;
+    padding-left:7vw;
+    padding-right:7vw;
+}
+#login_pie{
+    width: 100vw;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: auto;
+}
+.login_pie{
+    width: 100vw;
+    font-size: 2.7vh;
+    border: none;
+    outline: none;
+    height: 5.5vh;
+    margin-top: 1vh;
+    background: rgba(255,255,255,0.6);
+    color: #111;
+}
+@media all and (orientation:landscape) {
+	#login_logo_img{
+    height: 100%;
+    width: auto;
+}	 
+#login_logo{
+    margin-top: 5vh;
+    height: 30vh;
+}
+#login_input{
+    margin-top: 5vh;
+	
+}
+.login_titulo{
+    font-size: 6vh;
+    margin-bottom: 4vh;
+}
+.login_input_bg{
+    width: 45%;
+    margin-left: 27.5%;
+    font-size: 8vh;
+}
+
+.login_pie{
+    font-size: 4vh;
+    height: 7vh;
+}
+input[type="email"],input[type="password"],i{
+    font-size: 4vh;
+}
+}
