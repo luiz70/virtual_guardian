@@ -15,14 +15,14 @@
 	</div>
     <div class="popup-body ng-hide " style="" ng-show="!recorrido">
     <img src="img/logo_negro.png" style="  height: 27vw;width: 67vw;">
-    	<div class="div25vh" style="  font-size: 3vh;overflow: hidden;height:auto !important;  margin-top: 2vh; line-height: 3.2vh;">{{idioma.recorrido[61]}}
+    	<div class="div25vh" style="  font-size: 3vh;overflow: hidden;height:auto !important;  margin-top: 2vh; line-height: 3.2vh;">{{idioma.recorrido[2]}}
         </div>
         
     
      </div>
 	<div class="popup-buttons" style=" max-height:9.5vh;height: auto; bottom:0px;position: absolute;width: 100%;" nav-direction="enter"><!-- ngRepeat: button in buttons -->
-    	<!--button class="button ng-binding button-default ng-hide" ng-class="button.type || 'button-default'" ng-click="closeRecorrido()" style="  height: 100%;padding: 0px !important;" nav-direction="enter"  ng-show="!recorrido">{{idioma.recorrido[4]}}</button>
-        <button  nav-direction="enter" class="button ng-binding button-positive  ng-hide" ng-class="button.type || 'button-default'" ng-click="iniciaRecorrido()" style="  height: 100%;padding: 0px !important;" ng-show="!recorrido">{{idioma.recorrido[3]}}</button-->
-        <button  nav-direction="enter" class="button ng-binding button-positive  ng-hide" ng-class="button.type || 'button-default'" ng-click="closeRecorrido()" style="  height: 100%;padding: 1vh !important;" ng-show="!recorrido">{{idioma.general[2]}}</button>
+    	<button nav-direction="enter" class="button ng-binding button-default ng-hide" ng-class="button.type || 'button-default'" ng-click="closeRecorrido()" style="  height: 100%;padding: 1vh !important;" ng-show="!recorrido">{{idioma.recorrido[4]}}</button>
+        <button nav-direction="enter" class="button ng-binding button-positive ng-hide" ng-class="button.type || 'button-default'" ng-click="iniciaRecorrido()" style="  height: 100%;padding: 1vh !important;" ng-show="!recorrido">{{idioma.recorrido[3]}}</button>
+        <!--button  nav-direction="enter" class="button ng-binding button-positive  ng-hide" ng-class="button.type || 'button-default'" ng-click="closeRecorrido()" style="  height: 100%;padding: 1vh !important;" ng-show="!recorrido">{{idioma.general[2]}}</button-->
      </div> 
 </ion-popover-view>
