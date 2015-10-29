@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C84AC122042A5BF3D4877A9B'
+               BlueprintIdentifier = 'AC444909019ABD4F7B660894'
                BlueprintName = 'Pods-VirtualGuardian'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_VirtualGuardian.framework'>

@@ -375,7 +375,7 @@
 -(void) socketInit{
     NSLog(@"initsocket");
     SocketConected=false;
-    socket =[[SocketIOClient alloc] initWithSocketURL:@"http://www.virtual-guardian.com:8303" opts:@{@"log": @NO, @"connectParams": @{@"thing": @"value"}}];
+    socket = [[SocketIOClient alloc] initWithSocketURL:@"http://www.virtual-guardian.com:8303" options:@{@"log": @NO, @"connectParams": @{@"thing": @"value"}}];
     
     
     [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
@@ -405,7 +405,7 @@
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
     localNotification.alertBody = [NSString stringWithFormat:@"Llamada perdida de %@",callNotification.userInfo[@"Correo"]];
-    localNotification.soundName = @"none.wav";
+    //localNotification.soundName = @"none.wav";
     localNotification.applicationIconBadgeNumber = 0;
      if(notificationMessage != nil)[[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
      notificationMessage = nil;
