@@ -3,13 +3,18 @@ angular.module('starter')
 	$scope.video={currentTime:0};
 	$timeout(function(){
 	$scope.video=document.getElementById("videoTutorial");
+             $("#videoTutorial").css("opacity",1);
 	},500);
-	$scope.isPlay=false;
+	$scope.isPlay=true;
 	$scope.play=function(){
 		$scope.isPlay=true;
-		$("#videoTutorial").css("opacity",1);
+		
 		$scope.video.play();
 	}
+            $scope.playPause=function(){
+            if($scope.isPlay)$scope.pause()
+            else $scope.play()
+            }
 	$scope.pause=function(){
 		$scope.isPlay=false;
 		$scope.video.pause();

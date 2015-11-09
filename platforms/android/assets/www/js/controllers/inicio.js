@@ -24,6 +24,7 @@ angular.module('starter')
 		/*if($scope.Conexion(1,function(){
 			
 		})){*/
+            $scope.alert($rootScope.idioma.general[28],$rootScope.idioma.general[39],function(){
 			$scope.popoverRec = $ionicPopover.fromTemplateUrl("pantallas/recorridoStart.html", {
     		scope: $scope
 			}).then(function(popover) {
@@ -32,6 +33,7 @@ angular.module('starter')
 				$scope.popoverRec.show();
 				$(".popover-arrow").hide();
   			});
+                         });
 		//}
 	}
 	if($rootScope.Usuario.Nuevo==1 && !window.localStorage.getItem("enRecorrido"))$timeout(function(){$rootScope.startRecorrido(1)},1000);
@@ -51,7 +53,7 @@ angular.module('starter')
 	$scope.fechaPerRef=null;
 	$rootScope.cargando=true;
 	$scope.pantallas=[true,false,false,true];
-	$timeout(function(){ 
+	$timeout(function(){
 		$ionicSlideBoxDelegate.enableSlide(false); 
 		if($rootScope.tabInicial!=1)$rootScope.onTab($rootScope.tabInicial);
         
@@ -60,8 +62,8 @@ angular.module('starter')
 	$("#capa_menu").hide();
 	$scope.filtro={fechai:null,fechaf:null,estados:"",eventos:""};
 	$scope.Estados=[];
-	if(window.localStorage.getArray("TipoEventos"))$scope.TipoEventos=window.localStorage.getArray("TipoEventos");
-	else $scope.TipoEventos=[];
+	if(window.localStorage.getArray("TipoEventos"))$rootScope.TipoEventos=window.localStorage.getArray("TipoEventos");
+	else $rootScope.TipoEventos=[];
 	
 	$rootScope.iniciaRecorrido=function(){
 		$scope.popoverRec.hide();
@@ -181,16 +183,16 @@ angular.module('starter')
                                     {Id:9,Nombre:"Robo",Selected:true},
                                     {Id:10,Nombre:"Robo mercancía",Selected:true}
                                     ];
-            window.localStorage.setArray("TipoEventos",$scope.TipoEventos)
-            //if(!$rootScope.iOS)$rootScope.filtros.Tipos=$scope.TipoEventos;
+            window.localStorage.setArray("TipoEventos",$rootScope.TipoEventos)
+            //if(!$rootScope.iOS)$rootScope.filtros.Tipos=$rootScope.TipoEventos;
             /*$http.get("https://www.virtual-guardian.com/api/tipoeventos",{})
              .success(function(data,status,header,config){
-             $scope.TipoEventos=[];
+             $rootScope.TipoEventos=[];
              for(var i=0;i<data.length;i++)
-             $scope.TipoEventos.push(JSON.parse(data[i]));
-             window.localStorage.setArray("TipoEventos",$scope.TipoEventos)
-             if(!$rootScope.iOS)$rootScope.filtros.Tipos=$scope.TipoEventos;
-             console.log(JSON.stringify($scope.TipoEventos));
+             $rootScope.TipoEventos.push(JSON.parse(data[i]));
+             window.localStorage.setArray("TipoEventos",$rootScope.TipoEventos)
+             if(!$rootScope.iOS)$rootScope.filtros.Tipos=$rootScope.TipoEventos;
+             console.log(JSON.stringify($rootScope.TipoEventos));
              })
              .error(function(error,status,header,config){
              })*/
@@ -205,7 +207,7 @@ angular.module('starter')
 		Inicial:d2,
 		Final:d1,
 		Estados:$scope.Estados,
-		Tipos:$scope.TipoEventos,
+		Tipos:$rootScope.TipoEventos,
 		Periodo:{Nombre:$scope.idioma.periodos[$rootScope.Usuario.Periodo],Periodo:$rootScope.Usuario.Periodo}
 		
 	}
@@ -653,13 +655,13 @@ $scope.getUserTipos=function(){
     var t2=[];
     if($rootScope.Usuario.NotTipos!="")t2=$rootScope.Usuario.NotTipos.split(",");
     $rootScope.Usuario.Tipos=[];
-    for(var i=0,j=0; i<$scope.TipoEventos.length;i++)
-    if($rootScope.Usuario.NotTipos=="" )arr2.push($rootScope.iOS?{Nombre:$scope.TipoEventos[i].Nombre,Selected:true,Id:$scope.TipoEventos[i].Id}:$scope.TipoEventos[i]);
+    for(var i=0,j=0; i<$rootScope.TipoEventos.length;i++)
+    if($rootScope.Usuario.NotTipos=="" )arr2.push($rootScope.iOS?{Nombre:$rootScope.TipoEventos[i].Nombre,Selected:true,Id:$rootScope.TipoEventos[i].Id}:$rootScope.TipoEventos[i]);
     else
-        if( $scope.TipoEventos[i].Id==t2[j]){
+        if( $rootScope.TipoEventos[i].Id==t2[j]){
             if(j<t2.length-1)j++;
-            if($rootScope.iOS)arr2.push({Nombre:$scope.TipoEventos[i].Nombre,Selected:false,Id:$scope.TipoEventos[i].Id});
-        }else arr2.push($rootScope.iOS?{Nombre:$scope.TipoEventos[i].Nombre,Selected:true,Id:$scope.TipoEventos[i].Id}:$scope.TipoEventos[i]);
+            if($rootScope.iOS)arr2.push({Nombre:$rootScope.TipoEventos[i].Nombre,Selected:false,Id:$rootScope.TipoEventos[i].Id});
+        }else arr2.push($rootScope.iOS?{Nombre:$rootScope.TipoEventos[i].Nombre,Selected:true,Id:$rootScope.TipoEventos[i].Id}:$rootScope.TipoEventos[i]);
     $rootScope.Usuario.Tipos=arr2;
 	 return $rootScope.Usuario.Tipos;
 	
@@ -1082,6 +1084,7 @@ $scope.abreModalEstados=function(){
 }
 $scope.abreModalTipos=function(){
 	$rootScope.Usuario.Tipos=$scope.getUserTipos();
+           
 	 $rootScope.UsuarioTempo = jQuery.extend(true, {}, $rootScope.Usuario);
     $scope.openSelect($rootScope.Usuario.Tipos,true,function(){
 		
@@ -1161,7 +1164,9 @@ $scope.abreDate=function(val){
         };
         // calling show() function with options and a result handler
         datePicker.show(options, function(date){
+                        $scope.$apply(function(){
          if(date)$rootScope.filtros.Inicial=date;
+                                     });
         });
         }else{
             var options = {
@@ -1174,7 +1179,9 @@ $scope.abreDate=function(val){
         };
         // calling show() function with options and a result handler
         datePicker.show(options, function(date){
-        if(date) $rootScope.filtros.Final=date;  
+                        $scope.$apply(function(){
+        if(date) $rootScope.filtros.Final=date;
+                                      });
         });
         }
     }

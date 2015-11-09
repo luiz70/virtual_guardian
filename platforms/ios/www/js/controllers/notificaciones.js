@@ -56,7 +56,7 @@ angular.module('starter')
 							}
 						}
 					}
-					$rootScope.Notificaciones.push(tmp)
+					if(!$scope.existenoti(tmp.IdNotificacion))$rootScope.Notificaciones.push(tmp)
 				}
 				if(data.length<5)$scope.todasOld=true;
 				window.localStorage.setArray("Notificaciones",$rootScope.Notificaciones)
@@ -141,7 +141,7 @@ angular.module('starter')
 							}
 						}
 					}
-					$rootScope.Notificaciones.unshift(tmp);
+					if(!$scope.existenoti(tmp.IdNotificacion))$rootScope.Notificaciones.unshift(tmp);
 					//if($rootScope.Notificaciones.length>0)
 					//else $rootScope.Notificaciones.push(tmp);
 				}
@@ -163,6 +163,11 @@ angular.module('starter')
        			$scope.$broadcast('scroll.refreshComplete');
 				$rootScope.cargando=false;
      		});
+			$scope.existenoti=function (id){
+				for(var i=0; i<$rootScope.Notificaciones.length;i++)
+				if($rootScope.Notificaciones[i].IdNotificacion==id)return true
+				return false;
+			}
 		}
 	}		
 })
