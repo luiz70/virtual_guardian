@@ -11,22 +11,22 @@
 				<button class="button button-icon icon ion-navicon especial" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" menu-toggle="left" ng-click="toggleLeftSideMenu()" ng-hide="recorrido"></button>
                 <button class="button button-icon icon ion-navicon especial ng-hide" style="padding:0px;  position: absolute;top: 0px;bottom: 0px;margin: auto;    width: 9vw;max-width: 6vh;overflow: hidden;" ng-show="recorrido"></button>
 			</div>
-            <h1 class="title logo_barra" menu-toggle="left" ng-click="toggleLeftSideMenu();"><img src="img/logo_blanco.png" height="90%" style="position:absolute;top:0px;bottom:0px;margin: auto;"></h1>
+            <h1 class="title logo_barra" menu-toggle="left" ng-click="toggleLeftSideMenu();"><img src="img/logo_big.png" height="90%" style="position:absolute;top:0px;bottom:0px;margin: auto;"></h1>
 			<div class="buttons tabs-contenedor" >
                 <ion-tabs class="tabs-dark tabs-icon-only" style="max-width: 30vh; right: 0px;">
                     <a id="tab1" class="tab-item" ng-click="onTab(1)" >
-                        <img id="img_btn_1" src="img/iconos/map2.png" class="img-boton">
+                        <div id="img_btn_1" style="-webkit-mask-position: center;-webkit-mask-image: url('img/iconos/map.png');-webkit-mask-size: contain;" class="img-boton activo"></div>
                     </a>
                     <a  id="tab2" class="tab-item" ng-click="onTab(2)" >
-                        <img id="img_btn_2" src="img/iconos/tasks.png" class="img-boton">
-                        <img id="img_btn_2" src="img/iconos/tasksnot.png" class="img-boton ng-hide" ng-show="notPendientes>0">
+                        <div id="img_btn_2" style="-webkit-mask-position: center;-webkit-mask-image: url('img/iconos/tasks.png');-webkit-mask-size: contain;" class="img-boton"></div>
+                        <div id="img_btn_2" style="-webkit-mask-position: center;-webkit-mask-image: url('img/iconos/tasksnot.png');-webkit-mask-size: contain;" class="img-boton ng-hide" ng-show="notPendientes>0"></div>
                         <div id="notificacion_count" class="ng-hide" ng-show="notPendientes>0" style="font-size:2.5vh !important;">{{'+'+notPendientes}}</div>
                     </a>
                     <a id="tab3" class="tab-item" ng-click="onTab(3)" >
-                        <img id="img_btn_3" src="img/iconos/people.png" class="img-boton">
+                        <div id="img_btn_3" style="-webkit-mask-position: center;-webkit-mask-image: url('img/iconos/people.png');-webkit-mask-size: contain;" class="img-boton"></div>
                     </a>
                     <a id="tab4" class="tab-item" ng-click="onTab(4)" >
-                        <img id="img_btn_4" src="img/iconos/car.png" class="img-boton"  >
+                        <div id="img_btn_4" style="-webkit-mask-position: center;-webkit-mask-image: url('img/iconos/car.png');-webkit-mask-size: contain;" class="img-boton"  ></div>
                     </a>               
                 </ion-tabs>
 			</div>
@@ -95,12 +95,12 @@
         </ion-nav-view>
         
       </ion-pan>
-      <div class="perfil_cover" class="animate-hide" style="top: 8vh;" ng-hide="!cargando"><ion-spinner icon="android" class="spinner-dark"></ion-spinner></div>
+      
         <div id="capa_menu" on-touch="toggleLeftSideMenu()" ></div>
 	</ion-side-menu-content >
 	<ion-side-menu side="left" width="tamano" ng-controller="menu">
 		<ion-header-bar id="m1" class="bar-dark" style="height: 10vh !important;" >
-        <div style="float: left;width: 9vh;height: 9vh; top: 0.5vh;left: 1vh;background-color: rgb(216, 216, 216);position: absolute;border: solid 2px #CE932F;border-radius: 100%;"> <img style="height: 90%;position: absolute;left: 0px;right: 0px;margin: auto; margin-top:5%" src="img/iconos/icono.png"></div>
+        <div style="float: left;width: 9vh;height: 9vh; top: 0.5vh;left: 1vh;position: absolute;border-radius: 100%;"> <img style="height: 90%;position: absolute;left: 0px;right: 0px;margin: auto; margin-top:5%" src="img/avatar.png"></div>
 			<div class="titulo_menu" style="  font-weight: 400; text-overflow:ellipsis;white-space:nowrap;overflow:hidden;margin-left: 11vh !important;">{{Usuario.Correo.substr(0,1).toUpperCase()+Usuario.Correo.substr(1)}}</div>
             <div class="titulo_menu" style="position:absolute !important; left:0px;right:0px;bottom:0px;   font-size: 2.5vh !important;  color:#E9E9E9;margin-left: 11vh !important; text-overflow:ellipsis; white-space:nowrap; overflow:hidden">{{"Suscripción "+Usuario.Suscripcion.toLowerCase()}}</div>
 		</ion-header-bar>
@@ -115,7 +115,7 @@
             
 				<ion-item nav-clear class="item item-icon-left item-icon-right item_menu_inicio" ng-click="abrefiltrosMenu()">
                 	
-                	<i class="icon ion-funnel" style="color: #ce932f;"></i>
+                	<i class="icon ion-funnel" style="color: #059DB5;"></i>
                 	<div>
                 		<div style="position:relative;float:left;color: #fff;opacity: 1;" >{{idioma.menu[1]}}</div>
                         <div style="position:relative;float:right;font-size: 2.5vh;font-weight: 100;" class="{{filtros.Estado?'fact':'finact'}}">{{filtros.Estado?idioma.general[17]:idioma.general[18]}}</div>
@@ -190,7 +190,7 @@
                     </ion-list>
                 </div>
 				<ion-item nav-clear class="item item-icon-left item-icon-right item_menu_inicio" ng-click="opcionMenu('aplicacion')" >
-        			<i class="icon ion-gear-b" style="color: #ce932f;"></i>
+        			<i class="icon ion-gear-b" style="color: #059DB5;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[2]}}</div>
         			<i id="home_flecha_aplicacion" class="icon ion-chevron-down" style="font-size:3vh;" ></i>
 				</ion-item>
@@ -241,7 +241,7 @@
                     </ion-list>
                 </div>
                 <ion-item nav-clear class="item item-icon-left item-icon-right item_menu_inicio" ng-click="opcionMenu('notificaciones')" >
-        			<i class="icon ion-chatbox-working" style="color: #ce932f;"></i>
+        			<i class="icon ion-chatbox-working" style="color: #059DB5;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[3]}}</div>
         			<i id="home_flecha_notificaciones" class="icon ion-chevron-down" style="font-size:3vh;" ></i>
                 </ion-item>
@@ -339,28 +339,28 @@
                     </ion-list>
                 </div>
                  <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreAjustesCuenta()">
-        			<i class="icon ion-person" style="color: #ce932f;"></i>
+        			<i class="icon ion-person" style="color: #059DB5;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.cuenta[12]}}</div>
                 </ion-item>
                 
                 <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreIconos()">
-        			<i class="icon ion-images" style="color: #ce932f;"></i>
+        			<i class="icon ion-images" style="color: #059DB5;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[31]}}</div>
                 </ion-item>
                  <!--ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreInfor()">
-        			<i class="icon ion-information-circled" style="color: #ce932f;"></i>
+        			<i class="icon ion-information-circled" style="color: #059DB5;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[5]}}</div>
                 </ion-item-->
                  <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreHelp()" nav-direction="Enter">
-                     <i class="icon ion-help-circled" style="color: #ce932f;"></i>
+                     <i class="icon ion-help-circled" style="color: #059DB5;"></i>
                      <div style="color: #fff;opacity: 1;">{{idioma.menu[27]}}</div>
                  </ion-item>
                  <ion-item nav-clear class="item item-icon-left  item_menu_inicio" ng-click="abreTerminos()">
-        			<i class="icon ion-information-circled" style="color: #ce932f;"></i>
+        			<i class="icon ion-information-circled" style="color: #059DB5;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[4]}}</div>
                 </ion-item>
                 <ion-item nav-clear class="item item-icon-left item_menu_inicio" nav-direction="back" ng-click="cerrarSesion()" >
-        			<i class="icon ion-power" style="color: #ce932f;"></i>
+        			<i class="icon ion-power" style="color: #059DB5;"></i>
         			<div style="color: #fff;opacity: 1;">{{idioma.menu[6]}}</div>
                 </ion-item>
                 

@@ -38,24 +38,21 @@
 }
 .login_input_bg{
 	width: 70%;
-
 	margin-left: 15%;
 	font-size: 2.5vh;
-
-
 	overflow: hidden;
 	border-radius: 5px;
-border: none;
-background: rgba(255,255,255,0.1);
-
+	border: none;
+	background: rgba(255,255,255,0.1);
 	color: #A9A9A9;
-outline: none;
+	outline: none;
+	/* box-shadow: 2px 2px 0 #059DB5; */
 }
 .login_titulo{
 width: 100%;
 text-align: center;
 font-size: 4vh;
-color: #d08d33;
+color: #0FB5D0;
 height: 4.5vh;
 margin-bottom: 2vh;
 line-height: 4.5vh;
@@ -84,22 +81,22 @@ font-size: 3vh;
 color: #696666;
 }
 .login_boton{
-	font-size: 2.5vh;
-background: #d08d33;
-border: none;
-color: #161616;
-width: 30vw;
-height: 4.5vh;
-border-radius: 5px;
-float: none;
-margin-top: 3vh;
+	font-size: 3vh;
+	background: #059DB5;
+	border: none;
+	color: #161616;
+	width: 30vw;
+	height: 4.5vh;
+	border-radius: 5px;
+	float: none;
+	margin-top: 4vh;
 	outline: none;
-    display:block !important;
-    margin-right:auto !important;
-    margin-left:auto !important;
-    width:auto !important;
-    padding-left:7vw;
-    padding-right:7vw;
+	display:block !important;
+	margin-right:auto !important;
+	margin-left:auto !important;
+	width:auto !important;
+	padding-left:7vw;
+	padding-right:7vw;
 }
 #login_pie{
     width: 100vw;

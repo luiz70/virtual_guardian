@@ -46,6 +46,7 @@ angular.module('starter')
 40:"Error al guardar. ",
 41:"Revise su configuración de internet e intente de nuevo.",
 42:"Si",
+43:" en ",
 					
 				},
 				mapa:{
@@ -192,13 +193,17 @@ angular.module('starter')
 				Descripcion:"Acto de perseguir a delincuentes tras hecho delictivo.",
 				Imagen:"7"
 				},
+				{Nombre:"Bloqueo",
+				Descripcion:"Obstrucción de vías de transporte por grupos delictivos o manifestaciones agresivas.",
+				Imagen:"8"
+				},
 				{Nombre:"Robo",
 				Descripcion:"Robo a establecimientos (casa, restaurantes, locales, etc) en donde no hubo violencia y no existen testigos de los hechos.",
-				Imagen:"8"
+				Imagen:"9"
 				},
 				{Nombre:"Robo mercancía",
 				Descripcion:"Robo a vehículo que transporta mercancía en donde no hubo violencia y no existen testigos de los hechos.",
-				Imagen:"9"
+				Imagen:"10"
 				},
 				{Nombre:"Tips Virtual Guardian",
 				Descripcion:"Icono utilizado para representar los consejos que Virtual Guardian te enviará para ayudarte a estar siempre protegido.",
@@ -423,6 +428,7 @@ angular.module('starter')
 					12:"Para ver el tip manten pulsada la notificación.",
 					13:"Suscripción Familiar",
 					14:" quiere agregarte a su suscripción familiar.",
+					15:" de tí."
 				},
 				meses:{
 				1:"Enero",
@@ -943,50 +949,5 @@ angular.module('starter')
 
 
   
-}).service('CordovaNetwork', ['$ionicPlatform', '$q', function($ionicPlatform, $q,$rootScope) {
-  // Get Cordova's global Connection object or emulate a smilar one
-  var Connection = window.Connection || {
-    "CELL"     : "cellular",
-    "CELL_2G"  : "2g",
-    "CELL_3G"  : "3g",
-    "CELL_4G"  : "4g",
-    "ETHERNET" : "ethernet",
-    "NONE"     : "none",
-    "UNKNOWN"  : "unknown",
-    "WIFI"     : "wifi"
-  };
- 
-  var asyncGetConnection = function () {
-    var q = $q.defer();
-    $ionicPlatform.ready(function () {
-      if(navigator.connection) {
-        q.resolve(navigator.connection);
-      } else {
-        q.reject('navigator.connection is not defined');
-      }
-    });
-    return q.promise;
-  };
- 
-  return {
-    isOnline: function () {
-      return asyncGetConnection().then(function(networkConnection) {
-        var isConnected = false;
- 
-        switch (networkConnection.type) {
-          case Connection.ETHERNET:
-          case Connection.WIFI:
-          case Connection.CELL_2G:
-          case Connection.CELL_3G:
-          case Connection.CELL_4G:
-          case Connection.CELL:
-            isConnected = true;
-            break;
-        }
-		
-        return isConnected;
-      });
-    }
-  };
-}]);
+})
  
