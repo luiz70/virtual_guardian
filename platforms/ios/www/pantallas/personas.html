@@ -1,6 +1,6 @@
 <div ng-controller="personas">
 <ion-pan style="  position: absolute;  top: 10vh;  background: none;  bottom: 0vh;  height: auto;  width: 100vw;"   ng-hide="!pantallas[2]">
-<ion-content style="background:none; top:0vh;"  has-bouncing="true">
+<ion-content style="background:none; top:0vh;    bottom: 6vh;"  has-bouncing="true">
 <ion-refresher
     pulling-text={{idioma.general[5]}}  on-refresh="refreshPersonas()" spinner="android">
   </ion-refresher>
@@ -10,9 +10,9 @@
   		</ion-item>
     	<ion-item class="item item-avatar notificacion" ng-repeat="persona in Personas track by $index" ng-click="opcionesPersona(persona)">
         	
-      		<img ng-src="img/iconos/persona.png" style="  border-radius: 0px;  opacity: 0.9;">
+      		<img src="img/blank.png" style="  border-radius: 0px;  opacity: 0.9;-webkit-mask-position: center;-webkit-mask-image: url('img/iconos/persona.png');-webkit-mask-size: cover;-webkit-mask-repeat: no-repeat; background:#EEE">
       		<h2 style="  font-size: 3vh !important;  color: #fff; text-overflow:ellipsis; white-space:nowrap; ">{{persona.Correo}}</h2>
-      		<p style="  color: #ce932f;">{{persona.Tipo?idioma.personas[8] : persona.Lugar?idioma.personas[10]:idioma.personas[9]}}</p>
+      		<p style="  color: #059DB5">{{persona.Tipo?idioma.personas[8] : persona.Lugar?idioma.personas[10]:idioma.personas[9]}}</p>
 	  		<!--div class="eliminar_persona" style="top:3px;" ng-click="eliminaPersona(persona)" ><img src="img/iconos/cancel.png" width="100%"></div>
             <div class="eliminar_persona" style="bottom:3px;" ng-show="persona.Lugar && !persona.Tipo"  ng-click="aceptaPersona(persona)"><img src="img/iconos/acept.png" width="100%"></div-->
   		</ion-item>

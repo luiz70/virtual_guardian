@@ -1,18 +1,19 @@
 
-<ion-pane style="background:url(img/background.jpg); background-position:center; background-size:cover;" ng-controller="login" ng-cloak>
+<ion-pane style="background:#1D1D1D;     background: -webkit-linear-gradient(left, #232323, #2D2D2D);background-position:center; background-size:cover;" ng-controller="login" ng-cloak>
 	<div id="login_logo" style="margin-top:{{small?(vh*10):(vh*15)}}px;height:{{vh*20}}px;">
-    	<img src="img/logo_blanco_keros.png" id="login_logo_img">
+    	<img src="img/logo.png" id="login_logo_img">
+        <!--div id="login_logo_img" style="background: #E7E7E7;-webkit-mask-image: url('img/nuevovirtual.png');-webkit-mask-size: contain;-webkit-mask-position: center;-webkit-mask-repeat: no-repeat; height:100%;background-size: cover;background-position: center;"></div-->
     </div>
     <div id="login_input">
     	<div id="login_titulo" class="login_titulo" style="font-size: {{small?(vh*5):(vh*4)}}px !important; height: {{small?(vh*5.5):(vh*4.5)}}px;margin-bottom: {{small?(vh*3):(vh*2)}}px;line-height: {{small?(3.2*vh):(4.5*vh)}}px !important;">{{idioma.login[1]}}</div>
         <div class="login_input_bg">
   			<label class="item item-input" style="background: none; border: none;">
     			<i class="icon ion-person placeholder-icon"></i>
-    			<input id="log_email" class="input35vh" type="email" placeholder="{{idioma.login[2]}}" style="color: #969696;" ng-model="email" ng-keydown="nextinput($event)" >
+    			<input id="log_email" class="input35vh" type="email" placeholder="{{idioma.login[2]}}" style="color: #E2E2E2;" ng-model="email" ng-keydown="nextinput($event)" >
   			</label>
             <label class="item item-input" style="background: none; border: none; border-top:1px solid #3C3C3C;">
     			<i class="icon ion-locked placeholder-icon"></i>
-    			<input id="log_contrasena" class="input35vh" type="password" placeholder="{{idioma.login[3]}}" style="color: #969696;" ng-model="contrasena" ng-keydown="enterapp($event)" >
+    			<input id="log_contrasena" class="input35vh" type="password" placeholder="{{idioma.login[3]}}" style="color: #E2E2E2;" ng-model="contrasena" ng-keydown="enterapp($event)" >
   			</label>
     	</div>
         <button id="login_entrar" class="login_boton" style="line-height:inherit" nav-direction="enter" ng-click="iniciaSesion()">{{idioma.login[4]}}</button>

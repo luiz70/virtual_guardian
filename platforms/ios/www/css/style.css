@@ -108,7 +108,7 @@ top: 0px!important;
   font-weight: 300;
 }
 .suscripcion-selected{
-	    border: solid 2px #ce932f !important;
+	    border: solid 2px #059DB5 !important;
     border-radius: 4px;
 	}
 #capa_menu{
@@ -158,7 +158,7 @@ background: rgba(0, 0, 0, 0.8);
 	  height: 6vh;
 	  top: 11vh;
 	  right: 1vh;
-	  background: #E2A133;
+	  background: #059DB5;
 	  border: none;
 	  margin: 0px;
 	  padding: 0.8vh;
@@ -260,13 +260,13 @@ background: rgba(0, 0, 0, 0.8);
 	font-style: italic;
 }
 .fact{
-	color: #ce932f;
+	color: #059DB5;
 }
 .btn_act{
 	  width: 50%;
   background: #484848;
   border: none;
-  color: #ce932f;
+  color: #059DB5;
   font-size: 2vh;
   margin: 0px;
   padding: 0px;
@@ -370,6 +370,13 @@ div{
 	background-color: rgba(234, 231, 231, 0.3) !important;
     color: #A1A1A1 !important;
 }
+.img-boton{
+	background:#EEE;
+}
+.img-boton.activo{
+	background:#059DB5;
+}
+
 /*.popupActivo > .popup > .popup-buttons {
 position: absolute !important;
   bottom: 0px;

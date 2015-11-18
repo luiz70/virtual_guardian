@@ -1,17 +1,27 @@
 angular.module('starter')
 .controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory,signaling,ContactsService){
-	
+	$rootScope.internet={state:false,type:navigator.connection.type};
+	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+		$rootScope.internet={state:true,type:networkState};
+	})
+	$rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+		$rootScope.internet={state:false,type:networkState};
+	})
 		
 	$rootScope.onTab=function (id){
-		if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){
+		//if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){
 		$rootScope.cargando=false;
-		$("#img_btn_1").attr("src","img/iconos/map.png");
+		/*$("#img_btn_1").attr("src","img/iconos/map.png");
 		$("#img_btn_2").attr("src","img/iconos/tasks.png");
 		$("#img_btn_3").attr("src","img/iconos/people.png");
 		$("#img_btn_4").attr("src","img/iconos/car.png");
-		$("#img_btn_"+id).attr("src",$("#img_btn_"+id).attr("src").substr(0,$("#img_btn_"+id).attr("src").length-4)+"2.png");
+		$("#img_btn_"+id).attr("src",$("#img_btn_"+id).attr("src").substr(0,$("#img_btn_"+id).attr("src").length-4)+"2.png");*/
+		$(".img-boton").removeClass("activo");
+		$("#img_btn_"+id).addClass("activo");
 		$scope.slideTo(id)
-		}
+		$scope.reiniciaNots();
+		console.log(2);
+		//}
 	}
 	$ionicHistory.nextViewOptions({
      disableBack: true

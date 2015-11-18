@@ -1,109 +1,90 @@
 <ion-pan ng-hide="!pantallas[0]" style="  position: absolute;  top: 0vh;  background: none;  bottom: 0vh;  height: auto;  width: 100vw;">
-<ion-content id="inicio_mapa" class="inicio_mapa"  data-tap-disabled="true" style="top:0px;" on-touch="hideBarra()" ng-mouseover="hideBarra()" ng-hide="sinMapa" >
-</ion-content> 
-<!--div style="position: absolute;top: 11vh;left: 1vh;padding: 1vh;padding-bottom: 0px;background-color: #3E3E3E;border-radius: 5px;opacity: 0.8;" class="ng-hide" ng-show="loadingEvents"> <ion-spinner icon="android" class="spinner-dark"></ion-spinner></div-->
-<div id="msj_map" class="ng-hide" style="position: absolute;top: 8vh;height: auto;background-color: rgba(255, 255, 255, 0.9);padding: 1vh;z-index: 1;margin-top: 1vh;left: 1vh;right: 1vh;-webkit-box-shadow: 0 0 8px #000;font-size:3vh; box-shadow: 2px 2px 2px #A0A0A0;text-align:center" ng-show="msj_map"></div>
-<div style="position: absolute;top: 8vh;width: 100%;bottom: 0vh;overflow: hidden;" class="ng-hide" ng-show="sinMapa" ng-click="Reload()">
-    <div style="  width: 50vw;position: absolute;height: 50vw;top: 0px;bottom: 8vh;left: 0px;  right: 0px;  margin: auto;  opacity: 0.2;">
-        <img src="img/sinconexion.png" style="  width: 60%; margin-left: 20%;  height: 60%;">
-        <div style="color:#fff;  width: 100%; text-align: center;">{{idioma.general[4]}}</div>
-    </div>
-</div>
-<div id="inicio_pie" class="bar bar-footer bar-dark" drag-content="true" ng-hide="sinMapa" on-touch="showBarra()" style="height: 75px !important;-webkit-box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20);-moz-box-shadow: 0px -5px 6px -2px rgba(0,0,0,0.20); box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20)">
-<div id="tapa_pie" class="tapa ng-hide" ng-show="recorrido"></div>
+	<ion-content id="inicio_mapa ng-hide" class="inicio_mapa"  data-tap-disabled="true" style="top:0px;" on-touch="hideBarra()" ng-mouseover="hideBarra()" ng-show="mapLoaded" >
+	</ion-content> 
+	<div style="position: absolute;top: 8vh;width: 100%;bottom: 0vh;overflow: hidden;" class="ng-hide" ng-show="!internet.state" ng-click="reloadMap()">
+    	<div style="  width: 50vw;position: absolute;height: 50vw;top: 0px;bottom: 8vh;left: 0px;  right: 0px;  margin: auto;  opacity: 0.2;">
+        	<img src="img/sinconexion.png" style="  width: 60%; margin-left: 20%;  height: 60%;">
+        	<div style="color:#fff;  width: 100%; text-align: center;">{{idioma.general[4]}}</div>
+    	</div>
+	</div>
+	<div id="inicio_pie" class="bar bar-footer bar-dark ng-hide" drag-content="true" ng-show="internet.state" on-touch="showBarra()" style="height: 75px !important;-webkit-box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20);-moz-box-shadow: 0px -5px 6px -2px rgba(0,0,0,0.20); box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20)">
+		<div id="tapa_pie" class="tapa ng-hide" ng-show="recorrido"></div>
 
-    <div class="inicio_pie_mitad" style="height:30px;z-index:2;" >
-    <!--label class="toggle inicio_check toggle-energized" >
-   		<input type="checkbox" ng-model="swit" ng-change="cambiaSwitch()">
-        
-   		<div class="track" style="width:50px;height:30px;  position: relative;  ">
-     	<div class="handle" style="width:26px;height:26px;  position: absolute;  top: 0px;  left: 0px; "></div>
-   		</div>
-	</label-->
-    <label class="checkbox" style="z-index:2">
-       <input type="checkbox" ng-model="switchMap.enable" >
-     </label>
-     <div class="ng-hide" ng-show="!switchMap.enable" style="position:absolute;top:0px;left:0px;width:100%;height:75px;background:rgba(55, 55, 55, 0.84);z-index:1;    font-weight: 100;"></div>
-    <!--ion-toggle toggle-class="toggle-energized" ng-model="swit">Airplane Mode</ion-toggle-->
-    <!--ion-toggle ng-model="airplaneMode" toggle-class="toggle-calm"  ng-change="switchRadio()"></ion-toggle-->
-    <button id="inicio_rango_label" style="font-weight: 100;">{{idioma.menu[12]}} <span id="inicio_rango_numero" style="font-size: 21px !important;">{{radio | distance}}</span></button>
-   	</div> 
-    <div class="inicio_pie_mitad" style="z-index:1">
-    <!--div class="range">
- <i class="icon ion-volume-low"></i>
- <input type="range" name="volume">
- <i class="icon ion-volume-high"></i>
-</div-->
-          <div class="item range range-energized inicio_barra_rango" on-touch="startRange()" on-release="loadEventos()" >
-            <i class="icon ion-android-remove" style="color:#FFFFFF; font-size:3vh"></i>
-            <input id="inicio_barra_rango" type="range" name="volume" min="10" max="16000" step="1" style="height: 100%;
+    	<div class="inicio_pie_mitad" style="height:30px;z-index:2;" >
+    		<label class="checkbox" style="z-index:2">
+       			<input type="checkbox" ng-model="switchMap.enable" >
+     		</label>
+     		<div class="ng-hide" ng-show="!switchMap.enable" style="position:absolute;top:0px;left:0px;width:100%;height:75px;background:rgba(55, 55, 55, 0.84);z-index:1;    font-weight: 100;">
+            </div>
+    		<button id="inicio_rango_label" style="font-weight: 100;">
+            {{idioma.menu[12]}} <span id="inicio_rango_numero" style="font-size: 21px !important;">{{radio | distance}}</span>
+            </button>
+   		</div> 
+    	<div class="inicio_pie_mitad" style="z-index:1">
+        	<div class="item range range-energized inicio_barra_rango" on-touch="startRange()" on-release="loadEventos()" >
+            	<i class="icon ion-android-remove" style="color:#FFFFFF; font-size:3vh"></i>
+            	<input id="inicio_barra_rango" type="range" name="volume" min="10" max="16000" step="1" style="height: 100%;
   margin: 0px;" ng-model="radio"  ng-change="updateBar(radio)">
-            <i class="icon ion-android-add" style="color:#FFFFFF; font-size:3vh"></i>
-            
-          </div>
-</div>  
-</div>
-<div class="buscadorDir ng-hide" ng-show="buscandoDireccion">
-<div class="divBuscaMapa">
-	<input id="textoBuscado" class="inputBuscaMapa" type="text" ng-model="textoB" ng-change="buscaLugar()" placeholder="{{idioma.mapa[8]}}" ng-keydown="searchEnter($event)" ng-blur="cierrateclado()" style="padding:{{1*vh+'px !important'}}; padding-right:{{2*vh+'px'}}"></input>
-	<i class="icon ion-close-round" style="position: absolute;float:right;font-size: 4vh; color: #363636;  top: 0px;bottom: 0px;margin: auto;height: 4vh;width: 5vh;text-align: center;" ng-click="ocultaBuscador()"></i>
-</div>
-	<ion-content class="searchLista"  has-bouncing="true">
-
-	<ion-list>
-    	<ion-item id="mensajeBuscador" class="item" style="background: none;padding:5px;padding-top:8px;height: auto;text-align: center;border:none;  color: rgba(255, 255, 255, 0.71);font-size: 3vh; " ng-show="!loadingPlaces  && resultadoLugares.length<1" >
-      		{{(textoBuscado.length==0)?idioma.mapa[6]:idioma.mapa[7]+textoBuscado+'"'}}	  		
-  		</ion-item>
-    	<ion-item class="item" style="background: none;padding: 10px;height: 50px;text-align: center;border:none" ng-show="loadingPlaces" >
-      		<ion-spinner icon="android" class="spinner-dark"></ion-spinner>	  		
-  		</ion-item>
-    	<ion-item class="item item-avatar lugaritem" ng-repeat="lugar in resultadoLugares" ng-click="lugarSeleccionado(lugar)" ng-hide="loadingPlaces" style="  padding-top: {{2*vh+'px'}} !important;padding-bottom: {{1*vh+'px'}} !important;margin-bottom: {{1*vh+'px'}};padding-left: {{15*vw+'px'}};">
-        	<img src="img/blank.png" style="width:{{9*vw+'px'}};left:{{2*vh+'px'}};border-radius: 0px;  opacity: 0.9;background-color: #D17E26;-webkit-mask-image: url('{{lugar.icon}}');-webkit-mask-size: cover;" >
-      		<h2 style="  font-size: {{3*vh+'px !important'}};  color: #fff; text-overflow:ellipsis; white-space:nowrap; " class="nombreLugar">{{lugar.name}}</h2>
-      		<p style="  color: #ce932f; font-size:{{2.4*vh+'px'}}; line-height:{{3*vh+'px'}}">{{lugar.formatted_address}}</p>
-  		</ion-item>
-    </ion-list>
-</ion-content>
-</div>
-<button class="btn_mapa_flotante" ng-click="buscaEnMap()" ng-hide="sinMapa || recorrido">
-	<!--i class="icon ion-android-locate" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
-    <img src="img/blank.png" style="background-color: #191919;-webkit-mask-image: url('img/iconos/buscar.png');-webkit-mask-size: cover;    width: 100%;">
-</button>
-<button class="btn_mapa_flotante btn_mapa_flotante2" style="top:18vh" ng-click="revisaPos()" ng-hide="sinMapa">
-	<!--i class="icon ion-android-locate" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
-    <img src="img/blank.png"  style="background-color: #191919;-webkit-mask-image: url('img/iconos/position.png');-webkit-mask-size: cover;    width: 100%;">
-</button>
-<button class="btn_mapa_flotante btn_mapa_flotante3" style="top:25vh"   ng-click="showEventos(1)" ng-hide="sinMapa">
-	<!--i class="icon ion-android-sync" style="font-size: 3.5vh;color: #D77728;vertical-align: middle;"></i-->
-    <img src="img/blank.png"  style="background-color: #191919;-webkit-mask-image: url('img/iconos/refresh.png');-webkit-mask-size: cover;    width: 100%;">
-</button>
+            	<i class="icon ion-android-add" style="color:#FFFFFF; font-size:3vh"></i>
+           	</div>
+		</div>  
+	</div>
+	<div class="buscadorDir ng-hide" ng-show="buscandoDireccion">
+		<div class="divBuscaMapa">
+			<input id="textoBuscado" class="inputBuscaMapa" type="text" ng-model="textoB" ng-change="buscaLugar()" placeholder="{{idioma.mapa[8]}}" ng-keydown="searchEnter($event)" ng-blur="cierrateclado()" style="padding:{{1*vh+'px !important'}}; padding-right:{{2*vh+'px'}}">
+			<i class="icon ion-close-round" style="position: absolute;float:right;font-size: 4vh; color: #363636;  top: 0px;bottom: 0px;margin: auto;height: 4vh;width: 5vh;text-align: center;" ng-click="ocultaBuscador()"></i>
+		</div>
+        <ion-content class="searchLista"  has-bouncing="true">
+            <ion-list>
+                <ion-item id="mensajeBuscador" class="item" style="background: none;padding:5px;padding-top:8px;height: auto;text-align: center;border:none;  color: rgba(255, 255, 255, 0.71);font-size: 3vh; " ng-show="!loadingPlaces  && resultadoLugares.length<1" >
+                {{(textoBuscado.length==0)?idioma.mapa[6]:idioma.mapa[7]+textoBuscado+'"'}}	  		
+                </ion-item>
+                <ion-item class="item" style="background: none;padding: 10px;height: 50px;text-align: center;border:none" ng-show="loadingPlaces" >
+                    <ion-spinner icon="android" class="spinner-dark"></ion-spinner>	  		
+                </ion-item>
+                <ion-item class="item item-avatar lugaritem" ng-repeat="lugar in resultadoLugares" ng-click="lugarSeleccionado(lugar)" ng-hide="loadingPlaces" style="  padding-top: {{2*vh+'px'}} !important;padding-bottom: {{1*vh+'px'}} !important;margin-bottom: {{1*vh+'px'}};padding-left: {{15*vw+'px'}};">
+                    <img src="img/blank.png" style="width:{{9*vw+'px'}};left:{{2*vh+'px'}};border-radius: 0px;  opacity: 0.9;background-color: #D17E26;-webkit-mask-image: url('{{lugar.icon}}');-webkit-mask-size: cover;" >
+                    <h2 style="  font-size: {{3*vh+'px !important'}};  color: #fff; text-overflow:ellipsis; white-space:nowrap; " class="nombreLugar">{{lugar.name}}</h2>
+                    <p style="  color: #ce932f; font-size:{{2.4*vh+'px'}}; line-height:{{3*vh+'px'}}">{{lugar.formatted_address}}</p>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+	</div>
+    <div class="ng-hide" ng-show="internet.state">
+	<button class="btn_mapa_flotante" ng-click="buscaEnMap()" >
+    	<img src="img/blank.png" style="background-color: #191919;-webkit-mask-image: url('img/iconos/buscar.png');-webkit-mask-size: cover;    width: 100%;">
+	</button>
+	<button class="btn_mapa_flotante btn_mapa_flotante2" style="top:18vh" ng-click="revisaPos()">
+    	<img src="img/blank.png"  style="background-color: #191919;-webkit-mask-image: url('img/iconos/position.png');-webkit-mask-size: cover;    width: 100%;">
+	</button>
+	<button class="btn_mapa_flotante btn_mapa_flotante3" style="top:25vh"   ng-click="showEventos(1)" >
+    	<img src="img/blank.png"  style="background-color: #191919;-webkit-mask-image: url('img/iconos/refresh.png');-webkit-mask-size: cover;    width: 100%;">
+	</button>
+    </div>
 </ion-pan>
+
 <div class="infobox-wrapper">
     <div id="infoboxEvento" style="overflow:hidden" >
-    <div style="text-align:center;padding:2vh" ng-hide="markerLoaded">
-    <ion-spinner icon="android" class="spinner-dark"></ion-spinner>
-    <div style="width:100%;text-align:center;font-size:3vh">{{idioma.general[1]}}</div>
-    
-    </div>
+    	<div style="text-align:center;padding:2vh" ng-hide="markerLoaded">
+    		<ion-spinner icon="android" class="spinner-dark"></ion-spinner>
+    		<div style="width:100%;text-align:center;font-size:3vh">{{idioma.general[1]}}</div>
+    	</div>
     
         <div class="list card" style ="margin:0px;  width: 100%;box-shadow:none;" ng-hide="!markerLoaded">
-        
- <div class="item item-avatar" style="box-shadow:none;  z-index: 50; border: none;  height: 7vh;min-height: 0px;padding: 0.3vh; padding-left: 7vh;padding-bottom:0px">
-   <img ng-src={{"img/marcadores/"+selectedMarker.data.IdAsunto+".png"}} style="opacity:1;  height: 90%;width: auto;left: 0.5vh;">
-   <p style="  color: #000;  opacity: 1;  font-size: 3.3vh;height:3.4vh;line-height:3.4vh">{{selectedMarker.data.Info.Asunto}}</p>
-   <p style="font-size: 2.5vh;text-transform: capitalize;height:3.5vh !important;line-height:2.5vh">{{selectedMarker.data.Info.Subtitulo}}</p>
-   
- </div>
+        	<div class="item item-avatar" style="box-shadow:none;  z-index: 50; border: none;  height: 7vh;min-height: 0px;padding: 0.3vh; padding-left: 7vh;padding-bottom:0px">
+   				<img ng-src={{"img/marcadores/"+selectedMarker.data.IdAsunto+".png"}} style="opacity:1;  height: 90%;width: auto;left: 0.5vh;">
+   				<p style="  color: #000;  opacity: 1;  font-size: 3.3vh;height:3.4vh;line-height:3.4vh">{{selectedMarker.data.Info.Asunto}}</p>
+   				<p style="font-size: 2.5vh;text-transform: capitalize;height:3.5vh !important;line-height:2.5vh">{{selectedMarker.data.Info.Subtitulo}}</p>
+			</div>
 
- <div class="item item-image" style="  padding: 10px;  border: none;  text-align: left;">
-  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[1]}} {{selectedMarker.data.Info.Fecha}}</p>
-  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[2]}} {{selectedMarker.data.Info.Hora}}</p>
-  <p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.8vh;  white-space: normal;  text-transform: capitalize;margin-left:0.5vh;">{{idioma.mapa[3]}} {{selectedMarker.data.Info.Direccion}}</p>
- </div>
-</div>
-<button class="cerrar_info" style="position:absolute;top:0px;right:0px;width:5vh;height:5vh;padding:0px;background:none;border:none;z-index:1000" ng-click="cargaInfoEvento(false)">
+ 			<div class="item item-image" style="  padding: 10px;  border: none;  text-align: left;">
+  				<p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[1]}} {{selectedMarker.data.Info.Fecha}}</p>
+  				<p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.6vh;margin-left:0.5vh;">{{idioma.mapa[2]}} {{selectedMarker.data.Info.Hora}}</p>
+  				<p style="  color: #000;font-size:2.6vh;height:auto;line-height:2.8vh;  white-space: normal;  text-transform: capitalize;margin-left:0.5vh;">{{idioma.mapa[3]}} {{selectedMarker.data.Info.Direccion}}</p>
+ 			</div>
+		</div>
+		<button class="cerrar_info" style="position:absolute;top:0px;right:0px;width:5vh;height:5vh;padding:0px;background:none;border:none;z-index:1000" ng-click="cargaInfoEvento(false)">
     		<img  src="img/iconos/cancelmap.png" width="100%">
-	</button>
+		</button>
+	</div>
 </div>
-    </div>
-</div>  
