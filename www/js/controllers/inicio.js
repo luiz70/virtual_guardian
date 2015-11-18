@@ -1,6 +1,12 @@
 angular.module('starter')
 .controller("inicio",function($scope,$location,$ionicSlideBoxDelegate,$http,$rootScope,$ionicSideMenuDelegate,$timeout,$cordovaNetwork,$ionicPopover,$ionicHistory,signaling,ContactsService){
-	
+	$rootScope.internet={state:false,type:navigator.connection.type};
+	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+		$rootScope.internet={state:true,type:networkState};
+	})
+	$rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+		$rootScope.internet={state:false,type:networkState};
+	})
 		
 	$rootScope.onTab=function (id){
 		//if(!$rootScope.recorrido || $rootScope.stepRecorrido==9){

@@ -1,13 +1,13 @@
 <ion-pan ng-hide="!pantallas[0]" style="  position: absolute;  top: 0vh;  background: none;  bottom: 0vh;  height: auto;  width: 100vw;">
 	<ion-content id="inicio_mapa ng-hide" class="inicio_mapa"  data-tap-disabled="true" style="top:0px;" on-touch="hideBarra()" ng-mouseover="hideBarra()" ng-show="mapLoaded" >
 	</ion-content> 
-	<div style="position: absolute;top: 8vh;width: 100%;bottom: 0vh;overflow: hidden;" class="ng-hide" ng-show="!internet" ng-click="Reload()">
+	<div style="position: absolute;top: 8vh;width: 100%;bottom: 0vh;overflow: hidden;" class="ng-hide" ng-show="!internet.state" ng-click="reloadMap()">
     	<div style="  width: 50vw;position: absolute;height: 50vw;top: 0px;bottom: 8vh;left: 0px;  right: 0px;  margin: auto;  opacity: 0.2;">
         	<img src="img/sinconexion.png" style="  width: 60%; margin-left: 20%;  height: 60%;">
         	<div style="color:#fff;  width: 100%; text-align: center;">{{idioma.general[4]}}</div>
     	</div>
 	</div>
-	<div id="inicio_pie" class="bar bar-footer bar-dark" drag-content="true" ng-hide="sinMapa" on-touch="showBarra()" style="height: 75px !important;-webkit-box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20);-moz-box-shadow: 0px -5px 6px -2px rgba(0,0,0,0.20); box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20)">
+	<div id="inicio_pie" class="bar bar-footer bar-dark ng-hide" drag-content="true" ng-show="internet.state" on-touch="showBarra()" style="height: 75px !important;-webkit-box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20);-moz-box-shadow: 0px -5px 6px -2px rgba(0,0,0,0.20); box-shadow:0px -5px 6px -2px rgba(0,0,0,0.20)">
 		<div id="tapa_pie" class="tapa ng-hide" ng-show="recorrido"></div>
 
     	<div class="inicio_pie_mitad" style="height:30px;z-index:2;" >
@@ -50,15 +50,17 @@
             </ion-list>
         </ion-content>
 	</div>
-	<button class="btn_mapa_flotante" ng-click="buscaEnMap()" ng-hide="sinMapa || recorrido">
+    <div class="ng-hide" ng-show="internet.state">
+	<button class="btn_mapa_flotante" ng-click="buscaEnMap()" >
     	<img src="img/blank.png" style="background-color: #191919;-webkit-mask-image: url('img/iconos/buscar.png');-webkit-mask-size: cover;    width: 100%;">
 	</button>
-	<button class="btn_mapa_flotante btn_mapa_flotante2" style="top:18vh" ng-click="revisaPos()" ng-hide="sinMapa">
+	<button class="btn_mapa_flotante btn_mapa_flotante2" style="top:18vh" ng-click="revisaPos()">
     	<img src="img/blank.png"  style="background-color: #191919;-webkit-mask-image: url('img/iconos/position.png');-webkit-mask-size: cover;    width: 100%;">
 	</button>
-	<button class="btn_mapa_flotante btn_mapa_flotante3" style="top:25vh"   ng-click="showEventos(1)" ng-hide="sinMapa">
+	<button class="btn_mapa_flotante btn_mapa_flotante3" style="top:25vh"   ng-click="showEventos(1)" >
     	<img src="img/blank.png"  style="background-color: #191919;-webkit-mask-image: url('img/iconos/refresh.png');-webkit-mask-size: cover;    width: 100%;">
 	</button>
+    </div>
 </ion-pan>
 
 <div class="infobox-wrapper">
