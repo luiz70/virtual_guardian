@@ -8,7 +8,7 @@
 	bottom:10vh;
 }
 .login-logo-container{
-	height: 20vh;
+	height: 23vh;
     text-align: center;
 	margin-top: 10vh;
 }
@@ -16,14 +16,14 @@
 	height: 100%;
 }
 .login-input-title{
-    color: #fff;
+    color: #059DB5;
     text-align: center;
-    font-size: 4vh;
-    margin-top: 10vh;
-	line-height:4.5vh;
+    font-size: 5vh;
+    margin-top: 4vh;
+	line-height:5vh;
 }
 .login-input-container{
-	margin-top:3vh;
+	margin-top:4vh;
 }
 
 .login-input-bg{
@@ -38,17 +38,20 @@
 	outline: none;
 }
 .login-input{
-    font-size: 2.5vh !important;
-	color: #E2E2E2 !important;
+    font-size: 3.5vh !important;
+	color: #E7E7E7 !important;
 	padding-left: 1vh !important;
-    line-height: 3vh !important;
+    line-height: 5.3vh !important;
     padding-top: 0px !important;
+    padding-bottom:0px !important;
+    height:5.3vh !important;
+    
 }
 .login-input-icon{
-	font-size: 2.5vh !important;
-	color: #E2E2E2 !important;
+	font-size: 3.5vh !important;
+	color: #E7E7E7 !important;
 	padding-left: 1vh !important;
-    line-height: 3vh !important;
+    line-height: normal !important;
     padding-top: 0px !important;
 }
 .login-enter-button-container{
@@ -56,11 +59,13 @@
 	margin-top:5vh;
 }
 .login-enter-button, .login-enter-button:active, .login-enter-button:hover{
-	width:40vw;
-	font-size:3vh;
+	width:30vw;
+	font-size:3.5vh;
 	background: #059DB5;
 	color: #161616;
-	height: 4.5vh;
+	height: 6vh;
+    min-height:0px;
+    line-height:6vh;
 	border-radius: 5px !important;
 }
 .buttons-footer{
@@ -71,8 +76,10 @@
     height: auto;
 }
 .buttons-footer > button{
-	height: 5.5vh;
-	font-size: 2.7vh;
+	height: 7vh;
+	font-size: 3.5vh;
+    min-height:0px;
+    line-height:7vh;
 	margin-top: 1vh !important;
     background: rgba(255, 255, 255, 0.6) !important;
     color: rgb(17, 17, 17) !important;
