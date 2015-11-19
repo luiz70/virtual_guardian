@@ -1,1 +1,80 @@
 /* Empty. Add your own CSS if you like */
+.login-view{
+	background:#000;
+}
+.login-view > ion-content{
+	padding-top:0px;
+	padding-bottom:0px;
+	bottom:10vh;
+}
+.login-logo-container{
+	height: 20vh;
+    text-align: center;
+	margin-top: 10vh;
+}
+.login-logo{
+	height: 100%;
+}
+.login-input-title{
+    color: #fff;
+    text-align: center;
+    font-size: 4vh;
+    margin-top: 10vh;
+	line-height:4.5vh;
+}
+.login-input-container{
+	margin-top:3vh;
+}
+
+.login-input-bg{
+	width: 80%;
+	margin-left: 10%;
+	font-size: 2.5vh;
+	overflow: hidden;
+	border-radius: 5px;
+	border: none;
+	background: rgba(255,255,255,0.1);
+	color: #A9A9A9;
+	outline: none;
+}
+.login-input{
+    font-size: 2.5vh !important;
+	color: #E2E2E2 !important;
+	padding-left: 1vh !important;
+    line-height: 3vh !important;
+    padding-top: 0px !important;
+}
+.login-input-icon{
+	font-size: 2.5vh !important;
+	color: #E2E2E2 !important;
+	padding-left: 1vh !important;
+    line-height: 3vh !important;
+    padding-top: 0px !important;
+}
+.login-enter-button-container{
+	text-align:center;
+	margin-top:5vh;
+}
+.login-enter-button, .login-enter-button:active, .login-enter-button:hover{
+	width:40vw;
+	font-size:3vh;
+	background: #059DB5;
+	color: #161616;
+	height: 4.5vh;
+	border-radius: 5px !important;
+}
+.buttons-footer{
+	width: 100vw;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: auto;
+}
+.buttons-footer > button{
+	height: 5.5vh;
+	font-size: 2.7vh;
+	margin-top: 1vh !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    color: rgb(17, 17, 17) !important;
+	margin-bottom:0px !important;
+}
