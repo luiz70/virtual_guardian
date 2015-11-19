@@ -55,13 +55,13 @@ module.exports = [
             "Connection"
         ]
     },
-    {
+    /*{
         "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
         "id": "cordova-plugin-statusbar.statusbar",
         "clobbers": [
             "window.StatusBar"
         ]
-    },
+    },*/
     {
         "file": "plugins/cordova-plugin-vibration/www/vibration.js",
         "id": "cordova-plugin-vibration.notification",
@@ -177,7 +177,7 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "1.0.0",
     "cordova-plugin-globalization": "1.0.0",
     "cordova-plugin-network-information": "1.0.0",
-    "cordova-plugin-statusbar": "1.0.0",
+   /* "cordova-plugin-statusbar": "1.0.0",*/
     "cordova-plugin-vibration": "1.1.0",
     "com.phonegap.plugins.PushPlugin": "2.2.1",
     "uk.co.whiteoctober.cordova.appversion": "0.1.7",

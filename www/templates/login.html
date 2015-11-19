@@ -1,33 +1,33 @@
 <ion-view view-title="Login" class="login-view">
   <ion-content class="padding" has-bouncing="false">
   	<div class="login-logo-container" >
-    	<img src="img/logo.png" class="login-logo">
+    	<img ng-src="img/logo.png" class="login-logo">
     </div>
     <div class="login-input-title unselect">
-    Titulo
+    {{idioma.Login[1]}}
     </div>
     <div class="login-input-container">
     	<div class="login-input-bg">
   			<label class="item item-input" style="background: none; border: none;">
     			<i class="icon ion-person placeholder-icon login-input-icon"></i>
-    			<input id="log_email" class="login-input" type="email" placeholder="{{idioma.login[2]}}" ng-model="email" ng-keydown="nextinput($event)" >
+    			<input class="login-input" type="email" placeholder="{{idioma.Login[2]}}" ng-model="login.email" ng-keydown="loginKeyDown($event,1)" >
   			</label>
             <label class="item item-input" style="background: none; border: none; border-top:1px solid #3C3C3C;">
     			<i class="icon ion-locked placeholder-icon login-input-icon"></i>
-    			<input id="log_contrasena" class="login-input" type="password" placeholder="{{idioma.login[3]}}" ng-model="contrasena" ng-keydown="enterapp($event)" >
+    			<input id="login_password" class="login-input" type="password" placeholder="{{idioma.Login[3]}}" ng-model="login.password" ng-keydown="loginKeyDown($event,2)" >
   			</label>
     	</div>
     </div>
     <div class="login-enter-button-container">
-    	<button class="button login-enter-button">Entrar</button>
+    	<button class="button login-enter-button" ng-click="singIn()">{{idioma.Login[4]}}</button>
     </div>
   </ion-content>
   <div class="bar-footer buttons-footer">
   	<button class="button button-block button-vg-blue">
- 	 Block Button
+ 	 {{idioma.Login[5]}}
 	</button>
     <button class="button button-block button-vg-blue">
- 	 Block Button
+ 	 {{idioma.Login[6]}}
 	</button>
   </div>
 </ion-view>

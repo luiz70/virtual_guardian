@@ -19,12 +19,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-                       navigator.splashscreen.hide();
+    if(navigator.splashscreen)navigator.splashscreen.hide();
 });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider) {
+  // LocalStorage config
+  localStorageServiceProvider
+  .setPrefix('VirtualGuardian')
+  .setStorageType('localStorage');
+  
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -34,7 +38,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // setup an abstract state for the tabs directive
    .state('login', {
     url: '/login',
-    templateUrl: 'templates/login.html'
+    templateUrl: 'templates/login.html',
+	controller:"Login"
   })
     .state('tab', {
     url: '/tab',

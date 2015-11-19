@@ -1,4 +1,37 @@
 angular.module('starter.controllers', [])
+.controller('Login', function($scope,Memory,Message) {
+	//Variable: almacena los datos proporcionados por el cliente.
+	$scope.login={
+		email:"",
+		password:""	
+	}
+	//Funcion: revisa si se preciona enter en el teclado para realizar accion dependiendo del campo en el que se encuentre.
+	$scope.loginKeyDown=function(event,field){
+		//verificar si se preciono enter
+		if(event.keyCode==13){
+			//verificar en que campo se encuentra
+			switch(field){
+				case 1://Email
+					$("#login_password").focus();
+				break;
+				case 2://Password
+					if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.close();
+            		$scope.singIn()
+				break;
+			}
+		}
+	}
+	
+	
+	//Funcion: enviar datos al servidor y validar credenciales
+	$scope.singIn=function(){
+		if(!$scope.login.email || $scope.login.password.length<6)Message.alert($scope.idioma.Login[1],$scope.idioma.Login[7],function(){});
+		else{
+		Message.showLoading($scope.idioma.Login[8]);
+		Memory.clean();
+		}
+	}
+})
 
 .controller('DashCtrl', function($scope) {
             })

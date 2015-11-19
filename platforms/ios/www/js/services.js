@@ -1,5 +1,44 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['LocalStorageModule','ngError'])
+.factory('Memory', function(localStorageService) {
+	
+	return {
+		set: function(key,val){
+			localStorageService.set(key, val);
+		},
+		get: function(key){
+			return localStorageService.get(key);
+		},
+		clean: function(){
+			localStorageService.clearAll();
+		}
+	}
+})
+.factory('Message', function(localStorageService,$ionicLoading,$ionicPopup) {
+	var dictionary=null
+	var alertPopUp=null;
+	return {
+		setDictionary:function(dictionary){
+			this.dictionary=dictionary
+		},
+		showLoading: function(texto){
+			$ionicLoading.show({
+      			template: '<div style="width:100%"><ion-spinner icon="android" class="spinner-dark"></ion-spinner></div>'+texto
+   			});
+		},
+		alert:function(titulo,texto,funcion){
+			if(alertPopUp)alertPopUp.close();
+			alertPopUp = $ionicPopup.alert({
+     			title: titulo,
+     			template: texto,
+				okText: this.dictionary.general[2]
+   			});
+   			alertPopUp.then(function(res) {
+     			funcion();
+   			});
+		}
+	}
 
+})
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
