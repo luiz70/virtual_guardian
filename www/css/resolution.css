@@ -42,6 +42,10 @@
 	font-size: 3.5vh;
     line-height:7vh;
 }
+.registro-vista-contenido{
+	height: 66.5vh;
+}
+
 }
 /*iphone 6*/
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation : portrait) { 

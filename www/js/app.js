@@ -33,9 +33,56 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  $stateProvider
-
-  // setup an abstract state for the tabs directive
+ $stateProvider.state('app', {
+        url: '/app',
+        abstract: true,
+        templateUrl: 'templates/app.html',
+        controller: 'AppCtrl'
+    })
+	.state('app.login', {
+        url: '/login',
+        views: {
+            'contenido-app': {
+                templateUrl: 'templates/login.html',
+                controller: 'Login'
+            },
+        }
+    })
+	.state('app.registro', {
+        url: '/registro',
+		abstract: true,
+        views: {
+            'contenido-app': {
+                templateUrl: 'templates/registro.html',
+                controller: 'Registro'
+            },
+        }
+    })
+	.state('app.registro.datos', {
+        url: '/datos',
+        views: {
+            'contenido-registro': {
+                templateUrl: 'templates/registro_datos.html',
+            },
+        }
+    })
+	.state('app.registro.codigo', {
+        url: '/codigo',
+        views: {
+            'contenido-registro': {
+                templateUrl: 'templates/registro_codigo.html',
+            },
+        }
+    })
+	.state('app.registro.final', {
+        url: '/final',
+        views: {
+            'contenido-registro': {
+                templateUrl: 'templates/registro_final.html',
+            },
+        }
+    })
+  /* setup an abstract state for the tabs directive
    .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
@@ -86,9 +133,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'AccountCtrl'
       }
     }
-  });
+  });*/
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/app/login');
 
 });

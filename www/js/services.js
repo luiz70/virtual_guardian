@@ -30,7 +30,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			alertPopUp = $ionicPopup.alert({
      			title: titulo,
      			template: texto,
-				okText: this.dictionary.general[2]
+				okText: this.dictionary.General[2]
    			});
    			alertPopUp.then(function(res) {
      			funcion();

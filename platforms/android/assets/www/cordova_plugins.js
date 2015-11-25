@@ -55,13 +55,13 @@ module.exports = [
             "Connection"
         ]
     },
-    /*{
+    {
         "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
         "id": "cordova-plugin-statusbar.statusbar",
         "clobbers": [
             "window.StatusBar"
         ]
-    },*/
+    },
     {
         "file": "plugins/cordova-plugin-vibration/www/vibration.js",
         "id": "cordova-plugin-vibration.notification",
@@ -152,6 +152,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/plugin.google.maps/www/googlemaps-cdv-plugin.js",
+        "id": "plugin.google.maps.phonegap-googlemaps-plugin",
+        "clobbers": [
+            "plugin.google.maps"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "id": "cordova-plugin-dialogs.notification",
         "merges": [
@@ -176,8 +183,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.0.0",
     "cordova-plugin-geolocation": "1.0.0",
     "cordova-plugin-globalization": "1.0.0",
-    "cordova-plugin-network-information": "1.0.0",
-   /* "cordova-plugin-statusbar": "1.0.0",*/
+    "cordova-plugin-network-information": "1.0.1",
+    "cordova-plugin-statusbar": "1.0.0",
     "cordova-plugin-vibration": "1.1.0",
     "com.phonegap.plugins.PushPlugin": "2.2.1",
     "uk.co.whiteoctober.cordova.appversion": "0.1.7",
@@ -190,6 +197,7 @@ module.exports.metadata =
     "org.awokenwell.proximity": "0.2.1",
     "com.dooble.phonertc": "2.0.1",
     "com.dooble.audiotoggle": "1.0.0",
+    "plugin.google.maps": "1.3.4",
     "cordova-plugin-dialogs": "1.1.1"
 }
 // BOTTOM OF METADATA

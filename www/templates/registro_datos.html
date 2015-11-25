@@ -1,0 +1,12 @@
+<ion-view view-title="Registro_data" class="registro-datos-vista">
+  	<ion-content class="padding" has-bouncing="false" >
+  		<div class="registro-datos-titulo">{{idioma.Registro[2]}}</div>
+        <input class="registro-input" type="email" placeholder="{{idioma.Registro[3]}}" style="margin-bottom: 2vh;" ng-model="nuevoUsuario.Correo">
+        <div class="registro-leyenda-contrasena">{{idioma.Registro[11]}}</div>
+        <input class="registro-input" type="password" placeholder="{{idioma.Registro[4]}}" ng-model="nuevoUsuario.Contrasena">
+        <input class="registro-input" type="password" placeholder="{{idioma.Registro[5]}}" style="margin-bottom: 2vh;" ng-model="nuevoUsuario.Contrasena2">
+        <div class="registro-leyenda-contrasena">{{idioma.Registro[29]}}</div>
+        <input class="registro-input" type="text" placeholder="{{idioma.Registro[30]}}" ng-model="nuevoUsuario.Promocion">
+        <button class="registro-boton-privacidad">{{idioma.Registro[6]}}</button>
+  	</ion-content>
+</ion-view>
