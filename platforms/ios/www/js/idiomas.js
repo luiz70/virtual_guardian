@@ -5,6 +5,14 @@ angular.module('starter.controllers')
   // Some fake testing data
   var idiomas = {
   	es:{
+		General:{
+			1:"Cargando...",
+			2:"Aceptar",
+			3:"Conexión a internet",
+			4:"No hay conexión a internet.",
+			5:"Actualizar",
+			6:"Cancelar",
+		},
 		Login:{
 			1:"Iniciar Sesión",
 			2:"Correo electrónico",
@@ -17,10 +25,39 @@ angular.module('starter.controllers')
 			9:"Cerrando sesión...",
 			10:"¿Desea cerrar su sesión?"
 		},
-		general:{
-			1:"Cargando...",
-			2:"Aceptar"
-		}
+		Registro:{
+			1:"Registro",
+			2:"Virtual Guardian no solicita información personal con el objetivo de brindarte la mayor protección y confidencialidad. Nuestro sistema de prevención de riesgos utiliza un algoritmo que no necesita información personal para funcionar.",
+			3:"Correo Elecrónico",
+			4:"Contraseña",
+			5:"Repetir Contraseña",
+			6:"Leer aviso de privacidad",
+			7:"Continuar",
+			8:"Regresar",
+			9:"El correo electrónico es obligatorio para el registro.",
+			10:"El correo electrónico proporcionado no es válido",
+			11:"La contraseña debe de ser de 8 dígitos como mínimo y contener al menos un número y una letra.",
+			12:"Las contraseñas no coinciden.",
+			13:'Hemos enviado a tu correo electrónico un mensaje con el código de verificación, introdúcelo en el siguiente campo para completar tu registro. Revisa tu papelera de "correos no deseados".',
+			14:"Código",
+			15:"El correo electrónico ya esta registrado",
+			16:"Se ha producido un error inesperado, intente más tarde",
+			17:"El código proporcionado es incorrecto, verifica tu correo electrónico",
+			18:"Enviar código de nuevo",
+			19:"El código de verificación ha sido enviado nuevamente a tu correo electrónico",
+			20:"Bienvenido a",
+			21:"Terminar",
+			22:"Ahora puedes iniciar sesión, mantenerte informado y protegido con nosotros.",
+			23:"Proporciona tu correo electrónico registrado para enviarte un mensaje con las instrucciones necesarias para recuperar tu contraseña.",
+			24:"Enviar correo de recuperación",
+			25:"No has proporcionado tu correo electrónico.",
+			26:"Recuperar contraseña",
+			27:"El correo proporcionado no esta registrado en Virtual Guardian",
+			28:"El correo de recuperación se ha enviado correctamente, sigue las instrucciones para reestablecer tu contraseña.",
+			29:"Si tienes algún código de promocion, ingrésalo ahora para hacerlo válido.",
+			30:"Código de promoción"
+		},
+		
 	},
 	en:{
 		Login:{

@@ -1,4 +1,7 @@
 /* Empty. Add your own CSS if you like */
+* {
+	font-family: "Helvetica Neue", "Roboto", Sans-Serif !important;
+}
 .unselect{
 	-webkit-touch-callout: none;
     -webkit-user-select: none;

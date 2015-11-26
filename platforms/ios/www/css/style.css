@@ -1,4 +1,5 @@
 /* Empty. Add your own CSS if you like */
+/*        LOGIN         */
 .login-view{
 	background: -webkit-linear-gradient(left, #232323, #2D2D2D);
 }
@@ -87,4 +88,153 @@
     background: rgba(255, 255, 255, 0.6) !important;
     color: rgb(17, 17, 17) !important;
 	margin-bottom:0px !important;
+}
+/*        REGISTRO         */
+.registro-vista{
+	background: -webkit-linear-gradient(left, #232323, #2D2D2D);
+}
+.registro-header{
+	width: 100%;
+    height: 9vh;
+    position: relative;
+    float: left;
+	text-align: center;
+	margin-bottom:1vh;
+}
+.registro-header > .titulo{
+	color: #009FB5;
+    font-size: 5vh;
+    font-weight: 400;
+    line-height: 5vh;
+    height: 5vh;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+    width: 100%;
+}
+.registro-steps{
+	width: 100vw;
+    height: 9vh;
+    position: relative;
+    float: left;
+}
+.registro-steps > button{
+	    width: 6vh;
+    height: 6vh;
+    border-radius: 100% !important;
+    border:solid 2px #3E3E3E !important;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+    font-size: 4vh;
+    font-weight: 700;
+    line-height: 0px;
+    padding: 0px;
+    background:rgb(21, 21, 21);
+    color: rgba(255, 255, 255, 0.28);
+}
+.registro-steps > button.stepActivo{
+	background: #0493A7 !important;
+    color: #E6E6E6;
+    border: solid 2px #E6E6E6 !important;
+}
+.registro-steps > .barra{
+	position: absolute;
+    left: 11vw;
+    right: 11vw;
+    border-bottom: solid 3px;
+    height: 50%;
+    color: #4D4D4D;
+}
+.registro-vista-contenido{
+	background: -webkit-linear-gradient(left, #232323, #2D2D2D);
+	position: relative;
+    float: left;
+    height: 69vh;
+}
+.registro-pie{
+	width:100%;
+	position: absolute;
+    bottom:0px;
+    height: auto;
+}
+.registro-input{
+	position: relative;
+    float: left;
+    width: 100%;
+    font-size: 2.8vh !important;
+    height: auto !important;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ECECEC !important;
+    padding: 1vh 2vh !important;
+    line-height: inherit !important;
+    margin-top: 2vh;
+}
+/*          REGISTRO DATOS          */
+.registro-datos-vista{
+	background: -webkit-linear-gradient(left, #232323, #2D2D2D);
+}
+.registro-datos-titulo{
+	position: relative;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    color: #ECECEC;
+    line-height: 3vh;
+    font-size: 3vh;
+}
+.registro-leyenda-contrasena{
+	position: relative;
+    float: left;
+    width: 100%;
+    text-align: center;
+    color: #ECECEC;
+    font-size: 2.5vh;
+    line-height: 2.7vh;
+    padding-top: 2vh;
+    border-top: solid 1px #4E4E4E;
+}
+.registro-boton-privacidad{
+	width: 100%;
+    margin-top: 2vh;
+    background: none;
+    color: #868686;
+    font-size: 3vh;
+}
+/*                 REGISTRO CODIGO          */
+.registro-input.registro-codigo{
+	width: 40%;
+    position: relative;
+    float: left;
+    margin-left: 30%;
+	margin-top:4vh;
+	text-transform:uppercase;
+	text-align:center;
+}
+.registro-boton-reenviar{
+	width: 100%;
+    margin-top: 2vh;
+    background: none;
+    color: #868686;
+    font-size: 2.5vh;
+}
+.registro-logo-container{
+	height: 23vh;
+    text-align: center;
+	margin-top: 0vh;
+}
+.registro-logo{
+	height: 100%;
+}
+.registro-datos-titulo.registro-final{
+	font-size: 3.5vh;
+	    margin-top: 10vh;
+	margin-bottom:0px;
+}
+.registro-datos-titulo.registro-bottom{
+	margin-top:3vh;
+	opacity: 0.6;
+
 }
