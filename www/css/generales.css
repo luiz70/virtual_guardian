@@ -79,5 +79,65 @@ input{
     background-color: rgba(0, 0, 0, 0.71);
 }
 ion-nav-view{
-	background-color:##242424 !important;
+	background-color:#242424 !important;
+}
+.view-seccion{
+	    background: #242424 !important;
+}
+.has-header{
+	top:10vh;
+}
+ion-header-bar{
+	height:10vh !important;
+	max-height:10vh;
+	min-height:10vh;
+	background: #181818 !important;
+}
+.primary-buttons{
+	height: 10vh !important;
+    padding: 1vh !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.primary-buttons>button{
+	height: 100%;
+    background: none;
+	padding:0px;
+}
+.right-buttons{
+	margin-right:4vw;
+}
+.icono-header{
+	margin-left: 2vw;
+	top:0px;
+	margin-left: 2vw;
+    top: 0px !important;
+    position: relative !important;
+    float: right !important;
+}
+.icono-header > div{
+	width:9vw !important;
+	height:9vw !important;
+	-webkit-mask-size:cover !important;
+	-webkit-mask-position:center !important;
+	background:#E1E1E1;
+}
+.icono-header.seleccionado >div{
+	background:#059DB5 !important;
+}
+.menu-cover{
+	position:fixed;
+	width:100vw;
+	height:100vh;
+	top:0;
+	left:0;
+	background:#000;
+	z-index:10000;
+}
+.angular-google-map-container { 
+height:100vh;
+width:100vw;
+ }
+ .gmnoprint, .gm-style-cc, .gm-style > div + div {
+	opacity:0;
 }

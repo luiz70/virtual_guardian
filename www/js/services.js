@@ -63,6 +63,129 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
+.factory('Usuario',function($http,$rootScope){
+	$rootScope.Usuario;
+	
+	return {
+		login:function(credentials){
+			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
+		},
+		refresh:function(){
+			$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
+    		return true;
+		},
+		set:function(usuario){
+			$rootScope.Usuario=usuario
+			return true;
+		},
+		get:function(){
+			return $rootScope.Usuario;
+		}
+	}
+})
+.factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout){
+	uiGmapGoogleMapApi.then(function(maps) {
+	var r2 = document.createElement('script'); 
+    r2.src = 'js/res/richardMarker.js';
+    document.body.appendChild(r2);
+	$rootScope.map = { 
+		center: { latitude: 20.6737919, longitude:  -103.3354131 }, 
+		zoom:12,
+		options:{
+    		mapTypeControl: false,
+    		panControl: false,
+	    	zoomControl: false,
+    		scaleControl: false,
+    		streetViewControl: false,
+		},
+		position:{ latitude: 20.734684, longitude:  -103.455187 }
+		};
+		//$rootScope.mapa=$scope.map
+	//navigator.geolocation.getCurrentPosition($scope.mapSuccess, $scope.mapError);
+		$(".animate-enter-mapa").animate({
+			top:0,
+			left:0,
+			opacity:1,
+			},300);
+    });
+	
+	return {
+		login:function(credentials){
+			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
+		},
+		refresh:function(){
+			$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
+    		return true;
+		},
+		set:function(usuario){
+			$rootScope.Usuario=usuario
+			return true;
+		},
+		get:function(){
+			return $rootScope.Usuario;
+		}
+	}
+})
+.factory('Notificaciones',function($http,$rootScope){
+	var iosConfig = {
+    	"badge": true,
+    	"sound": true,
+    	"alert": true,
+  	}; 
+	var androidConfig = {
+    	"senderID": "12591466094",
+  	};
+  	var registra=function(token){
+		$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: {
+			Id:$rootScope.Usuario.Id,
+			Registro:deviceToken,
+			Os:window.device.platform.toUpperCase()
+		}})
+		.success(function(){
+			console.log("registrado");
+			$rootScope.Usuario.Registro=deviceToken;
+		})
+  	}
+	 $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
+		switch(notification.event) {
+			case 'registered': if(notification.regid.length > 0 )	registra(notification.regid);
+          	break;
+        	case 'message':
+          		console.log(notification);
+          	break;
+		}
+	})
+	return {
+		registra:function(state){
+			if(state){
+				switch(window.device.platform.toLowerCase()){
+					case "android":
+						$cordovaPush.register(androidConfig).then(function(result){});
+					break;
+					case "ios":
+						$cordovaPush.register(iosConfig).then(registra)
+					break;
+				}
+			}else{
+				$cordovaPush.unregister(options).then(function(result) {
+					registra("");
+				}, function(err) {
+					registra("");
+				});
+			}
+			
+			return true;
+		},
+		desregistra:function(){
+			
+    		return true;
+		},
+		set:function(usuario){
+			$rootScope.Usuario=usuario
+			return true;
+		}
+	}
+})
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

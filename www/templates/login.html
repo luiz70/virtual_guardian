@@ -10,16 +10,16 @@
     	<div class="login-input-bg">
   			<label class="item item-input" style="background: none; border: none;">
     			<i class="icon ion-person placeholder-icon login-input-icon"></i>
-    			<input class="login-input" type="email" placeholder="{{idioma.Login[2]}}" ng-model="login.email" ng-keydown="loginKeyDown($event,1)" >
+    			<input class="login-input" type="email" placeholder="{{idioma.Login[2]}}" ng-model="login.Correo" ng-keydown="enter($event,1)" >
   			</label>
             <label class="item item-input" style="background: none; border: none; border-top:1px solid #3C3C3C;">
     			<i class="icon ion-locked placeholder-icon login-input-icon"></i>
-    			<input id="login_password" class="login-input" type="password" placeholder="{{idioma.Login[3]}}" ng-model="login.password" ng-keydown="loginKeyDown($event,2)" >
+    			<input id="login_contrasena" class="login-input" type="password" placeholder="{{idioma.Login[3]}}" ng-model="login.Contrasena" ng-keydown="enter($event,2)" >
   			</label>
     	</div>
     </div>
     <div class="login-enter-button-container">
-    	<button class="button login-enter-button" ng-click="singIn()">{{idioma.Login[4]}}</button>
+    	<button class="button login-enter-button" ng-click="iniciaSesion()">{{idioma.Login[4]}}</button>
     </div>
   </ion-content>
   <div class="bar-footer buttons-footer">

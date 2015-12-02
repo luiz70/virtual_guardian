@@ -243,3 +243,58 @@
 .recuperar{
 	    float: left;
 }
+/*                  HOME                      */
+.boton-menu{
+	min-width: 0px !important;
+    width: 10vw !important;
+    max-width: 6vh !important;
+    height: 10vh !important;
+    max-height: 10vh !important;
+}
+.boton-menu::after{
+	display:none !important;
+}
+.boton-menu::before{
+	font-size: 32px !important;
+}
+ion-header-bar > .title{
+	display:none !important;
+}
+ion-side-menu{
+	width:80vw;
+}
+.animate-enter{
+	opacity:0;
+}
+.contenido-home{
+	top:10vh;
+}
+.barra-home{
+	height:10vh;
+	background:#171717;
+	    display: block;
+		top:-10vh;
+}
+.logo-menu{
+	width: auto;
+    height: 100%;
+    max-height: 1000px;
+    max-width: 1000px;
+    padding: 0px;
+    background: 0px;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+	float:left;
+}
+.nav-bar-block > ion-header-bar{
+	top:-10vh;
+}
+ion-side-menu-content{
+	background:#242424 !important
+}
+.animate-enter-mapa{
+	opacity:0;
+	top:100vh;
+	left:50vw;
+	position:absolute;
+}

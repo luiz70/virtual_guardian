@@ -1,7 +1,7 @@
 // JavaScript Document
 angular.module('starter.controllers')
 //Controlador para la seccion de registro
-.controller('Registro', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http) {
+.controller('Registro', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http,Usuario) {
 	
 	//VARIABLES
 	$scope.nuevoUsuario={
@@ -14,6 +14,14 @@ angular.module('starter.controllers')
 	$scope.botonSiguiente=$scope.idioma.Registro[7];
 	$scope.botonAtras=$scope.idioma.Registro[8];
 	$scope.state=$scope.getState($state.current.name)
+	//FUNCION QUE SE EJECUTA CADA VEZ QUE LA VISTA ENTRA Y REVISA SI EL USUARIO ESTA LOGGEADO
+	$scope.$on('$ionicView.beforeEnter',function(){
+		if(Usuario.get()){
+				$ionicViewSwitcher.nextTransition("none");
+				$ionicViewSwitcher.nextDirection('enter');
+				$state.go('app.home.mapa');
+		}
+	})
 	//FUNCION QUE SE EJECUTA CADA VEZ QUE LA VISTA ENTRA Y REVISA SI EL USUARIO YA TIENE UN REGISTRO EN PROCESO PARA CARGAR LOS DATOS ALMACENADOS
 	$scope.$on('$ionicView.afterEnter',function(){
     	if(Memory.get("Registro"))$scope.nuevoUsuario=Memory.get("Registro");
@@ -244,7 +252,15 @@ angular.module('starter.controllers')
 })
 
 //CONTROLADOR PARA RECUPERAR CONTRASEÑA
-.controller('Recuperar', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http) {
+.controller('Recuperar', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http,Usuario) {
+	//FUNCION QUE SE EJECUTA CADA VEZ QUE LA VISTA ENTRA Y REVISA SI EL USUARIO ESTA LOGGEADO
+	$scope.$on('$ionicView.beforeEnter',function(){
+		if(Usuario.get()){
+				$ionicViewSwitcher.nextTransition("none");
+				$ionicViewSwitcher.nextDirection('enter');
+				$state.go('app.home.mapa');
+		}
+	})
 	$scope.$on('$ionicView.afterEnter',function(){
 			$timeout(function(){
 				$("#recuperar_correo").focus();

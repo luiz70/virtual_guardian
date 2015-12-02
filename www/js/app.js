@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'starter.services','ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -19,7 +19,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    if(navigator.splashscreen)navigator.splashscreen.hide();
+    //if(navigator.splashscreen)navigator.splashscreen.hide();
 });
 })
 
@@ -96,6 +96,46 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
             'contenido-app': {
                 templateUrl: 'templates/recuperar.html',
 				controller: 'Recuperar'
+            },
+        }
+    })
+	.state('app.home',{
+		url:'/home',
+		abstract:true,
+		views:{
+			'contenido-app':{
+				templateUrl: 'templates/home.html',
+				controller: 'Home'
+			}
+		}
+	})
+	.state('app.home.mapa', {
+        url: '',
+		id:1,
+        views: {
+            'contenido-home': {
+                templateUrl: 'templates/mapa.html',
+				controller: 'Mapa'
+            },
+        }
+    })
+	.state('app.home.notificaciones', {
+        url: '',
+		id:2,
+        views: {
+            'contenido-home': {
+                templateUrl: 'templates/notificaciones.html',
+				controller: 'Notificaciones'
+            },
+        }
+    })
+	.state('app.home.personas', {
+        url: '',
+		id:3,
+        views: {
+            'contenido-home': {
+                templateUrl: 'templates/personas.html',
+				controller: 'Personas'
             },
         }
     })
