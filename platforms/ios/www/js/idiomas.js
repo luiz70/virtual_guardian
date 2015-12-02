@@ -34,7 +34,7 @@ angular.module('starter.controllers')
 			6:"Leer aviso de privacidad",
 			7:"Continuar",
 			8:"Regresar",
-			9:"El correo electrónico es obligatorio para el registro.",
+			9:"El código proporcionado no es válido.",
 			10:"El correo electrónico proporcionado no es válido",
 			11:"La contraseña debe de ser de 8 dígitos como mínimo y contener al menos un número y una letra.",
 			12:"Las contraseñas no coinciden.",
@@ -55,7 +55,13 @@ angular.module('starter.controllers')
 			27:"El correo proporcionado no esta registrado en Virtual Guardian",
 			28:"El correo de recuperación se ha enviado correctamente, sigue las instrucciones para reestablecer tu contraseña.",
 			29:"Si tienes algún código de promocion, ingrésalo ahora para hacerlo válido.",
-			30:"Código de promoción"
+			30:"Código de promoción",
+			31:"El código de promoción proporcionado ya se ha utilizado.",
+			32:"Verificando código de promoción...",
+			33:"Creando cuenta...",
+			34:"Completando registro...",
+			35:"El código proporcionado ha activado una suscripción TIPO por TIEMPO mes",
+			36:"Tu registro ha caducado, es necesario que realices el registro de nuevo."
 		},
 		
 	},

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -19,11 +19,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    if(navigator.splashscreen)navigator.splashscreen.hide();
+    //if(navigator.splashscreen)navigator.splashscreen.hide();
 });
 })
 
 .config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider) {
+	//
+	/*$ionicConfigProvider.views.maxCache(0);
+	$ionicConfigProvider.views.swipeBackEnabled(false);
+	$ionicConfigProvider.platform.ios.views.maxCache(0);
+	$ionicConfigProvider.platform.android.views.maxCache(0);
+	$ionicConfigProvider.views.transition("ios");
+	$ionicConfigProvider.views.forwardCache(false);*/
+	
   // LocalStorage config
   localStorageServiceProvider
   .setPrefix('VirtualGuardian')
@@ -79,6 +87,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         views: {
             'contenido-registro': {
                 templateUrl: 'templates/registro_final.html',
+            },
+        }
+    })
+	.state('app.recuperar', {
+        url: '/recuperar',
+        views: {
+            'contenido-app': {
+                templateUrl: 'templates/recuperar.html',
+				controller: 'Recuperar'
             },
         }
     })

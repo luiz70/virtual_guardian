@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 .controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice) {
 	//inicializa usuario
 	$rootScope.Usuario=Memory.get("Usuario");
-	console.log($cordovaDevice.getUUID())
+	//console.log($cordovaDevice.getUUID())
 	$http.defaults.headers.common.accessToken = $rootScope.Usuario?$rootScope.Usuario.Token:'-';
 	if(!$rootScope.Usuario && $state.current.name.indexOf("registro")<0 &&  $state.current.name.indexOf("login")<0 && $state.current.name.indexOf("recuperar")<0){
 		$ionicViewSwitcher.nextDirection('back');

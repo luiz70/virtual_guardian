@@ -1,7 +1,7 @@
 /* Empty. Add your own CSS if you like */
 /*        LOGIN         */
 .login-view{
-	background: -webkit-linear-gradient(left, #232323, #2D2D2D);
+	background: #242424;
 }
 .login-view > ion-content{
 	padding-top:0px;
@@ -91,7 +91,7 @@
 }
 /*        REGISTRO         */
 .registro-vista{
-	background: -webkit-linear-gradient(left, #232323, #2D2D2D);
+	background: #242424;
 }
 .registro-header{
 	width: 100%;
@@ -149,7 +149,7 @@
     color: #4D4D4D;
 }
 .registro-vista-contenido{
-	background: -webkit-linear-gradient(left, #232323, #2D2D2D);
+	background-color: #242424 !important;
 	position: relative;
     float: left;
     height: 69vh;
@@ -171,10 +171,11 @@
     padding: 1vh 2vh !important;
     line-height: inherit !important;
     margin-top: 2vh;
+	border-radius: 5px !important;
 }
 /*          REGISTRO DATOS          */
 .registro-datos-vista{
-	background: -webkit-linear-gradient(left, #232323, #2D2D2D);
+	background: #242424;
 }
 .registro-datos-titulo{
 	position: relative;
@@ -237,4 +238,8 @@
 	margin-top:3vh;
 	opacity: 0.6;
 
+}
+/*           RECUPERAR CONTRASEÑA          */
+.recuperar{
+	    float: left;
 }

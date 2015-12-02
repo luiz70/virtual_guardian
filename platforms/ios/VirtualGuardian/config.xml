@@ -101,6 +101,7 @@
     <content src="index.html" />
     <access origin="*" />
     <access origin="*.virtual-guardian.com" subdomains="true" />
+    <access origin="*.virtual-guardian.com:3200" subdomains="true" />
     <feature name="DatePicker">
         <param name="ios-package" value="DatePicker" />
     </feature>

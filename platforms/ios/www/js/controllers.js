@@ -1,13 +1,27 @@
 angular.module('starter.controllers', [])
-.controller('AppCtrl', function($scope,$rootScope,Memory,$state) {
-	
+.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice) {
 	//inicializa usuario
 	$rootScope.Usuario=Memory.get("Usuario");
-	if(!$rootScope.Usuario){
+	//console.log($cordovaDevice.getUUID())
+	$http.defaults.headers.common.accessToken = $rootScope.Usuario?$rootScope.Usuario.Token:'-';
+	if(!$rootScope.Usuario && $state.current.name.indexOf("registro")<0 &&  $state.current.name.indexOf("login")<0 && $state.current.name.indexOf("recuperar")<0){
+		$ionicViewSwitcher.nextDirection('back');
+		$state.go("app.login")	
+	}
+	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+		var state=toState.name
+		if(state.indexOf("registro")<0 && state.indexOf("login")<0 && state.indexOf("recuperar")<0){
+			//no va a login o registro
+			if(!$rootScope.Usuario){
+				event.preventDefault();	
+			}
+		}
+	})
+	/*if(!$rootScope.Usuario){
 			$state.go("app.login")
 	}
 	$scope.$on('$locationChangeStart', function(event, next, current) {
-		if(!next.indexOf("registro")){
+		if(!next.indexOf("registro") && !next.indexOf("recuperar")){
 		$rootScope.Usuario=Memory.get("Usuario");
     	if(!$rootScope.Usuario){
 			$state.go("app.login")
@@ -18,7 +32,7 @@ angular.module('starter.controllers', [])
 			
 		}
 		}
-	});
+	});*/
 	
 	//if(navigator.splashscreen)navigator.splashscreen.hide();
 	$scope.cerrarSesion=function(){
@@ -38,8 +52,17 @@ angular.module('starter.controllers', [])
 	}
 })
 
-.controller('Login', function($scope,Memory,Message,$rootScope,$timeout) {
-    $rootScope.$on('$ionicView.afterEnter',function(){
+.controller('Login', function($scope,Memory,Message,$timeout,$http) {
+	/*$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/recuperacion', data: {Correo:"a00225979@itesm.mx",Codigo:"KNH3B"}})
+
+	.success(function(data){
+	console.log(data);
+	})
+	.error(function(data,error){
+		
+	})	 */
+            
+	$scope.$on('$ionicView.afterEnter',function(){
             $timeout(function() {
                 if(navigator.splashscreen)navigator.splashscreen.hide();
             }, 500);
@@ -49,6 +72,9 @@ angular.module('starter.controllers', [])
 		email:"",
 		password:""	
 	}
+	$scope.registro="app.registro.datos"
+	//if(Memory.get("Registro"))$scope.registro="app.registro.codigo"
+		
 	//Funcion: revisa si se preciona enter en el teclado para realizar accion dependiendo del campo en el que se encuentre.
 	$scope.loginKeyDown=function(event,field){
 		//verificar si se preciono enter
@@ -76,58 +102,7 @@ angular.module('starter.controllers', [])
 		}
 	}
 })
-.controller('Registro', function($scope,Memory,Message,$state,$ionicViewSwitcher) {
-	$scope.nuevoUsuario={
-		Correo:"",
-		Contrasena:"",
-		Contrasena2:"",
-		Codigo:"",
-		Promocion:""
-		}
-		$scope.botonSiguiente=$scope.idioma.Registro[7];
-		$scope.botonAtras=$scope.idioma.Registro[8];
-		$scope.state=$scope.getState($state.current.name)
-		$scope.$watch('state', function() {
-       		switch($scope.state){
-				case "datos":
-					$scope.botonSiguiente=$scope.idioma.Registro[7];
-					$scope.botonAtras=$scope.idioma.Registro[8];
-				break; 
-				case "codigo":
-					$scope.botonSiguiente=$scope.idioma.Registro[7];
-					$scope.botonAtras=$scope.idioma.General[6];
-				break;
-				case "final":
-					$scope.botonSiguiente=$scope.idioma.Registro[21];
-				break;
-			}
-   		});
-		
-	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
-		$scope.state=$scope.getState(toState.name)
-	})
-	$scope.siguiente=function(){
-		
-		switch($scope.state){
-			case "datos":
-				$ionicViewSwitcher.nextDirection('forward');
-				$state.go('app.registro.codigo')
-			break; 
-			case "codigo":
-				$ionicViewSwitcher.nextDirection('forward');
-				$state.go('app.registro.final')
-			break;
-			case "final":
-				$ionicViewSwitcher.nextDirection('back');
-				$state.go('app.login')
-			break;
-		}
-	}
-	$scope.atras=function(){
-		$ionicViewSwitcher.nextDirection('back');
-		$state.go('app.login')
-	}
-})
+
 .controller('DashCtrl', function($scope) {
             })
 
