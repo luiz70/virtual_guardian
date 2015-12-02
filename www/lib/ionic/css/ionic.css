@@ -9186,7 +9186,8 @@ a.button {
 
 [nav-view-transition="ios"][nav-view-direction="forward"],
 [nav-view-transition="ios"][nav-view-direction="back"] {
-  background-color: #000; }
+  background-color: #242424;
+  }
 
 [nav-view-transition="ios"] [nav-view="active"],
 [nav-view-transition="ios"][nav-view-direction="forward"] [nav-view="entering"],

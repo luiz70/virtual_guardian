@@ -15,6 +15,9 @@ button{
 	border-radius:0px !important;
 	-webkit-appearance: none !important;
 }
+input{
+	border-radius: 0px !important;
+}
 .button-vg-blue, .button-vg-blue:active, .button-vg-blue:hover{
 	background: #E7E7E7;
     color: #000;
@@ -54,15 +57,19 @@ button{
 	font-size:2.5vh;
 	line-height:3vh;
 }
+.popup-buttons{
+	min-height: 0px;
+}
 .popup-buttons .button , .popup-buttons .button:active , .popup-buttons .button:hover {
     border-radius: 2px !important;
     line-height: 3vh;
     font-size: 3vh;
-    padding: 5px;
+    padding: 1vh;
     height: auto;
 	border-color: #3D3E3E;
     background-color: #424242;
     color: #fff;
+	min-height:0px;
 }
 .popup-head {
     padding: 2vh 10px;
@@ -70,4 +77,7 @@ button{
 }
 .backdrop {
     background-color: rgba(0, 0, 0, 0.71);
+}
+ion-nav-view{
+	background-color:##242424 !important;
 }
