@@ -34,7 +34,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
 	uiGmapGoogleMapApiProvider.configure({
         key: 'AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs',
         //v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'places'
+        libraries: 'places',
+		preventLoad: true
     });
   // LocalStorage config
   localStorageServiceProvider

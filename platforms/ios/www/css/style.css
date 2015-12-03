@@ -4,8 +4,8 @@
 	background: #242424;
 }
 .login-view > ion-content{
-	padding-top:0px;
-	padding-bottom:0px;
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
 	bottom:10vh;
 }
 .login-logo-container{
@@ -38,6 +38,10 @@
 	color: #A9A9A9;
 	outline: none;
 }
+label.item-input{
+padding-left:1vh !important;
+padding-right:1vh !important;
+}
 .login-input{
     font-size: 2.5vh !important;
     color: #E7E7E7 !important;
@@ -46,6 +50,7 @@
     padding-top: 0px !important;
     padding-bottom: 0px !important;
     height: auto !important;
+	padding-right: 0px !important;
     
 }
 .login-input-icon{
