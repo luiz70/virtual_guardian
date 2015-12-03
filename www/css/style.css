@@ -245,17 +245,18 @@
 }
 /*                  HOME                      */
 .boton-menu{
-	min-width: 0px !important;
     width: 10vw !important;
-    max-width: 6vh !important;
     height: 10vh !important;
+	min-width: 0px !important;
+    max-width: 100vh !important;
+    min-height: 10vh !important;
     max-height: 10vh !important;
 }
 .boton-menu::after{
 	display:none !important;
 }
 .boton-menu::before{
-	font-size: 32px !important;
+	font-size: 6vh !important;
 }
 ion-header-bar > .title{
 	display:none !important;
