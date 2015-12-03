@@ -83,7 +83,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
-.factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout){
+.factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout,uiGmapIsReady){
 	uiGmapGoogleMapApi.then(function(maps) {
 	var r2 = document.createElement('script'); 
     r2.src = 'js/res/richardMarker.js';
@@ -97,17 +97,36 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	    	zoomControl: false,
     		scaleControl: false,
     		streetViewControl: false,
+			styles:[
+		   {
+			featureType: "poi",
+			stylers: [{ visibility: "off" }]   
+			},
+			{
+			"featureType": "road",
+    		"stylers": [
+      			{ "gamma": 1.07 },
+      			{ "lightness": 6 },
+      			{ "hue": "#00bbff" },
+      			{ "saturation": -67 }
+    		]
+			}
+		],
 		},
+		
 		position:{ latitude: 20.734684, longitude:  -103.455187 }
 		};
+		//maps.
 		//$rootScope.mapa=$scope.map
 	//navigator.geolocation.getCurrentPosition($scope.mapSuccess, $scope.mapError);
-		$(".animate-enter-mapa").animate({
-			top:0,
-			left:0,
-			opacity:1,
-			},300);
+		
     });
+	uiGmapIsReady.promise()
+	.then(function(maps){
+		$(".angular-google-map").animate({
+			opacity:1,
+			},500);
+	})
 	
 	return {
 		login:function(credentials){
@@ -121,8 +140,8 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			$rootScope.Usuario=usuario
 			return true;
 		},
-		get:function(){
-			return $rootScope.Usuario;
+		getUbicacion:function(){
+			return { latitude: 20.734684, longitude:  -103.455187 };
 		}
 	}
 })

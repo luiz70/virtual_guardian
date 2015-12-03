@@ -14,6 +14,7 @@ button{
 	border:none !important;
 	border-radius:0px !important;
 	-webkit-appearance: none !important;
+	text-transform:none !important;
 }
 input{
 	border-radius: 0px !important;
@@ -89,8 +90,8 @@ ion-nav-view{
 }
 ion-header-bar{
 	height:10vh !important;
-	max-height:10vh;
-	min-height:10vh;
+	max-height:10vh !important;
+	min-height:10vh !important;
 	background: #181818 !important;
 }
 .primary-buttons{

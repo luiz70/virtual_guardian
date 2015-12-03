@@ -292,9 +292,6 @@ ion-side-menu{
 ion-side-menu-content{
 	background:#242424 !important
 }
-.animate-enter-mapa{
+.angular-google-map{
 	opacity:0;
-	top:100vh;
-	left:50vw;
-	position:absolute;
 }

@@ -23,7 +23,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
 });
 })
 
-.config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider) {
+.config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider,uiGmapGoogleMapApiProvider) {
 	//
 	/*$ionicConfigProvider.views.maxCache(0);
 	$ionicConfigProvider.views.swipeBackEnabled(false);
@@ -31,7 +31,11 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
 	$ionicConfigProvider.platform.android.views.maxCache(0);
 	$ionicConfigProvider.views.transition("ios");
 	$ionicConfigProvider.views.forwardCache(false);*/
-	
+	uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs',
+        //v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'places'
+    });
   // LocalStorage config
   localStorageServiceProvider
   .setPrefix('VirtualGuardian')
