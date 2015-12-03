@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'starter.services','ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,7 +23,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 });
 })
 
-.config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider) {
+.config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider,uiGmapGoogleMapApiProvider) {
 	//
 	/*$ionicConfigProvider.views.maxCache(0);
 	$ionicConfigProvider.views.swipeBackEnabled(false);
@@ -31,7 +31,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	$ionicConfigProvider.platform.android.views.maxCache(0);
 	$ionicConfigProvider.views.transition("ios");
 	$ionicConfigProvider.views.forwardCache(false);*/
-	
+	uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs',
+        //v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'places'
+    });
   // LocalStorage config
   localStorageServiceProvider
   .setPrefix('VirtualGuardian')
@@ -96,6 +100,46 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
             'contenido-app': {
                 templateUrl: 'templates/recuperar.html',
 				controller: 'Recuperar'
+            },
+        }
+    })
+	.state('app.home',{
+		url:'/home',
+		abstract:true,
+		views:{
+			'contenido-app':{
+				templateUrl: 'templates/home.html',
+				controller: 'Home'
+			}
+		}
+	})
+	.state('app.home.mapa', {
+        url: '',
+		id:1,
+        views: {
+            'contenido-home': {
+                templateUrl: 'templates/mapa.html',
+				controller: 'Mapa'
+            },
+        }
+    })
+	.state('app.home.notificaciones', {
+        url: '',
+		id:2,
+        views: {
+            'contenido-home': {
+                templateUrl: 'templates/notificaciones.html',
+				controller: 'Notificaciones'
+            },
+        }
+    })
+	.state('app.home.personas', {
+        url: '',
+		id:3,
+        views: {
+            'contenido-home': {
+                templateUrl: 'templates/personas.html',
+				controller: 'Personas'
             },
         }
     })

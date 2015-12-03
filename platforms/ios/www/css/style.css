@@ -78,6 +78,7 @@
     bottom: 0px;
     left: 0px;
     height: auto;
+    font-weight:100 !important;
 }
 .buttons-footer > button{
 	    height: 5.5vh;
@@ -242,4 +243,62 @@
 /*           RECUPERAR CONTRASEÑA          */
 .recuperar{
 	    float: left;
+}
+/*                  HOME                      */
+.boton-menu{
+    width: 10vw !important;
+    height: 10vh !important;
+	min-width: 0px !important;
+    max-width: 100vh !important;
+    min-height: 10vh !important;
+    max-height: 10vh !important;
+    margin-top:0px !important;
+    margin-bottom:0px !important;
+}
+.boton-menu::after{
+	display:none !important;
+}
+.boton-menu::before{
+	font-size: 6vh !important;
+}
+ion-header-bar > .title{
+	display:none !important;
+}
+ion-side-menu{
+	width:80vw;
+}
+.animate-enter{
+	opacity:0;
+}
+.contenido-home{
+	top:10vh;
+}
+.barra-home{
+	height:10vh !important;
+	background:#171717;
+	    display: block;
+		top:-10vh;
+        padding:0px !important;
+}
+.logo-menu{
+	width: auto;
+    height: 100%;
+    max-height: 1000px;
+    max-width: 1000px;
+    padding: 0px;
+    background: 0px;
+    padding-top: 1vh !important;
+    padding-bottom: 1vh !important;
+	float:left;
+    margin-top:0px !important;
+    margin-bottom:0px !important;
+}
+.nav-bar-block > ion-header-bar{
+	top:-10vh;
+}
+ion-side-menu-content{
+	background:#242424 !important
+}
+.angular-google-map{
+	opacity:0;
 }

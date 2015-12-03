@@ -1,7 +1,8 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 .controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice) {
 	//inicializa usuario
 	$rootScope.Usuario=Memory.get("Usuario");
+	//$rootScope.iOS=(window.device.platform=="iOS");
 	//console.log($cordovaDevice.getUUID())
 	$http.defaults.headers.common.accessToken = $rootScope.Usuario?$rootScope.Usuario.Token:'-';
 	if(!$rootScope.Usuario && $state.current.name.indexOf("registro")<0 &&  $state.current.name.indexOf("login")<0 && $state.current.name.indexOf("recuperar")<0){
@@ -16,7 +17,16 @@ angular.module('starter.controllers', [])
 				event.preventDefault();	
 			}
 		}
+		if((state.indexOf("login")>=0 || state.indexOf("recuperar")>=0 || state.indexOf("recuperar")>=0) && $rootScope.Usuario){
+			$ionicViewSwitcher.nextTransition("none");
+			$ionicViewSwitcher.nextDirection('enter');
+			$state.go('app.home.mapa');
+		}
 	})
+	
+	$rootScope.$watch('Usuario', function(newValue, oldValue) {
+  		Memory.set("Usuario",newValue)
+	});
 	/*if(!$rootScope.Usuario){
 			$state.go("app.login")
 	}
@@ -52,7 +62,7 @@ angular.module('starter.controllers', [])
 	}
 })
 
-.controller('Login', function($scope,Memory,Message,$timeout,$http) {
+.controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state) {
 	/*$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/recuperacion', data: {Correo:"a00225979@itesm.mx",Codigo:"KNH3B"}})
 
 	.success(function(data){
@@ -61,7 +71,14 @@ angular.module('starter.controllers', [])
 	.error(function(data,error){
 		
 	})	 */
-            
+	$scope.$on('$ionicView.beforeEnter',function(){
+		if(Usuario.get()){
+				$ionicViewSwitcher.nextTransition("none");
+				$ionicViewSwitcher.nextDirection('enter');
+				$state.go('app.home.mapa');
+		}
+	})
+	
 	$scope.$on('$ionicView.afterEnter',function(){
             $timeout(function() {
                 if(navigator.splashscreen)navigator.splashscreen.hide();
@@ -69,24 +86,24 @@ angular.module('starter.controllers', [])
     })
 	//Variable: almacena los datos proporcionados por el cliente.
 	$scope.login={
-		email:"",
-		password:""	
+		Correo:"",
+		Contrasena:""	
 	}
 	$scope.registro="app.registro.datos"
 	//if(Memory.get("Registro"))$scope.registro="app.registro.codigo"
 		
 	//Funcion: revisa si se preciona enter en el teclado para realizar accion dependiendo del campo en el que se encuentre.
-	$scope.loginKeyDown=function(event,field){
+	$scope.enter=function(event,field){
 		//verificar si se preciono enter
 		if(event.keyCode==13){
 			//verificar en que campo se encuentra
 			switch(field){
 				case 1://Email
-					$("#login_password").focus();
+					$("#login_contrasena").focus();
 				break;
 				case 2://Password
 					if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.close();
-            		$scope.singIn()
+            		$scope.iniciaSesion()
 				break;
 			}
 		}
@@ -94,17 +111,100 @@ angular.module('starter.controllers', [])
 	
 	
 	//Funcion: enviar datos al servidor y validar credenciales
-	$scope.singIn=function(){
-		if(!$scope.login.email || $scope.login.password.length<6)Message.alert($scope.idioma.Login[1],$scope.idioma.Login[7],function(){});
+	$scope.iniciaSesion=function(){
+		if(!$scope.login.Correo || $scope.login.Contrasena.length<8)Message.alert($scope.idioma.Login[1],$scope.idioma.Login[7],function(){});
 		else{
-		Message.showLoading($scope.idioma.Login[8]);
-		Memory.clean();
+			Message.showLoading($scope.idioma.Login[8]);
+			Memory.clean();
+			Usuario.login($scope.login)
+			.success(function(data){
+				Message.hideLoading();
+				if (data.error){
+					Message.alert($scope.idioma.Login[1],$scope.idioma.Login[7],function(){
+					$scope.login.Contrasena="";
+					});
+				}else{
+					Usuario.set(data);
+					$ionicViewSwitcher.nextDirection('forward');
+					$state.go('app.home.mapa');
+					if(window.cordova)Notificaciones.registra(true);
+				}
+			})
+			.error(function(){
+				Message.hideLoading();
+				
+			})
 		}
 	}
 })
 
-.controller('DashCtrl', function($scope) {
-            })
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state) {
+	$scope.menuWidth=window.innerWidth*0.85;
+	$scope.menuAbierto=false;
+	$scope.seccion=1;
+	
+	$scope.$on('$ionicView.beforeEnter',function(){
+		$scope.seccion=$state.current.id;
+	})
+	$scope.$on('$ionicView.enter',function(){
+		if(!$(".barra-home").css("top")=="0")
+		$(".barra-home").animate({
+			top:0
+		},300,function(){
+			$(".animate-enter").animate({
+				opacity:1,
+			},300);
+		});
+		
+	})
+})
+
+.controller('Personas', function($scope,$timeout,ionicMaterialMotion,ionicMaterialInk) {
+	$scope.Amigos=[
+		{ 
+		IdUsuario:1,
+		Nombre: "Luis",
+		Apellido:"bobadilla",
+		Matricula:"a00225979"
+		},
+		{ 
+		IdUsuario:2,
+		Nombre: "Luis",
+		Apellido:"bobadilla",
+		Matricula:"a00225979"
+		}
+	]
+	$timeout(function() {
+        	// Set Motion
+    		ionicMaterialMotion.fadeSlideInRight();
+			// Set Ink
+    		ionicMaterialInk.displayEffect();
+    		}, 200);
+	
+})
+.controller('Notificaciones', function($scope,$timeout,ionicMaterialMotion,ionicMaterialInk) {
+	$scope.Amigos=[
+		{ 
+		IdUsuario:1,
+		Nombre: "Luis",
+		Apellido:"bobadilla",
+		Matricula:"a00225979"
+		},
+		{ 
+		IdUsuario:2,
+		Nombre: "Luis",
+		Apellido:"bobadilla",
+		Matricula:"a00225979"
+		}
+	]
+	$timeout(function() {
+        	// Set Motion
+    		ionicMaterialMotion.fadeSlideInRight();
+			// Set Ink
+    		ionicMaterialInk.displayEffect();
+    		}, 200);
+	
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
