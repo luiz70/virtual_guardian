@@ -82,8 +82,9 @@ input{
 ion-nav-view{
 	background-color:#242424 !important;
 }
-.view-seccion{
+.view-seccion > ion-content{
 	    background: #242424 !important;
+        padding-top: 10vh !important;
 }
 .has-header{
 	top:10vh;

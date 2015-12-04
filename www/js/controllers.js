@@ -1,7 +1,12 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
-.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork) {
+.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,signaling) {
+	signaling.connect();
+	signaling.on('connect', function (id) {
+		console.log(2);
+		
+	})
 	//inicializa usuario
-	$rootScope.internet={state:false,type:""};
+	$rootScope.internet={state:true,type:""};
 	$rootScope.Usuario=Memory.get("Usuario");
 	//$rootScope.iOS=(window.device.platform=="iOS");
 	//console.log($cordovaDevice.getUUID())
@@ -26,15 +31,16 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 	})
 	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
 		$rootScope.internet={state:true,type:networkState};
-		alert(1);
 	})
 	$rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
 		$rootScope.internet={state:false,type:networkState};
-		alert(2);
 	})
 	$rootScope.$watch('Usuario', function(newValue, oldValue) {
   		Memory.set("Usuario",newValue)
 	});
+    $rootScope.$watch('internet', function(newValue, oldValue) {
+        console.log(newValue);
+    });
 	/*if(!$rootScope.Usuario){
 			$state.go("app.login")
 	}

@@ -83,6 +83,14 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
+.factory('signaling', function (socketFactory) {
+    var socket = io.connect('http://www.virtual-guardian.com:8303');
+    var socketFactory = socketFactory({
+      ioSocket: socket
+    });
+
+    return socketFactory;
+})
 .factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout,uiGmapIsReady){
 	uiGmapGoogleMapApi.then(function(maps) {
 	var r2 = document.createElement('script'); 

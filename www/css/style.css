@@ -280,14 +280,16 @@ ion-side-menu{
 	top:-10vh;
 }
 .contenido-home{
-	top:10vh;
+	top:0vh !important;
 }
 .barra-home{
 	height:10vh !important;
 	background:#171717;
 	display: block;
     padding:0px !important;
+    z-index:1000 !important;
 }
+
 .logo-menu{
 	width: auto;
     height: 100%;
