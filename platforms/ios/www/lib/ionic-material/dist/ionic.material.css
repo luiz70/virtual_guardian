@@ -561,7 +561,7 @@
   white-space: nowrap;
   text-align: center;
   text-transform: uppercase;
-  font-weight: 500;
+  /*font-weight: 500;*/
   font-style: inherit;
   font-variant: inherit;
   font-size: inherit;
@@ -1977,7 +1977,7 @@
 /* Ionic Overrides
 ==================================*/
 * {
-  font-family: "RobotoDraft","Roboto","Helvetica Neue", "Segoe UI", sans-serif; }
+  /*font-family: "RobotoDraft","Roboto","Helvetica Neue", "Segoe UI", sans-serif;*/ }
 
 .rounded {
   border-radius: 4px; }

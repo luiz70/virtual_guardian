@@ -1,6 +1,7 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
-.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice) {
+.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork) {
 	//inicializa usuario
+	$rootScope.internet={state:true,type:""};
 	$rootScope.Usuario=Memory.get("Usuario");
 	//$rootScope.iOS=(window.device.platform=="iOS");
 	//console.log($cordovaDevice.getUUID())
@@ -23,10 +24,18 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 			$state.go('app.home.mapa');
 		}
 	})
-	
+	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+		$rootScope.internet={state:true,type:networkState};
+	})
+	$rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+		$rootScope.internet={state:false,type:networkState};
+	})
 	$rootScope.$watch('Usuario', function(newValue, oldValue) {
   		Memory.set("Usuario",newValue)
 	});
+    $rootScope.$watch('internet', function(newValue, oldValue) {
+        console.log(newValue);
+    });
 	/*if(!$rootScope.Usuario){
 			$state.go("app.login")
 	}
@@ -147,14 +156,10 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		$scope.seccion=$state.current.id;
 	})
 	$scope.$on('$ionicView.enter',function(){
-		if(!$(".barra-home").css("top")=="0")
-		$(".barra-home").animate({
-			top:0
-		},300,function(){
-			$(".animate-enter").animate({
-				opacity:1,
-			},300);
-		});
+		$(".animate-enter-up").animate({
+			top:0,
+			opacity:1
+		},500);
 		
 	})
 })
