@@ -83,19 +83,65 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
-.factory('signaling', function (socketFactory) {
-    var socket = io.connect('http://www.virtual-guardian.com:8303');
+.factory('socket', function (socketFactory) {
+    var conectado=false;
+         var socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
+                                    reconnection:true,
+                                 });
     var socketFactory = socketFactory({
-      ioSocket: socket
+        ioSocket: socket
     });
+    socketFactory.on("connect",function(){
+        conectado=true;
+    })
+    socketFactory.on("connect_error",function(){
+        conectado=false;
+    })
+    socketFactory.on("reconnect",function(){
+        conectado=true;
+    })
+    socketFactory.on("reconnect_error",function(){
+        conectado=false;
+    })
+    socketFactory.on("disconnect",function(){
+        conectado=false;
 
-    return socketFactory;
+    })
+    socketFactory.on("error",function(){
+        conectado=false;
+    })
+         
+    return {
+         getSocket:function(){
+            return socketFactory
+         },
+         connect:function(){
+            if(!conectado)socketFactory.connect();
+            return true;
+         },
+         isConnected:function(){
+            return conectado;
+         }
+    };
 })
+
 .factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout,uiGmapIsReady){
+	var getIconUbicacion=function(){
+		
+		var icono = {
+			url: (!$rootScope.map)?'img/iconos/mapa/ubicacion.png':(($rootScope.map.ubicacion.position.latitude==$rootScope.map.ubicacion.location.latitude && $rootScope.map.ubicacion.position.longitude==$rootScope.map.ubicacion.location.longitude)?'img/iconos/mapa/ubicacion.png':'img/iconos/mapa/ubicacion_des.png'),
+			size: new google.maps.Size(20, 20),
+			origin: new google.maps.Point(0,0),
+			anchor: new google.maps.Point(10, 10),
+			scaledSize:new google.maps.Size(20, 20)
+		}
+		return icono;
+	}
 	uiGmapGoogleMapApi.then(function(maps) {
 	var r2 = document.createElement('script'); 
     r2.src = 'js/res/richardMarker.js';
     document.body.appendChild(r2);
+   	
 	$rootScope.map = { 
 		center: { latitude: 20.6737919, longitude:  -103.3354131 }, 
 		zoom:12,
@@ -120,22 +166,76 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     		]
 			}
 		],
-		},
-		
-		position:{ latitude: 20.734684, longitude:  -103.455187 }
+                            },
+                          
+        radio:{
+        	radius:3000,
+            fill:{color:'#39bbf7',opacity:0.15},
+            stroke:{color:'#ffffff',weight:2.5,opacity:0.6},
+            clickable:false,
+            draggable:false,
+            editable:false,
+            activo:true,
+			visible:true,
+        },
+		ubicacion:{
+			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
+			location:{ latitude: 20.6737919, longitude:  -103.3354131 },
+			options:{
+				draggable:true,
+				index:10000,
+				icon:getIconUbicacion(),
+				shape:{
+					coords: [0, 0, 0, 20, 20, 20, 20 , 0],
+					type: 'poly',
+				},
+			},
+			visible:false,
+			events:{
+				mousedown:function(){
+					$rootScope.map.radio.visible=false;
+				},
+				mouseup:function(event){
+					$rootScope.map.radio.visible=true;
+					$rootScope.map.ubicacion.options.icon=getIconUbicacion();
+					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
+				}
+			}
+		}
 		};
-		//maps.
-		//$rootScope.mapa=$scope.map
-	//navigator.geolocation.getCurrentPosition($scope.mapSuccess, $scope.mapError);
+        
 		
     });
+	$rootScope.$watch('map.ubicacion.position', function(newValue, oldValue) {
+  		if(newValue){
+			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
+			$rootScope.map.ubicacion.options.icon=getIconUbicacion();
+		}
+	});
+	$rootScope.$watch('map.radio.radius', function(newValue, oldValue) {
+  		if(newValue)$rootScope.map.radio.radius=parseInt(newValue);
+	});
 	uiGmapIsReady.promise()
 	.then(function(maps){
-		$(".angular-google-map").animate({
-			opacity:1,
-			},500);
+          getLocation();
+          $(".angular-google-map").animate({
+                opacity:1,
+        },500);
 	})
-	
+         var getLocation=function(){
+			 navigator.geolocation.getCurrentPosition(mapSuccess, mapError);
+			 $(".location").addClass("loading");
+		 }
+         var mapSuccess=function(position){ 
+			$rootScope.map.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
+         	$rootScope.map.ubicacion.position={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
+         	$rootScope.map.ubicacion.visible=true;
+			$rootScope.$apply(function(){})
+			$(".location").removeClass("loading");
+         }
+        var mapError=function(position){
+         console.log(position);
+         }
 	return {
 		login:function(credentials){
 			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
@@ -144,9 +244,15 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
     		return true;
 		},
+		refreshLocation:function(){
+			getLocation();
+		},
 		set:function(usuario){
 			$rootScope.Usuario=usuario
 			return true;
+		},
+		getMapa:function(){
+			return $rootScope.map;
 		},
 		getUbicacion:function(){
 			return { latitude: 20.734684, longitude:  -103.455187 };

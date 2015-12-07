@@ -45,6 +45,13 @@
 .registro-vista-contenido{
 	height: 66.5vh;
 }
+.contenedor-mapa-top-right{
+	width:7vh !important;
+}
+.boton-mapa-top-right{
+	width:7vh !important;
+	height:7vh !important;
+}
 
 }
 /*iphone 6*/

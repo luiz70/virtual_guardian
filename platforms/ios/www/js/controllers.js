@@ -56,7 +56,36 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		return st[st.length-1];
 	}
 })
-
+.controller('top-right',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+$scope.refreshLocation=function(){
+		Mapa.refreshLocation();
+	}
+})
+.controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.mapa=null;
+	uiGmapIsReady.promise()
+	.then(function(maps){
+		$scope.mapa=$rootScope.map;
+		$timeout(function(){
+			$scope.hideBarra();
+		},1000)
+	})
+	
+	$scope.hideBarra=function(){
+		$(".contenedor-mapa-pie").animate({
+		height:'7vh',
+		},1000);
+	}
+	$scope.showBarra=function(){
+		$(".contenedor-mapa-pie").animate({
+		height:'14vh',
+		},1000);
+	}
+	$(".gm-style div").first().mouseover($scope.hideBarra)
+	
+	/*ng-mouseout="hideBarra()"*/
+ 
+})
 .controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state) {
 	
 	$scope.$on('$ionicView.beforeEnter',function(){

@@ -1,0 +1,22 @@
+<div class="contenedor-mapa-bottom-center">
+	<div class="contenedor-mapa-pie" on-touch="showBarra()" >
+    	<div class="parte1">
+		<label class="toggle toggle-mapa-pie">
+			<input type="checkbox" ng-model="mapa.radio.activo">
+			<div class="track">
+				<div class="handle"></div>
+			</div>
+		</label>
+        <button class="label-pie-radio" >Radio: {{mapa.radio.radius | distance}}</button>
+        </div>
+        <div class="parte2">
+       		<div class="item range rango-radio">
+              	<i class="icon ion-minus-round"></i>
+              	<input type="range" min="10" max="16000" ng-model="mapa.radio.radius" >
+              	<i class="icon ion-plus-round"></i>
+            </div>
+            <div class="tapa-parte2" ng-show="!mapa.radio.activo"></div>
+        </div>
+        
+	</div>
+</div>

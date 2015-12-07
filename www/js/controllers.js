@@ -1,10 +1,5 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
-.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,signaling) {
-	signaling.connect();
-	signaling.on('connect', function (id) {
-		console.log(2);
-		
-	})
+.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,socket) {
 	//inicializa usuario
 	$rootScope.internet={state:true,type:""};
 	$rootScope.Usuario=Memory.get("Usuario");
@@ -28,6 +23,9 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 			$ionicViewSwitcher.nextDirection('enter');
 			$state.go('app.home.mapa');
 		}
+        if(fromState.name.indexOf("mapa")>=0 && state.indexOf("notificaciones")>=0)$ionicViewSwitcher.nextDirection('forward');
+        if(fromState.name.indexOf("personas")>=0 && state.indexOf("notificaciones")>=0)$ionicViewSwitcher.nextDirection('back');
+               
 	})
 	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
 		$rootScope.internet={state:true,type:networkState};
@@ -41,24 +39,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
     $rootScope.$watch('internet', function(newValue, oldValue) {
         console.log(newValue);
     });
-	/*if(!$rootScope.Usuario){
-			$state.go("app.login")
-	}
-	$scope.$on('$locationChangeStart', function(event, next, current) {
-		if(!next.indexOf("registro") && !next.indexOf("recuperar")){
-		$rootScope.Usuario=Memory.get("Usuario");
-    	if(!$rootScope.Usuario){
-			$state.go("app.login")
-		}else{
-			if(next.indexOf("login")>=0){
-				event.preventDefault();
-			}
-			
-		}
-		}
-	});*/
 	
-	//if(navigator.splashscreen)navigator.splashscreen.hide();
 	$scope.cerrarSesion=function(){
 		Message.showLoading($scope.idioma.Login[9]);
 		
@@ -75,16 +56,38 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		return st[st.length-1];
 	}
 })
-
-.controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state) {
-	/*$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/recuperacion', data: {Correo:"a00225979@itesm.mx",Codigo:"KNH3B"}})
-
-	.success(function(data){
-	console.log(data);
+.controller('top-right',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+$scope.refreshLocation=function(){
+		Mapa.refreshLocation();
+	}
+})
+.controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.mapa=null;
+	uiGmapIsReady.promise()
+	.then(function(maps){
+		$scope.mapa=$rootScope.map;
+		$timeout(function(){
+			$scope.hideBarra();
+		},1000)
 	})
-	.error(function(data,error){
-		
-	})	 */
+	
+	$scope.hideBarra=function(){
+		$(".contenedor-mapa-pie").animate({
+		height:'7vh',
+		},1000);
+	}
+	$scope.showBarra=function(){
+		$(".contenedor-mapa-pie").animate({
+		height:'14vh',
+		},1000);
+	}
+	$(".gm-style div").first().mouseover($scope.hideBarra)
+	
+	/*ng-mouseout="hideBarra()"*/
+ 
+})
+.controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state) {
+	
 	$scope.$on('$ionicView.beforeEnter',function(){
 		if(Usuario.get()){
 				$ionicViewSwitcher.nextTransition("none");
@@ -161,6 +164,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		$scope.seccion=$state.current.id;
 	})
 	$scope.$on('$ionicView.enter',function(){
+        if(navigator.splashscreen)navigator.splashscreen.hide();
 		$(".animate-enter-up").animate({
 			top:0,
 			opacity:1
