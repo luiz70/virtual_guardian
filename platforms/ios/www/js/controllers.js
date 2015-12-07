@@ -1,5 +1,5 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
-.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork) {
+.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,socket) {
 	//inicializa usuario
 	$rootScope.internet={state:true,type:""};
 	$rootScope.Usuario=Memory.get("Usuario");
@@ -23,6 +23,9 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 			$ionicViewSwitcher.nextDirection('enter');
 			$state.go('app.home.mapa');
 		}
+        if(fromState.name.indexOf("mapa")>=0 && state.indexOf("notificaciones")>=0)$ionicViewSwitcher.nextDirection('forward');
+        if(fromState.name.indexOf("personas")>=0 && state.indexOf("notificaciones")>=0)$ionicViewSwitcher.nextDirection('back');
+               
 	})
 	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
 		$rootScope.internet={state:true,type:networkState};
@@ -36,24 +39,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
     $rootScope.$watch('internet', function(newValue, oldValue) {
         console.log(newValue);
     });
-	/*if(!$rootScope.Usuario){
-			$state.go("app.login")
-	}
-	$scope.$on('$locationChangeStart', function(event, next, current) {
-		if(!next.indexOf("registro") && !next.indexOf("recuperar")){
-		$rootScope.Usuario=Memory.get("Usuario");
-    	if(!$rootScope.Usuario){
-			$state.go("app.login")
-		}else{
-			if(next.indexOf("login")>=0){
-				event.preventDefault();
-			}
-			
-		}
-		}
-	});*/
 	
-	//if(navigator.splashscreen)navigator.splashscreen.hide();
 	$scope.cerrarSesion=function(){
 		Message.showLoading($scope.idioma.Login[9]);
 		
@@ -72,14 +58,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 })
 
 .controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state) {
-	/*$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/recuperacion', data: {Correo:"a00225979@itesm.mx",Codigo:"KNH3B"}})
-
-	.success(function(data){
-	console.log(data);
-	})
-	.error(function(data,error){
-		
-	})	 */
+	
 	$scope.$on('$ionicView.beforeEnter',function(){
 		if(Usuario.get()){
 				$ionicViewSwitcher.nextTransition("none");
@@ -156,6 +135,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		$scope.seccion=$state.current.id;
 	})
 	$scope.$on('$ionicView.enter',function(){
+        if(navigator.splashscreen)navigator.splashscreen.hide();
 		$(".animate-enter-up").animate({
 			top:0,
 			opacity:1

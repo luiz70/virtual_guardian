@@ -83,11 +83,57 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
+.factory('socket', function (socketFactory) {
+    var conectado=false;
+         var socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
+                                    reconnection:true,
+                                 });
+    var socketFactory = socketFactory({
+        ioSocket: socket
+    });
+    socketFactory.on("connect",function(){
+        conectado=true;
+    })
+    socketFactory.on("connect_error",function(){
+        conectado=false;
+    })
+    socketFactory.on("reconnect",function(){
+        conectado=true;
+    })
+    socketFactory.on("reconnect_error",function(){
+        conectado=false;
+    })
+    socketFactory.on("disconnect",function(){
+        conectado=false;
+
+    })
+    socketFactory.on("error",function(){
+        conectado=false;
+    })
+         
+    return {
+         getSocket:function(){
+            return socketFactory
+         },
+         connect:function(){
+            if(!conectado)socketFactory.connect();
+            return true;
+         },
+         isConnected:function(){
+            return conectado;
+         }
+    };
+})
+
 .factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout,uiGmapIsReady){
 	uiGmapGoogleMapApi.then(function(maps) {
 	var r2 = document.createElement('script'); 
     r2.src = 'js/res/richardMarker.js';
     document.body.appendChild(r2);
+    $rootScope.mUbicacion={
+        Coordenadas: { latitude: 20.6737919, longitude:  -103.3354131 },
+                            Visible:false
+    }
 	$rootScope.map = { 
 		center: { latitude: 20.6737919, longitude:  -103.3354131 }, 
 		zoom:12,
@@ -112,22 +158,40 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     		]
 			}
 		],
-		},
-		
+                            },
+                          
+        radio:{
+                            radius:3000,
+                            fill:{color:'#39bbf7',opacity:0.15},
+                            stroke:{color:'#ffffff',weight:2.5,opacity:0.6},
+                            clickable:false,
+                            draggable:false,
+                            editable:false,
+                            visible:true
+                            },
 		position:{ latitude: 20.734684, longitude:  -103.455187 }
 		};
+        
 		//maps.
 		//$rootScope.mapa=$scope.map
-	//navigator.geolocation.getCurrentPosition($scope.mapSuccess, $scope.mapError);
+	
 		
     });
 	uiGmapIsReady.promise()
 	.then(function(maps){
-		$(".angular-google-map").animate({
-			opacity:1,
-			},500);
+          navigator.geolocation.getCurrentPosition(mapSuccess, mapError);
+          $(".angular-google-map").animate({
+                opacity:1,
+        },500);
 	})
-	
+         
+         var mapSuccess=function(position){
+         $rootScope.mUbicacion.Coordenadas={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
+         $rootScope.mUbicacion.Visible=true;
+         }
+        var mapError=function(position){
+         console.log(position);
+         }
 	return {
 		login:function(credentials){
 			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})

@@ -23,9 +23,9 @@
       </ion-nav-buttons>
     </ion-nav-bar-->
     <div class="bar bar-header barra-home animate-enter-up">
-        <button class="button button-icon button-clear ion-navicon boton-menu " style="float:left;" menu-toggle="left">
+        <button class="button button-icon button-clear ion-navicon boton-menu " style="float:left;" menu-toggle="left" >
         </button>
-      <button class="logo-menu ">
+      <button class="logo-menu " ng-click="conecta()">
       	<img src="img/logo_txt.png" height="100%">
         </button>
        <button class="button button-clear boton-menu icono-header  pull-right {{seccion==3?'seleccionado':''}}" nav-direction="forward" ui-sref="app.home.personas">
