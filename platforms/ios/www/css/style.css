@@ -250,6 +250,9 @@ padding-right:1vh !important;
 	    float: left;
 }
 /*                  HOME                      */
+.content-mapa{
+	top:0px
+}
 .boton-menu{
     width: 10vw !important;
     height: 10vh !important;
@@ -310,9 +313,9 @@ ion-side-menu-content{
 	background:#242424 !important
 }
 .gm-style{
-	top: 10vh !important;
+	top: 0vh !important;
     bottom: 0vh !important;
-    height:91vh !important;
+    height:90vh !important;
 }
 .boton-mapa-top-right{
 	margin-right:0px;
@@ -352,7 +355,7 @@ ion-side-menu-content{
 	width: 100vw;
     height: auto;
 	opacity:1 !important;
-	position: fixed !important;
+	position: absolute !important;
     display:block !important;
     border:none !important;
     bottom:0px !important;

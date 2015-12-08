@@ -1,4 +1,5 @@
-<ion-view  class="view-seccion" hide-nav-bar="false" scroll="false">
+<ion-view  class="view-seccion" hide-nav-bar="false" >
+<ion-content class="content-mapa" scroll="false">
     <ui-gmap-google-map class="animate-enter-mapa" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true'>
         <ui-gmap-circle center='map.ubicacion.position' radius='map.radio.radius' fill='map.radio.fill'   stroke='map.radio.stroke' visible='map.radio.activo && map.radio.visible'>
             
@@ -9,4 +10,5 @@
     <ui-gmap-map-control template='templates/controls/top-left.html' position="left-top"   index="5"></ui-gmap-map-control>
     <ui-gmap-map-control template='templates/controls/bottom-center.html' position="bottom-center"   controller="bottom-center" index="5"></ui-gmap-map-control>
     </ui-gmap-google-map>
+    </ion-content>
 </ion-view>
