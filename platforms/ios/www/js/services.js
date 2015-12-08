@@ -13,7 +13,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
-.factory('Message', function(localStorageService,$ionicLoading,$ionicPopup) {
+.factory('Message', function(localStorageService,$ionicLoading,$ionicPopup,$cordovaToast) {
 	var dictionary=null
 	var alertPopUp=null;
 	return {
@@ -28,6 +28,9 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		hideLoading:function(){
 			$ionicLoading.hide();
 		},
+         toast:function(msg){
+         $cordovaToast.showShortBottom(msg);
+         },
 		alert:function(titulo,texto,funcion){
 			if(alertPopUp)alertPopUp.close();
 			alertPopUp = $ionicPopup.alert({
@@ -173,16 +176,10 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
         	radius:3000,
             fill:{color:'#39bbf7',opacity:0.15},
             stroke:{color:'#ffffff',weight:2.5,opacity:0.6},
-            clickable:false,
-            draggable:false,
             editable:false,
             activo:true,
 			visible:true,
             events:{
-                mouseup:function(event){
-                    $rootScope.map.ubicacion.position={latitude:event.center.lat(),longitude:event.center.lng()}
-                    $rootScope.$apply(function(){})
-                }
             }
         },
 		ubicacion:{
