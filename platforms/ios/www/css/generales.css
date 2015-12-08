@@ -140,6 +140,6 @@ ion-header-bar{
 height:100vh;
 width:100vw;
  }
- .gmnoprint, .gm-style-cc, .gm-style > div + div {
+  .gm-style-cc, .gm-style > div + div {
 	display:none
  }

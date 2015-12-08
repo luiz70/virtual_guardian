@@ -169,6 +169,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
                             },
                           
         radio:{
+			center:{ latitude: 20.6737919, longitude:  -103.3354131 },
         	radius:3000,
             fill:{color:'#39bbf7',opacity:0.15},
             stroke:{color:'#ffffff',weight:2.5,opacity:0.6},
@@ -200,7 +201,11 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			events:{
 				mouseup:function(event){
 					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
-                            $rootScope.$apply(function(){})
+                    $rootScope.$apply(function(){})
+				},
+				position_changed:function(event){
+					$rootScope.map.radio.center={latitude:event.position.lat(),longitude:event.position.lng()}
+					$rootScope.$apply(function(){})
 				}
 			}
 		}
@@ -210,6 +215,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     });
 	$rootScope.$watch('map.ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
+			$rootScope.map.radio.center=$rootScope.map.ubicacion.position
             $rootScope.map.ubicacion.options.icon=getIconUbicacion();
 			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
 			$rootScope.map.ubicacion.options.icon=getIconUbicacion();

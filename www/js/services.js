@@ -169,6 +169,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
                             },
                           
         radio:{
+			center:{ latitude: 20.6737919, longitude:  -103.3354131 },
         	radius:3000,
             fill:{color:'#39bbf7',opacity:0.15},
             stroke:{color:'#ffffff',weight:2.5,opacity:0.6},
@@ -177,13 +178,19 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
             editable:false,
             activo:true,
 			visible:true,
+            events:{
+                mouseup:function(event){
+                    $rootScope.map.ubicacion.position={latitude:event.center.lat(),longitude:event.center.lng()}
+                    $rootScope.$apply(function(){})
+                }
+            }
         },
 		ubicacion:{
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			location:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			options:{
 				draggable:true,
-				index:10000,
+				zIndex:10000,
 				icon:getIconUbicacion(),
 				shape:{
 					coords: [0, 0, 0, 20, 20, 20, 20 , 0],
@@ -192,13 +199,13 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			},
 			visible:false,
 			events:{
-				mousedown:function(){
-					$rootScope.map.radio.visible=false;
-				},
 				mouseup:function(event){
-					$rootScope.map.radio.visible=true;
-					$rootScope.map.ubicacion.options.icon=getIconUbicacion();
 					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
+                    $rootScope.$apply(function(){})
+				},
+				position_changed:function(event){
+					$rootScope.map.radio.center={latitude:event.position.lat(),longitude:event.position.lng()}
+					$rootScope.$apply(function(){})
 				}
 			}
 		}
@@ -208,6 +215,8 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     });
 	$rootScope.$watch('map.ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
+			$rootScope.map.radio.center=$rootScope.map.ubicacion.position
+            $rootScope.map.ubicacion.options.icon=getIconUbicacion();
 			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
 			$rootScope.map.ubicacion.options.icon=getIconUbicacion();
 		}

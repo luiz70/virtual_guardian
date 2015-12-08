@@ -5,7 +5,7 @@ angular.module('starter.controllers')
 	uiGmapIsReady.promise()
 	.then(function(maps){
 		$scope.mapaCargado=true;
-          $ionicHistory.clearHistory();
+		$ionicHistory.clearHistory();
 		
 	})
 })

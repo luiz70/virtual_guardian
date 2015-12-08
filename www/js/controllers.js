@@ -1,5 +1,5 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
-.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,socket) {
+.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,socket,$ionicHistory) {
 	//inicializa usuario
 	$rootScope.internet={state:true,type:""};
 	$rootScope.Usuario=Memory.get("Usuario");
@@ -10,6 +10,12 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		$ionicViewSwitcher.nextDirection('back');
 		$state.go("app.login")	
 	}
+            
+    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+               //$ionicHistory.clearCache();
+               $ionicHistory.clearHistory();
+               
+               })
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
 		var state=toState.name
 		if(state.indexOf("registro")<0 && state.indexOf("login")<0 && state.indexOf("recuperar")<0){
@@ -63,16 +69,11 @@ $scope.refreshLocation=function(){
 })
 .controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
 	$scope.mapa=null;
-            $scope.radioLocal="";
 	uiGmapIsReady.promise()
 	.then(function(maps){
 		$scope.mapa=$rootScope.map;
-          $scope.radioLocal=0+$scope.mapa.radio.radius;
-		$timeout(function(){
-			$scope.hideBarra();
-		},1000)
         $(".gm-style div").first().click($scope.hideBarra)
-          $(".gm-style div").first().mousedown($scope.hideBarra)
+        $(".gm-style div").first().mousedown($scope.hideBarra)
 	})
     $scope.cambiaRadio=function(){
             console.log(2);
@@ -85,7 +86,7 @@ $scope.refreshLocation=function(){
 	$scope.showBarra=function(){
 		$(".contenedor-mapa-pie").animate({
 		height:'14vh',
-		},1000);
+		},500);
 	}
 })
 .controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state) {
