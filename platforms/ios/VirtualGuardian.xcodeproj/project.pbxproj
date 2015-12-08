@@ -14,6 +14,7 @@
 		11D061A6CDEB426498D77FFD /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94D152B46F9C45E2A6AA213C /* Toast+UIView.m */; };
 		12868B60E6124101A94743F3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B52D8F61F339427FAD0EF48F /* QuartzCore.framework */; };
 		196D8299B6DC411D86E58757 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8FFE124A56437094DF5A67 /* CDVNotification.m */; };
+		1A0033801C165B3600D36732 /* www in Resources */ = {isa = PBXBuildFile; fileRef = EB87FDF31871DA8E0020F90C /* www */; };
 		1A06C8BC1BCC302300480733 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F8F62FF679D31893056BBB /* Pods.framework */; };
 		1A1870841BC310C300448A81 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A1870831BC310C300448A81 /* StoreKit.framework */; };
 		1A46FB131BD2AA4900714FA4 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A46FB121BD2AA4900714FA4 /* beep.wav */; };
@@ -734,6 +735,7 @@
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 				1AB45B541BE2905D00C8A01B /* callTone.wav in Resources */,
 				2F8786F85F4B4B069A7CE5F0 /* DatePicker.xib in Resources */,
+				1A0033801C165B3600D36732 /* www in Resources */,
 				22E908D11B50408FBBE3D236 /* DatePicker.xib in Resources */,
 				762628D44313448886BD2DF7 /* CDVNotification.bundle in Resources */,
 			);

@@ -63,14 +63,20 @@ $scope.refreshLocation=function(){
 })
 .controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
 	$scope.mapa=null;
+            $scope.radioLocal="";
 	uiGmapIsReady.promise()
 	.then(function(maps){
 		$scope.mapa=$rootScope.map;
+          $scope.radioLocal=0+$scope.mapa.radio.radius;
 		$timeout(function(){
 			$scope.hideBarra();
 		},1000)
+        $(".gm-style div").first().click($scope.hideBarra)
+          $(".gm-style div").first().mousedown($scope.hideBarra)
 	})
-	
+    $scope.cambiaRadio=function(){
+            console.log(2);
+    }
 	$scope.hideBarra=function(){
 		$(".contenedor-mapa-pie").animate({
 		height:'7vh',
@@ -81,10 +87,6 @@ $scope.refreshLocation=function(){
 		height:'14vh',
 		},1000);
 	}
-	$(".gm-style div").first().mouseover($scope.hideBarra)
-	
-	/*ng-mouseout="hideBarra()"*/
- 
 })
 .controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state) {
 	
