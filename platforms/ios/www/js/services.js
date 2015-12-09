@@ -208,6 +208,43 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		filtros:{
 			activos:false,
 		},
+		cluster:{
+			styles:[
+				  {
+					textColor: '#EAEAEA',
+					url: 'img/iconos/mapa/marcadores/g1.png',
+					height: 51,
+					width: 40,
+					textSize:20
+				  },
+				 {
+					textColor: '#232323',
+					url: 'img/iconos/mapa/marcadores/g2.png',
+					height: 51,
+					width: 40,
+					textSize:20
+				  },
+				 {
+					textColor: '#EAEAEA',
+					url: 'img/iconos/mapa/marcadores/g3.png',
+					height: 51,
+					width: 40,
+					textSize:20
+				  }
+				],
+			maxZoom:10,
+			minimumClusterSize:10,
+			events:{
+				click: function(cluster, clusterModels){
+				},
+  				mouseout: function(cluster, clusterModels){
+					//cluster.setMinimumClusterSize(10);
+				},
+  				mouseover: function(cluster, clusterModels){
+					
+				} 
+			}
+		},
 		ubicacion:{
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			location:{ latitude: 20.6737919, longitude:  -103.3354131 },
@@ -224,11 +261,13 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			events:{
 				mouseup:function(event){
 					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
-                    //$rootScope.$apply(function(){})
+                    revisaEventos($rootScope.map.ubicacion.position);
+				},
+				mousedown:function(event){
+					hideAllMarkers();
 				},
 				position_changed:function(event){
 					$rootScope.map.radio.center={latitude:event.position.lat(),longitude:event.position.lng()}
-					if($rootScope.map.radio.activo)revisaEventos($rootScope.map.radio.center);
 					//$rootScope.$apply(function(){})
 				}
 			}
@@ -283,6 +322,9 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	$rootScope.$watch('map.radio.activo', function(newValue, oldValue) {
   		if($rootScope.map)revisaEventos($rootScope.map.ubicacion.position);
 	});
+	var hideAllMarkers=function(){
+		for(var i=0; i<$rootScope.map.eventos.length;i++)$rootScope.map.eventos[i].options={visible:false}
+	}
 	var revisaEventos=function(pos){
 		for(var i=0; i<$rootScope.map.eventos.length;i++){
 			if($rootScope.map.radio.activo){
