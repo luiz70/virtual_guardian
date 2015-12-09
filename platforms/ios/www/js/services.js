@@ -194,6 +194,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			}
 		},
 		eventos:[],
+		idEventos:[],
         radio:{
 			center:{ latitude: 20.6737919, longitude:  -103.3354131 },
         	radius:3000,
@@ -314,7 +315,10 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	});
 	$rootScope.$watch('map.eventos', function(newValue, oldValue) {
-  		if(newValue)revisaEventos($rootScope.map.ubicacion.position);
+  		if(newValue){
+			revisaEventos($rootScope.map.ubicacion.position);
+			$rootScope.map.idEventos = $.map($rootScope.map.eventos, function(v, i){return v.id;});
+		}
 	});
 	$rootScope.$watch('map.radio.radius', function(newValue, oldValue) {
   		if(newValue)$rootScope.map.radio.radius=parseInt(newValue);
@@ -348,7 +352,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	
 	uiGmapIsReady.promise()
 	.then(function(maps){
-          getLocation();console.log($rootScope.map.radio)
+          getLocation();
           $(".angular-google-map").animate({
                 opacity:1,
         },500);
