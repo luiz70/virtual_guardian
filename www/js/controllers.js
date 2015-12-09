@@ -1,10 +1,12 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
-.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,socket,$ionicHistory) {
+.controller('AppCtrl', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory) {
 	//inicializa usuario
+	//Memory.clean();
 	$rootScope.internet={state:true,type:""};
 	$rootScope.Usuario=Memory.get("Usuario");
 	//$rootScope.iOS=(window.device.platform=="iOS");
 	//console.log($cordovaDevice.getUUID())
+	
 	$http.defaults.headers.common.accessToken = $rootScope.Usuario?$rootScope.Usuario.Token:'-';
 	if(!$rootScope.Usuario && $state.current.name.indexOf("registro")<0 &&  $state.current.name.indexOf("login")<0 && $state.current.name.indexOf("recuperar")<0){
 		$ionicViewSwitcher.nextDirection('back');
@@ -47,7 +49,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
     });
 	
 	$scope.cerrarSesion=function(){
-		Message.showLoading($scope.idioma.Login[9]);
+		Message.showLoading($rootScope.idioma.Login[9]);
 		
 		$timeout(function(){
 			Memory.clean();
@@ -69,6 +71,7 @@ $scope.refreshLocation=function(){
 })
 .controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
 	$scope.mapa=null;
+	$scope.idioma=$rootScope.idioma;
 	uiGmapIsReady.promise()
 	.then(function(maps){
 		$scope.mapa=$rootScope.map;
@@ -89,7 +92,7 @@ $scope.refreshLocation=function(){
 		},500);
 	}
 })
-.controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state) {
+.controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state,$rootScope) {
 	
 	$scope.$on('$ionicView.beforeEnter',function(){
 		if(Usuario.get()){
@@ -132,15 +135,15 @@ $scope.refreshLocation=function(){
 	
 	//Funcion: enviar datos al servidor y validar credenciales
 	$scope.iniciaSesion=function(){
-		if(!$scope.login.Correo || $scope.login.Contrasena.length<8)Message.alert($scope.idioma.Login[1],$scope.idioma.Login[7],function(){});
+		if(!$scope.login.Correo || $scope.login.Contrasena.length<8)Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.Login[7],function(){});
 		else{
-			Message.showLoading($scope.idioma.Login[8]);
+			Message.showLoading($rootScope.idioma.Login[8]);
 			Memory.clean();
 			Usuario.login($scope.login)
 			.success(function(data){
 				Message.hideLoading();
 				if (data.error){
-					Message.alert($scope.idioma.Login[1],$scope.idioma.Login[7],function(){
+					Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.Login[7],function(){
 					$scope.login.Contrasena="";
 					});
 				}else{
@@ -158,7 +161,7 @@ $scope.refreshLocation=function(){
 	}
 })
 
-.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state) {
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope) {
 	$scope.menuWidth=window.innerWidth*0.85;
 	$scope.menuAbierto=false;
 	$scope.seccion=1;

@@ -86,10 +86,11 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
-.factory('socket', function (socketFactory) {
+.factory('socket', function (socketFactory,$rootScope) {
     var conectado=false;
          var socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
                                     reconnection:true,
+									query: "Token="+$rootScope.Usuario.Token
                                  });
     var socketFactory = socketFactory({
         ioSocket: socket
@@ -110,6 +111,10 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
         conectado=false;
 
     })
+	socketFactory.on("token",function(token){
+        //$rootScope.Usuario.Token=token
+		console.log(token);
+    })
     socketFactory.on("error",function(){
         conectado=false;
     })
@@ -128,7 +133,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     };
 })
 
-.factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout,uiGmapIsReady){
+.factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout,uiGmapIsReady,socket){
 	var getIconUbicacion=function(){
 		
 		var icono = {
@@ -169,8 +174,26 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     		]
 			}
 		],
-                            },
-                          
+        },
+		bounds:{
+			la1:0,
+			la2:0,
+			ln1:0,
+			ln2:0
+		},
+        events:{
+			bounds_changed:function(event){
+				var bounds=$rootScope.map.getGMap().getBounds();
+				$rootScope.map.bounds={
+					la1:bounds.getSouthWest().lat(),
+					la2:bounds.getNorthEast().lat(),
+					ln1:bounds.getSouthWest().lng(),
+					ln2:bounds.getNorthEast().lng()
+				}
+				//$rootScope.$apply(function(){})
+			}
+		},
+		eventos:[],
         radio:{
 			center:{ latitude: 20.6737919, longitude:  -103.3354131 },
         	radius:3000,
@@ -182,6 +205,9 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
             events:{
             }
         },
+		filtros:{
+			activos:false,
+		},
 		ubicacion:{
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			location:{ latitude: 20.6737919, longitude:  -103.3354131 },
@@ -198,11 +224,12 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			events:{
 				mouseup:function(event){
 					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
-                    $rootScope.$apply(function(){})
+                    //$rootScope.$apply(function(){})
 				},
 				position_changed:function(event){
 					$rootScope.map.radio.center={latitude:event.position.lat(),longitude:event.position.lng()}
-					$rootScope.$apply(function(){})
+					if($rootScope.map.radio.activo)revisaEventos($rootScope.map.radio.center);
+					//$rootScope.$apply(function(){})
 				}
 			}
 		}
@@ -210,6 +237,35 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
         
 		
     });
+	$rootScope.$watch('map.bounds', function(newValues, oldValues, scope) {
+		//console.log($rootScope.map.bounds);
+		if(newValues)refreshEventos();
+	})
+	var refreshEventos=function(){
+		if(!$rootScope.map.filtros.activos){
+			f2=new Date();
+			f1=new Date();
+			f1.setDate(f1.getDate()-$rootScope.Usuario.Periodo)
+			f1=f1.getTime()/1000000;
+			f2=f2.getTime()/1000000;
+		}
+		socket.getSocket().emit('getEventos', $rootScope.map.bounds,f1,f2);
+	}
+	var getIconoEvento=function(evt){
+		var icono = {
+			url: 'img/iconos/mapa/marcadores/'+evt.asunto+".png",
+			size: new google.maps.Size(40, 51),
+   			origin: new google.maps.Point(0,0),
+   			anchor: new google.maps.Point(20, 51),
+			scaledSize:new google.maps.Size(40, 51)
+		}
+		return icono;
+	}
+	socket.getSocket().on('getEventos',function(data){
+		for(var i=0; i<data.length;i++)
+		data[i].icono=getIconoEvento(data[i]);
+		$rootScope.map.eventos=data;
+	})
 	$rootScope.$watch('map.ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
 			$rootScope.map.radio.center=$rootScope.map.ubicacion.position
@@ -218,12 +274,39 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			$rootScope.map.ubicacion.options.icon=getIconUbicacion();
 		}
 	});
+	$rootScope.$watch('map.eventos', function(newValue, oldValue) {
+  		if(newValue)revisaEventos($rootScope.map.ubicacion.position);
+	});
 	$rootScope.$watch('map.radio.radius', function(newValue, oldValue) {
   		if(newValue)$rootScope.map.radio.radius=parseInt(newValue);
 	});
+	$rootScope.$watch('map.radio.activo', function(newValue, oldValue) {
+  		if($rootScope.map)revisaEventos($rootScope.map.ubicacion.position);
+	});
+	var revisaEventos=function(pos){
+		for(var i=0; i<$rootScope.map.eventos.length;i++){
+			if($rootScope.map.radio.activo){
+			rad = function(x) {return x*Math.PI/180;}
+			var R     =6378.137 ;      
+  			var dLat  = rad( pos.latitude - $rootScope.map.eventos[i].latitude );
+  			var dLong = rad( pos.longitude - $rootScope.map.eventos[i].longitude );
+			var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad($rootScope.map.eventos[i].latitude)) * Math.cos(rad(pos.latitude)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+  			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  			var d = R * c;
+			
+			
+				if( (d.toFixed(3)*1000)>$rootScope.map.radio.radius)$rootScope.map.eventos[i].options={visible:false}
+				else $rootScope.map.eventos[i].options={visible:true}
+			}else $rootScope.map.eventos[i].options={visible:true}
+		}
+	}
+	
+	
+	
+	
 	uiGmapIsReady.promise()
 	.then(function(maps){
-          getLocation();
+          getLocation();console.log($rootScope.map.radio)
           $(".angular-google-map").animate({
                 opacity:1,
         },500);

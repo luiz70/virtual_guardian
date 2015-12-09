@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Idioma', function($scope,Message) {
+.controller('Idioma', function($scope,Message,$rootScope) {
   // Might use a resource here that returns a JSON array
 	
   // Some fake testing data
@@ -63,6 +63,9 @@ angular.module('starter.controllers')
 			35:"El código proporcionado ha activado una suscripción TIPO por TIEMPO mes",
 			36:"Tu registro ha caducado, es necesario que realices el registro de nuevo."
 		},
+		Mapa:{
+			1:"Radio: "
+		}
 		
 	},
 	en:{
@@ -80,12 +83,12 @@ angular.module('starter.controllers')
 		}
 	}
   }
-  $scope.idioma=idiomas.es;
+  $rootScope.idioma=idiomas.es;
   if(navigator.globalization)
 	navigator.globalization.getPreferredLanguage(function (language) {
 			var l=language.value.split("-")
-			//if(l[0]=="EN" || l[0]=="en" || l[0]=="En")$scope.idioma=idiomas.en;
+			//if(l[0]=="EN" || l[0]=="en" || l[0]=="En")$rootScope.idioma=idiomas.en;
    	})
-	Message.setDictionary($scope.idioma);
+	Message.setDictionary($rootScope.idioma);
 	
 })

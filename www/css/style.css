@@ -313,9 +313,9 @@ ion-side-menu-content{
 	background:#242424 !important
 }
 .gm-style{
-	top: 10vh !important;
+	top: 0vh !important;
     bottom: 0vh !important;
-    height:90.1vh !important;
+    height:100vh !important;
 }
 .boton-mapa-top-right{
 	margin-right:0px;
@@ -339,6 +339,7 @@ ion-side-menu-content{
 }
 .contenedor-mapa-top-right{
 	    width: 6vh;
+        top:10vh !important;
     height: auto;
 	opacity:1 !important;
 	right:1vh !important;
@@ -346,6 +347,7 @@ ion-side-menu-content{
 }
 .contenedor-mapa-top-left{
 	width: 6vh;
+    top:10vh !important;
     height: auto;
 	opacity:1 !important;
 	left:1vh !important;
@@ -416,7 +418,7 @@ ion-side-menu-content{
     text-align: left;
     font-size: 4vh;
     color: #fff;
-    font-weight: 100;
+    font-weight: 200;
     height: 100%;
     background: none;
     line-height: 4vh;

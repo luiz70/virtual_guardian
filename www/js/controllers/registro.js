@@ -11,8 +11,8 @@ angular.module('starter.controllers')
 		Codigo:"",
 		Promocion:""
 	}
-	$scope.botonSiguiente=$scope.idioma.Registro[7];
-	$scope.botonAtras=$scope.idioma.Registro[8];
+	$scope.botonSiguiente=$rootScope.idioma.Registro[7];
+	$scope.botonAtras=$rootScope.idioma.Registro[8];
 	$scope.state=$scope.getState($state.current.name)
 	//FUNCION QUE SE EJECUTA CADA VEZ QUE LA VISTA ENTRA Y REVISA SI EL USUARIO ESTA LOGGEADO
 	$scope.$on('$ionicView.beforeEnter',function(){
@@ -35,15 +35,15 @@ angular.module('starter.controllers')
 	$scope.$watch('state', function() {
     	switch($scope.state){
 			case "datos":
-				$scope.botonSiguiente=$scope.idioma.Registro[7];
-				$scope.botonAtras=$scope.idioma.Registro[8];
+				$scope.botonSiguiente=$rootScope.idioma.Registro[7];
+				$scope.botonAtras=$rootScope.idioma.Registro[8];
 			break; 
 			case "codigo":
-				$scope.botonSiguiente=$scope.idioma.Registro[7];
-				$scope.botonAtras=$scope.idioma.General[6];
+				$scope.botonSiguiente=$rootScope.idioma.Registro[7];
+				$scope.botonAtras=$rootScope.idioma.General[6];
 			break;
 			case "final":
-				$scope.botonSiguiente=$scope.idioma.Registro[21];
+				$scope.botonSiguiente=$rootScope.idioma.Registro[21];
 			break;
 		}
    	});
@@ -56,14 +56,14 @@ angular.module('starter.controllers')
 		switch($scope.state){
 			case "datos":
 				if(!Verificacion.email($scope.nuevoUsuario.Correo))
-					Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[10],function(){
+					Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[10],function(){
 						$timeout(function(){
 							$("#registro_correo").focus();
 							if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.show();
 						},100)
 					})
 				else if(!Verificacion.password($scope.nuevoUsuario.Contrasena,8))
-					Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[11],function(){
+					Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[11],function(){
 						$timeout(function(){
 							$scope.nuevoUsuario.Contrasena="";
 							$scope.nuevoUsuario.Contrasena2="";
@@ -72,7 +72,7 @@ angular.module('starter.controllers')
 						},100);
 					})
 				else if($scope.nuevoUsuario.Contrasena!=$scope.nuevoUsuario.Contrasena2)
-					Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[12],function(){
+					Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[12],function(){
 						$timeout(function(){
 							$scope.nuevoUsuario.Contrasena2="";
 							$("#registro_contrasena2").focus();
@@ -81,17 +81,17 @@ angular.module('starter.controllers')
 					})
 				else{
 					if($scope.nuevoUsuario.Promocion!="" && $scope.nuevoUsuario.Promocion){
-						Message.showLoading($scope.idioma.Registro[32])
+						Message.showLoading($rootScope.idioma.Registro[32])
 						Verificacion.promocion($scope.nuevoUsuario.Promocion)
 						.success(function(data){
 							Message.hideLoading()
 							if(data.error){
 								$scope.nuevoUsuario.Promocion="";
-								Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[9],function(){})
+								Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[9],function(){})
 							}else{
 								if(data.Cantidad==0){
 									$scope.nuevoUsuario.Promocion="";
-									Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[31],function(){})
+									Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[31],function(){})
 								}else $scope.registra(data);
 							}
 						})
@@ -103,20 +103,20 @@ angular.module('starter.controllers')
 			break; 
 			case "codigo":
 				if($scope.nuevoUsuario.Codigo=="" || !$scope.nuevoUsuario.Codigo || $scope.nuevoUsuario.Codigo.length<5)
-				Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[17],function(){
+				Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[17],function(){
 						$timeout(function(){
 							$("#registro_correo").focus();
 						})
 				});
 				else{
-					Message.showLoading($scope.idioma.Registro[34])
+					Message.showLoading($rootScope.idioma.Registro[34])
 					$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/finalizar', data: {Codigo:$scope.nuevoUsuario.Codigo,Correo:$scope.nuevoUsuario.Correo}})
 					.success(function(data){
 						Message.hideLoading();
 						
 						switch(parseInt(data.return)){
 							case 0: 
-								Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[17],function(){
+								Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[17],function(){
 								});
 							break;
 							case 1: 
@@ -125,7 +125,7 @@ angular.module('starter.controllers')
 								$state.go('app.registro.final');
 							break;
 							case 2:
-								Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[36],function(){
+								Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[36],function(){
 									$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/limpia', data: {Correo:$scope.nuevoUsuario.Correo}})
 									Memory.set("Registro",null);
 									$scope.nuevoUsuario={
@@ -143,7 +143,7 @@ angular.module('starter.controllers')
 					})
 					.error(function(data){
 						Message.hideLoading();
-						Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[16],function(){})
+						Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[16],function(){})
 					})
 				}
 			break;
@@ -184,7 +184,7 @@ angular.module('starter.controllers')
 	//FUNCTION QUE SE EJECUTA CUANDO EL PRIMER PASO DEL REGISTRO SE REALIZA CORRECTAMENTE
 	$scope.registra=function(promo){
 		var promocion=promo || null;
-		Message.showLoading($scope.idioma.Registro[33])
+		Message.showLoading($rootScope.idioma.Registro[33])
 		$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro', data: $scope.nuevoUsuario})
 	
 	/*.success(function(data){console.log(data)})
@@ -193,12 +193,12 @@ angular.module('starter.controllers')
 			Message.hideLoading();
 			switch(parseInt(data.return)){
 				case 0: 
-					Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[15],function(){
+					Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[15],function(){
 					});
 				break;
 				case 1: 
 					Memory.set("Registro",$scope.nuevoUsuario);
-					if(promocion)Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[35].replace("TIEMPO",promocion.Duracion).replace("TIPO",promocion.Tipo)+(promocion.Duracion>1?"es.":"."),function(){
+					if(promocion)Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[35].replace("TIEMPO",promocion.Duracion).replace("TIPO",promocion.Tipo)+(promocion.Duracion>1?"es.":"."),function(){
 						$ionicViewSwitcher.nextDirection('forward');
 					$state.go('app.registro.codigo')
 						});
@@ -209,14 +209,14 @@ angular.module('starter.controllers')
 					
 				break;
 				case 2:
-					Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[16],function(){
+					Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[16],function(){
 					})
 				break;
 			}
 		})
 		.error(function(data){
 			Message.hideLoading();
-			Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[16],function(){
+			Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[16],function(){
 			})
 		})
 		
@@ -227,8 +227,8 @@ angular.module('starter.controllers')
 		$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/reenvio', data: {Correo:$scope.nuevoUsuario.Correo}})
 		.success(function(data){
 			Message.hideLoading()
-			if(!data.error) Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[19],function(){})
-			else Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[36],function(){
+			if(!data.error) Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[19],function(){})
+			else Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[36],function(){
 				$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/limpia', data: {Correo:$scope.nuevoUsuario.Correo}})
 				Memory.set("Registro",null);
 				$scope.nuevoUsuario={
@@ -246,7 +246,7 @@ angular.module('starter.controllers')
 		})
 		.error(function(data){
 			Message.hideLoading()
-			Message.alert($scope.idioma.Registro[1],$scope.idioma.Registro[16],function(){})
+			Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[16],function(){})
 		})
 	}
 })
@@ -274,7 +274,7 @@ angular.module('starter.controllers')
 	//FUNCION QUE SE EJECURA AL DAR CLIC EN EL BOTON DE ENVIAR CORREO DE RECUPERACION
 	$scope.siguiente=function(){
 		if(!Verificacion.email($scope.recuperar.Correo))
-					Message.alert($scope.idioma.Registro[26],$scope.idioma.Registro[10],function(){
+					Message.alert($rootScope.idioma.Registro[26],$rootScope.idioma.Registro[10],function(){
 						$timeout(function(){
 							$("#recuperar_correo").focus();
 							if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.show();
@@ -289,11 +289,11 @@ angular.module('starter.controllers')
 			console.log(data);
 			switch(parseInt(data.return)){
 				case 0: 
-					Message.alert($scope.idioma.Registro[26],$scope.idioma.Registro[27],function(){
+					Message.alert($rootScope.idioma.Registro[26],$rootScope.idioma.Registro[27],function(){
 					});
 				break;
 				case 1: 
-					Message.alert($scope.idioma.Registro[26],$scope.idioma.Registro[28],function(){
+					Message.alert($rootScope.idioma.Registro[26],$rootScope.idioma.Registro[28],function(){
 						$timeout(function(){
 							$ionicViewSwitcher.nextDirection('back');
 							$state.go('app.login')
@@ -305,7 +305,7 @@ angular.module('starter.controllers')
 		})
 		.error(function(data){
 			Message.hideLoading()
-			Message.alert($scope.idioma.Registro[26],$scope.idioma.Registro[16],function(){})
+			Message.alert($rootScope.idioma.Registro[26],$rootScope.idioma.Registro[16],function(){})
 		})
 		}
 	}
