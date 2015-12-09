@@ -69,6 +69,9 @@ $scope.refreshLocation=function(){
 		Mapa.refreshLocation();
 	}
 })
+.controller('top-left',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+
+})
 .controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
 	$scope.mapa=null;
 	$scope.idioma=$rootScope.idioma;
@@ -165,7 +168,22 @@ $scope.refreshLocation=function(){
 	$scope.menuWidth=window.innerWidth*0.85;
 	$scope.menuAbierto=false;
 	$scope.seccion=1;
-	
+	$scope.menuOpen=false
+	$scope.$watch(function () {
+    	return $ionicSideMenuDelegate.isOpenLeft();
+  	},
+     function (isOpen) {
+    if (isOpen){
+		$(".menu-cover-open").css("display","inline");
+		$scope.menuOpen=true
+	}else {
+		$(".menu-cover-open").css("display","none");
+		$scope.menuOpen=false
+	}
+  });
+	$scope.isCover=function(){
+		return $ionicSideMenuDelegate.isOpen()
+	}
 	$scope.$on('$ionicView.beforeEnter',function(){
 		$scope.seccion=$state.current.id;
 	})

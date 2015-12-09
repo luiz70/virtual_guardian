@@ -133,7 +133,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     };
 })
 
-.factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout,uiGmapIsReady,socket){
+.factory('Mapa',function($http,$rootScope,uiGmapGoogleMapApi,$timeout,uiGmapIsReady,socket,Memory){
 	var getIconUbicacion=function(){
 		
 		var icono = {
@@ -149,7 +149,8 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	var r2 = document.createElement('script'); 
     r2.src = 'js/res/richardMarker.js';
     document.body.appendChild(r2);
-   	
+   	$rootScope.map=Memory.get('Mapa')
+	if(!$rootScope.map)
 	$rootScope.map = { 
 		center: { latitude: 20.6737919, longitude:  -103.3354131 }, 
 		zoom:12,
@@ -181,23 +182,12 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			ln1:0,
 			ln2:0
 		},
-        events:{
-			bounds_changed:function(event){
-				var bounds=$rootScope.map.getGMap().getBounds();
-				$rootScope.map.bounds={
-					la1:bounds.getSouthWest().lat(),
-					la2:bounds.getNorthEast().lat(),
-					ln1:bounds.getSouthWest().lng(),
-					ln2:bounds.getNorthEast().lng()
-				}
-				//$rootScope.$apply(function(){})
-			}
-		},
+       
 		eventos:[],
 		idEventos:[],
         radio:{
 			center:{ latitude: 20.6737919, longitude:  -103.3354131 },
-        	radius:3000,
+        	radius:$rootScope.Usuario.Radio,
             fill:{color:'#39bbf7',opacity:0.15},
             stroke:{color:'#ffffff',weight:2.5,opacity:0.6},
             editable:false,
@@ -235,16 +225,6 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 				],
 			maxZoom:10,
 			minimumClusterSize:10,
-			events:{
-				click: function(cluster, clusterModels){
-				},
-  				mouseout: function(cluster, clusterModels){
-					//cluster.setMinimumClusterSize(10);
-				},
-  				mouseover: function(cluster, clusterModels){
-					
-				} 
-			}
 		},
 		ubicacion:{
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
@@ -259,7 +239,33 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 				},
 			},
 			visible:false,
-			events:{
+		}
+		};
+		//comentar para no poner esa opcion extra, innecesaria
+		$rootScope.map.radio.radius=$rootScope.Usuario.Rango
+		$rootScope.map.events={
+			bounds_changed:function(event){
+				var bounds=$rootScope.map.getGMap().getBounds();
+				$rootScope.map.bounds={
+					la1:bounds.getSouthWest().lat(),
+					la2:bounds.getNorthEast().lat(),
+					ln1:bounds.getSouthWest().lng(),
+					ln2:bounds.getNorthEast().lng()
+				}
+				//$rootScope.$apply(function(){})
+			}
+		}
+		$rootScope.map.cluster.events={
+			click: function(cluster, clusterModels){
+			},
+			mouseout: function(cluster, clusterModels){
+			//cluster.setMinimumClusterSize(10);
+			},
+  			mouseover: function(cluster, clusterModels){
+				
+			} 
+		}
+		$rootScope.map.ubicacion.events={
 				mouseup:function(event){
 					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
                     revisaEventos($rootScope.map.ubicacion.position);
@@ -272,9 +278,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 					//$rootScope.$apply(function(){})
 				}
 			}
-		}
-		};
-        
+		socket.getSocket().emit('setIds',$rootScope.map.idEventos);
 		
     });
 	$rootScope.$watch('map.bounds', function(newValues, oldValues, scope) {
@@ -304,7 +308,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	socket.getSocket().on('getEventos',function(data){
 		for(var i=0; i<data.length;i++)
 		data[i].icono=getIconoEvento(data[i]);
-		$rootScope.map.eventos=data;
+		$rootScope.map.eventos=_.uniq(_.union($rootScope.map.eventos,data),function(item) { return item.id;});
 	})
 	$rootScope.$watch('map.ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
@@ -314,14 +318,24 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			$rootScope.map.ubicacion.options.icon=getIconUbicacion();
 		}
 	});
+	$rootScope.$watch('map', function(newValue, oldValue) {
+		if(newValue)Memory.set('Mapa',$rootScope.map)
+	}, true)
 	$rootScope.$watch('map.eventos', function(newValue, oldValue) {
   		if(newValue){
 			revisaEventos($rootScope.map.ubicacion.position);
 			$rootScope.map.idEventos = $.map($rootScope.map.eventos, function(v, i){return v.id;});
+			Memory.set('Mapa',$rootScope.map)
 		}
 	});
+	/*$rootScope.$watch('map', function(newValue, oldValue) {
+		if(newValue)console.log(newValue);
+	})*/
 	$rootScope.$watch('map.radio.radius', function(newValue, oldValue) {
-  		if(newValue)$rootScope.map.radio.radius=parseInt(newValue);
+  		if(newValue){
+			$rootScope.map.radio.radius=parseInt(newValue);
+			revisaEventos($rootScope.map.ubicacion.position);
+		}
 	});
 	$rootScope.$watch('map.radio.activo', function(newValue, oldValue) {
   		if($rootScope.map)revisaEventos($rootScope.map.ubicacion.position);

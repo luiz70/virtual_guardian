@@ -1,6 +1,6 @@
 <ion-view  class="view-seccion" hide-nav-bar="false" can-swipe-back="false">
 <div data-tap-diabled="true">
-
+	
     <ui-gmap-google-map class="animate-enter-mapa" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events">
     <!--ui-gmap-rectangle bounds='map.bounds' fill="'#FFFFFF .5'"><ui-gmap-rectangle-->
         <ui-gmap-circle center='map.radio.center' radius='map.radio.radius' fill='map.radio.fill'   stroke='map.radio.stroke' visible='map.radio.activo && map.radio.visible' events="map.radio.events"></ui-gmap-circle>
@@ -9,8 +9,9 @@
     <ui-gmap-markers  models='map.eventos' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="map.cluster" typeEvents='map.cluster.events'>
     </ui-gmap-markers>
     <ui-gmap-map-control template='templates/controls/top-right.html' position="right-top" index="5" controller="top-right"></ui-gmap-map-control>
-    <ui-gmap-map-control template='templates/controls/top-left.html' position="left-top"   index="5"></ui-gmap-map-control>
+    <ui-gmap-map-control template='templates/controls/top-left.html' position="left-top"   index="6" controller="top-left"></ui-gmap-map-control>
     <ui-gmap-map-control template='templates/controls/bottom-center.html' position="bottom-center"   controller="bottom-center" index="5"></ui-gmap-map-control>
     </ui-gmap-google-map>
     </div>
+    
 </ion-view>
