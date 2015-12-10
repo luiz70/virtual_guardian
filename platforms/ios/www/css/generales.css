@@ -144,3 +144,18 @@ width:100vw;
   .gm-style-cc, .gm-style > div + div {
 	display:none
  }
+ .cover {
+  display: none;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.cover.display {
+  display: block;
+}
+.gm-style > div ~ div {
+	z-index:1000 !important;
+}

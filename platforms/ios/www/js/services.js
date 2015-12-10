@@ -269,12 +269,13 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 				mouseup:function(event){
 					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
                     revisaEventos($rootScope.map.ubicacion.position);
+					$rootScope.map.radio.visible=true;
 				},
 				mousedown:function(event){
 					hideAllMarkers();
+					$rootScope.map.radio.visible=false;
 				},
 				position_changed:function(event){
-					$rootScope.map.radio.center={latitude:event.position.lat(),longitude:event.position.lng()}
 					//$rootScope.$apply(function(){})
 				}
 			}
@@ -312,7 +313,6 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	})
 	$rootScope.$watch('map.ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
-			$rootScope.map.radio.center=$rootScope.map.ubicacion.position
             $rootScope.map.ubicacion.options.icon=getIconUbicacion();
 			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
 			$rootScope.map.ubicacion.options.icon=getIconUbicacion();
@@ -381,6 +381,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
          	$rootScope.map.ubicacion.visible=true;
 			$rootScope.$apply(function(){})
 			$(".location").removeClass("loading");
+			revisaEventos($rootScope.map.ubicacion.position);
          }
         var mapError=function(position){
          console.log(position);
