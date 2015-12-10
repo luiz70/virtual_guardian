@@ -70,7 +70,6 @@ $scope.refreshLocation=function(){
 	}
 })
 .controller('top-left',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
-
 })
 .controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
 	$scope.mapa=null;
@@ -174,10 +173,10 @@ $scope.refreshLocation=function(){
   	},
      function (isOpen) {
     if (isOpen){
-		$(".menu-cover-open").css("display","inline");
+		$("disable-screen").addClass('display');
 		$scope.menuOpen=true
 	}else {
-		$(".menu-cover-open").css("display","none");
+		$("disable-screen").removeClass('display');
 		$scope.menuOpen=false
 	}
   });
@@ -196,7 +195,23 @@ $scope.refreshLocation=function(){
 		
 	})
 })
-
+.directive('disable-screen', function() {
+  return {
+    restrict: 'E',
+    link: function(scope, element) {
+      scope.$watch(
+        function() {
+          return scope.sideMenuContentTranslateX;
+        }, function(translateVal) {
+        if(Math.abs(translateVal) === 275) {
+          !element.hasClass('display') && element.addClass('display');
+        } else {
+          element.hasClass('display') && element.removeClass('display');
+        }
+      });
+    }
+  };
+})
 .controller('Personas', function($scope,$timeout,ionicMaterialMotion,ionicMaterialInk) {
 	$scope.Amigos=[
 		{ 

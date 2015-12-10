@@ -3,7 +3,7 @@
 	
     <ui-gmap-google-map class="animate-enter-mapa" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events">
     <!--ui-gmap-rectangle bounds='map.bounds' fill="'#FFFFFF .5'"><ui-gmap-rectangle-->
-        <ui-gmap-circle center='map.radio.center' radius='map.radio.radius' fill='map.radio.fill'   stroke='map.radio.stroke' visible='map.radio.activo && map.radio.visible' events="map.radio.events"></ui-gmap-circle>
+        <ui-gmap-circle center='map.ubicacion.position' radius='map.radio.radius' fill='map.radio.fill'   stroke='map.radio.stroke' visible='map.radio.activo && map.radio.visible' events="map.radio.events"></ui-gmap-circle>
     <ui-gmap-marker idKey='1' coords='map.ubicacion.position' ng-hide="!map.ubicacion.visible" options="map.ubicacion.options" icon="icon" events="map.ubicacion.events" >
 	</ui-gmap-marker>
     <ui-gmap-markers  models='map.eventos' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="map.cluster" typeEvents='map.cluster.events'>

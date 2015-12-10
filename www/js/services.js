@@ -269,12 +269,13 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 				mouseup:function(event){
 					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
                     revisaEventos($rootScope.map.ubicacion.position);
+					$rootScope.map.radio.visible=true;
 				},
 				mousedown:function(event){
 					hideAllMarkers();
+					$rootScope.map.radio.visible=false;
 				},
 				position_changed:function(event){
-					$rootScope.map.radio.center={latitude:event.position.lat(),longitude:event.position.lng()}
 					//$rootScope.$apply(function(){})
 				}
 			}

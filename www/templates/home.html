@@ -1,27 +1,5 @@
 <ion-side-menus enable-menu-with-back-views="false" can-swipe-back="false">
   <ion-side-menu-content drag-content="false">
-    <!--ion-nav-bar class="bar-stable">
-      <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon boton-menu animate-enter" menu-toggle="left">
-        </button>
-      </ion-nav-buttons>
-      <ion-nav-buttons side="primary" >
-      <button class="animate-enter">
-      	<img src="img/logo_txt.png" height="100%">
-        </button>
-      </ion-nav-buttons>
-    <ion-nav-buttons side="right">
-        <button class="button button-clear boton-menu icono-header animate-enter {{seccion==1?'seleccionado':''}}" nav-direction="back" ui-sref="app.home.mapa">
-        	<div style="-webkit-mask-image:url(img/iconos/barra/mapa.png) !important;"></div>
-        </button>
-        <button class="button button-clear boton-menu icono-header animate-enter {{seccion==2?'seleccionado':''}}"  ui-sref="app.home.notificaciones" >
-        	<div style="-webkit-mask-image:url(img/iconos/barra/notificaciones.png) !important;"></div>
-        </button>
-        <button class="button button-clear boton-menu icono-header animate-enter {{seccion==3?'seleccionado':''}}" nav-direction="forward" ui-sref="app.home.personas">
-        	<div style="-webkit-mask-image:url(img/iconos/barra/personas.png) !important;"></div>
-        </button>
-      </ion-nav-buttons>
-    </ion-nav-bar-->
     <div class="bar bar-header barra-home animate-enter-up">
         <button class="button button-icon button-clear ion-navicon boton-menu " style="float:left;" menu-toggle="left" >
         </button>
@@ -38,8 +16,8 @@
         	<div style="-webkit-mask-image:url(img/iconos/barra/mapa.png) !important;"></div>
         </button>
         </button>
-</div>
-	<div class="menu-cover-open" menu-toggle="left" ></div>
+	</div>
+    <disable-screen class="cover"></disable-screen>
     <ion-nav-view name="contenido-home" class="contenido-home"></ion-nav-view>
     
   </ion-side-menu-content>
