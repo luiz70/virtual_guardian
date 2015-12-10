@@ -344,6 +344,7 @@ ion-side-menu-content{
 	opacity:1 !important;
 	right:1vh !important;
     display:block !important;
+	position:fixed !important;
 }
 .contenedor-mapa-top-left{
 	width: 6vh;
@@ -352,6 +353,16 @@ ion-side-menu-content{
 	opacity:1 !important;
 	left:1vh !important;
     display:block !important;
+	position:fixed !important;
+}
+.contenedor-mapa-controls{
+	width: 0px;
+    top:0px !important;
+    height: 0px;
+	opacity:1 !important;
+	right:0px !important;
+    display:block !important;
+	position:fixed !important;
 }
 .contenedor-mapa-bottom-center{
 	width: 100vw;

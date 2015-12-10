@@ -156,3 +156,6 @@ width:100vw;
 .cover.display {
   display: block;
 }
+.gm-style > div ~ div {
+	z-index:1000 !important;
+}

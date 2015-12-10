@@ -313,7 +313,6 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	})
 	$rootScope.$watch('map.ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
-			$rootScope.map.radio.center=$rootScope.map.ubicacion.position
             $rootScope.map.ubicacion.options.icon=getIconUbicacion();
 			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
 			$rootScope.map.ubicacion.options.icon=getIconUbicacion();
@@ -382,6 +381,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
          	$rootScope.map.ubicacion.visible=true;
 			$rootScope.$apply(function(){})
 			$(".location").removeClass("loading");
+			revisaEventos($rootScope.map.ubicacion.position);
          }
         var mapError=function(position){
          console.log(position);
