@@ -1,7 +1,7 @@
 // JavaScript Document
 angular.module('starter.controllers')
 //Controlador para la seccion de registro
-.controller('Registro', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http,Usuario) {
+.controller('Registro', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http,Usuario,$rootScope) {
 	
 	//VARIABLES
 	$scope.nuevoUsuario={
@@ -252,7 +252,7 @@ angular.module('starter.controllers')
 })
 
 //CONTROLADOR PARA RECUPERAR CONTRASEÑA
-.controller('Recuperar', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http,Usuario) {
+.controller('Recuperar', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http,Usuario,$rootScope) {
 	//FUNCION QUE SE EJECUTA CADA VEZ QUE LA VISTA ENTRA Y REVISA SI EL USUARIO ESTA LOGGEADO
 	$scope.$on('$ionicView.beforeEnter',function(){
 		if(Usuario.get()){

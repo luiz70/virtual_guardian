@@ -174,7 +174,7 @@ $scope.refreshLocation=function(){
         $(".gm-style div").first().mousedown($scope.hideBarra)
 	})
     $scope.cambiaRadio=function(){
-            console.log(2);
+            $scope.map.radio.radius=$scope.mapa.radio.radius;
     }
 	$scope.hideBarra=function(){
 		$(".contenedor-mapa-pie").animate({

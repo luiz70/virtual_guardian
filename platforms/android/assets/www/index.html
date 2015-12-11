@@ -4,27 +4,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
-
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="lib/ionic-material/dist/ionic.material.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 	<link href="css/generales.css" rel="stylesheet">
+    <link href="css/resolution.css" rel="stylesheet">
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ngcordova/dist/ng-cordova.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-    <!-- angular modules -->
-	<script src="js/modules/angular-local-storage.js"></script>
-    <script src="js/modules/angular-ng-error.js"></script>
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
 	<script src="js/idiomas.js"></script>
+    <script src="js/controllers/registro.js"></script>
+    <script src="js/controllers/mapa.js"></script>
+    <!-- angular others -->
+    <script src="js/res/lodash.js"></script>
+    <script src="js/res/jquery.js"></script> 
+    <!-- angular modules -->
+	<script src="js/modules/angular-local-storage.js"></script>
+    <script src="js/modules/angular-ng-error.js"></script>
+    <script src="js/modules/angular-simple-logger.js"></script>
+    <script src="js/modules/angular-google-maps.js"></script>
+    <script src="js/modules/angular-google-maps_dev_mapped.js"></script>
+    <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
+    <!--script src="lib/modules/ios9-patch.js"></script-->
+    <script src="js/modules/uiBootstrap.js"></script>
+    <script src="js/modules/socket.js"></script>
+    <script src="js/modules/socket.io.js"></script>
+    <!--script src="lib/ionic/js/angular/angular-ios9-uiwebview.patch.js"></script-->
+    
     
   </head>
   <body ng-app="starter" ng-controller="Idioma">
@@ -40,6 +58,7 @@
       Templates are in the /templates folder (but you could also
       have templates inline in this html file if you'd like).
     -->
+    <div class="preload-images"></div>
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

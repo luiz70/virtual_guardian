@@ -15,6 +15,11 @@ button{
 	border-radius:0px !important;
 	-webkit-appearance: none !important;
 	text-transform:none !important;
+	-webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+	backface-visibility:hidden;
 }
 input{
 	border-radius: 0px !important;
@@ -169,6 +174,26 @@ position:relative;
 	height:40px;
 	position:relative;
 }
+.preload-images {
+  display: none;
+  width: 0;
+  height: 0;
+  background: url(../img/iconos/mapa/marcadores/1.png),
+              url(../img/iconos/mapa/marcadores/2.png),
+              url(../img/iconos/mapa/marcadores/3.png),
+			  url(../img/iconos/mapa/marcadores/4.png),
+              url(../img/iconos/mapa/marcadores/5.png),
+              url(../img/iconos/mapa/marcadores/6.png),
+			  url(../img/iconos/mapa/marcadores/7.png),
+              url(../img/iconos/mapa/marcadores/8.png),
+              url(../img/iconos/mapa/marcadores/9.png),
+			  url(../img/iconos/mapa/marcadores/10.png),
+              url(../img/logo.png),
+              url(../img/avatar.png),
+			  url(../img/iconos/mapa/marcadores/g1.png),
+              url(../img/iconos/mapa/marcadores/g2.png),
+              url(../img/iconos/mapa/marcadores/g3.png);
+}
 .iconMarker{
 	width:23px;
 	height:23px;
@@ -181,4 +206,11 @@ position:relative;
 	opacity: 1;
 	background-color: #026B7B;
 	-webkit-mask-size: cover;
+}
+.fast {
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+	backface-visibility:hidden;
 }

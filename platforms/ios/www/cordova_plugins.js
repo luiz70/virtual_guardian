@@ -205,7 +205,7 @@ module.exports.metadata =
     "cordova-plugin-device": "1.0.0",
     "cordova-plugin-geolocation": "1.0.0",
     "cordova-plugin-globalization": "1.0.0",
-    "cordova-plugin-network-information": "1.0.0",
+    "cordova-plugin-network-information": "1.0.1",
     "cordova-plugin-splashscreen": "2.0.0",
     "cordova-plugin-statusbar": "1.0.0",
     "cordova-plugin-vibration": "1.1.0",

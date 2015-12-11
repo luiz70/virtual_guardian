@@ -87,18 +87,6 @@
                         {
                             "xml": "<feature name=\"AudioTogglePlugin\"><param name=\"android-package\" value=\"com.dooble.audiotoggle.AudioTogglePlugin\" /></feature>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"GoogleMaps\"><param name=\"android-package\" value=\"plugin.google.maps.GoogleMaps\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"External\"><param name=\"android-package\" value=\"plugin.google.maps.External\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Geocoder\"><param name=\"android-package\" value=\"plugin.google.maps.MyGeocoder\" /></feature>",
-                            "count": 1
                         }
                     ]
                 }
@@ -126,7 +114,7 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 3
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\" />",
@@ -150,11 +138,11 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
-                            "count": 2
+                            "count": 1
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 2
+                            "count": 1
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\" />",
@@ -162,7 +150,7 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-                            "count": 3
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"com.android.vending.BILLING\" />",
@@ -178,7 +166,7 @@
                         },
                         {
                             "xml": "<uses-feature android:glEsVersion=\"0x00020000\" android:required=\"true\" />",
-                            "count": 2
+                            "count": 1
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\" />",
@@ -190,14 +178,10 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
                             "count": 1
                         },
                         {
-                            "xml": "<uses-permission android:name=\"com.google.android.providers.gsf.permission.READ_GSERVICES\" />",
+                            "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
                             "count": 1
                         }
                     ],
@@ -216,14 +200,6 @@
                         },
                         {
                             "xml": "<service android:enabled=\"true\" android:name=\"com.tenforwardconsulting.cordova.bgloc.LocationUpdateService\" android:process=\":remote\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<meta-data android:name=\"com.google.android.maps.v2.API_KEY\" android:value=\"AIzaSyCXEk8VVmwGXnKidxIjv4e3D7bewznWaB4\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<meta-data android:name=\"com.google.android.gms.version\" android:value=\"@integer/google_play_services_version\" />",
                             "count": 1
                         }
                     ]
@@ -304,10 +280,6 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "com.dooble.audiotoggle": {
-            "PACKAGE_NAME": "com.app.virtualguardian"
-        },
-        "plugin.google.maps": {
-            "API_KEY_FOR_ANDROID": "AIzaSyCXEk8VVmwGXnKidxIjv4e3D7bewznWaB4",
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },

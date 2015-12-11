@@ -1,0 +1,44 @@
+<ion-side-menus enable-menu-with-back-views="true" >
+    <ion-side-menu-content drag-content="false">
+        <disable-screen class="cover"></disable-screen>
+        <ion-nav-view name="menuContent"  ></ion-nav-view>
+    </ion-side-menu-content >
+    
+    
+    <ion-side-menu side="left" >
+        <ion-header-bar class="bar-general ">
+            <img src="img/logo_horizontal.png" >
+        </ion-header-bar>
+        <ion-content class="stable-bg has-header" style="top:44px !important">
+            <ion-list>
+                <ion-item nav-clear menu-close class="item-menu" nav-direction="back" ui-sref="app.friends">
+                    <i class="icon ion-ios-people" style="margin-right: 2px;"></i>
+    				Amigos
+   					<!--span class="item-note">
+      					Grammy
+    				</span-->
+                </ion-item>
+                <ion-item nav-clear menu-close class="item-menu">
+                    <i class="icon ion-android-calendar"></i>
+    				Eventos
+                </ion-item>
+                <ion-item nav-clear menu-close class="item-menu" nav-direction="forward" ui-sref="app.places">
+                    <i class="icon ion-location" style="margin-left: 5px;margin-right: 7px;"></i>
+    				Lugares
+                </ion-item>
+                <ion-item nav-clear menu-close class="item-menu">
+                    <i class="icon ion-android-car"></i>
+    				Estacionamiento
+                </ion-item>
+                <ion-item nav-clear class="item-menu">
+                    <i class="icon ion-information-circled" ></i>
+    				Información
+                </ion-item>
+                <ion-item nav-clear menu-close class="item-menu" ng-click="cerrarSesion()">
+                    <i class="icon ion-power"></i>
+    				Cerrar sesión
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

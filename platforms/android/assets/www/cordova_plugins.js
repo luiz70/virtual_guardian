@@ -152,13 +152,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/plugin.google.maps/www/googlemaps-cdv-plugin.js",
-        "id": "plugin.google.maps.phonegap-googlemaps-plugin",
-        "clobbers": [
-            "plugin.google.maps"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "id": "cordova-plugin-dialogs.notification",
         "merges": [
@@ -197,7 +190,6 @@ module.exports.metadata =
     "org.awokenwell.proximity": "0.2.1",
     "com.dooble.phonertc": "2.0.1",
     "com.dooble.audiotoggle": "1.0.0",
-    "plugin.google.maps": "1.3.4",
     "cordova-plugin-dialogs": "1.1.1"
 }
 // BOTTOM OF METADATA

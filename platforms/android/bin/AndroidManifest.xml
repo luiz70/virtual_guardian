@@ -10,11 +10,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity
-        android:name="com.plugin.gcm.NotificationActivity"
-        android:taskAffinity=""
-        android:excludeFromRecents="true">
-    </activity>
+        <activity android:excludeFromRecents="true" android:name="com.plugin.gcm.NotificationActivity" android:taskAffinity="">
+        </activity>
         <activity android:exported="true" android:name="com.plugin.gcm.PushHandlerActivity" />
         <receiver android:name="com.plugin.gcm.CordovaGCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
