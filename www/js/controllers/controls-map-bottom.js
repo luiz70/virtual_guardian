@@ -3,22 +3,10 @@ angular.module('starter.controllers')
 	//define el diccionario
 	$scope.idioma=$rootScope.idioma;
 	//define las variables para control local que seran pasadas al mapa
-	$scope.barra={
-		//variable que controla el valor del radio, inicializada con el valor predefinido del usuario, se puede inicializar tambien con datos guardados
-		radio:$rootScope.Usuario.Rango,
-		//estado del radio, esto permite que se muestre o no en el mapa el radio
-		activo:true
-	}
-	//funcion que se ejecuta al modificar el estado del radio
-	$scope.$watch('barra.activo',function(val){
-		Radio.setActivo(val);
-	})
-	//funcion que se ejecuta al modificar el valor del radio
-	$scope.$watch('barra.radio',function(val){
-		Radio.setRadio(val);
-	})
+	$scope.radio=$rootScope.radio
 	//funcion que se ejecuta cuando se cargo el mapa para inicializar el touch event
 	uiGmapIsReady.promise().then(function(maps){
+		//$scope.barra.radio=$rootScope.radio.radio
 		//activa el touch event en el mapa para ocultar la barra
 		$(".gm-style div").first().on("touch",$scope.hideBarra)
 	})
