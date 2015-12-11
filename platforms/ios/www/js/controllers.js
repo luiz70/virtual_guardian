@@ -131,19 +131,17 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 	})
 	$scope.showControls=function(){
 		$(".contenedor-mapa-top-right").animate({
-			height:"50vh"
-		},400);
+			right:"1vh"
+		},200);
 		$(".boton-mapa-top-right.options").animate({
 		opacity:0
 		},200,function(){
-		$(".boton-mapa-top-right.options").css("display","none")
 		});
 	}
 	$scope.hideControls=function(){
 		$(".contenedor-mapa-top-right").animate({
-			height:"0vh"
+			right:"-10vh"
 		},400);
-		$(".boton-mapa-top-right.options").css("display","block")
 		$(".boton-mapa-top-right.options").animate({
 		opacity:1
 		},200);
