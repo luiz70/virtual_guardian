@@ -1,0 +1,18 @@
+<div class="contenedor-mapa-controls">
+<div class="contenedor-mapa-top-right" z-index="1" ng-hide="map.auto.posicionando" >
+        <button ng-repeat="control in controls" class="boton-mapa-top-right dead {{control.id}}"   ng-click="controlClick($index)" ng-hide="control.activo">
+        <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/{{control.nombre}}.png');" >
+        </button>
+</div>
+<div class="contenedor-mapa-top-right-more" z-index="2" ng-hide="map.auto.posicionando">
+<button class="boton-mapa-top-right options" ng-click="showControls()"><i class="icon ion-android-more-vertical"></i></button>
+</div>
+<div class="contenedor-mapa-top-left" ng-hide="map.auto.posicionando">
+	<button ng-repeat="control in controls" class="boton-mapa-top-right activo {{control.id}}"   ng-click="controlClick($index)" ng-show="control.activo">
+        <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/{{control.nombre}}.png');" >
+    </button>
+</div>
+<div ng-show="map.auto.posicionando" class="contenedor-mapa-auto">
+	<button class="boton-auto-aceptar" ng-click="setAuto()">iniciar vigilancia</button>
+</div>
+</div>

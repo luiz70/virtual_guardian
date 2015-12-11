@@ -1,15 +1,18 @@
 <ion-view  class="view-seccion" hide-nav-bar="false" can-swipe-back="false">
 <div data-tap-diabled="true">
 	
-    <ui-gmap-google-map class="animate-enter-mapa" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events">
+    <ui-gmap-google-map class="animate-enter-mapa" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events" ng-cloak>
     <!--ui-gmap-rectangle bounds='map.bounds' fill="'#FFFFFF .5'"><ui-gmap-rectangle-->
         <ui-gmap-circle center='map.ubicacion.position' radius='map.radio.radius' fill='map.radio.fill'   stroke='map.radio.stroke' visible='map.radio.activo && map.radio.visible' events="map.radio.events"></ui-gmap-circle>
     <ui-gmap-marker idKey='1' coords='map.ubicacion.position' ng-hide="!map.ubicacion.visible" options="map.ubicacion.options" icon="icon" events="map.ubicacion.events" >
 	</ui-gmap-marker>
+    <ui-gmap-marker idKey='2' coords='map.auto.position' ng-hide="!map.auto.visible" options="map.auto.options" icon="content" events="map.auto.events" >
+	</ui-gmap-marker>
     <ui-gmap-markers  models='map.eventos' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="map.cluster" typeEvents='map.cluster.events'>
     </ui-gmap-markers>
-    <ui-gmap-map-control template='templates/controls/top-right.html' position="right-top" index="5" controller="top-right"></ui-gmap-map-control>
+    <ui-gmap-map-control template='templates/controls.html' position="right-top" index="5" controller="controls"></ui-gmap-map-control>
     <ui-gmap-map-control template='templates/controls/bottom-center.html' position="bottom-center"   controller="bottom-center" index="5"></ui-gmap-map-control>
+    <ui-gmap-map-control template='templates/controls/top-center.html' position="top-center" controller="top-center" index="5"></ui-gmap-map-control>
     </ui-gmap-google-map>
     </div>
     

@@ -65,6 +65,12 @@ angular.module('starter.controllers')
 		},
 		Mapa:{
 			1:"Radio: "
+		},
+		Menu:{
+			1:"Suscripción",
+		},
+		Auto:{
+			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto."
 		}
 		
 	},

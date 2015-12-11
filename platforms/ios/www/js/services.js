@@ -146,11 +146,12 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		return icono;
 	}
 	uiGmapGoogleMapApi.then(function(maps) {
-	var r2 = document.createElement('script'); 
+	/*var r2 = document.createElement('script'); 
     r2.src = 'js/res/richardMarker.js';
-    document.body.appendChild(r2);
-   	$rootScope.map=Memory.get('Mapa')
-	if(!$rootScope.map)
+    document.body.appendChild(r2);*/
+	
+   	//$rootScope.map=Memory.get('Mapa')
+	//if(!$rootScope.map)
 	$rootScope.map = { 
 		center: { latitude: 20.6737919, longitude:  -103.3354131 }, 
 		zoom:12,
@@ -199,6 +200,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		filtros:{
 			activos:false,
 		},
+		markerOpacity:0.9,
 		cluster:{
 			styles:[
 				  {
@@ -237,11 +239,30 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 					coords: [0, 0, 0, 20, 20, 20, 20 , 0],
 					type: 'poly',
 				},
+				visible:false,
 			},
-			visible:false,
+			
+		},
+		auto:{
+			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
+			posicionando:false,
+			activo:false,
+			options:{
+				draggable:true,
+				zIndex:10000,
+				shadow: 'none',
+				content: '<div class="placeMarker"><div class="contIconMarker"><img class="iconMarker" style="-webkit-mask-image: url(img/iconos/mapa/controls/auto.png);" ></div></div>',
+				visible:false,
+				shape:{
+					coords: [0, 0, 0, 40, 40, 40, 40 , 0],
+					type: 'poly',
+				},
+			},
+		
 		}
 		};
 		//comentar para no poner esa opcion extra, innecesaria
+		
 		$rootScope.map.radio.radius=$rootScope.Usuario.Rango
 		$rootScope.map.events={
 			bounds_changed:function(event){
@@ -255,6 +276,8 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 				//$rootScope.$apply(function(){})
 			}
 		}
+		
+		
 		$rootScope.map.cluster.events={
 			click: function(cluster, clusterModels){
 			},
@@ -311,6 +334,20 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		data[i].icono=getIconoEvento(data[i]);
 		$rootScope.map.eventos=_.uniq(_.union($rootScope.map.eventos,data),function(item) { return item.id;});
 	})
+	$rootScope.$watch("map.auto.posicionando",function(newVal){
+		if($rootScope.map){
+			navigator.geolocation.getCurrentPosition(mapSuccessAuto, mapError);
+			$rootScope.map.radio.visible=!newVal;
+			$rootScope.map.ubicacion.options.visible=!newVal;
+			$rootScope.map.auto.options.visible=newVal;
+			if(newVal){
+				
+				$rootScope.map.markerOpacity=0;
+				$rootScope.map.zoom=17
+				$rootScope.map.center=$rootScope.map.auto.position
+			}
+		}
+	})
 	$rootScope.$watch('map.ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
             $rootScope.map.ubicacion.options.icon=getIconUbicacion();
@@ -341,7 +378,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
   		if($rootScope.map)revisaEventos($rootScope.map.ubicacion.position);
 	});
 	var hideAllMarkers=function(){
-		for(var i=0; i<$rootScope.map.eventos.length;i++)$rootScope.map.eventos[i].options={visible:false}
+		for(var i=0; i<$rootScope.map.eventos.length;i++)$rootScope.map.eventos[i].options={visible:false,opacity:$rootScope.map.markerOpacity}
 	}
 	var revisaEventos=function(pos){
 		for(var i=0; i<$rootScope.map.eventos.length;i++){
@@ -355,9 +392,9 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
   			var d = R * c;
 			
 			
-				if( (d.toFixed(3)*1000)>$rootScope.map.radio.radius)$rootScope.map.eventos[i].options={visible:false}
-				else $rootScope.map.eventos[i].options={visible:true}
-			}else $rootScope.map.eventos[i].options={visible:true}
+				if( (d.toFixed(3)*1000)>$rootScope.map.radio.radius)$rootScope.map.eventos[i].options={visible:false,opacity:$rootScope.map.markerOpacity}
+				else $rootScope.map.eventos[i].options={visible:true,opacity:$rootScope.map.markerOpacity}
+			}else $rootScope.map.eventos[i].options={visible:true,opacity:$rootScope.map.markerOpacity}
 		}
 	}
 	
@@ -373,18 +410,22 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	})
          var getLocation=function(){
 			 navigator.geolocation.getCurrentPosition(mapSuccess, mapError);
-			 $(".location").addClass("loading");
 		 }
+		 
          var mapSuccess=function(position){ 
 			$rootScope.map.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
          	$rootScope.map.ubicacion.position={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
-         	$rootScope.map.ubicacion.visible=true;
+         	$rootScope.map.ubicacion.options.visible=true;
 			$rootScope.$apply(function(){})
-			$(".location").removeClass("loading");
 			revisaEventos($rootScope.map.ubicacion.position);
+			console.log(3);
          }
-        var mapError=function(position){
-         console.log(position);
+		 var mapSuccessAuto=function(position){ 
+			$rootScope.map.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
+         	$rootScope.map.auto.position={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
+			$rootScope.$apply(function(){})
+         }
+        var mapError=function(error){
          }
 	return {
 		login:function(credentials){

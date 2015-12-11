@@ -4,6 +4,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 	//Memory.clean();
 	$rootScope.internet={state:true,type:""};
 	$rootScope.Usuario=Memory.get("Usuario");
+	console.log($rootScope.Usuario);
 	//$rootScope.iOS=(window.device.platform=="iOS");
 	//console.log($cordovaDevice.getUUID())
 	
@@ -64,14 +65,108 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		return st[st.length-1];
 	}
 })
-.controller('top-right',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.map=$rootScope.map;
+	$scope.controls=[
+		{nombre:"buscar",
+			id:1,
+			activo:false,
+			activable:false,
+			onClick:function(){
+			},
+		},
+		{nombre:"ubicacion",
+			id:2,
+			activo:false,
+			activable:true,
+			onClick:function(){
+			$scope.refreshLocation();
+			},
+		},
+		{nombre:"actualizar",
+			id:3,
+			activo:false,
+			activable:false,
+			onClick:function(){
+			
+			},
+		},
+		{nombre:"auto",
+			id:4,
+			activo:$rootScope.map.auto.activo,
+			activable:true,
+			posicionando:false,
+			onClick:function(){
+			$scope.carPark();
+			},
+		},
+		{nombre:"filtro",
+			id:5,
+			activo:false,
+			activable:true,
+			onClick:function(){
+			
+			},
+		},
+		{nombre:"periodo",
+			id:6,
+			activo:false,
+			activable:false,
+			onClick:function(){
+			
+			},
+		},
+	]
+	$scope.controlClick=function(i){
+		//if($scope.controls[i].activable)$scope.controls[i].activo=!$scope.controls[i].activo
+		$scope.controls[i].onClick()
+		
+	}
+	uiGmapIsReady.promise()
+	.then(function(maps){
+		$scope.mapa=$rootScope.map;
+        $(".gm-style div").first().click($scope.hideControls)
+        $(".gm-style div").first().mousedown($scope.hideControls)
+		$scope.showControls();
+	})
+	$scope.showControls=function(){
+		$(".contenedor-mapa-top-right").animate({
+			height:"50vh"
+		},400);
+		$(".boton-mapa-top-right.options").animate({
+		opacity:0
+		},200,function(){
+		$(".boton-mapa-top-right.options").css("display","none")
+		});
+	}
+	$scope.hideControls=function(){
+		$(".contenedor-mapa-top-right").animate({
+			height:"0vh"
+		},400);
+		$(".boton-mapa-top-right.options").css("display","block")
+		$(".boton-mapa-top-right.options").animate({
+		opacity:1
+		},200);
+	}
 $scope.refreshLocation=function(){
 		Mapa.refreshLocation();
 	}
+	$scope.carPark=function(){
+		$rootScope.map.auto.posicionando=true;
+		
+	}
+	$scope.setAuto=function(){
+		$rootScope.map.auto.posicionando=false;
+		$rootScope.map.auto.activo=true;
+	}
+	
 })
-.controller('top-left',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+.controller('top-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.idioma=$rootScope.idioma;
+	$scope.map=$rootScope.map;
 })
 .controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.map=$rootScope.map;
 	$scope.mapa=null;
 	$scope.idioma=$rootScope.idioma;
 	uiGmapIsReady.promise()
@@ -281,4 +376,9 @@ $scope.refreshLocation=function(){
   $scope.settings = {
     enableFriends: true
   };
-});
+})
+.filter('firstMayus', function () {
+return function (input) {
+    return input.substring(0,1).toUpperCase()+input.substring(1).toLowerCase()
+}
+})

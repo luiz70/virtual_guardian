@@ -156,6 +156,29 @@ width:100vw;
 .cover.display {
   display: block;
 }
-.gm-style > div ~ div {
-	z-index:1000 !important;
+.placeMarker{
+ width:40px;
+ height:40px;
+ background:url(../img/iconos/mapa/marcadores/g4.png);
+ background-size:cover;
+ background-position:center;
+position:relative;
+}
+.contIconMarker{
+	width:40px;
+	height:40px;
+	position:relative;
+}
+.iconMarker{
+	width:23px;
+	height:23px;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	margin:auto;
+	position:absolute;
+	opacity: 1;
+	background-color: #026B7B;
+	-webkit-mask-size: cover;
 }
