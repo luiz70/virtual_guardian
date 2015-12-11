@@ -26,7 +26,6 @@ angular.module('starter.services')
 			$rootScope.map.ubicacion.options.visible=!newVal;
 			$rootScope.map.auto.options.visible=newVal;
 			if(newVal){
-				
 				$rootScope.map.markerOpacity=0;
 				$rootScope.map.zoom=17
 				$rootScope.map.center=$rootScope.map.auto.position

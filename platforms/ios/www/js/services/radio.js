@@ -8,9 +8,9 @@ angular.module('starter.services')
 			//define el radio inicial (default 3000) 
         	radio:3000,
 			//define el color de relleno y la opacidad
-            fill:{color:'#39bbf7',opacity:0.15},
+            fill:{color:'#39bbf7',opacity:0.13},
 			//define el color de la linea el grosor y la opacidad
-            stroke:{color:'#ffffff',weight:2.5,opacity:0.6},
+            stroke:{color:'#ffffff',weight:2,opacity:0.6},
 			//define si el usuario puede editarlo con los controles de google maps
             editable:false,
 			//define si el circulo esta activo o no (validacion de marcadores)

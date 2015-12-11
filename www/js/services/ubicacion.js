@@ -38,9 +38,10 @@ angular.module('starter.services')
 		$rootScope.ubicacion.events={
 			mouseup:function(event){
 				$rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
-				
-                //revisaEventos($rootScope.map.ubicacion.position);
 				$rootScope.radio.visible=true;
+				if(!$rootScope.$$phase) {
+  					$rootScope.$apply(function(){})
+				}
 			},
 			mousedown:function(event){
 				//esconde a los marcadores

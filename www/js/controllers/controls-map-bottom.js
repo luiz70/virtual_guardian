@@ -9,6 +9,12 @@ angular.module('starter.controllers')
 		//activa el touch event en el mapa para ocultar la barra
 		$(".gm-style div").first().on("touch",$scope.hideBarra)
 	})
+	//function para mejorar el movimiento de el range de radio
+	$scope.onTap = function(e) {
+      if(ionic.Platform.isIOS()) {
+        $scope.barProgress = (e.target.max / e.target.offsetWidth)*(e.gesture.touches[0].screenX - e.target.offsetLeft);
+      }
+    };
 	//funcion que oculta la barra de radio
 	$scope.hideBarra=function(){
 		//desactiva el touch event en el mapa para ocultar la barra
@@ -22,12 +28,6 @@ angular.module('starter.controllers')
 			height:'7vh',
 		},1000);
 	}
-	//function para mejorar el movimiento de el range de radio
-	$scope.onTap = function(e) {
-      if(ionic.Platform.isIOS()) {
-        $scope.barProgress = (e.target.max / e.target.offsetWidth)*(e.gesture.touches[0].screenX - e.target.offsetLeft);
-      }
-    };
 	//function que muestra la barra de radio
 	$scope.showBarra=function(){
 		//activa el touch event en el mapa para ocultar la barra

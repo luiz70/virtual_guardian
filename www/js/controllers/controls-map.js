@@ -29,7 +29,7 @@ angular.module('starter.controllers')
 		},
 		{nombre:"auto",
 			id:4,
-			activo:$rootScope.map.auto.activo,
+			activo:false,//$rootScope.map.auto.activo,
 			activable:true,
 			posicionando:false,
 			onClick:function(){

@@ -9,7 +9,7 @@ angular.module('starter.controllers')
 	//$rootScope.iOS=(window.device.platform=="iOS");
 	//console.log($cordovaDevice.getUUID())
 	
-	//$http.defaults.headers.common.accessToken = $rootScope.Usuario?$rootScope.Usuario.Token:'-';
+	$http.defaults.headers.common.accessToken = $rootScope.Usuario?$rootScope.Usuario.Token:'-';
 	//controla que el usuario este iniciado si quiere visitar una pagina
 	if(!$rootScope.Usuario && $state.current.name.indexOf("registro")<0 && $state.current.name.indexOf("login")<0 && $state.current.name.indexOf("recuperar")<0){
 		$ionicViewSwitcher.nextDirection('back');
