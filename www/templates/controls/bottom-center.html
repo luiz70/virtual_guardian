@@ -1,21 +1,21 @@
-<div class="contenedor-mapa-bottom-center fast" ng-hide="map.auto.posicionando">
-	<div class="contenedor-mapa-pie" on-touch="showBarra()" >
+<div class="contenedor-mapa-bottom-center fast" >
+	<div class="contenedor-mapa-pie" >
     	<div class="parte1">
 		<label class="toggle toggle-mapa-pie">
-			<input type="checkbox" ng-model="mapa.radio.activo">
+			<input type="checkbox" ng-model="barra.activo" >
 			<div class="track">
 				<div class="handle"></div>
 			</div>
 		</label>
-        <button class="label-pie-radio" >{{idioma.Mapa[1]}}{{mapa.radio.radius | distance}}</button>
+        <button class="label-pie-radio" >{{idioma.Mapa[1]}}{{barra.radio | distance}}</button>
         </div>
         <div class="parte2">
        		<div class="item range rango-radio" >
               	<i class="icon ion-minus-round"></i>
-              	<input type="range" min="10" max="16000" step="1" ng-model="mapa.radio.radius" ng-change="cambiaRadio()">
+              	<input type="range" min="10" max="16000" step="1" ng-model="barra.radio">
               	<i class="icon ion-plus-round"></i>
             </div>
-            <div class="tapa-parte2" ng-show="!mapa.radio.activo"></div>
+            <div class="tapa-parte2" ng-show="!barra.activo"></div>
         </div>
         
 	</div>

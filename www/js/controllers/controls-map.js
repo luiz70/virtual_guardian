@@ -1,6 +1,8 @@
 angular.module('starter.controllers')
 .controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
 	$scope.map=$rootScope.map;
+	$scope.ubicacion=$rootScope.ubicacion;
+	$scope.radio=$rootScope.radio;
 	$scope.controls=[
 		{nombre:"buscar",
 			id:1,
@@ -96,28 +98,4 @@ $scope.refreshLocation=function(){
 .controller('top-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
 	$scope.idioma=$rootScope.idioma;
 	$scope.map=$rootScope.map;
-})
-.controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
-	$scope.map=$rootScope.map;
-	$scope.mapa=null;
-	$scope.idioma=$rootScope.idioma;
-	uiGmapIsReady.promise()
-	.then(function(maps){
-		$scope.mapa=$rootScope.map;
-        $(".gm-style div").first().click($scope.hideBarra)
-        $(".gm-style div").first().mousedown($scope.hideBarra)
-	})
-    $scope.cambiaRadio=function(){
-            $rootScope.map.radio.radius=$scope.mapa.radio.radius;
-    }
-	$scope.hideBarra=function(){
-		$(".contenedor-mapa-pie").animate({
-		height:'7vh',
-		},1000);
-	}
-	$scope.showBarra=function(){
-		$(".contenedor-mapa-pie").animate({
-		height:'14vh',
-		},500);
-	}
 })

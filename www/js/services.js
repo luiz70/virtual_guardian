@@ -129,7 +129,10 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
          },
          isConnected:function(){
             return conectado;
-         }
+         },
+		 emit:function(event,obj){
+			 socketFactory.emit(event,obj);
+		 }
     };
 })
 

@@ -50,7 +50,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
         url: '/app',
         abstract: true,
         templateUrl: 'templates/app.html',
-        controller: 'AppCtrl'
+        controller: 'Aplicacion'
     })
 	.state('app.login', {
         url: '/login',
