@@ -45,8 +45,8 @@
 .registro-vista-contenido{
 	height: 66.5vh;
 }
-.contenedor-mapa-top-right{
-	width:7vh !important;
+.contenedor-mapa-top-right ,.contenedor-mapa-top-right-more{
+	width:8vh !important;
 }
 .boton-mapa-top-right{
 	width:7vh !important;
