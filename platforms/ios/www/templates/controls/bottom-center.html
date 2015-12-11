@@ -1,4 +1,4 @@
-<div class="contenedor-mapa-bottom-center" ng-hide="map.auto.posicionando">
+<div class="contenedor-mapa-bottom-center fast" ng-hide="map.auto.posicionando">
 	<div class="contenedor-mapa-pie" on-touch="showBarra()" >
     	<div class="parte1">
 		<label class="toggle toggle-mapa-pie">
@@ -12,7 +12,7 @@
         <div class="parte2">
        		<div class="item range rango-radio" >
               	<i class="icon ion-minus-round"></i>
-              	<input type="range" min="10" max="16000" step="1" ng-model="mapa.radio.radius">
+              	<input type="range" min="10" max="16000" step="1" ng-model="mapa.radio.radius" ng-change="cambiaRadio()">
               	<i class="icon ion-plus-round"></i>
             </div>
             <div class="tapa-parte2" ng-show="!mapa.radio.activo"></div>

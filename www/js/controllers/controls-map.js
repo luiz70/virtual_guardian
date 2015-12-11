@@ -1,0 +1,123 @@
+angular.module('starter.controllers')
+.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.map=$rootScope.map;
+	$scope.controls=[
+		{nombre:"buscar",
+			id:1,
+			activo:false,
+			activable:false,
+			onClick:function(){
+			},
+		},
+		{nombre:"ubicacion",
+			id:2,
+			activo:false,
+			activable:true,
+			onClick:function(){
+			$scope.refreshLocation();
+			},
+		},
+		{nombre:"actualizar",
+			id:3,
+			activo:false,
+			activable:false,
+			onClick:function(){
+			
+			},
+		},
+		{nombre:"auto",
+			id:4,
+			activo:$rootScope.map.auto.activo,
+			activable:true,
+			posicionando:false,
+			onClick:function(){
+			$scope.carPark();
+			},
+		},
+		{nombre:"filtro",
+			id:5,
+			activo:false,
+			activable:true,
+			onClick:function(){
+			
+			},
+		},
+		{nombre:"periodo",
+			id:6,
+			activo:false,
+			activable:false,
+			onClick:function(){
+			
+			},
+		},
+	]
+	$scope.controlClick=function(i){
+		//if($scope.controls[i].activable)$scope.controls[i].activo=!$scope.controls[i].activo
+		$scope.controls[i].onClick()
+		
+	}
+	uiGmapIsReady.promise()
+	.then(function(maps){
+		$scope.mapa=$rootScope.map;
+        $(".gm-style div").first().click($scope.hideControls)
+        $(".gm-style div").first().mousedown($scope.hideControls)
+		$scope.showControls();
+	})
+	$scope.showControls=function(){
+		$(".contenedor-mapa-top-right").animate({
+			right:"1vh"
+		},200);
+		$(".boton-mapa-top-right.options").animate({
+		opacity:0
+		},200,function(){
+		});
+	}
+	$scope.hideControls=function(){
+		$(".contenedor-mapa-top-right").animate({
+			right:"-10vh"
+		},400);
+		$(".boton-mapa-top-right.options").animate({
+		opacity:1
+		},200);
+	}
+$scope.refreshLocation=function(){
+		Mapa.refreshLocation();
+	}
+	$scope.carPark=function(){
+		$rootScope.map.auto.posicionando=true;
+		
+	}
+	$scope.setAuto=function(){
+		$rootScope.map.auto.posicionando=false;
+		$rootScope.map.auto.activo=true;
+	}
+	
+})
+.controller('top-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.idioma=$rootScope.idioma;
+	$scope.map=$rootScope.map;
+})
+.controller('bottom-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.map=$rootScope.map;
+	$scope.mapa=null;
+	$scope.idioma=$rootScope.idioma;
+	uiGmapIsReady.promise()
+	.then(function(maps){
+		$scope.mapa=$rootScope.map;
+        $(".gm-style div").first().click($scope.hideBarra)
+        $(".gm-style div").first().mousedown($scope.hideBarra)
+	})
+    $scope.cambiaRadio=function(){
+            $rootScope.map.radio.radius=$scope.mapa.radio.radius;
+    }
+	$scope.hideBarra=function(){
+		$(".contenedor-mapa-pie").animate({
+		height:'7vh',
+		},1000);
+	}
+	$scope.showBarra=function(){
+		$(".contenedor-mapa-pie").animate({
+		height:'14vh',
+		},500);
+	}
+})
