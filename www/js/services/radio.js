@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Radio',function($rootScope,uiGmapGoogleMapApi,Ubicacion){
+.factory('Radio',function($rootScope,uiGmapGoogleMapApi,Ubicacion,Eventos){
 	//function que inicializa el radio
 	var inicializa=function(){
 		//define el objeto radio que sera quien controla el mapa
@@ -19,7 +19,11 @@ angular.module('starter.services')
 			visible:true,
         }
 		//inicializa los eventos del radio
-		$rootScope.radio.events={}
+		$rootScope.radio.events={
+			radius_changed:function(data){
+			}
+		}
+		
 		//funcion que se ejecuta cada que el radio es cambiado
 		$rootScope.$watch('radio.radio', function(newValue, oldValue) {
 			if(newValue){
@@ -28,8 +32,9 @@ angular.module('starter.services')
 			}
 		});
 		//funcion que se ejecuta cada que cambia el estado del radio
-		$rootScope.$watch('map.radio.activo', function(newValue, oldValue) {
+		$rootScope.$watch('radio.activo', function(newValue, oldValue) {
 			//if($rootScope.radio) revisaEventos($rootScope.map.ubicacion.position);
+			Eventos.showHide()
 		});
 	}
 	//function que se ejecuta una vez que el script de google maps esta cargado

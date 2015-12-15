@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory) {
+.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope) {
 	//variable que controla si se cargo el mapa en pantalla
 	$scope.mapaCargado=false;
 	//funcion que se ejecuta cuando el mapa se carga 

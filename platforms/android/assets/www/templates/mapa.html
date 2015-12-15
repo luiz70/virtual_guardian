@@ -4,15 +4,16 @@
     <ui-gmap-google-map class="animate-enter-mapa fast" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events" ng-cloak>
     <!--ui-gmap-rectangle bounds='map.bounds' fill="'#FFFFFF .5'"><ui-gmap-rectangle-->
         <ui-gmap-circle center='radio.center' radius='radio.radio' fill='radio.fill'   stroke='radio.stroke' visible='radio.activo && radio.visible' events="radio.events"></ui-gmap-circle>
-    <ui-gmap-marker idKey='1' coords='ubicacion.position' options="ubicacion.options" icon="'icon'" events="ubicacion.events" >
-	</ui-gmap-marker>
-    <!--ui-gmap-marker idKey='2' coords='map.auto.position' ng-hide="!map.auto.visible" options="map.auto.options" icon="content" events="map.auto.events" >
-	</ui-gmap-marker>
-    <ui-gmap-markers  models='map.eventos' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="map.cluster" typeEvents='map.cluster.events'>
-    </ui-gmap-markers>
-    <ui-gmap-map-control template='templates/controls.html' position="right-top" index="5" controller="controls"></ui-gmap-map-control>
     
-    <ui-gmap-map-control template='templates/controls/top-center.html' position="top-center" controller="top-center" index="5"></ui-gmap-map-control-->
+    <!--ui-gmap-marker idKey='2' coords='map.auto.position' ng-hide="!map.auto.visible" options="map.auto.options" icon="content" events="map.auto.events" >
+	</ui-gmap-marker-->
+    <ui-gmap-markers  models='eventos' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="cluster" typeEvents='cluster.events' >
+    </ui-gmap-markers>
+    <ui-gmap-marker idKey='0' style="opacity:1 !important" coords='ubicacion.position' options="ubicacion.options" icon="'icon'" events="ubicacion.events" index="1000" >
+	</ui-gmap-marker>
+    <ui-gmap-map-control template='templates/controls.html' position="right-top" index="-1" controller="controls"></ui-gmap-map-control>
+    
+    <ui-gmap-map-control template='templates/controls/top-center.html' position="top-center" controller="top-center" index="5"></ui-gmap-map-control>
     <ui-gmap-map-control template='templates/controls/bottom-center.html' position="bottom-center"   controller="bottom-center" index="5"></ui-gmap-map-control>
     </ui-gmap-google-map>
     </div>

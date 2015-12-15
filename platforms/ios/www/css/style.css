@@ -698,3 +698,6 @@ ion-side-menu-content{
     font-size: 4vh !important;
     padding: 2vh !important;
 }
+.gmnoprint{
+ opacity: 1 !important;
+}

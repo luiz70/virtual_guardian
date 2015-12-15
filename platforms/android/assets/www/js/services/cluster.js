@@ -1,35 +1,37 @@
 angular.module('starter.services')
 .factory('Cluster',function($rootScope,uiGmapGoogleMapApi){
-	
-	uiGmapGoogleMapApi.then(function(maps) {
-		$rootScope.map.cluster={
+	var inicializa=function(){
+		$rootScope.cluster={
 			styles:[
 				  {
 					textColor: '#EAEAEA',
 					url: 'img/iconos/mapa/marcadores/g1.png',
 					height: 51,
 					width: 40,
-					textSize:20
+					textSize:20,
+					clusterClass:"cluster"
 				  },
 				 {
 					textColor: '#232323',
 					url: 'img/iconos/mapa/marcadores/g2.png',
 					height: 51,
 					width: 40,
-					textSize:20
+					textSize:20,
+					clusterClass:"cluster"
 				  },
 				 {
 					textColor: '#EAEAEA',
 					url: 'img/iconos/mapa/marcadores/g3.png',
 					height: 51,
 					width: 40,
-					textSize:20
+					textSize:20,
+					clusterClass:"cluster"
 				  }
 				],
 			maxZoom:10,
 			minimumClusterSize:10,
 		}
-		$rootScope.map.cluster.events={
+		$rootScope.cluster.events={
 			click: function(cluster, clusterModels){
 			},
 			mouseout: function(cluster, clusterModels){
@@ -39,10 +41,12 @@ angular.module('starter.services')
 				
 			} 
 		}
+	}
+	uiGmapGoogleMapApi.then(function(maps) {
 	})
 	return {
-		func:function(){
-			return 1;
+		inicializa:function(){
+			inicializa();
 		}
 	}
 })

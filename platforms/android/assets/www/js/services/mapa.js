@@ -1,11 +1,15 @@
 angular.module('starter.services')
-.factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory,Radio,Ubicacion){
+.factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory,Radio,Ubicacion,Filtros,Eventos,Cluster){
 	
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	uiGmapGoogleMapApi.then(function(maps) {
 		//inicializa los componentes del mapa
 		Ubicacion.inicializa();
 		Radio.inicializa();
+		Filtros.inicializa();
+		Eventos.inicializa();
+		Cluster.inicializa();
+		
 		//carga la informacion del mapa guardada
    		$rootScope.map=Memory.get('Mapa')
 		//Si no hay informacion guardada, inicializa el mapa
@@ -49,18 +53,39 @@ angular.module('starter.services')
 			//opacidad de los marcadores
        		markerOpacity:0.9,
 		};
+		//eventos del mapa
+		$rootScope.map.events={
+			//cuando se mueve la pantalla
+			bounds_changed:function(event){
+				//declaracion del contenido actual del mapa
+				var bounds=$rootScope.map.getGMap().getBounds();
+				//declaracion del objeto de contenido.
+				$rootScope.map.bounds={
+					//latitud soutwest
+					la1:bounds.getSouthWest().lat(),
+					//latitud northeast
+					la2:bounds.getNorthEast().lat(),
+					//longitud southwest
+					ln1:bounds.getSouthWest().lng(),
+					//longitud northwest
+					ln2:bounds.getNorthEast().lng()
+				}
+			}
+		}
 	});
 	//function que vigila la region visualizada en el mapa
 	$rootScope.$watch('map.bounds', function(newValues, oldValues, scope) {
 		//console.log($rootScope.map.bounds);
-		//if(newValues)refreshEventos();
+		if(newValues)Eventos.refresh();
 	},true)
 	//function que vigila las propiedades del mapa para guardarlas en caso de algun cambio
 	$rootScope.$watch('map', function(newValue, oldValue) {
-		//if(newValue)Memory.set('Mapa',$rootScope.map)
+		if(newValue)Memory.set('Mapa',$rootScope.map)
 	}, true)
 	//function que se ejecuta una vez que el mapa esta cargado
 	uiGmapIsReady.promise().then(function(maps){
+		//carga los eventos
+		Eventos.refresh();
 		//animacion del mapa una vez cargado
     	$(".angular-google-map").animate({
 			opacity:1,

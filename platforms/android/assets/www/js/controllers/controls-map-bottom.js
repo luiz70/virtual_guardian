@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,Radio){
+.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,Radio,Eventos){
 	//define el diccionario
 	$scope.idioma=$rootScope.idioma;
 	//importa la configuracion del radio
@@ -9,13 +9,21 @@ angular.module('starter.controllers')
 		//activa el touch event en el mapa para ocultar la barra
 		$(".gm-style div").first().on("touch",$scope.hideBarra)
 	})
-	$scope.$watch("radio.radio",function(val){
-		if(!$rootScope.$$phase) {
-  			$rootScope.$apply(function(){
-				$rootScope.radio.radio=val;
-			});
+	//function para mejorar el movimiento de el range de radio
+	$scope.onTap = function(e) {
+      if(ionic.Platform.isIOS()) {
+        $scope.barProgress = (e.target.max / e.target.offsetWidth)*(e.gesture.touches[0].screenX - e.target.offsetLeft);
+      }
+    };
+	//funcion que se ejecuta cuando se inicia el cambio en valor numerico de rango
+		$scope.iniciaCambio=function(){
+			Eventos.hideAll();
 		}
-	});
+		//function que se ejecuta cuando se termina el cambio en valor de rango
+		$scope.terminaCambio=function(){
+			Eventos.showHide()
+			Eventos.refresh();
+		}
 	//funcion que oculta la barra de radio
 	$scope.hideBarra=function(){
 		//desactiva el touch event en el mapa para ocultar la barra
@@ -29,12 +37,6 @@ angular.module('starter.controllers')
 			height:'7vh',
 		},1000);
 	}
-	//function para mejorar el movimiento de el range de radio
-	$scope.onTap = function(e) {
-      if(ionic.Platform.isIOS()) {
-        $scope.barProgress = (e.target.max / e.target.offsetWidth)*(e.gesture.touches[0].screenX - e.target.offsetLeft);
-      }
-    };
 	//function que muestra la barra de radio
 	$scope.showBarra=function(){
 		//activa el touch event en el mapa para ocultar la barra

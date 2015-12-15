@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory){
+.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos){
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	uiGmapGoogleMapApi.then(function(maps) {
 		getLocation();
@@ -21,7 +21,8 @@ angular.module('starter.services')
 				//define que se puede arrastrar y cambiar de lugar
 				draggable:true,
 				//define el idice de psicionamiento
-				zIndex:10000,
+				zIndex:100,
+				opacity:1,
 				//define el icono
 				icon:getIconUbicacion(),
 				//define el area del marcador
@@ -36,17 +37,24 @@ angular.module('starter.services')
 		}
 		//define los eventos de la ubicacion
 		$rootScope.ubicacion.events={
+			//cuando el mouse termina el click
 			mouseup:function(event){
+				//actualiza la ubicacion actual
 				$rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
-				
-                //revisaEventos($rootScope.map.ubicacion.position);
+				//muestra el radio una vez posicionada la ubicación
 				$rootScope.radio.visible=true;
+				Eventos.showHide();
+				//intenta aplicar para apresurar la proyeccion.
+				if(!$rootScope.$$phase) {
+  					$rootScope.$apply(function(){})
+				}
 			},
 			mousedown:function(event){
 				//esconde a los marcadores
 				//hideAllMarkers();
-				//esconde el radio
+				//esconde el radio mientras se mueve la ubicacion
 				$rootScope.radio.visible=false;
+				Eventos.hideAll();
 			},
 			position_changed:function(event){
 				//$rootScope.$apply(function(){})

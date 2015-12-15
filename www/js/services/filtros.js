@@ -1,13 +1,16 @@
 angular.module('starter.services')
 .factory('Filtros',function($rootScope,uiGmapGoogleMapApi){
-	uiGmapGoogleMapApi.then(function(maps) {
-		$rootScope.map.filtros={
+	var inicializa = function(){
+		$rootScope.filtros={
 			activos:false,
 		}
+	}
+	uiGmapGoogleMapApi.then(function(maps) {
+		
 	})
 	return {
-		func:function(){
-			
+		inicializa:function(){
+			inicializa();
 		},
 	}
 })

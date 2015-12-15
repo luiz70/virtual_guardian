@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,Radio){
+.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,Radio,Eventos){
 	//define el diccionario
 	$scope.idioma=$rootScope.idioma;
 	//importa la configuracion del radio
@@ -15,6 +15,15 @@ angular.module('starter.controllers')
         $scope.barProgress = (e.target.max / e.target.offsetWidth)*(e.gesture.touches[0].screenX - e.target.offsetLeft);
       }
     };
+	//funcion que se ejecuta cuando se inicia el cambio en valor numerico de rango
+		$scope.iniciaCambio=function(){
+			Eventos.hideAll();
+		}
+		//function que se ejecuta cuando se termina el cambio en valor de rango
+		$scope.terminaCambio=function(){
+			Eventos.showHide()
+			Eventos.refresh();
+		}
 	//funcion que oculta la barra de radio
 	$scope.hideBarra=function(){
 		//desactiva el touch event en el mapa para ocultar la barra

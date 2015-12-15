@@ -1,63 +1,58 @@
 angular.module('starter.services')
-.factory('Eventos',function($rootScope,uiGmapGoogleMapApi,socket){
-	uiGmapGoogleMapApi.then(function(maps) {
-		$rootScope.map.Eventos=[];
-		$rootScope.map.events={
-			bounds_changed:function(event){
-				var bounds=$rootScope.map.getGMap().getBounds();
-				$rootScope.map.bounds={
-					la1:bounds.getSouthWest().lat(),
-					la2:bounds.getNorthEast().lat(),
-					ln1:bounds.getSouthWest().lng(),
-					ln2:bounds.getNorthEast().lng()
-				}
-				//$rootScope.$apply(function(){})
-			}
-		}
-		$rootScope.map.ubicacion.events={
-				mouseup:function(event){
-					$rootScope.map.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
-                    revisaEventos($rootScope.map.ubicacion.position);
-					$rootScope.map.radio.visible=true;
-				},
-				mousedown:function(event){
-					hideAllMarkers();
-					$rootScope.map.radio.visible=false;
-				},
-				position_changed:function(event){
-					//$rootScope.$apply(function(){})
-				}
-			}
-			socket.emit('setIds',$rootScope.map.idEventos);
+.factory('Eventos',function($rootScope,uiGmapGoogleMapApi,socket,Memory,Evento){
+	
+	var inicializa=function(){
+		//se intenta recuperar lo guardado en memoria
+		$rootScope.eventos=Memory.get('Eventos');
+		//si no hay datos guardados se inicializa un arreglo vacio
+		if(!$rootScope.eventos) $rootScope.eventos=[];
+		//se declara un arreglo con los ids de los eventos almacenados
+		$rootScope.idEventos=$.map($rootScope.eventos, function(v, i){return v.id;})
+		//se envian los ids al servidor
+		socket.emit('setIds',$rootScope.idEventos);
+	}
+		
+	uiGmapGoogleMapApi.then(function(maps) {		
 	})
 	
 	
-	var refreshEventos=function(){
-		if(!$rootScope.map.filtros.activos){
+	var getEventosServer=function(){
+		//se verifica si hay filtros para derifinir las fechas
+		if(!$rootScope.filtros.activos){
+			//si no hay filtros se definen en base al periodo establecido
+			//la fecha final se define como la fecha actual
 			f2=new Date();
+			//la fecha inicial se inicializa como la fecha actual
 			f1=new Date();
+			//se modifica la fecha inicial para restarle el periodo
 			f1.setDate(f1.getDate()-$rootScope.Usuario.Periodo)
+			//se dividen las fechas para enviar menos datos por la red
 			f1=f1.getTime()/1000000;
 			f2=f2.getTime()/1000000;
+		}else{
+			//si hay filtros se definen las fechas en base a lo establecido en los filtros
+			
 		}
+		//se envia la peticion al servidor de los eventos en el bounds seleccionado en las fechas seleccionadas.
 		socket.getSocket().emit('getEventos', $rootScope.map.bounds,f1,f2);
 	}
 	
-	/*socket.getSocket().on('getEventos',function(data){
+	socket.getSocket().on('getEventos',function(data){
 		for(var i=0; i<data.length;i++)
-		data[i].icono=getIconoEvento(data[i]);
-		$rootScope.map.eventos=_.uniq(_.union($rootScope.map.eventos,data),function(item) { return item.id;});
-	})*/
-	$rootScope.$watch('map.eventos', function(newValue, oldValue) {
+		data[i]=Evento.create(data[i]);
+		/*data[i].icono=getIconoEvento(data[i]);*/
+		$rootScope.eventos=_.uniq(_.union($rootScope.eventos,data),function(item) { return item.id;});
+		revisashowHide();
+		//console.log(data);
+	})
+	$rootScope.$watch('eventos', function(newValue, oldValue) {
   		if(newValue){
-			revisaEventos($rootScope.map.ubicacion.position);
-			$rootScope.map.idEventos = $.map($rootScope.map.eventos, function(v, i){return v.id;});
+			//revisaEventos($rootScope.map.ubicacion.position);
+			$rootScope.idEventos = $.map($rootScope.eventos, function(v, i){return v.id;});
 			Memory.set('Mapa',$rootScope.map)
 		}
 	});
-	var hideAllMarkers=function(){
-		for(var i=0; i<$rootScope.map.eventos.length;i++)$rootScope.map.eventos[i].options={visible:false,opacity:$rootScope.map.markerOpacity}
-	}
+	
 	var revisaEventos=function(pos){
 		for(var i=0; i<$rootScope.map.eventos.length;i++){
 			if($rootScope.map.radio.activo){
@@ -75,9 +70,23 @@ angular.module('starter.services')
 			}else $rootScope.map.eventos[i].options={visible:true,opacity:$rootScope.map.markerOpacity}
 		}
 	}
+	var revisashowHide=function(){
+		for(var i=0;i<$rootScope.eventos.length;i++)
+			Evento.review($rootScope.eventos[i]);
+	}
 	return {
-		func:function(){
-			
+		inicializa:function(){
+			inicializa();
 		},
+		refresh:function(){
+			getEventosServer();
+		},
+		showHide:function(){
+			revisashowHide();
+		},
+		hideAll:function(){
+			for(var i=0;i<$rootScope.eventos.length;i++)
+			Evento.hide($rootScope.eventos[i]);
+		}
 	}
 })

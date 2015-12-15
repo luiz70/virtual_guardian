@@ -631,13 +631,14 @@ ion-side-menu-content{
 	background: #252525;
 }
 .menu-header-img-content{
-	position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 10vh;
-    width: 10vh;
-    padding: 1vh;
-	text-align: right;
+	position: absolute !important;
+    top: 0px !important;
+    left: 0px !important;
+    height: 10vh !important;
+    width: 10vh !important;
+    padding: 1vh !important;
+	text-align: right !important;
+	margin:0px  !important;
 }
 .menu-header-title{
 	position: absolute;
@@ -696,4 +697,7 @@ ion-side-menu-content{
     width: 8vh !important;
     font-size: 4vh !important;
     padding: 2vh !important;
+}
+.gmnoprint{
+ opacity: 1 !important;
 }
