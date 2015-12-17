@@ -16,13 +16,13 @@ angular.module('starter.services')
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			//la ultima ubicacion del usuario obtenida
 			location:{ latitude: 20.6737919, longitude:  -103.3354131 },
+			track:false,
 			//opciones de marcadores (google maps api v3)
 			options:{
 				//define que se puede arrastrar y cambiar de lugar
 				draggable:true,
 				//define el idice de psicionamiento
-				zIndex:100,
-				opacity:1,
+				zIndex:10000,
 				//define el icono
 				icon:getIconUbicacion(),
 				//define el area del marcador
@@ -43,6 +43,7 @@ angular.module('starter.services')
 				$rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
 				//muestra el radio una vez posicionada la ubicación
 				$rootScope.radio.visible=true;
+				//muestra los marcadores
 				Eventos.showHide();
 				//intenta aplicar para apresurar la proyeccion.
 				if(!$rootScope.$$phase) {
@@ -51,10 +52,10 @@ angular.module('starter.services')
 			},
 			mousedown:function(event){
 				//esconde a los marcadores
-				//hideAllMarkers();
+				Eventos.hideAll();
 				//esconde el radio mientras se mueve la ubicacion
 				$rootScope.radio.visible=false;
-				Eventos.hideAll();
+				
 			},
 			position_changed:function(event){
 				//$rootScope.$apply(function(){})
@@ -70,6 +71,9 @@ angular.module('starter.services')
 			//actualiza el icono
 			$rootScope.ubicacion.options.icon=getIconUbicacion();
 		}
+	},true);
+	$rootScope.$watch('ubicacion', function(newValue, oldValue) {
+		if($rootScope.ubicacion)Memory.set("Ubicacion",$rootScope.ubicacion);
 	},true);
 	//funcion que crea el icono de la ubicacion
 	var getIconUbicacion=function(){

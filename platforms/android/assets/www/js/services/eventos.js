@@ -1,6 +1,6 @@
 angular.module('starter.services')
-.factory('Eventos',function($rootScope,uiGmapGoogleMapApi,socket,Memory,Evento){
-	
+.factory('Eventos',function($rootScope,uiGmapGoogleMapApi,socket,Memory,Evento,$timeout){
+	var server=null;
 	var inicializa=function(){
 		//se intenta recuperar lo guardado en memoria
 		$rootScope.eventos=Memory.get('Eventos');
@@ -15,8 +15,13 @@ angular.module('starter.services')
 	uiGmapGoogleMapApi.then(function(maps) {		
 	})
 	
-	
 	var getEventosServer=function(){
+		if(server)$timeout.cancel(server)
+		server=$timeout(function(){
+			serverCall()
+		},800)
+	}
+	var serverCall=function(){
 		//se verifica si hay filtros para derifinir las fechas
 		if(!$rootScope.filtros.activos){
 			//si no hay filtros se definen en base al periodo establecido

@@ -698,6 +698,29 @@ ion-side-menu-content{
     font-size: 4vh !important;
     padding: 2vh !important;
 }
-.gmnoprint{
+/*.gmnoprint{
  opacity: 1 !important;
+}*/
+.ubicacionMarker{
+	width:20px;
+	height:20px;
+	margin-top:10px;
+	position:relative;
+	border-radius:100%;
+	background:#03C0DE;
+	border:solid 2px #fff
+}
+.ubicacionMarker.desconectado{
+	background:rgb(90, 90, 90);
+}
+.ubicacionMarker > img{
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	margin:auto;
+	position:absolute;
+	opacity: 1;
 }

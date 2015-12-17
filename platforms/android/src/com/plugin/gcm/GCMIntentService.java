@@ -161,7 +161,7 @@ public class GCMIntentService extends GCMBaseIntentService {
             			int distcarro=pingCar(getCarroPos(context).getString("Latitud"),getCarroPos(context).getString("Longitud"),extras);
             			
             			if(distancia>=0 && distancia<=Integer.parseInt(extras.getString("RangoPersonal")) ){
-                			//informaAmigos(extras,distancia);
+                			informaAmigos(extras,distancia);
                 			extras.putBoolean("foreground",false);
             				if(distcarro>=0 && distcarro<=Integer.parseInt(extras.getString("RangoAuto")) && Integer.parseInt(extras.getString("NotificacionesAuto"))==1){
             					informaCarro(extras,distcarro);
