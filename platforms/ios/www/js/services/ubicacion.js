@@ -39,22 +39,47 @@ angular.module('starter.services')
 		$rootScope.ubicacion.events={
 			//cuando el mouse termina el click
 			mouseup:function(event){
-				//actualiza la ubicacion actual
-				$rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
-				//muestra el radio una vez posicionada la ubicación
-				$rootScope.radio.visible=true;
-				//muestra los marcadores
-				Eventos.showHide();
-				//intenta aplicar para apresurar la proyeccion.
-				if(!$rootScope.$$phase) {
-  					$rootScope.$apply(function(){})
-				}
+                console.log("up")
+                //intenta aplicar para apresurar la proyeccion.
+                if(!$rootScope.$$phase) {
+                    $rootScope.$apply(function(){
+                        //actualiza la ubicacion actual
+                        $rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
+                        //muestra el radio una vez posicionada la ubicación
+                        $rootScope.radio.visible=true;
+                        //muestra los marcadores
+                        Eventos.showHide();
+                    })
+                }else{
+                    //actualiza la ubicacion actual
+                    $rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
+                    //muestra el radio una vez posicionada la ubicación
+                    $rootScope.radio.visible=true;
+                    //muestra los marcadores
+                    Eventos.showHide();
+                }
+         
+				
+				
 			},
 			mousedown:function(event){
-				//esconde a los marcadores
-				Eventos.hideAll();
-				//esconde el radio mientras se mueve la ubicacion
-				$rootScope.radio.visible=false;
+                console.log("down")
+				
+                if(!$rootScope.$$phase) {
+                    $rootScope.$apply(function(){
+                        //esconde el radio mientras se mueve la ubicacion
+                        $rootScope.radio.visible=false;
+                        //esconde a los marcadores
+                        Eventos.showHide();
+                    })
+                }else{
+         
+                    //esconde el radio mientras se mueve la ubicacion
+                    $rootScope.radio.visible=false;
+                    //esconde a los marcadores
+                    Eventos.showHide();
+                }
+         
 				
 			},
 			position_changed:function(event){

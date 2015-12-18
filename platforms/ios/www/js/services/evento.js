@@ -57,6 +57,9 @@ angular.module('starter.services')
 			return d;
 		},
 		review:function(data){
+            if(!$rootScope.radio.visible){
+                return false;
+            }else 
 			if(!$rootScope.radio.activo) {
 				return true;
 			}else {
@@ -76,6 +79,8 @@ angular.module('starter.services')
 		},
 		hide:function(data){
 			data.options.visible=false;
+         
+            
 		}
 	}
 })

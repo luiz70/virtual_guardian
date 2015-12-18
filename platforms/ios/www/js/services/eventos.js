@@ -109,6 +109,11 @@ angular.module('starter.services')
 			$rootScope.eventos[i].options.visible=Evento.review($rootScope.eventos[i]);
 		}
 	}
+    var hideAll=function(){
+         for(var i=0;i<$rootScope.eventos.length;i++){
+            $rootScope.eventos[i].options.visible=false;
+         }
+    }
 	return {
 		inicializa:function(){
 			inicializa();
@@ -120,8 +125,8 @@ angular.module('starter.services')
 			revisashowHide();
 		},
 		hideAll:function(){
-			for(var i=0;i<$rootScope.eventos.length;i++)
-			Evento.hide($rootScope.eventos[i]);
+         hideAll();
+         
 		}
 	}
 })
