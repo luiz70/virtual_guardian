@@ -724,3 +724,71 @@ ion-side-menu-content{
 	position:absolute;
 	opacity: 1;
 }
+.mapa-descripcion-evento-contenedor{
+	position:absolute;
+	bottom:-100vh;
+	left:0px;
+	width:100%;
+	height:auto;
+	background:#F5F5F5;
+	padding-top: 5vh;
+    border-top: solid 1vh #059DB5;
+	padding-bottom:5vh;
+	padding-left:3vh;
+	padding-right:3vh;
+}
+.mapa-descripcion-evento-icono{
+	    width: 10vh;
+    height: 10vh;
+    border-radius: 100% !important;
+    padding: 1vh !important;
+    background: #F5F5F5;
+    border: solid 1vh #059DB5 !important;
+    top: -6vh;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+	
+}
+.mapa-descripcion-evento-icono > img{
+	position:relative;
+}
+.mapa-descripcion-evento-titulo{
+	font-size: 3.5vh;
+}
+.mapa-descripcion-evento-subtitulo{
+	font-size: 3vh;
+    color: #5C5C5C;
+    margin-bottom: 2vh;
+    padding-bottom: 2vh;
+    margin-top: 1vh;
+    border-bottom: solid 1px #D6D6D6;
+}
+.mapa-descripcion-evento-texto{
+	font-size: 3vh;
+	margin-bottom:0.5vh;
+}
+.mapa-descripcion-evento-cover{
+	    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(6, 6, 6, 0.65);
+	opacity: 0;
+}
+.mapa-descripcion-evento{
+	position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    bottom: 0px;
+    z-index: 10000000000;
+}
+.mapa-descripcion-evento-close{
+	position:absolute;
+	top:0px;
+	right:0px;
+	background: none;
+    padding: 2vh;
+	
+}

@@ -64,13 +64,69 @@ angular.module('starter.controllers')
 			36:"Tu registro ha caducado, es necesario que realices el registro de nuevo."
 		},
 		Mapa:{
-			1:"Radio: "
+			1:"Radio: ",
+			
+		},
+		Info:{
+			1:"Fecha: ",
+			2:"Hora: ",
+			3:"Dirección: ",
+			4:"Error al cargar la información"
 		},
 		Menu:{
 			1:"Suscripción",
 		},
 		Auto:{
 			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto."
+		},
+		Estados:{
+			1:"Aguascalientes",
+			2:"Baja California",
+			3:"Baja California Sur",
+			4:"Campeche",
+			5:"Coahuila",
+			6:"Colima",
+			7:"Chiapas",
+			8:"Chihuahua",
+			9:"Distrito Federal",
+			10:"Durango",
+			11:"Guanajuato",
+			12:"Guerrero",
+			13:"Hidalgo",
+			14:"Jalisco",
+			15:"México",
+			16:"Michoacán",
+			17:"Morelos",
+			18:"Nayarit",
+			19:"Nuevo León",
+			20:"Oaxaca",
+			21:"Puebla",
+			22:"Querétaro",
+			23:"Quintana Roo",
+			24:"San Luis Potosí",
+			25:"Sinaloa",
+			26:"Sonora",
+			27:"Tabasco",
+			28:"Tamaulipas",
+			29:"Tlaxcala",
+			30:"Veracruz",
+			31:"Yucatán",
+			32:"Zacatecas"
+		},
+		Meses:{
+			1:"Enero",
+			2:"Febrero",
+			3:"Marzo",
+			4:"Abril",
+			5:"Mayo",
+			6:"Junio",
+			7:"Julio",
+			8:"Agosto",
+			9:"Septiembre",
+			10:"Octubre",
+			11:"Noviembre",
+			12:"Diciembre"
+			
 		}
 		
 	},

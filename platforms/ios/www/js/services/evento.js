@@ -1,10 +1,12 @@
 // JavaScript Document
 angular.module('starter.services')
-.factory('Evento',function($rootScope,uiGmapGoogleMapApi,$timeout){
+.factory('Evento',function($rootScope,uiGmapGoogleMapApi,$timeout,InfoEvento){
 	var rad = function(x) {return x*Math.PI/180;}
 	var R     =6378.137 ;      
 	var timer=1000
 	var hidden=false;
+	$rootScope.info=false;
+	$rootScope.selected=null;
 	var create=function(data){
 		return {
 			id:data.id,
@@ -26,6 +28,7 @@ angular.module('starter.services')
 			}
 		};
 	}
+	
 	var addFunctions=function(data){
 		data.options.opacity=0.9
 		/*if(data.options.visible){
@@ -35,7 +38,8 @@ angular.module('starter.services')
 		}*/
 		data.events={
 			click:function(){
-				console.log(this.getGMarker().data.id)
+				InfoEvento.select(this.getGMarker().data.id)
+				InfoEvento.visible(true);
 			},
 			visible_changed:function(event){
 				/*data=(_.findWhere($rootScope.eventos, { id: event.key }));
