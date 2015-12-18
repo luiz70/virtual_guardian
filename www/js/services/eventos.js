@@ -11,9 +11,9 @@ angular.module('starter.services')
 		//se declara un arreglo con los ids de los eventos almacenados
 		$rootScope.idEventos=$.map($rootScope.eventos, function(v, i){return v.id;})
 		$rootScope.editEventos=$.map($rootScope.eventos, function(v, i){return v.editado;})
-		
 		//se envian los ids al servidor
 		socket.emit('setInfo',{ids:$rootScope.idEventos,edit:$rootScope.editEventos});
+		console.log($rootScope.eventos);
 		
 	}
 		
@@ -45,23 +45,46 @@ angular.module('starter.services')
 		//se envia la peticion al servidor de los eventos en el bounds seleccionado en las fechas seleccionadas.
 		socket.getSocket().emit('getEventos', $rootScope.map.bounds,f1,f2);
 	}
-	
+	socket.getSocket().on('newEvent',function(data){
+		getEventosServer();
+		console.log("nuevo")
+		console.log(data)
+	})
 	socket.getSocket().on('eventosEditados',function(data){
-		console.log("editados");
-		console.log(data);
+		console.log("editado")
+		console.log(data)
+		for(var i=0;i<data.length;i++){
+			
+			var e=_.findWhere($rootScope.eventos, { id: data[i].id });
+			if(e){
+			e.latitude=data[i].latitude
+			e.longitude=data[i].longitude
+			e.asunto=data[i].asunto
+			e.editado=data[i].edit
+			e.icono.url='img/iconos/mapa/marcadores/'+data[i].asunto+".png"
+			}
+		}
+		
 	})
 	socket.getSocket().on('test',function(data){
 		alert(data);
 	})
 	//socket.getSocket().emit('test');
+	
 	socket.getSocket().on('eventosEliminados',function(data){
 		console.log("eliminados");
 		console.log(data);
+		for(var i=0;i<data.length;i++){
+			
+			var e=_.findIndex($rootScope.eventos, { id: parseInt(data[i])})
+			if(e>=0){
+				$rootScope.eventos.splice(e,1);
+			}
+		}
 	})
 	socket.getSocket().on('getEventos',function(data){
 		for(var i=0; i<data.length;i++)
 		data[i]=Evento.create(data[i]);
-		/*data[i].icono=getIconoEvento(data[i]);*/
 		$rootScope.eventos=_.uniq(_.union($rootScope.eventos,data),function(item) { return item.id;});
 		revisashowHide();
 	})
@@ -71,6 +94,7 @@ angular.module('starter.services')
 	})
 	$rootScope.$watch('eventos', function(newValue, oldValue) {
   		if(newValue){
+			if($rootScope.eventos.length>10000)console.log("FULL");
 			//revisaEventos($rootScope.map.ubicacion.position);
 			$rootScope.idEventos = $.map($rootScope.eventos, function(v, i){return v.id;});
 			$rootScope.editEventos=$.map($rootScope.eventos, function(v, i){return v.editado;})

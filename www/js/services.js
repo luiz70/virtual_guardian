@@ -102,6 +102,12 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
         conectado=false;
     })
     socketFactory.on("reconnect",function(){
+		if($rootScope.eventos){
+		$rootScope.idEventos=$.map($rootScope.eventos, function(v, i){return v.id;})
+		$rootScope.editEventos=$.map($rootScope.eventos, function(v, i){return v.editado;})
+		//se envian los ids al servidor
+		socket.emit('setInfo',{ids:$rootScope.idEventos,edit:$rootScope.editEventos});
+		}
         conectado=true;
     })
     socketFactory.on("reconnect_error",function(){

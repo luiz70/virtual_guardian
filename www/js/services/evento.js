@@ -34,16 +34,16 @@ angular.module('starter.services')
 		}*/
 		data.events={
 			click:function(){
-				console.log(3);
+				console.log(this.getGMarker().data.id)
 			},
 			visible_changed:function(event){
-				data=(_.findWhere($rootScope.eventos, { id: event.key }));
+				/*data=(_.findWhere($rootScope.eventos, { id: event.key }));
 				if(data.interval)$timeout.cancel(data.interval)
 				if(event.visible){
-					/*data.interval=$timeout(function(){
+					data.interval=$timeout(function(){
 						revisaEvento(data)
-					},timer)*/
-				}
+					},timer)
+				}*/
 			}
 		}
 	}
@@ -52,8 +52,9 @@ angular.module('starter.services')
 	}
 	return {
 		create:function(data){
-			create(data);
-			return addFunctions(data);
+			var d=create(data)
+			addFunctions(d);
+			return d;
 		},
 		review:function(data){
 			if(!$rootScope.radio.activo) {
