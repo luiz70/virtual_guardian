@@ -21,7 +21,7 @@ angular.module('starter.controllers')
 		}
 		//function que se ejecuta cuando se termina el cambio en valor de rango
 		$scope.terminaCambio=function(){
-			Eventos.showHide()
+			Eventos.showHide();
 			Eventos.refresh();
 		}
 	//funcion que oculta la barra de radio

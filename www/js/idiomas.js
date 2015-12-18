@@ -49,7 +49,7 @@ angular.module('starter.controllers')
 			21:"Terminar",
 			22:"Ahora puedes iniciar sesión, mantenerte informado y protegido con nosotros.",
 			23:"Proporciona tu correo electrónico registrado para enviarte un mensaje con las instrucciones necesarias para recuperar tu contraseña.",
-			24:"Enviar correo de recuperación",
+			24:"Enviar correo",
 			25:"No has proporcionado tu correo electrónico.",
 			26:"Recuperar contraseña",
 			27:"El correo proporcionado no esta registrado en Virtual Guardian",

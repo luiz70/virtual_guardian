@@ -39,14 +39,15 @@ angular.module('starter.services')
 		$rootScope.ubicacion.events={
 			//cuando el mouse termina el click
 			mouseup:function(event){
-                console.log("up")
                 //intenta aplicar para apresurar la proyeccion.
                 if(!$rootScope.$$phase) {
                     $rootScope.$apply(function(){
                         //actualiza la ubicacion actual
                         $rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
                         //muestra el radio una vez posicionada la ubicación
-                        $rootScope.radio.visible=true;
+                       	$rootScope.radio.fill={color:'#39bbf7',opacity:0.13};
+						$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0.6};
+						$rootScope.radio.visible=true;
                         //muestra los marcadores
                         Eventos.showHide();
                     })
@@ -54,7 +55,9 @@ angular.module('starter.services')
                     //actualiza la ubicacion actual
                     $rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
                     //muestra el radio una vez posicionada la ubicación
-                    $rootScope.radio.visible=true;
+                    $rootScope.radio.fill={color:'#39bbf7',opacity:0.13};
+					$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0.6};
+					$rootScope.radio.visible=true;
                     //muestra los marcadores
                     Eventos.showHide();
                 }
@@ -63,19 +66,21 @@ angular.module('starter.services')
 				
 			},
 			mousedown:function(event){
-                console.log("down")
-				
                 if(!$rootScope.$$phase) {
                     $rootScope.$apply(function(){
                         //esconde el radio mientras se mueve la ubicacion
-                        $rootScope.radio.visible=false;
+                        $rootScope.radio.fill={color:'#39bbf7',opacity:0};
+						$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0};
+						$rootScope.radio.visible=false;
                         //esconde a los marcadores
                         Eventos.showHide();
                     })
                 }else{
          
                     //esconde el radio mientras se mueve la ubicacion
-                    $rootScope.radio.visible=false;
+                   	$rootScope.radio.fill={color:'#39bbf7',opacity:0};
+					$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0};
+					$rootScope.radio.visible=false;
                     //esconde a los marcadores
                     Eventos.showHide();
                 }

@@ -4,6 +4,7 @@ angular.module('starter.services')
 	var rad = function(x) {return x*Math.PI/180;}
 	var R     =6378.137 ;      
 	var timer=1000
+	var hidden=false;
 	var create=function(data){
 		return {
 			id:data.id,
@@ -57,6 +58,12 @@ angular.module('starter.services')
 			return d;
 		},
 		review:function(data){
+			if(hidden){
+				return false
+			}else
+            if(!$rootScope.radio.visible){
+                return false;
+            }else 
 			if(!$rootScope.radio.activo) {
 				return true;
 			}else {
@@ -75,7 +82,8 @@ angular.module('starter.services')
 			return addFunctions(data);
 		},
 		hide:function(data){
-			data.options.visible=false;
+			hidden=data;
+            
 		}
 	}
 })

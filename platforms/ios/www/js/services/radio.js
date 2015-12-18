@@ -23,6 +23,7 @@ angular.module('starter.services')
 		//inicializa los eventos del radio
 		$rootScope.radio.events={
 			radius_changed:function(data){
+				
 				Eventos.hideAll();
 				$rootScope.radio.visible=false;
 				$rootScope.radio.visible=true;	
@@ -39,8 +40,11 @@ angular.module('starter.services')
 		});
 		//funcion que se ejecuta cada que cambia el estado del radio
 		$rootScope.$watch('radio.activo', function(newValue, oldValue) {
-			if($rootScope.radio) $rootScope.radio.activo=newValue
-			Eventos.showHide();
+			if($rootScope.radio) {
+				$rootScope.radio.activo=newValue
+				Eventos.showHide();
+				
+			}
 			
 		});
 		$rootScope.$watch('radio', function(newValue, oldValue) {
@@ -61,6 +65,14 @@ angular.module('starter.services')
 		},
 		setRadio:function(val){
 			$rootScope.radio.radio=parseInt(val)
+		},
+		hide:function(){
+			$rootScope.radio.fill={color:'#39bbf7',opacity:0};
+			$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0};
+		},
+		show:function(){
+			$rootScope.radio.fill={color:'#39bbf7',opacity:0.13};
+			$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0.6};
 		}
 	}
 })

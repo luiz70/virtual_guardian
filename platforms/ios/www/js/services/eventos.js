@@ -87,6 +87,7 @@ angular.module('starter.services')
 		data[i]=Evento.create(data[i]);
 		$rootScope.eventos=_.uniq(_.union($rootScope.eventos,data),function(item) { return item.id;});
 		revisashowHide();
+		
 	})
 	
 	$rootScope.$watch('fechaEventos', function(newValue, oldValue) {
@@ -110,9 +111,10 @@ angular.module('starter.services')
 		}
 	}
     var hideAll=function(){
+		
          for(var i=0;i<$rootScope.eventos.length;i++){
-            $rootScope.eventos[i].options.visible=false;
-         }
+			$rootScope.eventos[i].options.visible=false;
+		}
     }
 	return {
 		inicializa:function(){
@@ -122,10 +124,12 @@ angular.module('starter.services')
 			getEventosServer();
 		},
 		showHide:function(){
+			Evento.hide(false);
 			revisashowHide();
 		},
 		hideAll:function(){
-         hideAll();
+        	 Evento.hide(true);
+			 hideAll()
          
 		}
 	}
