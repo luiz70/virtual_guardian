@@ -36,10 +36,15 @@ angular.module('starter.services')
 				revisaEvento(data)
 			},timer)
 		}*/
+		
+		data.onClick=function(){
+			InfoEvento.select(this.id)
+				InfoEvento.visible(true);
+		}
 		data.events={
 			click:function(){
-				InfoEvento.select(this.getGMarker().data.id)
-				InfoEvento.visible(true);
+				/*InfoEvento.select(this.getGMarker().data.id)
+				InfoEvento.visible(true);*/
 			},
 			visible_changed:function(event){
 				/*data=(_.findWhere($rootScope.eventos, { id: event.key }));
