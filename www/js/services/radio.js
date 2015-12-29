@@ -18,7 +18,8 @@ angular.module('starter.services')
 			//define si el circulo esta activo o no (validacion de marcadores)
             activo:true,
 			//define si el circulo esta visible o no (solo proyeccion)
-			visible:true,
+			visible:true
+			
         }
 		//inicializa los eventos del radio
 		$rootScope.radio.events={
@@ -33,7 +34,7 @@ angular.module('starter.services')
 		//funcion que se ejecuta cada que el radio es cambiado
 		$rootScope.$watch('radio.radio', function(newValue, oldValue) {
 			if(newValue){
-				Eventos.hideAll();
+				$rootScope.eventosMap=[];
 				$rootScope.radio.radio=parseInt(newValue);
 				//revisaEventos($rootScope.map.ubicacion.position);
 			}
@@ -42,7 +43,8 @@ angular.module('starter.services')
 		$rootScope.$watch('radio.activo', function(newValue, oldValue) {
 			if($rootScope.radio) {
 				$rootScope.radio.activo=newValue
-				Eventos.showHide();
+				$rootScope.eventosMap=[];
+				Eventos.refresh();
 				
 			}
 			

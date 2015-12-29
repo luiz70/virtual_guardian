@@ -7,7 +7,7 @@
     
     <!--ui-gmap-marker idKey='2' coords='map.auto.position' ng-hide="!map.auto.visible" options="map.auto.options" icon="content" events="map.auto.events" >
 	</ui-gmap-marker-->
-    <ui-gmap-markers  models='eventos' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="cluster" typeEvents='cluster.events'>
+    <ui-gmap-markers  models='eventosMap' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="cluster" typeEvents='cluster.events'>
     </ui-gmap-markers>
     <ui-gmap-marker idKey='0' style="opacity:1 !important" coords='ubicacion.position' options="ubicacion.options" icon="'icon'" events="ubicacion.events" index="1000" >
 	</ui-gmap-marker>
@@ -27,10 +27,10 @@
         	<i class="icon ion-chevron-down" ></i>
         </button>
         <div class="mapa-descripcion-evento-titulo" ng-hide="cargandoInfo || error">{{idioma.Asuntos[selectedMarker.asunto]}}</div>
-        <div class="mapa-descripcion-evento-subtitulo" ng-hide="cargandoInfo || error">{{selectedMarker.info | subtituloInfo:this}}</div>
-        <div class="mapa-descripcion-evento-texto" ng-hide="cargandoInfo || error">{{idioma.Info[1]}}{{selectedMarker.info.Fecha | fechaInfo:this}}</div>
-        <div class="mapa-descripcion-evento-texto" ng-hide="cargandoInfo || error">{{idioma.Info[2]}}{{selectedMarker.info.Hora}}</div>
-        <div class="mapa-descripcion-evento-texto"  ng-hide="cargandoInfo || error">{{idioma.Info[3]}}{{selectedMarker.info | direccion:this }}</div>
+        <div class="mapa-descripcion-evento-subtitulo" ng-hide="cargandoInfo || error">{{selectedMarker.options.data.info | subtituloInfo:this}}</div>
+        <div class="mapa-descripcion-evento-texto" ng-hide="cargandoInfo || error">{{idioma.Info[1]}}{{selectedMarker.options.data.info.Fecha | fechaInfo:this}}</div>
+        <div class="mapa-descripcion-evento-texto" ng-hide="cargandoInfo || error">{{idioma.Info[2]}}{{selectedMarker.options.data.info.Hora}}</div>
+        <div class="mapa-descripcion-evento-texto"  ng-hide="cargandoInfo || error">{{idioma.Info[3]}}{{selectedMarker.options.data.info | direccion:this }}</div>
         <div style="text-align:center" ng-hide="!cargandoInfo">
        		<ion-spinner icon="ripple"></ion-spinner>
         	<div class="mapa-descripcion-evento-texto" style="text-align:center">cargando...</div>

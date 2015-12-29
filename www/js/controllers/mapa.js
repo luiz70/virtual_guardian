@@ -19,13 +19,15 @@ angular.module('starter.controllers')
 	})
 	$scope.loadData=function(){
 		//$timeout(function(){$scope.cargandoInfo=false;},2000)
-		socket.emit("getInfoEvento",{id:$scope.selectedMarker.id})
+		if(!$scope.selectedMarker.options.data.info)socket.emit("getInfoEvento",{id:$scope.selectedMarker.id,edit:-1})
+		else socket.emit("getInfoEvento",{id:$scope.selectedMarker.id,edit:$scope.selectedMarker.options.data.info.Edit})
 		
 	}
 	socket.getSocket().on("getInfoEvento",function(data){
+		
 		if(data){
-		$scope.selectedMarker.info=data;
-		$scope.cargandoInfo=false;
+			if(data!==1) $scope.selectedMarker.options.data.info=data;
+			$scope.cargandoInfo=false;
 		}else {
 			//error
 			console.log("error");

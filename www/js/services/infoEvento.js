@@ -41,7 +41,7 @@ angular.module('starter.services')
 			else hideInfo();
 		},
 		select:function(marker){
-			$rootScope.selectedMarker=_.findWhere($rootScope.eventos,{id:marker});
+			$rootScope.selectedMarker=_.findWhere($rootScope.eventosMap,{id:marker});
 		}
 	}
 })
