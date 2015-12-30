@@ -4,6 +4,8 @@ angular.module('starter.services')
 	uiGmapGoogleMapApi.then(function(maps) {
 		getLocation();
 	})
+	var eventos=[];
+	var pos={}
 	//funcion que inicializa la ubicacion
 	var inicializa=function(){
 		//carga los datos guardados de la ubicacion
@@ -16,13 +18,13 @@ angular.module('starter.services')
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			//la ultima ubicacion del usuario obtenida
 			location:{ latitude: 20.6737919, longitude:  -103.3354131 },
+			track:false,
 			//opciones de marcadores (google maps api v3)
 			options:{
 				//define que se puede arrastrar y cambiar de lugar
 				draggable:true,
 				//define el idice de psicionamiento
-				zIndex:100,
-				opacity:1,
+				zIndex:10000,
 				//define el icono
 				icon:getIconUbicacion(),
 				//define el area del marcador
@@ -39,22 +41,52 @@ angular.module('starter.services')
 		$rootScope.ubicacion.events={
 			//cuando el mouse termina el click
 			mouseup:function(event){
-				//actualiza la ubicacion actual
-				$rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
-				//muestra el radio una vez posicionada la ubicación
-				$rootScope.radio.visible=true;
-				Eventos.showHide();
-				//intenta aplicar para apresurar la proyeccion.
-				if(!$rootScope.$$phase) {
-  					$rootScope.$apply(function(){})
-				}
+				
+                //intenta aplicar para apresurar la proyeccion.
+                if(!$rootScope.$$phase) {
+                    $rootScope.$apply(function(){
+                        //actualiza la ubicacion actual
+                        $rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
+                        //muestra el radio una vez posicionada la ubicación
+                       	$rootScope.radio.fill={color:'#39bbf7',opacity:0.13};
+						$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0.6};
+						$rootScope.radio.visible=true;
+                    })
+                }else{
+                    //actualiza la ubicacion actual
+                    $rootScope.ubicacion.position={latitude:event.position.lat(),longitude:event.position.lng()}
+                    //muestra el radio una vez posicionada la ubicación
+                    $rootScope.radio.fill={color:'#39bbf7',opacity:0.13};
+					$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0.6};
+					$rootScope.radio.visible=true;
+                }
+				//muestra los marcadores
+				if($rootScope.ubicacion.position.latitude.toFixed(10)==pos.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==pos.longitude.toFixed(10))$rootScope.eventosMap=eventos;
+				
 			},
 			mousedown:function(event){
-				//esconde a los marcadores
-				//hideAllMarkers();
-				//esconde el radio mientras se mueve la ubicacion
-				$rootScope.radio.visible=false;
-				Eventos.hideAll();
+				eventos=$rootScope.eventosMap;
+				pos= {latitude:$rootScope.ubicacion.position.latitude,longitude:$rootScope.ubicacion.position.longitude}
+                if(!$rootScope.$$phase) {
+                    $rootScope.$apply(function(){
+                        //esconde el radio mientras se mueve la ubicacion
+                        $rootScope.radio.fill={color:'#39bbf7',opacity:0};
+						$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0};
+						$rootScope.radio.visible=false;
+                        //esconde a los marcadores
+                        $rootScope.eventosMap=[];
+                    })
+                }else{
+         
+                    //esconde el radio mientras se mueve la ubicacion
+                   	$rootScope.radio.fill={color:'#39bbf7',opacity:0};
+					$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0};
+					$rootScope.radio.visible=false;
+                    //esconde a los marcadores
+                    $rootScope.eventosMap=[];
+                }
+         
+				
 			},
 			position_changed:function(event){
 				//$rootScope.$apply(function(){})
@@ -71,12 +103,15 @@ angular.module('starter.services')
 			$rootScope.ubicacion.options.icon=getIconUbicacion();
 		}
 	},true);
+	$rootScope.$watch('ubicacion', function(newValue, oldValue) {
+		if($rootScope.ubicacion)Memory.set("Ubicacion",$rootScope.ubicacion);
+	},true);
 	//funcion que crea el icono de la ubicacion
 	var getIconUbicacion=function(){
 		//definicion de objeto
 		var icono = {
 			//url corresponde a la direccion de la imagen del marcador, verifica si esta en la ultima ubicacion obtenida o no para seleccionar la imagen
-			url: (!$rootScope.ubicacion)?'img/iconos/mapa/ubicacion.png':(($rootScope.ubicacion.position.latitude==$rootScope.ubicacion.location.latitude && $rootScope.ubicacion.position.longitude==$rootScope.ubicacion.location.longitude)?'img/iconos/mapa/ubicacion.png':'img/iconos/mapa/ubicacion_des.png'),
+			url: (!$rootScope.ubicacion)?'img/iconos/mapa/ubicacion.png':(($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10))?'img/iconos/mapa/ubicacion.png':'img/iconos/mapa/ubicacion_des.png'),
 			//define el tamaño del marcador
 			size: new google.maps.Size(20, 20),
 			//define el punto de orgen
@@ -91,6 +126,7 @@ angular.module('starter.services')
 	}
 	//funcion que se ejecuta una vez que se obtiene la ubicacion del usuario
 	var mapSuccess=function(position){ 
+	
 		//actualiza el valor de la ultima ubicacion obtenida
 		$rootScope.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
 		//actualiza la posicion del marcador
@@ -99,6 +135,7 @@ angular.module('starter.services')
 		$rootScope.$apply(function(){})
 		//revisa los eventos
 		//revisaEventos($rootScope.map.ubicacion.position);
+		console.log($rootScope.ubicacion.position)
 	}
 	//funcion que se ejecuta cuando se produce un error en la ubicacion del evento
 	var mapError=function(error){

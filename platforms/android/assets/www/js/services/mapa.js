@@ -76,7 +76,10 @@ angular.module('starter.services')
 	//function que vigila la region visualizada en el mapa
 	$rootScope.$watch('map.bounds', function(newValues, oldValues, scope) {
 		//console.log($rootScope.map.bounds);
-		if(newValues)Eventos.refresh();
+		if(newValues){
+			Eventos.refresh();
+			Eventos.showHide();
+		}
 	},true)
 	//function que vigila las propiedades del mapa para guardarlas en caso de algun cambio
 	$rootScope.$watch('map', function(newValue, oldValue) {

@@ -218,3 +218,11 @@ position:relative;
  stroke: #059DB5;
  fill: #F5F5F5;
 }
+.popup-buttons > button{
+	    box-shadow: none;
+}
+.button-default{
+	background: #E7E7E7 !important;
+    border: solid 1px #8C8C8C !important;
+    color: #424242 !important;
+}

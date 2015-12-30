@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Aplicacion', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory) {
+.controller('Aplicacion', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory,Message,$timeout,Usuario) {
 	//Memory.clean();
 	//Variable que controla el estado de conexion a internet
 	$rootScope.internet={state:true,type:""};
@@ -69,19 +69,21 @@ angular.module('starter.controllers')
         //
     });
 	//function que se ejecuta al cerrar sesion
-	$scope.cerrarSesion=function(){
+	$rootScope.cerrarSesion=function(){
 		//muestra mensaje de cerrando sesion
 		Message.showLoading($rootScope.idioma.Login[9]);
 		//realiza un timeout por diseño
 		$timeout(function(){
 			//limpia la memoria de la aplicacion
-			Memory.clean();
+			Memory.set("Usuario",null);
+			Usuario.set(null)
 			//programa la transicion de salida
 			$ionicViewSwitcher.nextDirection('back');
 			//cambia a pantalla de login
 			$state.go('app.login')
 			//oculta el mensaje de cerrando sesion
 			Message.hideLoading();
+			$rootScope.cerrada=true;
 		},300)
 	}
 	//obtiene el ultimo elemento del nombre del estado
@@ -181,6 +183,7 @@ angular.module('starter.controllers')
 })
 .filter('firstMayus', function () {
 return function (input) {
+	if(input)
     return input.substring(0,1).toUpperCase()+input.substring(1).toLowerCase()
 }
 })

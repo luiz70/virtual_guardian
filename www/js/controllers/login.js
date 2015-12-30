@@ -1,11 +1,14 @@
 angular.module('starter.controllers')
-.controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,Notificaciones,$state,$rootScope) {
-	
+.controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,$state,$rootScope) {
 	$scope.$on('$ionicView.beforeEnter',function(){
 		if(Usuario.get()){
 				$ionicViewSwitcher.nextTransition("none");
 				$ionicViewSwitcher.nextDirection('enter');
 				$state.go('app.home.mapa');
+		}
+		$scope.login={
+			Correo:"",
+			Contrasena:""	
 		}
 	})
 	
@@ -57,7 +60,6 @@ angular.module('starter.controllers')
 					Usuario.set(data);
 					$ionicViewSwitcher.nextDirection('forward');
 					$state.go('app.home.mapa');
-					if(window.cordova)Notificaciones.registra(true);
 				}
 			})
 			.error(function(){

@@ -1,9 +1,9 @@
 angular.module('starter.controllers')
-.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout,Ubicacion){
 	$scope.map=$rootScope.map;
 	$scope.ubicacion=$rootScope.ubicacion;
 	$scope.radio=$rootScope.radio;
-	$scope.controls=[
+	$rootScope.controls=[
 		{nombre:"buscar",
 			id:1,
 			activo:false,
@@ -16,7 +16,7 @@ angular.module('starter.controllers')
 			activo:false,
 			activable:true,
 			onClick:function(){
-			$scope.refreshLocation();
+				$scope.refreshLocation();
 			},
 		},
 		{nombre:"actualizar",
@@ -53,9 +53,10 @@ angular.module('starter.controllers')
 			},
 		},
 	]
+	$scope.controls=$rootScope.controls;
 	$scope.controlClick=function(i){
 		//if($scope.controls[i].activable)$scope.controls[i].activo=!$scope.controls[i].activo
-		$scope.controls[i].onClick()
+		$rootScope.controls[i].onClick()
 		
 	}
 	uiGmapIsReady.promise()
@@ -82,8 +83,10 @@ angular.module('starter.controllers')
 		opacity:1
 		},200);
 	}
-$scope.refreshLocation=function(){
-		Mapa.refreshLocation();
+	$scope.refreshLocation=function(){
+		$rootScope.eventosMap=[];
+		Ubicacion.refreshLocation();
+		
 	}
 	$scope.carPark=function(){
 		$rootScope.map.auto.posicionando=true;

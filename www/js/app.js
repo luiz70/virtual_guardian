@@ -122,6 +122,10 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
                 templateUrl: 'templates/mapa.html',
 				controller: 'Mapa'
             },
+			'contenido-menu':{
+				templateUrl: 'templates/menu_contenido.html',
+				controller: 'Menu'
+			}
         }
     })
 	.state('app.home.notificaciones', {
@@ -132,6 +136,10 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
                 templateUrl: 'templates/notificaciones.html',
 				controller: 'Notificaciones'
             },
+			/*'contenido-menu':{
+				templateUrl: 'templates/menu_contenido.html',
+				controller: 'Menu'
+			}*/
         }
     })
 	.state('app.home.personas', {
@@ -142,6 +150,10 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
                 templateUrl: 'templates/personas.html',
 				controller: 'Personas'
             },
+			/*'contenido-menu':{
+				templateUrl: 'templates/menu_contenido.html',
+				controller: 'Menu'
+			}*/
         }
     })
   /* setup an abstract state for the tabs directive

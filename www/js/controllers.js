@@ -39,6 +39,15 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
     		}, 200);
 	
 })
+.controller('Menu', function($scope,$rootScope,Message) {
+	$scope.cerrarSesion=function(){
+		Message.confirm($rootScope.idioma.Menu[7],$rootScope.idioma.Login[10],function(res){
+			if(res){
+				$rootScope.cerrarSesion();
+			}
+		},null,null,false,true)
+	}
+})
 .controller('Notificaciones', function($scope,$timeout,ionicMaterialMotion,ionicMaterialInk) {
 	$scope.Amigos=[
 		{ 

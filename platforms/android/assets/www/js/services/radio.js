@@ -1,7 +1,9 @@
 angular.module('starter.services')
-.factory('Radio',function($rootScope,uiGmapGoogleMapApi,Ubicacion,Eventos){
+.factory('Radio',function($rootScope,uiGmapGoogleMapApi,Ubicacion,Eventos,Memory){
 	//function que inicializa el radio
 	var inicializa=function(){
+		$rootScope.radio=Memory.get("Radio");
+		if(!$rootScope.radio)
 		//define el objeto radio que sera quien controla el mapa
 		$rootScope.radio={
 			center:$rootScope.ubicacion.position,
@@ -16,11 +18,13 @@ angular.module('starter.services')
 			//define si el circulo esta activo o no (validacion de marcadores)
             activo:true,
 			//define si el circulo esta visible o no (solo proyeccion)
-			visible:true,
+			visible:true
+			
         }
 		//inicializa los eventos del radio
 		$rootScope.radio.events={
 			radius_changed:function(data){
+				
 				Eventos.hideAll();
 				$rootScope.radio.visible=false;
 				$rootScope.radio.visible=true;	
@@ -30,16 +34,24 @@ angular.module('starter.services')
 		//funcion que se ejecuta cada que el radio es cambiado
 		$rootScope.$watch('radio.radio', function(newValue, oldValue) {
 			if(newValue){
-				
+				$rootScope.eventosMap=[];
 				$rootScope.radio.radio=parseInt(newValue);
 				//revisaEventos($rootScope.map.ubicacion.position);
 			}
 		});
 		//funcion que se ejecuta cada que cambia el estado del radio
 		$rootScope.$watch('radio.activo', function(newValue, oldValue) {
-			//if($rootScope.radio) revisaEventos($rootScope.map.ubicacion.position);
-			Eventos.showHide()
+			if($rootScope.radio) {
+				$rootScope.radio.activo=newValue
+				$rootScope.eventosMap=[];
+				Eventos.refresh();
+				
+			}
+			
 		});
+		$rootScope.$watch('radio', function(newValue, oldValue) {
+			Memory.set("Radio",$rootScope.radio)
+		},true)
 	}
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	uiGmapGoogleMapApi.then(function(maps) {
@@ -55,6 +67,14 @@ angular.module('starter.services')
 		},
 		setRadio:function(val){
 			$rootScope.radio.radio=parseInt(val)
+		},
+		hide:function(){
+			$rootScope.radio.fill={color:'#39bbf7',opacity:0};
+			$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0};
+		},
+		show:function(){
+			$rootScope.radio.fill={color:'#39bbf7',opacity:0.13};
+			$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0.6};
 		}
 	}
 })

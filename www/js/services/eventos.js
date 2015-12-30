@@ -15,7 +15,43 @@ angular.module('starter.services')
 		$rootScope.idEventos=$.map($rootScope.eventos, function(v, i){return v.id;})
 		$rootScope.editEventos=$.map($rootScope.eventos, function(v, i){return v.edit;})
 		//se envian los ids al servidor
-		socket.emit('setInfo',{ids:$rootScope.idEventos,edit:$rootScope.editEventos});		
+		socket.emit('setInfo',{ids:$rootScope.idEventos,edit:$rootScope.editEventos});	
+	}
+	var newEvent=function(data){
+		getEventosServer();
+	}
+	var eventosEditados=function(data){
+		for(var i=0;i<data.length;i++){
+			
+			var e=_.findIndex($rootScope.eventos, { id: data[i].id });
+			if(e)$rootScope.eventos[e]=data[i];
+			Evento.load(data[i].id);
+		}
+	}
+	var eventosEliminados=function(data){
+		for(var i=0;i<data.length;i++){
+			var e=_.findIndex($rootScope.eventos, { id: parseInt(data[i])})
+			var em=_.findIndex($rootScope.eventosMap, { id: data[i].id });
+			if(e>=0){
+				$rootScope.eventos.splice(e,1);
+			}
+			if(em)$rootScope.eventosMap.splice(em,1);
+		}
+	}
+	var getEventos=function(ids){
+		$rootScope.eventosMap=[];
+		for(var i=0; i<ids.length;i++)
+			Evento.load(ids[i]);
+	}
+	var listeners=function(){
+		socket.getSocket().removeListener('newEvent',newEvent)
+		socket.getSocket().removeListener('eventosEditados',eventosEditados)
+		socket.getSocket().removeListener('eventosEliminados',eventosEliminados)
+		socket.getSocket().removeListener('getEventos',getEventos)
+		socket.getSocket().on('newEvent',newEvent)
+		socket.getSocket().on('eventosEditados',eventosEditados)
+		socket.getSocket().on('eventosEliminados',eventosEliminados)
+		socket.getSocket().on('getEventos',getEventos)	
 	}
 	
 	var getEventosServer=function(){
@@ -25,6 +61,7 @@ angular.module('starter.services')
 		},400)
 	}
 	var serverCall=function(){
+		
 		//se verifica si hay filtros para derifinir las fechas
 		if(!$rootScope.filtros.activos){
 			//si no hay filtros se definen en base al periodo establecido
@@ -64,47 +101,9 @@ angular.module('starter.services')
 					ln2:b.getNorthEast().lng()}
 		}
 		//se envia la peticion al servidor de los eventos en el bounds seleccionado en las fechas seleccionadas.
-		socket.getSocket().emit('getEventos',bounds,f1,f2);
+		if(socket.isConnected)socket.getSocket().emit('getEventos',bounds,f1,f2);
 	}
-	socket.getSocket().on('newEvent',function(data){
-		getEventosServer();
-	})
-	socket.getSocket().on('eventosEditados',function(data){
-		for(var i=0;i<data.length;i++){
-			
-			var e=_.findIndex($rootScope.eventos, { id: data[i].id });
-			if(e)$rootScope.eventos[e]=data[i];
-			Evento.load(data[i].id);
-		}
-		
-	})
-	socket.getSocket().on('test',function(data){
-		alert(data);
-	})
-	//socket.getSocket().emit('test');
 	
-	socket.getSocket().on('eventosEliminados',function(data){
-		for(var i=0;i<data.length;i++){
-			
-			var e=_.findIndex($rootScope.eventos, { id: parseInt(data[i])})
-			var em=_.findIndex($rootScope.eventosMap, { id: data[i].id });
-			if(e>=0){
-				$rootScope.eventos.splice(e,1);
-			}
-			if(em)$rootScope.eventosMap.splice(em,1);
-		}
-	})
-	socket.getSocket().on('getEventos',function(ids){
-		/*for(var i=0; i<data.length;i++)
-		data[i]=Evento.create(data[i]);
-		$rootScope.eventos=_.uniq(_.union($rootScope.eventos,data),function(item) { return item.id;});
-		revisashowHide();
-		*/
-		
-		$rootScope.eventosMap=[];
-		for(var i=0; i<ids.length;i++)
-			Evento.load(ids[i]);
-	})
 	
 	$rootScope.$watch('fechaEventos', function(newValue, oldValue) {
 		if(newValue)Memory.set('FechaEventos',$rootScope.fechaEventos)
@@ -134,6 +133,11 @@ angular.module('starter.services')
 	return {
 		inicializa:function(){
 			inicializa();
+			listeners();
+			Evento.listeners();
+		},
+		listeners:function(){
+			listeners();
 		},
 		refresh:function(){
 			getEventosServer();

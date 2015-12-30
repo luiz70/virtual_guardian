@@ -6,6 +6,7 @@ angular.module('starter.controllers')
   var idiomas = {
   	es:{
 		General:{
+			0:"Virtual Guardian",
 			1:"Cargando...",
 			2:"Aceptar",
 			3:"Conexión a internet",
@@ -23,7 +24,8 @@ angular.module('starter.controllers')
 			7:"El correo electrónico y la contraseña que ingresaste no coinciden con nuestros registros.\nPor favor, revisa e inténtalo de nuevo.",
 			8:"Iniciando sesión...",
 			9:"Cerrando sesión...",
-			10:"¿Desea cerrar su sesión?"
+			10:"¿Desea cerrar su sesión?",
+			11:"Alguien mas ha iniciado sesión con este usuario.<br>Inicie sesión de nuevo",
 		},
 		Registro:{
 			1:"Registro",
@@ -75,6 +77,12 @@ angular.module('starter.controllers')
 		},
 		Menu:{
 			1:"Suscripción",
+			2:"Ajustes de cuenta",
+			3:"Ajustes de notificaciones",
+			4:"Iconos",
+			5:"Ayuda",
+			6:"Acerca de",
+			7:"Cerrar sesión"
 		},
 		Auto:{
 			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto."

@@ -1,11 +1,12 @@
 angular.module('starter.services')
-.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos){
+.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos,$interval){
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	uiGmapGoogleMapApi.then(function(maps) {
 		getLocation();
 	})
 	var eventos=[];
 	var pos={}
+	var interval=null;
 	//funcion que inicializa la ubicacion
 	var inicializa=function(){
 		//carga los datos guardados de la ubicacion
@@ -17,7 +18,7 @@ angular.module('starter.services')
 			//la posicion que tiene el marcador
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			//la ultima ubicacion del usuario obtenida
-			location:{ latitude: 20.6737919, longitude:  -103.3354131 },
+			location:{ latitude: 20.6737914, longitude:  -103.3354131 },
 			track:false,
 			//opciones de marcadores (google maps api v3)
 			options:{
@@ -124,9 +125,16 @@ angular.module('starter.services')
 		
 		return icono;
 	}
+	var track=function(val){
+		/*if(interval)$interval.cancel()
+		if(val && ($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)))
+		interval=$interval(function(){
+			getLocation();
+		},15000)*/
+	}
 	//funcion que se ejecuta una vez que se obtiene la ubicacion del usuario
 	var mapSuccess=function(position){ 
-	
+		track(true)
 		//actualiza el valor de la ultima ubicacion obtenida
 		$rootScope.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
 		//actualiza la posicion del marcador
@@ -135,14 +143,13 @@ angular.module('starter.services')
 		$rootScope.$apply(function(){})
 		//revisa los eventos
 		//revisaEventos($rootScope.map.ubicacion.position);
-		console.log($rootScope.ubicacion.position)
 	}
 	//funcion que se ejecuta cuando se produce un error en la ubicacion del evento
 	var mapError=function(error){
     }
 	//
 	var getLocation=function(){
-		navigator.geolocation.getCurrentPosition(mapSuccess, mapError);
+		navigator.geolocation.getCurrentPosition(mapSuccess, mapError,{enableHighAccuracy: true,timeout:15000 });
 	}
 	
 	return {

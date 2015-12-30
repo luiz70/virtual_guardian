@@ -16,6 +16,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 .factory('Message', function(localStorageService,$ionicLoading,$ionicPopup,$cordovaToast) {
 	var dictionary=null
 	var alertPopUp=null;
+	var confirmPopUp=null;
 	return {
 		setDictionary:function(dictionary){
 			this.dictionary=dictionary
@@ -41,6 +42,44 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
    			alertPopUp.then(function(res) {
      			funcion();
    			});
+		},
+		confirm:function(titulo,texto,funcion,btn1,btn2,closable,callback){
+			if(confirmPopUp)confirmPopUp.close();
+			callback=callback || false
+			btn1 = btn1 || this.dictionary.General[2];
+    		btn2 = btn2 || this.dictionary.General[6];
+			closable=closable||function(){return true};
+			confirmPopUp = $ionicPopup.confirm({
+     			title: titulo,
+     			template: "<div>"+texto+"</div>"+
+				'<div id="botones_confirm"></div>',
+				buttons: [{ 
+    				text: btn2,
+    				type: 'button-default',
+    				onTap: function(){
+					  return 0;
+					}
+  				},{
+    				text: btn1,
+    				type: 'button-positive',
+    				onTap: function(){
+						return 1;
+					}
+  				}]
+   			});
+			if(!closable())$timeout(function(){
+				$(".popup-buttons").addClass("ng-hide");
+				$(".popup-visible").removeClass("ng-hide");
+			},10);
+			confirmPopUp.then(function(res) {
+			if(res) {
+				confirmPopUp.close();
+				funcion(res);
+			} else {
+				if(callback)funcion(res);
+				confirmPopUp.close();
+			}
+		})
 		}
 	}
 
@@ -66,19 +105,47 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
-.factory('Usuario',function($http,$rootScope){
+.factory('Usuario',function($http,$rootScope,socket,$interval,Message){
 	$rootScope.Usuario;
+	var interval=null;
+	var refresh=function(){
+		if($rootScope.Usuario){
+			socket.getSocket().emit("getUsuario",$rootScope.Usuario.Id)
+		}else console.log("no logged");
+		socket.getSocket().on("getUsuario",revisaUsuario)
+	}
+	var revisaUsuario=function(data){
+		console.log(3);
+		
+		socket.getSocket().removeListener("getUsuario",revisaUsuario);
+		if($rootScope.Usuario.Registro!=data.Registro){
+			if(interval)$interval.cancel(interval);
+				//cuanta iniciada por alguien mas
+				Message.alert($rootScope.idioma.General[0],$rootScope.idioma.Login[11],function(){
+					$rootScope.cerrarSesion();
+				})
+		}else{
+		}
+	}
 	
 	return {
 		login:function(credentials){
 			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
 		},
 		refresh:function(){
-			$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
+			if(interval)$interval.cancel(interval);
+			refresh();
+			interval=$interval(function(){
+				refresh();
+			},10000)
     		return true;
 		},
 		set:function(usuario){
 			$rootScope.Usuario=usuario
+			if(usuario==null && interval){
+				$interval.cancel(interval);
+				socket.close();
+			}
 			return true;
 		},
 		get:function(){
@@ -86,15 +153,21 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
-.factory('socket', function (socketFactory,$rootScope) {
+.factory('socket', function (socketFactory,$rootScope,Memory) {
     var conectado=false;
-         var socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
+	var socket ;
+	var socketFactory;
+	var inicializa=function(){
+		if(!socket){socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
                                     reconnection:true,
 									query: "Token="+$rootScope.Usuario.Token
                                  });
-    var socketFactory = socketFactory({
-        ioSocket: socket
-    });
+			socketFactory = socketFactory({
+        		ioSocket: socket
+    		});
+		}else socket.connect();
+    	
+	
     socketFactory.on("connect",function(){
         conectado=true;
     })
@@ -124,8 +197,12 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     socketFactory.on("error",function(){
         conectado=false;
     })
+	}
          
     return {
+		inicializa:function(){
+			inicializa()
+		},
          getSocket:function(){
             return socketFactory
          },
@@ -138,12 +215,17 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
          },
 		 emit:function(event,obj){
 			 socketFactory.emit(event,obj);
+		 
+		 },
+		 close:function(){
+			 socket.removeAllListeners();
+			 socket.disconnect();
 		 }
     };
 })
 
 
-.factory('Notificaciones',function($http,$rootScope){
+.factory('Notificaciones',function($http,$rootScope,$cordovaPush,socket){
 	var iosConfig = {
     	"badge": true,
     	"sound": true,
@@ -153,7 +235,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     	"senderID": "12591466094",
   	};
   	var registra=function(token){
-		$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: {
+		/*$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: {
 			Id:$rootScope.Usuario.Id,
 			Registro:deviceToken,
 			Os:window.device.platform.toUpperCase()
@@ -161,8 +243,21 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		.success(function(){
 			console.log("registrado");
 			$rootScope.Usuario.Registro=deviceToken;
-		})
+		})*/
+		socket.getSocket().emit("setDevice",$rootScope.Usuario.Id,token,window.device.platform)
+		socket.getSocket().on("setDevice",setDevice);
+		socket.getSocket().on("errorSetDevice",errorSetDevice);
   	}
+	var errorSetDevice=function(data){
+		$timeout(function(){
+			registra(data);
+		},5000);
+	}
+	var setDevice=function(data){
+		socket.getSocket().removeListener("setDevice",setDevice);
+		$rootScope.Usuario.Registro=data;
+	}
+	
 	 $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
 		switch(notification.event) {
 			case 'registered': if(notification.regid.length > 0 )	registra(notification.regid);
@@ -175,6 +270,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	return {
 		registra:function(state){
 			if(state){
+				if(window.cordova)
 				switch(window.device.platform.toLowerCase()){
 					case "android":
 						$cordovaPush.register(androidConfig).then(function(result){});
@@ -183,6 +279,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 						$cordovaPush.register(iosConfig).then(registra)
 					break;
 				}
+				else registra("")
 			}else{
 				$cordovaPush.unregister(options).then(function(result) {
 					registra("");

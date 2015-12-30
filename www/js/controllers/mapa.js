@@ -7,6 +7,12 @@ angular.module('starter.controllers')
 	$scope.selectedMarker=$rootScope.selectedMarker;
 	$scope.idioma=$rootScope.idioma;
 	$scope.error=false;
+	Mapa.inicializa();
+	$scope.$on('$ionicView.afterEnter',function(){
+		if($rootScope.cerrada){
+			//Mapa.inicializa();
+		}
+	})
 	//funcion que se ejecuta cuando el mapa se carga 
 	uiGmapIsReady.promise().then(function(maps){
 		//declara que el mapa se cargo
@@ -19,12 +25,22 @@ angular.module('starter.controllers')
 	})
 	$scope.loadData=function(){
 		//$timeout(function(){$scope.cargandoInfo=false;},2000)
-		if(!$scope.selectedMarker.options.data.info)socket.emit("getInfoEvento",{id:$scope.selectedMarker.id,edit:-1})
-		else socket.emit("getInfoEvento",{id:$scope.selectedMarker.id,edit:$scope.selectedMarker.options.data.info.Edit})
-		
+		if(!$scope.selectedMarker.options.data.info){
+			socket.emit("getInfoEvento",{id:$scope.selectedMarker.id,edit:-1})
+			socket.getSocket().on("getInfoEvento",getInfoEvento);
+		}
+		else {
+			if(!socket.isConnected){
+				$scope.cargandoInfo=false;
+			}else	{
+				socket.emit("getInfoEvento",{id:$scope.selectedMarker.id,edit:$scope.selectedMarker.options.data.info.Edit})
+				socket.getSocket().on("getInfoEvento",getInfoEvento);
+			}
+		}
 	}
-	socket.getSocket().on("getInfoEvento",function(data){
-		
+	
+	var getInfoEvento=function(data){
+		socket.getSocket().removeListener("getInfoEvento",getInfoEvento);
 		if(data){
 			if(data!==1) $scope.selectedMarker.options.data.info=data;
 			$scope.cargandoInfo=false;
@@ -34,7 +50,7 @@ angular.module('starter.controllers')
 			$scope.cargandoInfo=false;
 			$scope.error=true;
 		}
-	})
+	}
 	$rootScope.$watch("selectedMarker",function(newValue){
 		if(newValue){
 			$scope.selectedMarker=newValue

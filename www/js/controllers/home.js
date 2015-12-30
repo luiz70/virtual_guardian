@@ -1,9 +1,16 @@
 angular.module('starter.controllers')
-.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory) {
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,Notificaciones,Usuario) {
+	socket.inicializa();
+	socket.getSocket().on("connect",function(){
+		Notificaciones.registra(true);
+		Usuario.refresh();
+	})
+	
 	$scope.menuWidth=window.innerWidth*0.85;
 	$scope.menuAbierto=false;
 	$scope.seccion=1;
 	$scope.menuOpen=false
+	
 	$scope.$watch(function () {
     	return $ionicSideMenuDelegate.isOpenLeft();
   	},
@@ -19,6 +26,7 @@ angular.module('starter.controllers')
 	$scope.isCover=function(){
 		return $ionicSideMenuDelegate.isOpen()
 	}
+	
 	$scope.$on('$ionicView.beforeEnter',function(){
 		$scope.seccion=$state.current.id;
 	})

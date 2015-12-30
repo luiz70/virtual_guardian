@@ -214,3 +214,7 @@ position:relative;
 	transform: translate3d(0,0,0);
 	backface-visibility:hidden;
 }
+.spinner svg {
+ stroke: #059DB5;
+ fill: #F5F5F5;
+}

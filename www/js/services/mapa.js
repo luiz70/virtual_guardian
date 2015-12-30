@@ -2,16 +2,20 @@ angular.module('starter.services')
 .factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory,Radio,Ubicacion,Filtros,Eventos,Cluster){
 	
 	//function que se ejecuta una vez que el script de google maps esta cargado
-	uiGmapGoogleMapApi.then(function(maps) {
+	
 		//inicializa los componentes del mapa
+		//inicializa();
+	//})
+	var inicializa=function(){
+		uiGmapGoogleMapApi.then(function(maps) {
 		Ubicacion.inicializa();
 		Radio.inicializa();
 		Filtros.inicializa();
 		Eventos.inicializa();
 		Cluster.inicializa();
-		
+		Ubicacion.refreshLocation();
 		//carga la informacion del mapa guardada
-   		$rootScope.map=Memory.get('Mapa')
+   		if(!$rootScope.map)$rootScope.map=Memory.get('Mapa')
 		//Si no hay informacion guardada, inicializa el mapa
 		if(!$rootScope.map)
 		$rootScope.map = { 
@@ -57,6 +61,7 @@ angular.module('starter.services')
 		$rootScope.map.events={
 			//cuando se mueve la pantalla
 			bounds_changed:function(event){
+				
 				//declaracion del contenido actual del mapa
 				var bounds=$rootScope.map.getGMap().getBounds();
 				//declaracion del objeto de contenido.
@@ -70,9 +75,20 @@ angular.module('starter.services')
 					//longitud northwest
 					ln2:bounds.getNorthEast().lng()
 				}
+				
 			}
 		}
-	});
+		})
+		uiGmapIsReady.promise().then(function(maps){
+		//carga los eventos
+		//Eventos.refresh();
+		//animacion del mapa una vez cargado
+    	$(".angular-google-map").animate({
+			opacity:1,
+        },500);
+		
+	})   
+	};
 	//function que vigila la region visualizada en el mapa
 	$rootScope.$watch('map.bounds', function(newValues, oldValues, scope) {
 		//console.log($rootScope.map.bounds);
@@ -86,16 +102,10 @@ angular.module('starter.services')
 		if(newValue)Memory.set('Mapa',$rootScope.map)
 	}, true)
 	//function que se ejecuta una vez que el mapa esta cargado
-	uiGmapIsReady.promise().then(function(maps){
-		//carga los eventos
-		Eventos.refresh();
-		//animacion del mapa una vez cargado
-    	$(".angular-google-map").animate({
-			opacity:1,
-        },500);
-	})   
+	
 	return {
-		func:function(){
+		inicializa:function(){
+			inicializa();
 		},
 	}
 })

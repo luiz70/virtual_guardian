@@ -85,13 +85,17 @@ angular.module('starter.services')
 			} 
 		}
 	}
-	socket.getSocket().on('getEvento',function(data){
-		if(data){
-			$rootScope.eventos=_.uniq(_.union($rootScope.eventos,[data]),function(item) { return item.id;});
-			if(revisa(data))$rootScope.eventosMap=_.uniq(_.union($rootScope.eventosMap,[create(data)]),function(item) { return item.id;});
-			//$rootScope.eventosMap.push(create(data))
+	var getEvento=function(data){
+			if(data){
+				$rootScope.eventos=_.uniq(_.union($rootScope.eventos,[data]),function(item) { return item.id;});
+				if(revisa(data))$rootScope.eventosMap=_.uniq(_.union($rootScope.eventosMap,[create(data)]),function(item) { return item.id;});
+				//$rootScope.eventosMap.push(create(data))
+			}
 		}
-	})
+	var listeners=function(){
+		socket.getSocket().removeListener('getEvento',getEvento)
+		socket.getSocket().on('getEvento',getEvento)
+	}
 	var revisa=function(data){
 		/*if(hidden){
 			console.log(2);
@@ -132,6 +136,9 @@ angular.module('starter.services')
 		hide:function(data){
 			hidden=data;
             
+		},
+		listeners:function(){
+			listeners();
 		}
 	}
 })
