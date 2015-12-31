@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos,$interval){
+.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos,$interval,Message){
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	uiGmapGoogleMapApi.then(function(maps) {
 		getLocation();
@@ -99,7 +99,10 @@ angular.module('starter.services')
 		navigator.geolocation.clearWatch(positionId);
 	}, false);
 	document.addEventListener("resume", function(){
-		getLocation();
+		if($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10))getLocation();
+		else{
+			//preguntar si quiere actualizar ubicacion
+		}
 	}, false);
 	//function que se ejecuta cada que la posicion del marcador cambia
 	$rootScope.$watch('ubicacion.position', function(newValue, oldValue) {

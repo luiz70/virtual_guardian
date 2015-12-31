@@ -66,7 +66,7 @@ angular.module('starter.controllers')
 			36:"Tu registro ha caducado, es necesario que realices el registro de nuevo."
 		},
 		Mapa:{
-			1:"Radio: ",
+			1:"Radio: "
 			
 		},
 		Info:{

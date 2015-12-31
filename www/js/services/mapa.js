@@ -89,6 +89,9 @@ angular.module('starter.services')
 		
 	})   
 	};
+	document.addEventListener("resume", function(){
+		alert("resume");
+	})
 	//function que vigila la region visualizada en el mapa
 	$rootScope.$watch('map.bounds', function(newValues, oldValues, scope) {
 		//console.log($rootScope.map.bounds);
