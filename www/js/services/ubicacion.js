@@ -95,6 +95,12 @@ angular.module('starter.services')
 			}
 		}
 	}
+	document.addEventListener("pause", function(){
+		navigator.geolocation.clearWatch(positionId);
+	}, false);
+	document.addEventListener("resume", function(){
+		getLocation();
+	}, false);
 	//function que se ejecuta cada que la posicion del marcador cambia
 	$rootScope.$watch('ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
@@ -104,7 +110,7 @@ angular.module('starter.services')
 			//actualiza el icono
 			$rootScope.ubicacion.options.icon=getIconUbicacion();
 			if($rootScope.radio.activo)Eventos.refresh()
-			//if(!($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)))navigator.geolocation.clearWatch(positionId);
+			if(!($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)))navigator.geolocation.clearWatch(positionId);
 		}
 	},true);
 	$rootScope.$watch('ubicacion', function(newValue, oldValue) {
