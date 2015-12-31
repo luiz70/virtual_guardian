@@ -92,6 +92,9 @@ angular.module('starter.services')
 			},
 			position_changed:function(event){
 				//$rootScope.$apply(function(){})
+			},
+			dblclick:function(event){
+				$rootScope.map.zoom=18
 			}
 		}
 	}
@@ -109,6 +112,7 @@ angular.module('starter.services')
   		if(newValue){
 			$rootScope.radio.center={ latitude: newValue.latitude, longitude:  newValue.longitude};
 			//centra el mapa en la nueva ubicación
+			if(oldValue.latitude.toFixed(10)==$rootScope.map.center.latitude.toFixed(10) && oldValue.longitude.toFixed(10)==$rootScope.map.center.longitude.toFixed(10))
 			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
 			//actualiza el icono
 			$rootScope.ubicacion.options.icon=getIconUbicacion();
