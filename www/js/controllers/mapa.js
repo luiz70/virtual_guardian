@@ -84,7 +84,7 @@ return function (input,scope) {
 .filter('direccion', function () {
 return function (input,scope) {
    if(input){
-	   var palabras=["y","de"]
+	   var palabras=["del","la","al","de","por","y","a","e"]
 	   	var direc=[]
 		if(input.Calles.trim()!="")direc.push(input.Calles)
 		if(input.Colonia.trim()!="")direc.push(input.Colonia)

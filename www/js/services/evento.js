@@ -27,7 +27,7 @@ angular.module('starter.services')
 				data:data
 			},
 			events:{
-				mouseup:function(){
+				click:function(){
 					InfoEvento.select(this.getGMarker().data.id)
 					InfoEvento.visible(true);
 				},

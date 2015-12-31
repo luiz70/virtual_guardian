@@ -116,7 +116,6 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	}
 	var revisaUsuario=function(data){
 		console.log(3);
-		
 		socket.getSocket().removeListener("getUsuario",revisaUsuario);
 		if($rootScope.Usuario.Registro!=data.Registro){
 			if(interval)$interval.cancel(interval);
@@ -137,7 +136,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			refresh();
 			interval=$interval(function(){
 				refresh();
-			},10000)
+			},900000)
     		return true;
 		},
 		set:function(usuario){

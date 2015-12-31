@@ -19,16 +19,8 @@ angular.module('starter.controllers')
 				$scope.refreshLocation();
 			},
 		},
-		{nombre:"actualizar",
-			id:3,
-			activo:false,
-			activable:false,
-			onClick:function(){
-			
-			},
-		},
 		{nombre:"auto",
-			id:4,
+			id:3,
 			activo:false,//$rootScope.map.auto.activo,
 			activable:true,
 			posicionando:false,
@@ -37,7 +29,7 @@ angular.module('starter.controllers')
 			},
 		},
 		{nombre:"filtro",
-			id:5,
+			id:4,
 			activo:false,
 			activable:true,
 			onClick:function(){
@@ -45,7 +37,7 @@ angular.module('starter.controllers')
 			},
 		},
 		{nombre:"periodo",
-			id:6,
+			id:5,
 			activo:false,
 			activable:false,
 			onClick:function(){

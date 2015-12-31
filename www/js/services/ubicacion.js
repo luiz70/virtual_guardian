@@ -7,6 +7,7 @@ angular.module('starter.services')
 	var eventos=[];
 	var pos={}
 	var interval=null;
+	var positionId=null;
 	//funcion que inicializa la ubicacion
 	var inicializa=function(){
 		//carga los datos guardados de la ubicacion
@@ -102,6 +103,8 @@ angular.module('starter.services')
 			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
 			//actualiza el icono
 			$rootScope.ubicacion.options.icon=getIconUbicacion();
+			if($rootScope.radio.activo)Eventos.refresh()
+			//if(!($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)))navigator.geolocation.clearWatch(positionId);
 		}
 	},true);
 	$rootScope.$watch('ubicacion', function(newValue, oldValue) {
@@ -133,8 +136,7 @@ angular.module('starter.services')
 		},15000)*/
 	}
 	//funcion que se ejecuta una vez que se obtiene la ubicacion del usuario
-	var mapSuccess=function(position){ 
-		track(true)
+	var positionSuccess=function(position){ 
 		//actualiza el valor de la ultima ubicacion obtenida
 		$rootScope.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
 		//actualiza la posicion del marcador
@@ -145,11 +147,13 @@ angular.module('starter.services')
 		//revisaEventos($rootScope.map.ubicacion.position);
 	}
 	//funcion que se ejecuta cuando se produce un error en la ubicacion del evento
-	var mapError=function(error){
+	var positionError=function(error){
     }
 	//
 	var getLocation=function(){
-		navigator.geolocation.getCurrentPosition(mapSuccess, mapError,{enableHighAccuracy: true,timeout:15000 });
+		navigator.geolocation.clearWatch(positionId);
+		positionId = navigator.geolocation.watchPosition(positionSuccess, positionError,{enableHighAccuracy: true,timeout:15000 });
+		//navigator.geolocation.getCurrentPosition(mapSuccess, mapError,{enableHighAccuracy: true,timeout:15000 });
 	}
 	
 	return {
