@@ -163,8 +163,8 @@ width:100vw;
 }
 .placeMarker{
  width:40px;
- height:40px;
- background:url(../img/iconos/mapa/marcadores/g4.png);
+ height:51px;
+ background:url(../img/iconos/mapa/marcadores/place.png);
  background-size:cover;
  background-position:center;
 position:relative;
@@ -204,7 +204,7 @@ position:relative;
 	margin:auto;
 	position:absolute;
 	opacity: 1;
-	background-color: #026B7B;
+	background-color: #e2e2e2;
 	-webkit-mask-size: cover;
 }
 .fast {
@@ -225,4 +225,7 @@ position:relative;
 	background: #E7E7E7 !important;
     border: solid 1px #8C8C8C !important;
     color: #424242 !important;
+}
+.cluster{
+	opacity:0.9;
 }

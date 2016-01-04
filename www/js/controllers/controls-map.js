@@ -9,6 +9,7 @@ angular.module('starter.controllers')
 			activo:false,
 			activable:false,
 			onClick:function(){
+				$rootScope.search=true;
 			},
 		},
 		{nombre:"ubicacion",

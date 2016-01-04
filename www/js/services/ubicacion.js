@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos,$interval,Message){
+.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos,$interval,Message,$timeout,Lugar){
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	uiGmapGoogleMapApi.then(function(maps) {
 		getLocation();
@@ -39,6 +39,7 @@ angular.module('starter.services')
 			},
 			
 		}
+		$rootScope.ubicacion.centrar=true
 		//define los eventos de la ubicacion
 		$rootScope.ubicacion.events={
 			//cuando el mouse termina el click
@@ -95,11 +96,17 @@ angular.module('starter.services')
 			},
 			dblclick:function(event){
 				$rootScope.map.zoom=18
+				$rootScope.map.center={ latitude: $rootScope.ubicacion.position.latitude, longitude:  $rootScope.ubicacion.position.longitude}
 			}
 		}
+		$timeout(function(){
+			$rootScope.ubicacion.centrar=true
+			getLocation();
+		},10)
 	}
 	document.addEventListener("pause", function(){
 		navigator.geolocation.clearWatch(positionId);
+		
 	}, false);
 	document.addEventListener("resume", function(){
 		if($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10))getLocation();
@@ -110,13 +117,18 @@ angular.module('starter.services')
 	//function que se ejecuta cada que la posicion del marcador cambia
 	$rootScope.$watch('ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
+			Lugar.hide();
 			$rootScope.radio.center={ latitude: newValue.latitude, longitude:  newValue.longitude};
 			//centra el mapa en la nueva ubicación
-			if(oldValue.latitude.toFixed(10)==$rootScope.map.center.latitude.toFixed(10) && oldValue.longitude.toFixed(10)==$rootScope.map.center.longitude.toFixed(10))
-			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
+			if($rootScope.ubicacion.centrar){
+				$rootScope.ubicacion.centrar=false;
+				$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
+				
+			}
 			//actualiza el icono
 			$rootScope.ubicacion.options.icon=getIconUbicacion();
-			if($rootScope.radio.activo)Eventos.refresh()
+			//if($rootScope.radio.activo)
+			Eventos.refresh()
 			if(!($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)))navigator.geolocation.clearWatch(positionId);
 		}
 	},true);
@@ -150,6 +162,7 @@ angular.module('starter.services')
 	}
 	//funcion que se ejecuta una vez que se obtiene la ubicacion del usuario
 	var positionSuccess=function(position){ 
+	
 		//actualiza el valor de la ultima ubicacion obtenida
 		$rootScope.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
 		//actualiza la posicion del marcador
@@ -164,6 +177,7 @@ angular.module('starter.services')
     }
 	//
 	var getLocation=function(){
+		
 		navigator.geolocation.clearWatch(positionId);
 		positionId = navigator.geolocation.watchPosition(positionSuccess, positionError,{enableHighAccuracy: true,timeout:15000 });
 		//navigator.geolocation.getCurrentPosition(mapSuccess, mapError,{enableHighAccuracy: true,timeout:15000 });
@@ -174,7 +188,10 @@ angular.module('starter.services')
 			return inicializa();
 		},
 		refreshLocation:function(){
-			getLocation();
+			$timeout(function(){
+				$rootScope.ubicacion.centrar=true
+				getLocation();
+			},10)
 		},
 		getPosition:function(){
 			return $rootScope.ubicacion.position

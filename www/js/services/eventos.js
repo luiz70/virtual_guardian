@@ -140,6 +140,7 @@ angular.module('starter.services')
 			listeners();
 		},
 		refresh:function(){
+			
 			getEventosServer();
 		},
 		showHide:function(){

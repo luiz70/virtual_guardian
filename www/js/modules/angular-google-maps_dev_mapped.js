@@ -133,7 +133,7 @@ Nicholas McCready - https://twitter.com/nmccready
       china: false,
       v: '3',
       libraries: '',
-      language: 'en'
+      language: 'es'
     };
     this.configure = function(options) {
       angular.extend(this.options, options);

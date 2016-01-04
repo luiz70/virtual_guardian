@@ -5,6 +5,8 @@ angular.module('starter.services')
 	var R     =6378.137 ;      
 	var timer=1000
 	var hidden=false;
+	var double=false;
+	var sel=null;
 	$rootScope.info=false;
 	$rootScope.selected=null;
 	var create=function(data){
@@ -28,8 +30,15 @@ angular.module('starter.services')
 			},
 			events:{
 				click:function(){
-					InfoEvento.select(this.getGMarker().data.id)
-					InfoEvento.visible(true);
+					double=false;
+					/**/
+					sel=this;
+					$timeout(function(){
+						if(!double){
+							InfoEvento.select(sel.getGMarker().data.id)
+							InfoEvento.visible(true);
+						}
+					},300)
 				},
 				visible_changed:function(event){
 					/*data=(_.findWhere($rootScope.eventos, { id: event.key }));
@@ -39,36 +48,17 @@ angular.module('starter.services')
 							revisaEvento(data)
 						},timer)
 					}*/
+				},
+				dblclick:function(event){
+					double=true;
+					$rootScope.map.zoom=18
+					$rootScope.map.center={ latitude: event.data.latitude, longitude:  event.data.longitude}
 				}
 			}
 		};
 	}
 	
-	var addFunctions=function(data){
-		data.options.opacity=0.9
-		/*if(data.options.visible){
-			data.interval=$timeout(function(){
-				revisaEvento(data)
-			},timer)
-		}*/
-		
-		
-		data.events={
-			mouseup:function(){
-				InfoEvento.select(this.getGMarker().data.id)
-				InfoEvento.visible(true);
-			},
-			visible_changed:function(event){
-				/*data=(_.findWhere($rootScope.eventos, { id: event.key }));
-				if(data.interval)$timeout.cancel(data.interval)
-				if(event.visible){
-					data.interval=$timeout(function(){
-						revisaEvento(data)
-					},timer)
-				}*/
-			}
-		}
-	}
+	
 	var revisaEvento=function(data){
 		console.log(data.id);
 	}
@@ -80,7 +70,7 @@ angular.module('starter.services')
 			socket.getSocket().emit('getEvento',id);
 		else{
 			
-			if(revisa(et)){
+			if(dl<0 && revisa(et)){
 				$rootScope.eventosMap=_.uniq(_.union($rootScope.eventosMap,[create(et)]),function(item) { return item.id;});
 			} 
 		}
@@ -120,7 +110,6 @@ angular.module('starter.services')
 	return {
 		create:function(data){
 			var d=create(data)
-			addFunctions(d);
 			return d;
 		},
 		load:function(id){
@@ -129,9 +118,6 @@ angular.module('starter.services')
 		review:function(data){
 			return revisa(data);
 			
-		},
-		inicialize:function(data){
-			return addFunctions(data);
 		},
 		hide:function(data){
 			hidden=data;

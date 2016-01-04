@@ -3,9 +3,11 @@ angular.module('starter.services')
 .factory('InfoEvento',function($rootScope,uiGmapGoogleMapApi,$timeout){
 	$rootScope.info=false;
 	$rootScope.selectedMarker=null;
+	var open=false;
 	
 	var showInfo=function(){
 		$rootScope.info=true;
+		open=true;
 		$(".mapa-descripcion-evento-contenedor").animate({
 			bottom:"0px"
 			},500);
@@ -18,6 +20,7 @@ angular.module('starter.services')
 			});
 	}
 	var hideInfo=function(){
+		open=false;
 		$(".mapa-descripcion-evento-cover").off("click",hideInfo);
 		$(".mapa-descripcion-evento-close").off("click",hideInfo);
 		$(".mapa-descripcion-evento-contenedor").animate({
@@ -41,7 +44,15 @@ angular.module('starter.services')
 			else hideInfo();
 		},
 		select:function(marker){
+			if(!open){
+			if(!marker.data)
 			$rootScope.selectedMarker=_.findWhere($rootScope.eventosMap,{id:marker});
+			else{
+				//if(marker.data.photos && marker.data.photos.length>0)
+				//marker.data.foto=marker.data.photos[0].getUrl({'maxWidth': marker.data.photos[0].width, 'maxHeight': marker.data.photos[0].height})
+				$rootScope.selectedMarker=marker
+			}
+			}
 		}
 	}
 })
