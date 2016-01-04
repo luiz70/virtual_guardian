@@ -17,6 +17,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
   };
 })
 .controller('Personas', function($scope,$timeout,ionicMaterialMotion,ionicMaterialInk) {
+	alert(3);
 	$scope.Amigos=[
 		{ 
 		IdUsuario:1,
@@ -48,28 +49,20 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		},null,null,false,true)
 	}
 })
-.controller('Notificaciones', function($scope,$timeout,ionicMaterialMotion,ionicMaterialInk) {
-	$scope.Amigos=[
-		{ 
-		IdUsuario:1,
-		Nombre: "Luis",
-		Apellido:"bobadilla",
-		Matricula:"a00225979"
-		},
-		{ 
-		IdUsuario:2,
-		Nombre: "Luis",
-		Apellido:"bobadilla",
-		Matricula:"a00225979"
-		}
-	]
-	$timeout(function() {
-        	// Set Motion
-    		ionicMaterialMotion.fadeSlideInRight();
-			// Set Ink
-    		ionicMaterialInk.displayEffect();
-    		}, 200);
-	
+.controller('Notificaciones', function($scope,$timeout,ionicMaterialMotion,ionicMaterialInk,socket) {
+	alert(4);
+	$scope.notificaciones=[]
+	console.log(4);
+	/*socket.getSocket().emit("getNotificaciones");*/
+	$scope.animate=function(){
+		$timeout(function() {
+				// Set Motion
+				ionicMaterialMotion.fadeSlideInRight();
+				// Set Ink
+				ionicMaterialInk.displayEffect();
+				}, 200);
+	}
+	$scope.animate
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {

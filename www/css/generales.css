@@ -229,3 +229,37 @@ position:relative;
 .cluster{
 	opacity:0.9;
 }
+.boton-menu > .ink-ripple{
+	display:none !important;
+}
+.action-sheet-backdrop.active {
+    background-color: rgba(0, 0, 0, 0.68);
+}
+.action-sheet-option, .action-sheet-destructive{
+	box-shadow:none !important;
+	    border-bottom: solid 1px #C9C9C9 !important;
+		font-size: 2.5vh !important;
+		    color: #038296 !important;
+			    font-weight: 400;
+}
+.action-sheet-destructive{
+     color: #BE4306 !important;
+}
+.action-sheet-title{
+	border-bottom: solid 1px #C9C9C9;
+	    font-size: 2.8vh;
+		    color: #1F1F1F !important;
+			    font-weight: 500;
+}
+.action-sheet-options{
+	    background: #F5F4F4;
+		
+}
+.action-sheet-cancel {
+	 background: #F5F4F4;
+	 font-size: 2.5vh !important;
+}
+.action-sheet-cancel > button{
+	background: #F5F4F4;
+	 font-size: 2.5vh !important;
+	 color: #484848 !important;

@@ -211,6 +211,7 @@ return function (input,scope) {
 	   }
 	}
 })
+
 .filter('escalaV', function () {
 	return function (input) {
 	   if(input){

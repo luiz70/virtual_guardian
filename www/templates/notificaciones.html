@@ -3,13 +3,15 @@
         <div class="content">
         <ion-refresher pulling-text="{{idioma.general[3]}}" on-refresh="refreshFs()" spinner="ripple"></ion-refresher>
             <div class="list animate-fade-slide-in-right">
-                <a class="item item-avatar item-icon-right" ng-repeat="amigo in Amigos track by $index"  ng-click="moreFriend(amigo)">
-                    <!--img src={{"https://www.virtual-guardian.com/campus/perfil/"+amigo.IdUsuario+".jpg"}} class="friends-avatar"-->
-                    <h2>{{amigo.Nombre+" "+amigo.Apellido}}</h2>
-                    <p>{{amigo.Matricula}}</p>
+                <a class="item item-avatar item-icon-right notificacion-item-contenido" ng-repeat="notificacion in notificaciones track by $index" ng-click="abreNotificacion(notificacion)" >
+                    <img src={{"img/iconos/notificaciones/"+notificacion.Imagen+".png"}} class="friends-avatar">
+                    <h2>{{notificacion.Asunto}}</h2>
+                    <p>{{notificacion | direccion:this }}</p>
+                    <p class="notificacion-item-fecha">{{notificacion.Fecha+"  "+notificacion.Hora}}</p>
                     <i class="icon ion-android-more-vertical friends-more"></i>
                 </a>
             </div>
+       
             <div class="loading-list" ng-show="Amigos.length==0"><ion-spinner icon="ripple" class="spinner-blue"></ion-spinner></div>
         </div>
            

@@ -13,10 +13,11 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
-.factory('Message', function(localStorageService,$ionicLoading,$ionicPopup,$cordovaToast) {
+.factory('Message', function(localStorageService,$ionicLoading,$ionicPopup,$cordovaToast,$ionicActionSheet) {
 	var dictionary=null
 	var alertPopUp=null;
 	var confirmPopUp=null;
+	var options=null;
 	return {
 		setDictionary:function(dictionary){
 			this.dictionary=dictionary
@@ -80,6 +81,23 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 				confirmPopUp.close();
 			}
 		})
+		},
+		showActionSheet:function(){
+			 var options = $ionicActionSheet.show({
+     			buttons: [
+				   { text: 'Share This' },
+				   { text: 'Move' }
+				 ],
+				 destructiveText: 'Delete',
+				 titleText: 'Modify your album',
+				 cancelText: 'Cancel',
+				 cancel: function() {
+					  // add cancel code..
+					},
+				 buttonClicked: function(index) {
+				   return true;
+				 }
+   			});
 		}
 	}
 

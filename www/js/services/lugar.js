@@ -23,7 +23,6 @@ angular.module('starter.services')
 			click:function(event){
 				InfoEvento.select(event)
 				InfoEvento.visible(true)
-				console.log(event);
 			}
 		}
 	}
