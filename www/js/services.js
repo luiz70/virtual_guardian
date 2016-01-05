@@ -82,22 +82,20 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			}
 		})
 		},
-		showActionSheet:function(){
-			 var options = $ionicActionSheet.show({
-     			buttons: [
-				   { text: 'Share This' },
-				   { text: 'Move' }
-				 ],
-				 destructiveText: 'Delete',
-				 titleText: 'Modify your album',
-				 cancelText: 'Cancel',
-				 cancel: function() {
-					  // add cancel code..
-					},
+		showActionSheet:function(title,buttons,destructive,cancel,result){
+			var settings={
+     			buttons: buttons,
 				 buttonClicked: function(index) {
-				   return true;
+				   result(index,buttons[index])
+				 },
+				 cancel:function(){
+					 result(-1,null)
 				 }
-   			});
+   			}
+			if(cancel)settings.cancelText=cancel
+			if(title)settings.titleText=title
+			if(destructive)settings.destructiveText=destructive
+			 var options = $ionicActionSheet.show(settings);
 		}
 	}
 

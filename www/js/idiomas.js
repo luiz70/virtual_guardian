@@ -89,6 +89,9 @@ angular.module('starter.controllers')
 			6:"Acerca de",
 			7:"Cerrar sesión"
 		},
+		Notificaciones:{
+			1:" en "
+		},
 		Auto:{
 			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto."
 		},

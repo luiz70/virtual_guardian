@@ -1,6 +1,7 @@
 angular.module('starter.controllers')
-.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,Notificaciones,Usuario) {
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,Notificaciones,Usuario,sql) {
 	socket.inicializa();
+	sql.inicializa();
 	socket.getSocket().on("connect",function(){
 		Notificaciones.registra(true);
 		Usuario.refresh();
