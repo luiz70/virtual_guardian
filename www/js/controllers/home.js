@@ -1,12 +1,13 @@
 angular.module('starter.controllers')
 .controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,Notificaciones,Usuario,sql) {
 	socket.inicializa();
-	sql.inicializa();
+	sql.inicializa()
+	
 	socket.getSocket().on("connect",function(){
 		Notificaciones.registra(true);
 		Usuario.refresh();
+		sql.update();
 	})
-	
 	$scope.menuWidth=window.innerWidth*0.85;
 	$scope.menuAbierto=false;
 	$scope.seccion=1;

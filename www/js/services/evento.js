@@ -10,14 +10,16 @@ angular.module('starter.services')
 	$rootScope.info=false;
 	$rootScope.selected=null;
 	var create=function(data){
-		return {
-			id:data.id,
-			latitude:data.latitude,
-			longitude:data.longitude,
-			asunto:data.asunto,
-			editado:data.edit,
+		var d=null
+		if(revisa(data))
+		d={
+			id:data.IdEvento,
+			latitude:data.Latitud,
+			longitude:data.Longitud,
+			asunto:data.Asunto,
+			editado:data.Edicion,
 			icono:{
-				url: 'img/iconos/mapa/marcadores/'+data.asunto+".png",
+				url: 'img/iconos/mapa/marcadores/'+data.Asunto+".png",
 				size: new google.maps.Size(40, 51),
    				origin: new google.maps.Point(0,0),
    				anchor: new google.maps.Point(20, 51),
@@ -56,6 +58,7 @@ angular.module('starter.services')
 				}
 			}
 		};
+		return d;
 	}
 	
 	
@@ -76,15 +79,15 @@ angular.module('starter.services')
 		}
 	}
 	var getEvento=function(data){
-			if(data){
+		/*	if(data){
 				$rootScope.eventos=_.uniq(_.union($rootScope.eventos,[data]),function(item) { return item.id;});
 				if(revisa(data))$rootScope.eventosMap=_.uniq(_.union($rootScope.eventosMap,[create(data)]),function(item) { return item.id;});
 				//$rootScope.eventosMap.push(create(data))
-			}
+			}*/
 		}
 	var listeners=function(){
-		socket.getSocket().removeListener('getEvento',getEvento)
-		socket.getSocket().on('getEvento',getEvento)
+		//socket.getSocket().removeListener('getEvento',getEvento)
+		//socket.getSocket().on('getEvento',getEvento)
 	}
 	var revisa=function(data){
 		/*if(hidden){
@@ -98,9 +101,9 @@ angular.module('starter.services')
 				return true;
 			}else {
 				var pos=$rootScope.ubicacion.position;
-				var dLat  = rad( pos.latitude - data.latitude );
-  				var dLong = rad( pos.longitude - data.longitude );
-				var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(data.latitude)) * Math.cos(rad(pos.latitude)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+				var dLat  = rad( pos.latitude - data.Latitud );
+  				var dLong = rad( pos.longitude - data.Longitud );
+				var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(data.Latitud)) * Math.cos(rad(pos.latitude)) * Math.sin(dLong/2) * Math.sin(dLong/2);
   				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   				var d = R * c;
 				if( (d.toFixed(3)*1000)>$rootScope.radio.radio)return false;

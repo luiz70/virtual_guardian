@@ -12,7 +12,7 @@ angular.module('starter.controllers')
 			3:"Conexión a internet",
 			4:"No hay conexión a internet.",
 			5:"Actualizar",
-			6:"Cancelar",
+			6:"Cancelar"
 		},
 		Login:{
 			1:"Iniciar Sesión",
@@ -69,8 +69,18 @@ angular.module('starter.controllers')
 			1:"Radio: ",
 			2:"Buscador de eventos",
 			3:"Escribe para buscar lugares",
-			4:"No hay resultados para"
+			4:"No hay resultados para",
+			5:"Mostrar los eventos de los ultimos:",
+			6:"7 días",
+			7:"30 días",
+			8:"6 meses",
+			9:"12 meses"
 			
+		},
+		Filtros:{
+			1:"Filtros de eventos",
+			2:"Fechas",
+			3:"Periodo"
 		},
 		Info:{
 			1:"Fecha: ",
@@ -143,7 +153,17 @@ angular.module('starter.controllers')
 			11:"Noviembre",
 			12:"Diciembre"
 			
-		}
+		},
+		Semana:[
+			"Domingo",
+			"Lunes",
+			"Martes",
+			"Miercoles",
+			"Jueves",
+			"Viernes",
+			"Sabado"
+			
+		]
 		
 	},
 	en:{

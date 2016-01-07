@@ -13,11 +13,12 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		}
 	}
 })
-.factory('Message', function(localStorageService,$ionicLoading,$ionicPopup,$cordovaToast,$ionicActionSheet) {
+.factory('Message', function(localStorageService,$ionicLoading,$ionicPopup,$cordovaToast,$ionicActionSheet,$ionicModal,$rootScope) {
 	var dictionary=null
 	var alertPopUp=null;
 	var confirmPopUp=null;
 	var options=null;
+	var modal=null;
 	return {
 		setDictionary:function(dictionary){
 			this.dictionary=dictionary
@@ -87,6 +88,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
      			buttons: buttons,
 				 buttonClicked: function(index) {
 				   result(index,buttons[index])
+				   options();
 				 },
 				 cancel:function(){
 					 result(-1,null)
@@ -95,7 +97,21 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 			if(cancel)settings.cancelText=cancel
 			if(title)settings.titleText=title
 			if(destructive)settings.destructiveText=destructive
-			 var options = $ionicActionSheet.show(settings);
+			 options = $ionicActionSheet.show(settings);
+		},
+		showModal:function(template){
+			 $ionicModal.fromTemplateUrl(template, {
+				scope: $rootScope,
+				animation: 'slide-in-up',
+				hardwareBackButtonClose:false
+			  }).then(function(mod) {
+    			modal = mod;
+				modal.show();
+  			});
+			  
+		},
+		hideModal:function(){
+			modal.hide();
 		}
 	}
 
@@ -172,6 +188,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     var conectado=false;
 	var socket ;
 	var socketFactory;
+	
 	var inicializa=function(){
 		if(!socket){socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
                                     reconnection:true,
@@ -185,9 +202,13 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	
     socketFactory.on("connect",function(){
         conectado=true;
+		$rootScope.socketState=true;
+		
     })
     socketFactory.on("connect_error",function(){
         conectado=false;
+		$rootScope.socketState=false;
+		
     })
     socketFactory.on("reconnect",function(){
 		if($rootScope.eventos){
@@ -197,12 +218,15 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		socket.emit('setInfo',{ids:$rootScope.idEventos,edit:$rootScope.editEventos});
 		}
         conectado=true;
+		$rootScope.socketState=true;
     })
     socketFactory.on("reconnect_error",function(){
         conectado=false;
+		$rootScope.socketState=false;
     })
     socketFactory.on("disconnect",function(){
         conectado=false;
+		$rootScope.socketState=false;
 
     })
 	socketFactory.on("token",function(token){
@@ -211,12 +235,14 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
     })
     socketFactory.on("error",function(){
         conectado=false;
+		$rootScope.socketState=false;
     })
+	return socketFactory;
 	}
          
     return {
 		inicializa:function(){
-			inicializa()
+			return inicializa()
 		},
          getSocket:function(){
             return socketFactory

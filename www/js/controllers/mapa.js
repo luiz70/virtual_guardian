@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope,Evento,$timeout,socket,$ionicScrollDelegate,Lugar) {
+.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope,Evento,$timeout,socket,$ionicScrollDelegate,Lugar,Message) {
 	//variable que controla si se cargo el mapa en pantalla
 	$scope.mapaCargado=false;
 	$scope.timeout=null
@@ -13,6 +13,7 @@ angular.module('starter.controllers')
 	$scope.buscador="";
 	$scope.resultados=[];
 	$scope.buscando=false;
+	$scope.socketState=$rootScope.socketState
 	Mapa.inicializa();
 	$scope.socket=socket;
 	$scope.lugar=$rootScope.lugar
@@ -22,6 +23,10 @@ angular.module('starter.controllers')
 			//Mapa.inicializa();
 		}
 	})
+	//Message.showModal("templates/modal/filtros.html");
+	$rootScope.$watch("socketState",function (newValue) {
+    	$scope.socketState=$rootScope.socketState;
+  	})
 	$scope.buscaLugares=function(){
 		$scope.buscando=true;
 		if($scope.timeout)$timeout.cancel($scope.timeout)

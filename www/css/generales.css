@@ -263,3 +263,144 @@ position:relative;
 	background: #F5F4F4;
 	 font-size: 2.5vh !important;
 	 color: #484848 !important;
+}
+.datepicker-modal{
+	    height: 100vh !important;
+    width: 100vw !important;
+    max-height: 100vh !important;
+	 background: #272727 !important;
+}
+.datepicker-content{
+	height: 53vh;
+    background: #272727;
+}
+.datepicker-content > .col{
+	        color: #EFEFEF;
+    height: 7vh;
+    line-height: 5vh;
+    font-size: 2.8vh;
+    font-weight: 100;
+}
+.datepicker-content > .col + div > div{
+	background:none !important
+}
+.datepicker-content > .row:not(.col){
+	height: 6vh;
+    padding: 0px;
+    min-height: 0px;
+    margin: 0px;
+}
+
+.datepicker-content > .row:not(.col) > div:not(.datepicker-selected)>div{
+	    color: #E0E0E0;
+}
+.datepicker-content > .row:not(.col) > div.datepicker-disabled>div{
+	    color: #777;
+}
+.datepicker-content > .row:not(.col) > div:hover:not(.datepicker-disabled){
+	    background: rgba(255, 255, 255, 0.09);
+    border-radius: 5px;
+}
+
+.datepicker-content > .row:not(.col) > div.datepicker-selected,.datepicker-content > .row:not(.col) > div.datepicker-selected:hover{
+	background: rgb(5, 157, 181);
+	border-radius: 5px;
+}
+.datepicker-content > .row:not(.col) > div.datepicker-selected>div{
+	
+    
+    color: #272727;
+    font-weight: bold;
+}
+.datepicker-content > .row:not(.col) > div{
+	    padding: 0px;
+    font-size: 3vh;
+    line-height: 6vh;
+	color: #059DB5;
+}
+.datepicker-content > .row:not(.col) > div >div{
+	height: 100%;
+    padding: 0px;
+}
+.datepicker-modal-buttons{
+	background: none;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 0px;
+    height: 10vh;
+    min-height: 0px;
+    display: block;
+	
+}
+.datepicker-modal-buttons > button{
+	padding: 0px;
+    width: 50% !important;
+    max-width: 100vh !important;
+    margin: 0px !important;
+	height: 100% !important;
+    float: left !important;
+    min-height: 100% !important;
+	font-size: 3vh !important;
+}
+.datepicker-ok-js{
+	color: #059DB5 !important;
+    
+}
+.datepicker-modal-head{
+	height: 7vh;
+    padding: 1vh;
+	background:#037283;
+	min-height: 7vh;
+}
+.datepicker-modal-head >div{
+	font-size: 3vh;
+    line-height: 5vh;
+    font-weight: 100;
+}
+.datepicker-modal-head + div{
+	    height: 30vh;
+    min-height: 30vh;
+    max-height: 30vh;
+    background: #059DB5;
+}
+.datepicker-modal-head + div >div{
+	    height: auto;
+    min-height: 0px;
+    max-height: 100vh;
+    padding: 0px;
+}
+.datepicker-month{
+    margin: 0px;
+    padding: 0px;
+    height: 8vh;
+    line-height: 8vh;
+    font-size: 3vh;
+    font-weight: 100;
+}
+.datepicker-day-of-month{
+    margin: 0px;
+    padding: 0px;
+    height: 16vh;
+    line-height: 16vh;
+    font-size: 13vh;
+    font-weight: 600;
+}
+.datepicker-year{
+    margin: 0px;
+    padding: 0px;
+    height: 8vh;
+    line-height: 8vh;
+    font-size: 3vh;
+    font-weight: 100;
+}
+.datepicker-year-content-js , .datepicker-month-content-js{
+	padding:3vh;
+	height: 53vh;
+}
+.datepicker-year-content-js > .row:not(.col) > div.datepicker-selected,.datepicker-year-content-js > .row:not(.col) > div.datepicker-selected:hover, .datepicker-month-content-js > .row:not(.col) > div.datepicker-selected,.datepicker-month-content-js > .row:not(.col) > div.datepicker-selected:hover{
+	    background: #4E4E4E;
+    color: #fff;
+    border-radius: 0px;
+}
