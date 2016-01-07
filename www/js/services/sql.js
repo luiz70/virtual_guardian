@@ -9,7 +9,7 @@ angular.module('starter.services')
 		//carga la base de datos para movil y web
 		try{
 			//intenta cargar la base de datos para movil
-			db=$cordovaSQLite.openDB({ name:"VirtualG.db", location:1, bgType: 1 });
+			db=window.sqlitePlugin.openDatabase({ name:"VirtualG.db", location:1, bgType: 1 });
 		}catch(err){
 			//si no se puede la carga para web
 			db = window.openDatabase("VirtualG", "1.0", "VirtualG", 100000000)
@@ -23,6 +23,7 @@ angular.module('starter.services')
 			//actualizaEventos()
 			
 		})
+                  
 		
 	}
 	//funcion que se comunica con el servidor para revisar ids de edicion y comprobar que este actualizada
@@ -79,8 +80,9 @@ angular.module('starter.services')
 	}
 	//funcion que se ejecuta una ves que se obtienen los ids de la consulta
 	var getIdEventos=function(ids){
-		//se limpian los eventos del mapa
-		$rootScope.eventosMap=[];
+		//se limpian los eventos que no deben de aparecer en el mapa
+		for(var i=0;i<$rootScope.eventosMap.length;i++)
+			if(ids.indexOf(parseInt($rootScope.eventosMap[i].id))<0)$rootScope.eventosMap.splice(i,1);
 		//se ejecuta una consulta a la base de datos local para obtener los eventos que esten almacenados
 		$cordovaSQLite.execute(db, "SELECT IdEvento,Asunto,Latitud,Longitud,Edicion FROM EVENTOS WHERE IdEvento IN("+ids.join(",")+")")
 		.then(function(res){
@@ -98,7 +100,6 @@ angular.module('starter.services')
 	}
 	//funcion que proyecta los eventos en el mapa
 	var createEventos=function(data){
-		console.log(data);
 		//se recorre el arreglo de eventos a proyectar
 		for(var i=0;i<data.length;i++){
 			//se crea el evento

@@ -71,16 +71,38 @@ angular.module('starter.controllers')
 			3:"Escribe para buscar lugares",
 			4:"No hay resultados para",
 			5:"Mostrar los eventos de los ultimos:",
-			6:"7 días",
-			7:"30 días",
-			8:"6 meses",
-			9:"12 meses"
 			
+			
+		},
+		Periodos:{
+			7:"7 días",
+			30:"30 días",
+			180:"6 meses",
+			365:"12 meses"
 		},
 		Filtros:{
 			1:"Filtros de eventos",
 			2:"Fechas",
-			3:"Periodo"
+			3:"Periodo",
+			4:"Fecha inicial",
+			5:"Fecha final",
+			6:"Periodo",
+			7:"Estados",
+			8:"Eventos",
+			9:"Seleccionar todo",
+			10:"Borrar selección"
+		},
+		Asuntos:{
+			1:"Asalto",
+			2:"Balacera",
+			3:"Ejecución",
+			4:"Explosión",
+			5:"Hallazgo",
+			6:"Movilización",
+			7:"Persecución",
+			8:"bloqueo",
+			9:"Robo",
+			10:"Robo mercancía",
 		},
 		Info:{
 			1:"Fecha: ",
