@@ -37,6 +37,7 @@
         <button class="filtros-tabs-fecha activo" style="width:100%" >{{idioma.Filtros[7]}}</button>
         <button class="filtros-tabs-fecha " style="background: #353535;" ng-click="marcaTodo(true)">{{idioma.Filtros[9]}}</button>
         <button class="filtros-tabs-fecha " style="border-left:solid 0.5vh #303030 !important;    background: #353535;" ng-click="marcaTodo(false)">{{idioma.Filtros[10]}}</button>
+        <ion-content class="lista-estados-container">
         <ion-list class="lista-estados">
         <ion-item class="item-icon-right filtros-estados-item " ng-repeat="estado in filtros.estados" ng-click="seleccionaEstado(estado.Id)">
         	<i class="icon ion-checkmark ng-hide " ng-show="estado.Selected"></i>
@@ -44,6 +45,7 @@
         </ion-item>
         
         </ion-list>
+        </ion-content>
         <button class="filtros-tabs-fecha activo" style="width:100%">{{idioma.Filtros[8]}}</button>
         <button class="filtros-tabs-fecha " style="background: #353535;" ng-click="marcaTodoEventos(true)">{{idioma.Filtros[9]}}</button>
         <button class="filtros-tabs-fecha " style="border-left:solid 0.5vh #303030 !important;    background: #353535;" ng-click="marcaTodoEventos(false)">{{idioma.Filtros[10]}}</button>
