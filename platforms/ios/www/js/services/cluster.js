@@ -28,8 +28,10 @@ angular.module('starter.services')
 					clusterClass:"cluster"
 				  }
 				],
-			maxZoom:10,
-			minimumClusterSize:10,
+			maxZoom:14,
+			minimumClusterSize:25,
+			averageCenter:true,
+			printable:true,
 		}
 		$rootScope.cluster.events={
 			click: function(cluster, clusterModels){

@@ -1,0 +1,26 @@
+<ion-modal-view class="modal-view-filtros" ng-controller="Filtros">
+    <ion-header-bar>
+    <div>
+    	<label class="toggle toggle-mapa-pie">
+			<input type="checkbox" ng-model="filtros.activos" >
+			<div class="track">
+				<div class="handle"></div>
+			</div>
+		</label>
+ 	</div>
+      <h1 class="title">{{idioma.Filtros[1]}}</h1>
+    </ion-header-bar>
+    <ion-content has-bouncing="false">
+      <button class="filtros-tabs-fecha {{(!filtros.tipo)?'activo':''}}" ng-click="cambiaTipoFecha(0)">{{idioma.Filtros[2]}}</button>
+      <button class="filtros-tabs-fecha {{(filtros.tipo)?'activo':''}}" ng-click="cambiaTipoFecha(1)">{{idioma.Filtros[3]}}</button>
+      <ionic-datepicker date="filtros.fechaInicial" callback="cambioFecha" min="minDate" max="maxDate">
+    		<button class="filtros-fecha-boton"> <p>Fecha Inicial</p>{{ filtros.fechaInicial | fechaMx:this}} </button>
+		</ionic-datepicker>
+        <ionic-datepicker date="filtros.fechaInicial" callback="cambioFecha" min="minDate" max="maxDate">
+    		<button class="filtros-fecha-boton"> <p>Fecha Inicial</p>{{ filtros.fechaInicial | fechaMx:this}} </button>
+		</ionic-datepicker>
+    </ion-content>
+    <ion-footer-bar>
+      <button ng-click="guardaFiltros()">{{idioma.General[2]}}</button>
+    </ion-footer-bar>
+  </ion-modal-view>

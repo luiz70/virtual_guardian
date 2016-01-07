@@ -3,6 +3,8 @@ angular.module('starter.services')
 	var inicializa = function(){
 		$rootScope.filtros={
 			activos:false,
+			tipo:0,
+			fechaInicial:new Date()
 		}
 	}
 	uiGmapGoogleMapApi.then(function(maps) {

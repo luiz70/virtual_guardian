@@ -1,61 +1,68 @@
 angular.module('starter.controllers')
-.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout,Ubicacion,Message){
 	$scope.map=$rootScope.map;
 	$scope.ubicacion=$rootScope.ubicacion;
 	$scope.radio=$rootScope.radio;
-	$scope.controls=[
+	$rootScope.controls=[
 		{nombre:"buscar",
 			id:1,
 			activo:false,
 			activable:false,
+			content:"",
 			onClick:function(){
+				$rootScope.search=true;
 			},
 		},
 		{nombre:"ubicacion",
 			id:2,
 			activo:false,
 			activable:true,
+			content:"",
 			onClick:function(){
-			$scope.refreshLocation();
-			},
-		},
-		{nombre:"actualizar",
-			id:3,
-			activo:false,
-			activable:false,
-			onClick:function(){
-			
+				$scope.refreshLocation();
 			},
 		},
 		{nombre:"auto",
-			id:4,
+			id:3,
 			activo:false,//$rootScope.map.auto.activo,
 			activable:true,
 			posicionando:false,
+			content:"",
 			onClick:function(){
 			$scope.carPark();
 			},
 		},
 		{nombre:"filtro",
-			id:5,
+			id:4,
 			activo:false,
 			activable:true,
+			content:"",
 			onClick:function(){
-			
+			Message.showModal("templates/modal/filtros.html");
 			},
 		},
 		{nombre:"periodo",
-			id:6,
+			id:5,
 			activo:false,
 			activable:false,
+			content:"<div class='letra-periodo'>{{$rootScope.Usuario.Periodo}}</div>",
 			onClick:function(){
-			
+				var buttons=[]
+				if($rootScope.Usuario.Periodo!=7)buttons.push({text:$rootScope.idioma.Mapa[6],valor:7})
+				if($rootScope.Usuario.Periodo!=30)buttons.push({text:$rootScope.idioma.Mapa[7],valor:30})
+				if($rootScope.Usuario.Periodo!=180)buttons.push({text:$rootScope.idioma.Mapa[8],valor:180})
+				if($rootScope.Usuario.Periodo!=365)buttons.push({text:$rootScope.idioma.Mapa[9],valor:365})
+				
+				Message.showActionSheet($rootScope.idioma.Mapa[5],buttons,null,$rootScope.idioma.General[6],function(res,data){
+					$rootScope.Usuario.Periodo=data.valor;
+				})
 			},
 		},
 	]
+	$scope.controls=$rootScope.controls;
 	$scope.controlClick=function(i){
 		//if($scope.controls[i].activable)$scope.controls[i].activo=!$scope.controls[i].activo
-		$scope.controls[i].onClick()
+		$rootScope.controls[i].onClick()
 		
 	}
 	uiGmapIsReady.promise()
@@ -82,8 +89,10 @@ angular.module('starter.controllers')
 		opacity:1
 		},200);
 	}
-$scope.refreshLocation=function(){
-		Mapa.refreshLocation();
+	$scope.refreshLocation=function(){
+		$rootScope.eventosMap=[];
+		Ubicacion.refreshLocation();
+		
 	}
 	$scope.carPark=function(){
 		$rootScope.map.auto.posicionando=true;

@@ -6,12 +6,13 @@ angular.module('starter.controllers')
   var idiomas = {
   	es:{
 		General:{
+			0:"Virtual Guardian",
 			1:"Cargando...",
 			2:"Aceptar",
 			3:"Conexión a internet",
 			4:"No hay conexión a internet.",
 			5:"Actualizar",
-			6:"Cancelar",
+			6:"Cancelar"
 		},
 		Login:{
 			1:"Iniciar Sesión",
@@ -23,7 +24,8 @@ angular.module('starter.controllers')
 			7:"El correo electrónico y la contraseña que ingresaste no coinciden con nuestros registros.\nPor favor, revisa e inténtalo de nuevo.",
 			8:"Iniciando sesión...",
 			9:"Cerrando sesión...",
-			10:"¿Desea cerrar su sesión?"
+			10:"¿Desea cerrar su sesión?",
+			11:"Alguien mas ha iniciado sesión con este usuario.<br>Inicie sesión de nuevo",
 		},
 		Registro:{
 			1:"Registro",
@@ -65,16 +67,40 @@ angular.module('starter.controllers')
 		},
 		Mapa:{
 			1:"Radio: ",
+			2:"Buscador de eventos",
+			3:"Escribe para buscar lugares",
+			4:"No hay resultados para",
+			5:"Mostrar los eventos de los ultimos:",
+			6:"7 días",
+			7:"30 días",
+			8:"6 meses",
+			9:"12 meses"
 			
+		},
+		Filtros:{
+			1:"Filtros de eventos",
+			2:"Fechas",
+			3:"Periodo"
 		},
 		Info:{
 			1:"Fecha: ",
 			2:"Hora: ",
 			3:"Dirección: ",
-			4:"Error al cargar la información"
+			4:"Error al cargar la información",
+			5:"Escala Virtual",
+			6:"10 es el valor mas seguro"
 		},
 		Menu:{
 			1:"Suscripción",
+			2:"Ajustes de cuenta",
+			3:"Ajustes de notificaciones",
+			4:"Iconos",
+			5:"Ayuda",
+			6:"Acerca de",
+			7:"Cerrar sesión"
+		},
+		Notificaciones:{
+			1:" en "
 		},
 		Auto:{
 			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto."
@@ -127,7 +153,17 @@ angular.module('starter.controllers')
 			11:"Noviembre",
 			12:"Diciembre"
 			
-		}
+		},
+		Semana:[
+			"Domingo",
+			"Lunes",
+			"Martes",
+			"Miercoles",
+			"Jueves",
+			"Viernes",
+			"Sabado"
+			
+		]
 		
 	},
 	en:{

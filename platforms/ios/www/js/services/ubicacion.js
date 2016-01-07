@@ -1,9 +1,13 @@
 angular.module('starter.services')
-.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos){
+.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,Eventos,$interval,Message,$timeout,Lugar){
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	uiGmapGoogleMapApi.then(function(maps) {
 		getLocation();
 	})
+	var eventos=[];
+	var pos={}
+	var interval=null;
+	var positionId=null;
 	//funcion que inicializa la ubicacion
 	var inicializa=function(){
 		//carga los datos guardados de la ubicacion
@@ -15,7 +19,7 @@ angular.module('starter.services')
 			//la posicion que tiene el marcador
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			//la ultima ubicacion del usuario obtenida
-			location:{ latitude: 20.6737919, longitude:  -103.3354131 },
+			location:{ latitude: 20.6737914, longitude:  -103.3354131 },
 			track:false,
 			//opciones de marcadores (google maps api v3)
 			options:{
@@ -35,10 +39,12 @@ angular.module('starter.services')
 			},
 			
 		}
+		$rootScope.ubicacion.centrar=true
 		//define los eventos de la ubicacion
 		$rootScope.ubicacion.events={
 			//cuando el mouse termina el click
 			mouseup:function(event){
+				
                 //intenta aplicar para apresurar la proyeccion.
                 if(!$rootScope.$$phase) {
                     $rootScope.$apply(function(){
@@ -48,8 +54,6 @@ angular.module('starter.services')
                        	$rootScope.radio.fill={color:'#39bbf7',opacity:0.13};
 						$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0.6};
 						$rootScope.radio.visible=true;
-                        //muestra los marcadores
-                        Eventos.showHide();
                     })
                 }else{
                     //actualiza la ubicacion actual
@@ -58,14 +62,14 @@ angular.module('starter.services')
                     $rootScope.radio.fill={color:'#39bbf7',opacity:0.13};
 					$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0.6};
 					$rootScope.radio.visible=true;
-                    //muestra los marcadores
-                    Eventos.showHide();
                 }
-         
-				
+				//muestra los marcadores
+				if($rootScope.ubicacion.position.latitude.toFixed(10)==pos.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==pos.longitude.toFixed(10))$rootScope.eventosMap=eventos;
 				
 			},
 			mousedown:function(event){
+				eventos=$rootScope.eventosMap;
+				pos= {latitude:$rootScope.ubicacion.position.latitude,longitude:$rootScope.ubicacion.position.longitude}
                 if(!$rootScope.$$phase) {
                     $rootScope.$apply(function(){
                         //esconde el radio mientras se mueve la ubicacion
@@ -73,7 +77,7 @@ angular.module('starter.services')
 						$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0};
 						$rootScope.radio.visible=false;
                         //esconde a los marcadores
-                        Eventos.showHide();
+                        $rootScope.eventosMap=[];
                     })
                 }else{
          
@@ -82,24 +86,50 @@ angular.module('starter.services')
 					$rootScope.radio.stroke={color:'#ffffff',weight:2,opacity:0};
 					$rootScope.radio.visible=false;
                     //esconde a los marcadores
-                    Eventos.showHide();
+                    $rootScope.eventosMap=[];
                 }
          
 				
 			},
 			position_changed:function(event){
 				//$rootScope.$apply(function(){})
+			},
+			dblclick:function(event){
+				$rootScope.map.zoom=18
+				$rootScope.map.center={ latitude: $rootScope.ubicacion.position.latitude, longitude:  $rootScope.ubicacion.position.longitude}
 			}
 		}
+		$timeout(function(){
+			$rootScope.ubicacion.centrar=true
+			getLocation();
+		},10)
 	}
+	document.addEventListener("pause", function(){
+		navigator.geolocation.clearWatch(positionId);
+		
+	}, false);
+	document.addEventListener("resume", function(){
+		if($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10))getLocation();
+		else{
+			//preguntar si quiere actualizar ubicacion
+		}
+	}, false);
 	//function que se ejecuta cada que la posicion del marcador cambia
 	$rootScope.$watch('ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
+			Lugar.hide();
 			$rootScope.radio.center={ latitude: newValue.latitude, longitude:  newValue.longitude};
 			//centra el mapa en la nueva ubicación
-			$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
+			if($rootScope.ubicacion.centrar){
+				$rootScope.ubicacion.centrar=false;
+				$rootScope.map.center={ latitude: newValue.latitude, longitude:  newValue.longitude}
+				
+			}
 			//actualiza el icono
 			$rootScope.ubicacion.options.icon=getIconUbicacion();
+			//if($rootScope.radio.activo)
+			Eventos.refresh()
+			if(!($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)))navigator.geolocation.clearWatch(positionId);
 		}
 	},true);
 	$rootScope.$watch('ubicacion', function(newValue, oldValue) {
@@ -110,7 +140,7 @@ angular.module('starter.services')
 		//definicion de objeto
 		var icono = {
 			//url corresponde a la direccion de la imagen del marcador, verifica si esta en la ultima ubicacion obtenida o no para seleccionar la imagen
-			url: (!$rootScope.ubicacion)?'img/iconos/mapa/ubicacion.png':(($rootScope.ubicacion.position.latitude==$rootScope.ubicacion.location.latitude && $rootScope.ubicacion.position.longitude==$rootScope.ubicacion.location.longitude)?'img/iconos/mapa/ubicacion.png':'img/iconos/mapa/ubicacion_des.png'),
+			url: (!$rootScope.ubicacion)?'img/iconos/mapa/ubicacion.png':(($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10))?'img/iconos/mapa/ubicacion.png':'img/iconos/mapa/ubicacion_des.png'),
 			//define el tamaño del marcador
 			size: new google.maps.Size(20, 20),
 			//define el punto de orgen
@@ -123,8 +153,16 @@ angular.module('starter.services')
 		
 		return icono;
 	}
+	var track=function(val){
+		/*if(interval)$interval.cancel()
+		if(val && ($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)))
+		interval=$interval(function(){
+			getLocation();
+		},15000)*/
+	}
 	//funcion que se ejecuta una vez que se obtiene la ubicacion del usuario
-	var mapSuccess=function(position){ 
+	var positionSuccess=function(position){ 
+	
 		//actualiza el valor de la ultima ubicacion obtenida
 		$rootScope.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
 		//actualiza la posicion del marcador
@@ -135,11 +173,14 @@ angular.module('starter.services')
 		//revisaEventos($rootScope.map.ubicacion.position);
 	}
 	//funcion que se ejecuta cuando se produce un error en la ubicacion del evento
-	var mapError=function(error){
+	var positionError=function(error){
     }
 	//
 	var getLocation=function(){
-		navigator.geolocation.getCurrentPosition(mapSuccess, mapError);
+		
+		navigator.geolocation.clearWatch(positionId);
+		positionId = navigator.geolocation.watchPosition(positionSuccess, positionError,{enableHighAccuracy: true,timeout:15000 });
+		//navigator.geolocation.getCurrentPosition(mapSuccess, mapError,{enableHighAccuracy: true,timeout:15000 });
 	}
 	
 	return {
@@ -147,7 +188,10 @@ angular.module('starter.services')
 			return inicializa();
 		},
 		refreshLocation:function(){
-			getLocation();
+			$timeout(function(){
+				$rootScope.ubicacion.centrar=true
+				getLocation();
+			},10)
 		},
 		getPosition:function(){
 			return $rootScope.ubicacion.position
