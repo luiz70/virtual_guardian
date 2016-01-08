@@ -186,6 +186,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 })
 .factory('socket', function (socketFactory,$rootScope,Memory) {
     var conectado=false;
+	$rootScope.socketState=true;
 	var socket ;
 	var socketFactory;
 	

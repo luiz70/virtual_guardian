@@ -150,6 +150,24 @@ angular.module('starter.controllers')
 			$rootScope.controls[2].activo=true;
 		})
 	}
+	$scope.cancelarAuto=function(){
+		$rootScope.auto.posicionando=false;
+		$rootScope.auto.activo=false;
+		$rootScope.auto.options.visible=false;
+		$rootScope.auto.options.draggable=true;
+		$rootScope.controls[2].activo=false;
+	}
+	$scope.actualizaAuto=function(){
+		Ubicacion.stopPosition();
+		navigator.geolocation.getCurrentPosition($scope.mapSuccessAuto, $scope.mapError,{enableHighAccuracy: true,timeout:15000 });
+	}
+	$scope.mapSuccessAuto=function(position){
+		$rootScope.auto.position={latitude:position.coords.latitude,longitude:position.coords.longitude}
+		Ubicacion.startPosition();
+	}
+	$scope.mapError=function(error){
+		Ubicacion.startPosition();
+	}
 	
 })
 .controller('top-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){

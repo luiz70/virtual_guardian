@@ -7,6 +7,14 @@
         <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/{{control.nombre}}.png');" >
         </button>
 </div>
+<div class="auto-id ng-hide" z-index="2" ng-show="auto.posicionando" >
+        <button  class="boton-mapa-top-right dead "   ng-click="cancelarAuto()" style="top: 10vh;">
+        <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/cerrar.png');" >
+        </button>
+        <button  class="boton-mapa-top-right dead "   ng-click="actualizaAuto()" style="top: 10vh;">
+        <img class="img-boton-mapa-top-right " style="-webkit-mask-image: url('img/iconos/mapa/controls/ubicacion.png');" >
+        </button>
+</div>
 <div class="contenedor-mapa-top-left" ng-hide="auto.posicionando">
 	<button ng-repeat="control in controls" class="boton-mapa-top-right activo {{control.id}}"   ng-click="controlClick($index)" ng-show="control.activo">
         <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/{{control.nombre}}.png');" >

@@ -197,6 +197,12 @@ angular.module('starter.services')
 				getLocation();
 			},10)
 		},
+		stopPosition:function(){
+			navigator.geolocation.clearWatch(positionId);
+		},
+		startPosition:function(){
+			positionId = navigator.geolocation.watchPosition(positionSuccess, positionError,{enableHighAccuracy: true,timeout:15000 });
+		},
 		getPosition:function(){
 			return $rootScope.ubicacion.position
 		}

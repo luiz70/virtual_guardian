@@ -83,7 +83,7 @@ angular.module('starter.services')
 				//navigator.geolocation.getCurrentPosition(mapSuccessAuto, mapError);
 			}
 			else{
-				$rootScope.auto.options.visible=true;
+				//$rootScope.auto.options.visible=true;
 				$rootScope.auto.options.draggable=false;
 				$rootScope.radio.visible=true;
 				$rootScope.ubicacion.options.visible=true;

@@ -438,7 +438,17 @@ ion-side-menu-content{
 	 text-align: right;
 	 opacity:0.8 !important;
 }
-
+.auto-id{
+	width: 7vh;
+    top:10vh !important;
+    height: auto;
+	opacity:1 !important;
+    display:block !important;
+	position:fixed !important;
+	 text-align: right;
+	 opacity:0.8 !important;
+	right:1vh;
+}
 .contenedor-mapa-top-right.more{
 	right:1vh !important;
     opacity:1 !important;
@@ -1056,7 +1066,7 @@ display: block !important;
         line-height: 8vh !important;
     font-size: 3.5vh !important;
     color: #059DB5 !important;
-    font-weight: 100 !important;
+    font-weight: 200 !important;
     margin-top:0px !important;
 }
 .modal-view-filtros > ion-header-bar > div{
@@ -1114,7 +1124,7 @@ display: block !important;
     text-align: center !important;
 }
 .auto-escala>span{
-	    font-weight: 100;
+	    font-weight: 200;
     font-size: 3vh;
 }
 .auto-intro{
