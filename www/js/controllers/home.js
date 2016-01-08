@@ -9,6 +9,9 @@ angular.module('starter.controllers')
         sql.inicializa()
 		sql.update();
 	})
+	socket.getSocket().on("connect_error",function(){
+		 sql.inicializa()
+	})
 	$scope.menuWidth=window.innerWidth*0.85;
 	$scope.menuAbierto=false;
 	$scope.seccion=1;

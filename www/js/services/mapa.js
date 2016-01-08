@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory,Radio,Ubicacion,Filtros,Eventos,Cluster,Lugar){
+.factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory,Radio,Ubicacion,Filtros,Eventos,Cluster,Lugar,Auto){
 	
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	
@@ -8,12 +8,15 @@ angular.module('starter.services')
 	//})
 	var inicializa=function(){
 		uiGmapGoogleMapApi.then(function(maps) {
+		
 		Ubicacion.inicializa();
+		Auto.inicializa();
 		Radio.inicializa();
 		Filtros.inicializa();
 		Eventos.inicializa();
 		Cluster.inicializa();
 		Lugar.inicializa()
+		
 		//carga la informacion del mapa guardada
    		if(!$rootScope.map)$rootScope.map=Memory.get('Mapa')
 		//Si no hay informacion guardada, inicializa el mapa
@@ -57,6 +60,7 @@ angular.module('starter.services')
 			//opacidad de los marcadores
        		markerOpacity:0.9,
 		};
+		//
 		//eventos del mapa
 		$rootScope.map.events={
 			//cuando se mueve la pantalla

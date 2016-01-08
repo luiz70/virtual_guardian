@@ -20,7 +20,7 @@ angular.module('starter.services')
 			position:{ latitude: 20.6737919, longitude:  -103.3354131 },
 			//la ultima ubicacion del usuario obtenida
 			location:{ latitude: 20.6737914, longitude:  -103.3354131 },
-			track:false,
+			estado:"Jalisco",
 			//opciones de marcadores (google maps api v3)
 			options:{
 				//define que se puede arrastrar y cambiar de lugar
@@ -39,6 +39,7 @@ angular.module('starter.services')
 			},
 			
 		}
+		
 		$rootScope.ubicacion.centrar=true
 		//define los eventos de la ubicacion
 		$rootScope.ubicacion.events={
@@ -100,7 +101,9 @@ angular.module('starter.services')
 			}
 		}
 		$timeout(function(){
+			if(!$rootScope.auto.posicionando)
 			$rootScope.ubicacion.centrar=true
+			else $rootScope.ubicacion.centrar=false
 			getLocation();
 		},10)
 	}
@@ -174,6 +177,7 @@ angular.module('starter.services')
 	}
 	//funcion que se ejecuta cuando se produce un error en la ubicacion del evento
 	var positionError=function(error){
+		Eventos.refresh()
     }
 	//
 	var getLocation=function(){

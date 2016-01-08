@@ -4,6 +4,7 @@ angular.module('starter.controllers')
 	$scope.idioma=$rootScope.idioma;
 	//importa la configuracion del radio
 	$scope.radio=$rootScope.radio
+	$scope.auto=$rootScope.auto;
 	//funcion que se ejecuta cuando se cargo el mapa para inicializar el touch event
 	uiGmapIsReady.promise().then(function(maps){
 		//activa el touch event en el mapa para ocultar la barra

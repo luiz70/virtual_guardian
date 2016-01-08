@@ -130,6 +130,8 @@ angular.module('starter.services')
 	}
 	//funcion que obtiene los parametros de busqueda de los eventos
 	var getEventosServer=function(){
+		var estados=[];
+		var asuntos=[];
 	  //se verifica si hay filtros para derifinir las fechas
 		if(!$rootScope.filtros.activos){
 			//si no hay filtros se definen en base al periodo establecido
@@ -144,7 +146,17 @@ angular.module('starter.services')
 			f2=f2.getTime()/1000000;
 		}else{
 			//si hay filtros se definen las fechas en base a lo establecido en los filtros
-			
+			if($rootScope.filtros.tipo==0){
+				f1=$rootScope.filtros.fechaInicial.getTime()/1000000;
+				f2=$rootScope.filtros.fechaFinal.getTime()/1000000;
+			}else{
+				var f1=new Date();
+				f1.setDate(f1.getDate()-$rootScope.filtros.periodo)
+				f1=f1.getTime()/1000000
+				f2=(new Date()).getTime()/1000000;
+			}
+			estados=$.map($rootScope.filtros.estados,function(v,i){if(!v.Selected)return v.Id})
+			asuntos=$.map($rootScope.filtros.asuntos,function(v,i){if(!v.Selected)return v.Id})
 		}
 		//si no se ha creado el circulo lo crea con los parametros actuales
 		if(!circulo)
@@ -174,9 +186,9 @@ angular.module('starter.services')
 					ln2:b.getNorthEast().lng()}
 		}
 		//envia al servidor los parametros de busqueda para que regrese los ids
-		if(socket.isConnected())socket.getSocket().emit("getIdEventos",bounds,f1,f2)
+		if(socket.isConnected())socket.getSocket().emit("getIdEventos",bounds,f1,f2,estados,asuntos)
 		else {
-			$cordovaSQLite.execute(db, "SELECT IdEvento,Asunto,Latitud,Longitud,Edicion FROM EVENTOS WHERE (Latitud BETWEEN "+bounds.la1+" AND "+bounds.la2+" ) AND (Longitud BETWEEN "+bounds.ln1+" AND  "+bounds.ln2+") AND (Fecha BETWEEN "+(f1*1000)+" AND "+(f2*1000)+") ")
+			$cordovaSQLite.execute(db, "SELECT IdEvento,Asunto,Latitud,Longitud,Edicion FROM EVENTOS WHERE (Latitud BETWEEN "+bounds.la1+" AND "+bounds.la2+" ) AND (Longitud BETWEEN "+bounds.ln1+" AND  "+bounds.ln2+") AND (Fecha BETWEEN "+(f1*1000)+" AND "+(f2*1000)+") AND ASUNTO NOT IN("+asuntos.join(",")+") AND ESTADO NOT IN("+estados.join(",")+")")
 			.then(function(res){
 				createEventos(parseArray(res.rows))
 			})
@@ -192,6 +204,7 @@ angular.module('starter.services')
 			listeners();
 		},
 		getEventos:function(){
+			if(!$rootScope.auto.posicionando)
 			getEventosServer()
 		},
 		update:function(){

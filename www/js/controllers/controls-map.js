@@ -1,8 +1,10 @@
 angular.module('starter.controllers')
-.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout,Ubicacion,Message){
+.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout,Ubicacion,Message,socket){
 	$scope.map=$rootScope.map;
 	$scope.ubicacion=$rootScope.ubicacion;
 	$scope.radio=$rootScope.radio;
+	$scope.auto=$rootScope.auto;
+	$scope.idioma=$rootScope.idioma
 	$rootScope.controls=[
 		{nombre:"buscar",
 			id:1,
@@ -24,7 +26,7 @@ angular.module('starter.controllers')
 		},
 		{nombre:"auto",
 			id:3,
-			activo:false,//$rootScope.map.auto.activo,
+			activo:(true && $rootScope.auto.activo),
 			activable:true,
 			posicionando:false,
 			content:"",
@@ -95,16 +97,63 @@ angular.module('starter.controllers')
 		
 	}
 	$scope.carPark=function(){
-		$rootScope.map.auto.posicionando=true;
-		
+		if(!$scope.auto.activo)
+			$scope.auto.posicionando=true;
+		else{
+			var buttons=[{text:$rootScope.idioma.Auto[5],id:1},{text:$rootScope.idioma.Auto[6],id:2},{text:$rootScope.idioma.Auto[7],id:3}]
+			Message.showActionSheet($rootScope.idioma.Auto[4],buttons,null,$rootScope.idioma.General[6],function(res,data){
+				if(data)
+				switch(data.id){
+					case 1:
+						$rootScope.auto.options.visible=false;
+						$rootScope.auto.options.draggable=true;
+						$rootScope.auto.activo=false;
+						$rootScope.controls[2].activo=false;
+					break;
+					case 2:
+						$rootScope.auto.posicionando=true;
+					break;
+					case 3: 
+						$rootScope.map.zoom=16;
+						$rootScope.map.center={latitude:$rootScope.auto.position.latitude,longitude:$rootScope.auto.position.longitude}
+					break;
+				}
+			})
+		}
 	}
 	$scope.setAuto=function(){
-		$rootScope.map.auto.posicionando=false;
-		$rootScope.map.auto.activo=true;
+		Message.showLoading($rootScope.idioma.Auto[8]);
+		if(socket.isConnected()){
+			socket.getSocket().removeListener("getAnalisisAuto",$scope.getAnalisis)
+			socket.getSocket().removeListener("errorAnalisisAuto",$scope.errorAnalisis)
+			socket.getSocket().on("errorAnalisisAuto",$scope.errorAnalisis)
+			socket.getSocket().on("getAnalisisAuto",$scope.getAnalisis)
+			socket.getSocket().emit("getAnalisisAuto",$rootScope.auto.position)
+		}else{
+			$scope.errorAnalisis();
+		}
+		//Message.showModal("templates/modal/resumen-auto.html");
+	}
+	$scope.getAnalisis=function(escala,eventos){
+		socket.getSocket().removeListener("getAnalisisAuto",$scope.getAnalisis)
+		Message.hideLoading();
+		$rootScope.auto.escala=escala;
+		$rootScope.auto.eventos=eventos;
+		Message.showModal("templates/modal/resumen-auto.html");
+	}
+	$scope.errorAnalisis=function(data){
+		socket.getSocket().removeListener("errorAnalisisAuto",$scope.errorAnalisis)
+		Message.hideLoading();
+		Message.confirm($rootScope.idioma.Auto[3],$rootScope.idioma.Auto[9],function(res){
+			$rootScope.auto.posicionando=false;
+			$rootScope.auto.activo=true;
+			$rootScope.controls[2].activo=true;
+		})
 	}
 	
 })
 .controller('top-center',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout){
+	$scope.auto=$rootScope.auto
 	$scope.idioma=$rootScope.idioma;
 	$scope.map=$rootScope.map;
 })

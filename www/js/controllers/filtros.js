@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Filtros', function($scope,$rootScope,Filtros,Message) {
+.controller('Filtros', function($scope,$rootScope,Filtros,Message,Eventos) {
 	Filtros.inicializa()
 	$scope.idioma=$rootScope.idioma
   	$scope.filtros=$rootScope.filtros
@@ -8,12 +8,40 @@ angular.module('starter.controllers')
 	
 	$scope.guardaFiltros=function(){
 		Message.hideModal();
+		$rootScope.eventosMap=[];
+		Eventos.refresh();
+		$rootScope.controls[3].activo=(true && $rootScope.filtros.activos);
+		if($rootScope.filtros.activos ){
+			
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode({'location': new google.maps.LatLng($rootScope.ubicacion.position.latitude,$rootScope.ubicacion.position.longitude)}, function(results, status) {
+    		if (status === google.maps.GeocoderStatus.OK) {
+				var state="";
+				for(var i=0;i<results.length;i++)
+					if(results[i].address_components.length==2){
+						state=results[i];
+						i=results.length
+					}
+				for(var i=0;i<$rootScope.filtros.estados.length;i++)
+					if($rootScope.filtros.estados[i].Nombre.toLowerCase()==state.address_components[0].long_name.toLowerCase()){
+						i=$rootScope.filtros.estados.length;
+						console.log(state);
+						//if(!$rootScope.filtros.estados[i].Selected)
+						
+					}
+			}
+		})
+		}
+		
+	}
+	$scope.getEstado=function(){
+		
 	}
   $scope.cambiaTipoFecha=function(val){
 	 $scope.filtros.tipo=val
   }
   $scope.cambioFecha=function(date){
-	  console.log(date);
+	  //console.log(date);
   }
   $scope.seleccionaEstado=function(id){
 	  $scope.filtros.estados[id-1].Selected=!$scope.filtros.estados[id-1].Selected

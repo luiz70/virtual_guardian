@@ -5,8 +5,8 @@
     <!--ui-gmap-rectangle bounds='map.bounds' fill="'#FFFFFF .5'"><ui-gmap-rectangle-->
         <ui-gmap-circle center='radio.center' radius='radio.radio' fill='radio.fill'   stroke='radio.stroke' visible='radio.activo && radio.visible' events="radio.events"></ui-gmap-circle>
     
-    <!--ui-gmap-marker idKey='2' coords='map.auto.position' ng-hide="!map.auto.visible" options="map.auto.options" icon="content" events="map.auto.events" >
-	</ui-gmap-marker-->
+    <ui-gmap-marker idKey='1' coords='auto.position'  options="auto.options" icon="content"  events="auto.events" index="10000">
+	</ui-gmap-marker>
     <ui-gmap-markers  models='eventosMap' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="cluster" typeEvents='cluster.events' index="2">
     </ui-gmap-markers>
     <ui-gmap-marker idKey='0' style="opacity:1 !important" coords='ubicacion.position' options="ubicacion.options" icon="'icon'" events="ubicacion.events" index="1000" >

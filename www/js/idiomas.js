@@ -125,7 +125,16 @@ angular.module('starter.controllers')
 			1:" en "
 		},
 		Auto:{
-			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto."
+			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto.",
+			2:"Inicial vigilancia",
+			3:"Análisis de seguridad",
+			4:"Mi auto",
+			5:"Detener vigilacia",
+			6:"Editar ubicación",
+			7:"Revisar la zona",
+			8:"Analizando zona...",
+			9:"No se pudo realizar el análisis de seguridad. <p>¿Deseas iniciar la vigilancia?</p>",
+			10:"No hay eventos registrados en esta zona."
 		},
 		Estados:{
 			1:"Aguascalientes",
