@@ -495,8 +495,9 @@ ion-side-menu-content{
     width: 100vw;
 }
 .boton-auto-aceptar{
-	    position: relative;
-    width: 100%;
+	 position: relative;
+    width: 102%;
+    left: -1%;
     height: 7vh;
     background: rgba(23, 23, 23, 0.91);
     color: #F7F7F7;

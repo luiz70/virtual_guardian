@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,Radio,Eventos){
+.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,Radio,Eventos,$timeout){
 	//define el diccionario
 	$scope.idioma=$rootScope.idioma;
 	//importa la configuracion del radio
@@ -22,8 +22,10 @@ angular.module('starter.controllers')
 		}
 		//function que se ejecuta cuando se termina el cambio en valor de rango
 		$scope.terminaCambio=function(){
-			$rootScope.radio.visible=false;
-			$rootScope.radio.visible=true;
+			$timeout(function(){
+				$rootScope.radio.visible=false;
+				$rootScope.radio.visible=true;
+			},200)
 			//Eventos.showHide();
 			Eventos.refresh();
 		}

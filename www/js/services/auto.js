@@ -71,6 +71,7 @@ angular.module('starter.services')
 	$rootScope.$watch("auto.posicionando",function(newVal,oldVal){
 		if(!_.isUndefined(newVal) && !_.isUndefined(oldVal)){
 			if(newVal){
+				$timeout(function(){
 				$rootScope.auto.options.visible=true;
 				$rootScope.auto.options.draggable=true;
 				$rootScope.radio.visible=false;
@@ -80,9 +81,11 @@ angular.module('starter.services')
 				$rootScope.auto.position={latitude:$rootScope.ubicacion.position.latitude,longitude:$rootScope.ubicacion.position.longitude}
 				$rootScope.map.zoom=17;
 				$rootScope.map.center={latitude:$rootScope.auto.position.latitude,longitude:$rootScope.auto.position.longitude}
+				},100)
 				//navigator.geolocation.getCurrentPosition(mapSuccessAuto, mapError);
 			}
 			else{
+				$timeout(function(){
 				//$rootScope.auto.options.visible=true;
 				$rootScope.auto.options.draggable=false;
 				$rootScope.radio.visible=true;
@@ -90,6 +93,7 @@ angular.module('starter.services')
 				$rootScope.map.center={latitude:$rootScope.ubicacion.position.latitude,longitude:$rootScope.ubicacion.position.longitude}
 				$rootScope.map.zoom=12;
 				Eventos.refresh();
+				},100)
 			}
 		}
 	})
