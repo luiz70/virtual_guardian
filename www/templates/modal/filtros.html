@@ -53,8 +53,9 @@
         	<img src="img/iconos/mapa/marcadores/{{asunto.Id}}.png">
             <p>{{asunto.Nombre}}</p>
         </div>
-        <div class="filtros-cover ng-hide" ng-show="!filtros.activos"></div>
+        
     </ion-content>
+    <div class="filtros-cover ng-hide" ng-show="!filtros.activos"></div>
     <ion-footer-bar>
       <button ng-click="guardaFiltros()">{{idioma.General[2]}}</button>
     </ion-footer-bar>

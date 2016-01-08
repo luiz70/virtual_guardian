@@ -1284,13 +1284,13 @@ ionic-datepicker{
 }
 .filtros-cover{
 	    position: absolute;
-    top: 0px;
+    top: 11vh;
     bottom: 0px;
-    left: 0px;
-    right: 0px;
+    left: 3vh;
+    right: 3vh;
     background: rgba(50, 50, 50, 0.89);
     height: 78vh;
-    z-index: 50;
+    z-index: 50000;
 }
 .filtros-estados-item>i{
 	font-size: 3vh !important;
