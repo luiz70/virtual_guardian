@@ -1,6 +1,0 @@
-framework module Pods_VirtualGuardian {
-  umbrella header "Pods-VirtualGuardian-umbrella.h"
-
-  export *
-  module * { export * }
-}
