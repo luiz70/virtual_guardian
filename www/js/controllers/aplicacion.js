@@ -46,6 +46,15 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
         if(fromState.name.indexOf("personas")>=0 && state.indexOf("notificaciones")>=0)
 			$ionicViewSwitcher.nextDirection('back');
 	})
+	document.addEventListener("pause", function(){
+		//puarda estados y todo
+	}, false);
+	document.addEventListener("resume", function(){
+		if(navigator.splashscreen)navigator.splashscreen.show();
+		$timeout(function(){
+			if(navigator.splashscreen)navigator.splashscreen.hide();
+		},3000)
+	})
 	//funcion que se ejecuta cada que se cambia de desconectado a conectado del internet
 	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
 		//modifica la variable internet para que otras secciones puedan usarla
