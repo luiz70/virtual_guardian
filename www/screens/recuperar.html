@@ -1,0 +1,22 @@
+<ion-view view-title="Registro" class="registro-vista" can-swipe-back="false">
+	<ion-content has-bouncing="false" scroll="false">
+    	<div class="registro-header">
+  			<h1 class="titulo">{{idioma.Registro[26]}}</h1>
+		</div>
+    	<div class="padding">
+  		<div class="registro-datos-titulo recuperar" style="margin-top:5vh; margin-bottom:3vh">{{idioma.Registro[23]}}</div>
+        <input id="recuperar_correo" class="registro-input" type="email" placeholder="{{idioma.Registro[3]}}" style="margin-bottom: 2vh;" ng-model="recuperar.Correo" ng-keydown="enter($event)">
+        </div>
+   		<div class="registro-pie">
+       		<div class="bar-footer buttons-footer">
+            	<button class="button button-block" ng-click="siguiente()">
+             	{{idioma.Registro[24]}}
+            	</button>
+            	<button class="button button-block" ng-click="atras()">
+             	{{idioma.General[6]}}
+            	</button>
+      		</div>
+   		
+        </div>
+	</ion-content>
+</ion-view>
