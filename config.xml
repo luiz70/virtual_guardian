@@ -23,7 +23,7 @@
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="exit-on-suspend" value="false"/>
   <preference name="KeyboardShrinksView" value="false"/>
-  <preference name="StatusBarBackgroundColor" value="#059DB5"/>
+  <preference name="StatusBarBackgroundColor" value="#E6E6E6"/>
   <preference name="StatusBarStyle" value="lightcontent"/>
   <preference name="AllowInlineMediaPlayback" value="false" />
   <preference name="BackupWebStorage" value="cloud" />
@@ -35,7 +35,9 @@
   <preference name="PageLength" value="0" />
   <preference name="PaginationBreakingMode" value="page" />
   <preference name="PaginationMode" value="unpaginated" />
-  <preference name="StatusBarOverlaysWebView" value="false" />  
+  <preference name="StatusBarOverlaysWebView" value="false" />
+  <preference name="android-windowSoftInputMode" value="adjustPan|stateAlwaysHidden" />
+  <preference name="Fullscreen" value="false" />
   
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.app.virtualguardian" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <preference name="loglevel" value="DEBUG" />
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
@@ -55,12 +56,24 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="4000" />
     <preference name="AutoHideSplashScreen" value="false" />
-    <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="detect-data-types" value="true" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="KeyboardShrinksView" value="false" />
-    <preference name="StatusBarBackgroundColor" value="#059DB5" />
+    <preference name="StatusBarBackgroundColor" value="#E6E6E6" />
     <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="AllowInlineMediaPlayback" value="false" />
+    <preference name="BackupWebStorage" value="cloud" />
+    <preference name="EnableViewportScale" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="GapBetweenPages" value="0" />
+    <preference name="PageLength" value="0" />
+    <preference name="PaginationBreakingMode" value="page" />
+    <preference name="PaginationMode" value="unpaginated" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="android-windowSoftInputMode" value="adjustPan|stateAlwaysHidden" />
+    <preference name="Fullscreen" value="false" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
 </widget>
