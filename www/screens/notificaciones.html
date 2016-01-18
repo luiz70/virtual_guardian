@@ -1,0 +1,28 @@
+<ion-view  class="view-seccion" hide-nav-bar="false" hide-back-button="true" can-swipe-back="false"> 
+	<ion-content delegate-handle="notificaciones" padding="false" >
+    notificaciones
+		<!--ion-refresher   on-refresh="loadNotifications(0)" spinner="ripple" pulling-icon="ion-refresh"></ion-refresher>
+        <ion-list class="">
+           	<ion-item class="list-mensaje" ng-show="!cargandoNotificaciones && notificaciones.length==0 ">
+               	{{idioma.Notificaciones[2]}}
+            </ion-item>
+            <ion-item class="ng-hide" style="padding-bottom: 0px;text-align:center" ng-show="cargandoNotificaciones">
+               	<ion-spinner icon="ripple" class="spinner-blue"></ion-spinner>
+            </ion-item>
+            <div class="animate-fade-slide-in-right">
+               	<ion-item class="item-avatar item-icon-right notificacion-item-contenido" ng-repeat="notificacion in notificaciones track by notificacion.IdNotificacion"  >				
+                	<img ng-src={{"img/iconos/notificaciones/"+notificacion.Imagen+".png"}} class="friends-avatar">
+                	<h2>{{notificacion | tituloNotificacion:this}}</h2>
+                    <p>{{notificacion | subtituloNotificacion:this }}</p>
+                    <p class="notificacion-item-fecha">{{notificacion | FHNotificacion}}</p>
+                    <i class="icon ion-android-more-vertical friends-more" ng-click="abreNotificacion(notificacion)"></i>
+				</ion-item>
+            </div>
+            <ion-item class="list-mensaje ng-hide" ng-show="!moreData">
+               	{{idioma.Notificaciones[16]}}
+            </ion-item>
+		</ion-list>
+		<ion-infinite-scroll on-infinite="loadNotifications(1)" distance="1%" spinner="ripple"  ng-if="moreData">
+		</ion-infinite-scroll-->
+    </ion-content>
+</ion-view>

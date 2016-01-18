@@ -2,6 +2,9 @@
 * {
 	font-family: "Helvetica Neue", "Roboto", Sans-Serif !important;
 }
+#app_content.invisible{
+	opacity:0 !important;
+}
 .unselect{
 	-webkit-touch-callout: none;
     -webkit-user-select: none;

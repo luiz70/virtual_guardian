@@ -6,17 +6,24 @@ angular.module('starter.services')
 	var socketFactory;
 	
 	var inicializa=function(){
-		if(!socket){socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
+		var usuario=Memory.get("Usuario")
+		if(!socket && usuario){socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
                                     reconnection:true,
-									query: "Token="+$rootScope.Usuario.Token
+									query: "token="+usuario.Token
                                  });
 			socketFactory = socketFactory({
         		ioSocket: socket
     		});
 		}else socket.connect();
-    	
+    
+	socketFactory.on("autenticated",function(val){
+		$rootScope.socketState=val;
+		conectado=val;
+		$rootScope.$broadcast("socket.connect",val)
+	})
 	
     socketFactory.on("connect",function(){
+		
         conectado=true;
 		$rootScope.socketState=true;
 		

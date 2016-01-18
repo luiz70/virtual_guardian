@@ -22,6 +22,9 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+	$ionicPlatform.registerBackButtonAction(function (event) {
+    	event.preventDefault();
+    }, 100);
   });
 })
 .config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider,uiGmapGoogleMapApiProvider) {
@@ -31,10 +34,12 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
         libraries: 'places',
         preventLoad: true
     });
+	
 	// LocalStorage config
   localStorageServiceProvider
   .setPrefix('VirtualGuardian')
   .setStorageType('localStorage');
+  
   $stateProvider.state('app', {
         url: '/app',
         abstract: true,
@@ -90,6 +95,50 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
             'contenido-app': {
                 templateUrl: 'screens/recuperar.html',
 				controller: 'Recuperar'
+            },
+        }
+    })
+	.state('app.home',{
+		url:'/home',
+		abstract:true,
+		views:{
+			'contenido-app':{
+				templateUrl: 'screens/home.html',
+				controller: 'Home'
+			}
+		}
+	})
+	.state('app.home.mapa', {
+        url: '',
+		id:1,
+        views: {
+            'contenido-home': {
+                templateUrl: 'screens/mapa.html',
+				controller: 'Mapa'
+            },
+			'contenido-menu':{
+				templateUrl: 'screens/menu.html',
+				controller: 'Menu'
+			}
+        }
+    })
+	.state('app.home.notificaciones', {
+        url: '',
+		id:2,
+        views: {
+            'contenido-home': {
+                templateUrl: 'screens/notificaciones.html',
+				controller: 'Notificaciones'
+            },
+        }
+    })
+	.state('app.home.contactos', {
+        url: '',
+		id:3,
+        views: {
+            'contenido-home': {
+                templateUrl: 'screens/contactos.html',
+				controller: 'Contactos'
             },
         }
     })

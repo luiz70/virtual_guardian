@@ -1,0 +1,227 @@
+.sprite {
+    background-image: url(spritesheet.png);
+    background-repeat: no-repeat;
+    display: block;
+}
+.mask {
+	-webkit-mask-size: cover !important;
+   	-webkit-mask-box-image: url(../img/imgs.png);
+    -webkit-mask-repeat: no-repeat;
+    display: block;
+}
+
+.sprite-1 {
+    width: 40px;
+    height: 51px;
+    background-position: -5px -5px;
+}
+
+.sprite-10 {
+    width: 40px;
+    height: 51px;
+    background-position: -55px -5px;
+}
+
+.sprite-2 {
+    width: 40px;
+    height: 51px;
+    background-position: -105px -5px;
+}
+
+.sprite-3 {
+    width: 40px;
+    height: 51px;
+    background-position: -155px -5px;
+}
+
+.sprite-4 {
+    width: 40px;
+    height: 51px;
+    background-position: -205px -5px;
+}
+
+.sprite-5 {
+    width: 40px;
+    height: 51px;
+    background-position: -255px -5px;
+}
+
+.sprite-6 {
+    width: 40px;
+    height: 51px;
+    background-position: -305px -5px;
+}
+
+.sprite-7 {
+    width: 40px;
+    height: 51px;
+    background-position: -5px -66px;
+}
+
+.sprite-8 {
+    width: 40px;
+    height: 51px;
+    background-position: -55px -66px;
+}
+
+.sprite-9 {
+    width: 40px;
+    height: 51px;
+    background-position: -105px -66px;
+}
+
+.sprite-aa {
+    width: 40px;
+    height: 49px;
+    background-position: -155px -66px;
+}
+
+.sprite-actualizar {
+    width: 60px;
+    height: 60px;
+    background-position: -205px -66px;
+}
+
+.sprite-anonimo {
+    width: 50px;
+    height: 64px;
+    background-position: -275px -66px;
+}
+
+.sprite-ap {
+    width: 40px;
+    height: 49px;
+    background-position: -5px -140px;
+}
+
+.sprite-aps {
+    width: 40px;
+    height: 49px;
+    background-position: -55px -140px;
+}
+
+.sprite-auto {
+    width: 60px;
+    height: 60px;
+    background-position: -105px -140px;
+}
+
+.sprite-buscar {
+    width: 60px;
+    height: 60px;
+    background-position: -175px -140px;
+}
+
+.sprite-car {
+    width: 40px;
+    height: 51px;
+    background-position: -245px -140px;
+}
+
+.sprite-cerrar {
+    width: 60px;
+    height: 60px;
+    background-position: -295px -140px;
+}
+
+.sprite-cruz {
+    width: 50px;
+    height: 64px;
+    background-position: -5px -210px;
+}
+
+.sprite-emergencia {
+    width: 50px;
+    height: 64px;
+    background-position: -65px -210px;
+}
+
+.sprite-filtro {
+    width: 60px;
+    height: 60px;
+    background-position: -125px -210px;
+}
+
+.sprite-g1 {
+    width: 40px;
+    height: 51px;
+    background-position: -195px -210px;
+}
+
+.sprite-g2 {
+    width: 40px;
+    height: 51px;
+    background-position: -245px -210px;
+}
+
+.sprite-g3 {
+    width: 40px;
+    height: 51px;
+    background-position: -295px -210px;
+}
+
+.mask-mapa {
+    width: 60px;
+    height: 60px;
+    -webkit-mask-position: -195px -271px !important;
+}
+
+.sprite-notificaciones {
+    width: 60px;
+    height: 60px;
+    background-position: -265px -271px;
+}
+
+.sprite-periodo {
+    width: 60px;
+    height: 60px;
+    background-position: -355px -5px;
+}
+
+.sprite-personas {
+    width: 60px;
+    height: 60px;
+    background-position: -365px -75px;
+}
+
+.sprite-place {
+    width: 40px;
+    height: 51px;
+    background-position: -365px -145px;
+}
+
+.sprite-policia {
+    width: 50px;
+    height: 64px;
+    background-position: -365px -206px;
+}
+
+.sprite-sinconexion {
+    width: 60px;
+    height: 60px;
+    background-position: -125px -280px;
+}
+
+.sprite-sp {
+    width: 40px;
+    height: 49px;
+    background-position: -335px -280px;
+}
+
+.sprite-ubicacion {
+    width: 60px;
+    height: 60px;
+    background-position: -5px -339px;
+}
+
+.sprite-ubicacion {
+    width: 60px;
+    height: 60px;
+    background-position: -335px -339px;
+}
+
+.sprite-ubicacion_des {
+    width: 60px;
+    height: 60px;
+    background-position: -425px -5px;
+}

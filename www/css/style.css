@@ -2,7 +2,7 @@
 /* Empty. Add your own CSS if you like */
 /*        LOGIN         */
 .login-view{
-	background: #242424;
+	background: none;
 }
 .login-view > ion-content{
 	padding-top: 0px !important;
@@ -281,7 +281,8 @@ ion-side-menu{
 }
 .animate-enter-up{
 	opacity:0;
-	top:-10vh;
+	top:0px;
+	-webkit-transform: translate3d(0, -10vh, 0);
 }
 .contenido-home{
 	top:0vh !important;
@@ -1439,4 +1440,26 @@ ionic-datepicker{
     color: #028296;
     background: #E6E4E4;
     border: solid 0.7vh #028296 !important;
+}
+.animate-enter-up.animate{
+	animation-duration: 0.5s;
+	animation-timing-function: linear;
+	animation-name: animate-enter-up;
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+@keyframes animate-enter-up {
+   from {opacity: 0;
+   -webkit-transform: translate3d(0, -10vh, 0);
+   }
+   to {opacity: 1;
+   -webkit-transform: translate3d(0, 0vh, 0);
+   }
+}
+.pane{
+	background-color: #242424 !important;
 }

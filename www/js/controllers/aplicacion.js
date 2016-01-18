@@ -1,17 +1,12 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
-.controller('Aplicacion', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory,Message,$timeout,Usuario) {
+.controller('Aplicacion', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory,Message,$timeout,Usuario,socket) {
 	//Memory.clean();
+	
 	//Variable que controla el estado de conexion a internet
 	$rootScope.internet={state:true,type:""};
 	//inicializa usuario
 	$rootScope.Usuario=Memory.get("Usuario");
-	
-	$http.defaults.headers.common.accessToken = $rootScope.Usuario?$rootScope.Usuario.Token:'-';
-	//controla que el usuario este iniciado si quiere visitar una pagina
-	if(!$rootScope.Usuario && $state.current.name.indexOf("registro")<0 && $state.current.name.indexOf("login")<0 && $state.current.name.indexOf("recuperar")<0){
-		$ionicViewSwitcher.nextDirection('back');
-		$state.go("app.login")	
-	}
+	$state.go("app.home.mapa")
     //function que se ejecuta cada que hay un cambio de pantalla y limpia el historial para evitar errores con ios
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
 		//limpia el historial
@@ -21,39 +16,26 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
 		//define el nombre del estado a acceder
 		var state=toState.name
-		//verifica que no se este intentando acceder a los estados libres
-		if(state.indexOf("registro")<0 && state.indexOf("login")<0 && state.indexOf("recuperar")<0){
-			// si no va a un estado libre verifica que este logeado
-			if(!$rootScope.Usuario){
-				//si no esta logeado no procede el cambio de estado
-				event.preventDefault();	
-			}
-		}
-		//si no es un estado libre y esta loggeado permite el acceso y envia al mapa (inicializa)
-		if((state.indexOf("login")>=0 || state.indexOf("recuperar")>=0 || state.indexOf("recuperar")>=0) && $rootScope.Usuario){
-			//define el tipo de transicion
-			$ionicViewSwitcher.nextTransition("none");
-			//define la direccion
-			$ionicViewSwitcher.nextDirection('enter');
-			//entra al mapa
-			$state.go('app.home.mapa');
-		}
 		//control de direccion en cambio de pestañas
 		//si  va a cambiar de mapa a notificaciones el estado entra de la derecha 
         if(fromState.name.indexOf("mapa")>=0 && state.indexOf("notificaciones")>=0)
 			$ionicViewSwitcher.nextDirection('forward');
 		//si va a cambiar de personas a notificaciones el estado entra de la izquierda por que regresa
-        if(fromState.name.indexOf("personas")>=0 && state.indexOf("notificaciones")>=0)
+        if(fromState.name.indexOf("contactos")>=0 && state.indexOf("notificaciones")>=0)
 			$ionicViewSwitcher.nextDirection('back');
 	})
+	
+	
 	document.addEventListener("pause", function(){
 		//puarda estados y todo
+		angular.element(document.getElementById("app_content")).addClass("invisible")
 	}, false);
 	document.addEventListener("resume", function(){
 		if(navigator.splashscreen)navigator.splashscreen.show();
 		$timeout(function(){
+			angular.element(document.getElementById("app_content")).removeClass("invisible")
 			if(navigator.splashscreen)navigator.splashscreen.hide();
-		},3000)
+		},1000)
 	})
 	//funcion que se ejecuta cada que se cambia de desconectado a conectado del internet
 	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
@@ -99,4 +81,10 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		//obtiene la ultima parte
 		return st[st.length-1];
 	}
+})
+.filter('firstMayus', function () {
+return function (input) {
+	if(input)
+    return input.substring(0,1).toUpperCase()+input.substring(1).toLowerCase()
+}
 })

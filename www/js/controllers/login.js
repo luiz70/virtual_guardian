@@ -18,6 +18,7 @@ angular.module('starter.controllers')
 	$scope.$on('$ionicView.afterEnter',function(){
             if(!Memory.get("Usuario"))
 			$timeout(function() {
+				angular.element(document.getElementById("app_content")).removeClass("invisible")
                 if(navigator.splashscreen)navigator.splashscreen.hide();
             }, 500);
 			
@@ -47,6 +48,7 @@ angular.module('starter.controllers')
 	}
 	
 	
+	
 	//Funcion: enviar datos al servidor y validar credenciales
 	$scope.iniciaSesion=function(){
 		if(!$scope.login.Correo || $scope.login.Contrasena.length<8)Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.Login[7],function(){});
@@ -61,10 +63,11 @@ angular.module('starter.controllers')
 					$scope.login.Contrasena="";
 					});
 				}else{
-					Usuario.set(data);
+					Memory.set("Usuario",data);
 					$ionicViewSwitcher.nextDirection('forward');
 					$state.go('app.home.mapa');
 				}
+				
 			})
 			.error(function(){
 				Message.hideLoading();
