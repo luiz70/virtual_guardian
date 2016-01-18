@@ -86,4 +86,7 @@
     <preference name="android-windowSoftInputMode" value="adjustPan|stateAlwaysHidden" />
     <preference name="Fullscreen" value="false" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
 </widget>

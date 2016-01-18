@@ -13,6 +13,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -38,6 +42,9 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "cordova-plugin-splashscreen": {
