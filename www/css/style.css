@@ -176,7 +176,7 @@ padding-right:1vh !important;
     background: rgba(255, 255, 255, 0.12);
     color: #ECECEC !important;
     padding: 1vh 2vh !important;
-    line-height: inherit !important;
+    line-height: initial !important;
     margin-top: 2vh;
 	border-radius: 5px !important;
 }
