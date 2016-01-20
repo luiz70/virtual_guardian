@@ -25,7 +25,8 @@ angular.module('starter.services')
 			alertPopUp = $ionicPopup.alert({
      			title: titulo,
      			template: texto,
-				okText: this.dictionary.General[2]
+				okText: this.dictionary.General[2],
+				okType:"button",
    			});
    			alertPopUp.then(function(res) {
      			funcion();
@@ -49,7 +50,7 @@ angular.module('starter.services')
 					}
   				},{
     				text: btn1,
-    				type: 'button-positive',
+    				type: "button",
     				onTap: function(){
 						return 1;
 					}
