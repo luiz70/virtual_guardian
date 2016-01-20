@@ -72,7 +72,7 @@ input{
 .popup-buttons{
 	min-height: 0px;
 }
-.popup-buttons .button , .popup-buttons .button:active , .popup-buttons .button:hover {
+.popup-buttons >.button , .popup-buttons >.button:active , .popup-buttons >.button:hover{
     border-radius: 2px !important;
     line-height: 3vh;
     font-size: 3vh;

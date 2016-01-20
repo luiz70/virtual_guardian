@@ -146,6 +146,7 @@
 	}
 	.registro-steps{
 		height: 5vw;
+		margin-bottom: 2vw;
 	}
 	.registro-steps > button{
 		height: 5vw;
@@ -153,7 +154,7 @@
 		font-size: 3vw;
 	}
 	.registro-vista-contenido{
-		height: calc( 100vh - 18vw);
+		height: calc( 100vh - 20vw);
 	}
 	.registro-datos-titulo{
 	    line-height: 3vw;
@@ -172,6 +173,25 @@
 	.registro-boton-privacidad{
 		margin-top: 2vw;
     	font-size: 2.5vw;
+	}
+	.popup{
+		width: 60vw !important;
+	}
+	.popup-head{
+		padding: 2vw 10px;
+	}
+	.popup-head >h3{
+		font-size: 3vw;
+	}
+	.popup-body{
+		font-size: 2.5vw;
+    	line-height: 3vw;
+	}
+	
+	.popup-buttons >.button , .popup-buttons >.button:active , .popup-buttons >.button:hover {
+		line-height: 3vw;
+		font-size: 3vw;
+		padding: 1vw;
 	}
 	
 }
