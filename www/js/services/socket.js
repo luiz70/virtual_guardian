@@ -23,6 +23,7 @@ angular.module('starter.services')
 									query: "token="+usuario.Token,
 									"force new connection":true
             });
+	
 			}catch(err){
 				console.log("errorSocketConnect")
 			}
@@ -111,7 +112,7 @@ angular.module('starter.services')
             return true;
          },
          isConnected:function(){
-            return conectado;
+            return socket.connected;
          },
 		 emit:function(event,obj){
 			 socket.emit(event,obj);

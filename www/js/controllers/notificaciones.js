@@ -16,18 +16,23 @@ angular.module('starter.controllers')
 })
 	
 	var getNotificaciones=function(data){
-		$scope.cargandoNotificaciones=false;
+		
 		socket.getSocket().removeListener("getNotificaciones",getNotificaciones)
 		$timeout(function(){
 		$ionicScrollDelegate.resize()
-		$scope.animate()
+		$scope.animate();
 		},300)
-		
+		$timeout(function(){
+		$scope.cargandoNotificaciones=false;
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 		$scope.$broadcast('scroll.refreshComplete');
 		if(data.Tipo==1 && data.Data.length==0)$scope.moreData=false;
+		},100)
+		
+		
 	}
 	var connect=function(){
+		if($rootScope.notificaciones && $rootScope.notificaciones.length>0)socket.getSocket().emit("setNotificaciones",_.map($rootScope.notificaciones,function(v){return {IdN:v.IdNotificacion,IdE:v.IdEvento,Edi:v.Editado}}))
 		socket.getSocket().removeListener("connect",connect)
 		$scope.loadNotifications(0)
 		$scope.cargandoNotificaciones=true;

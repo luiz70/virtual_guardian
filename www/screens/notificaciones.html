@@ -21,7 +21,7 @@
                	{{idioma.Notificaciones[16]}}
             </ion-item>
 		</ion-list>
-		<ion-infinite-scroll on-infinite="loadNotifications(1)" distance="1%" spinner="ripple"  ng-if="moreData && !cargandoNotificaciones">
+		<ion-infinite-scroll on-infinite="loadNotifications(1)" distance="1%" spinner="ripple"  ng-if="moreData && !cargandoNotificaciones && notificaciones.length>=15">
 		</ion-infinite-scroll>
     </ion-content>
 </ion-view>
