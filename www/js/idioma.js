@@ -101,7 +101,7 @@ angular.module('starter.controllers')
 			5:"Hallazgo",
 			6:"Movilización",
 			7:"Persecución",
-			8:"bloqueo",
+			8:"Bloqueo",
 			9:"Robo",
 			10:"Robo mercancía",
 		},

@@ -17,9 +17,10 @@ angular.module('starter.controllers')
 	$scope.abrePrivacidad=function(){
 		window.open("https://www.virtual-guardian.com/privacidad.pdf","_system");
 	}
+	
 	//FUNCION QUE SE EJECUTA CADA VEZ QUE LA VISTA ENTRA Y REVISA SI EL USUARIO ESTA LOGGEADO
 	$scope.$on('$ionicView.beforeEnter',function(){
-		if(Usuario.get()){
+		if(Memory.get("Usuario")){
 				$ionicViewSwitcher.nextTransition("none");
 				$ionicViewSwitcher.nextDirection('enter');
 				$state.go('app.home.mapa');
@@ -27,6 +28,7 @@ angular.module('starter.controllers')
 	})
 	//FUNCION QUE SE EJECUTA CADA VEZ QUE LA VISTA ENTRA Y REVISA SI EL USUARIO YA TIENE UN REGISTRO EN PROCESO PARA CARGAR LOS DATOS ALMACENADOS
 	$scope.$on('$ionicView.afterEnter',function(){
+		angular.element(document.getElementById("app_content")).removeClass("invisible")
     	if(Memory.get("Registro"))$scope.nuevoUsuario=Memory.get("Registro");
 		if($scope.state=="datos")
 			$timeout(function(){

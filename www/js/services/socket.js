@@ -1,39 +1,76 @@
 angular.module('starter.services')
-.factory('socket', function (socketFactory,$rootScope,Memory) {
+.factory('socket', function ($rootScope,Memory,Message) {
     var conectado=false;
 	$rootScope.socketState=true;
 	var socket ;
 	var socketFactory;
 	
 	var inicializa=function(){
+		
 		var usuario=Memory.get("Usuario")
-		if(!socket && usuario){socket = io.connect('https://www.virtual-guardian.com:3200/socket',{
+		//if(usuario){
+		//if(!socket){
+			if(socket){
+				socket.removeAllListeners();
+				socket.disconnect();
+			}
+			socket=null;
+			
+			//socket = io();
+			try{
+			socket=io.connect('https://www.virtual-guardian.com:3200/socket',{
                                     reconnection:true,
-									query: "token="+usuario.Token
-                                 });
+									query: "token="+usuario.Token,
+									"force new connection":true
+            });
+			}catch(err){
+				console.log("errorSocketConnect")
+			}
+			
+			/*socketFactory = null;
 			socketFactory = socketFactory({
         		ioSocket: socket
-    		});
-		}else socket.connect();
+    		});*/
+		//}else socket.connect();
+		
     
-	socketFactory.on("autenticated",function(val){
+	socket.on("autenticated",function(val){
 		$rootScope.socketState=val;
 		conectado=val;
-		$rootScope.$broadcast("socket.connect",val)
+		
 	})
 	
-    socketFactory.on("connect",function(){
-		
+    socket.on("connect",function(){
+		$rootScope.$broadcast("socket.connect",true)
         conectado=true;
 		$rootScope.socketState=true;
+		socket.emit('getSesion',{Id:$rootScope.Usuario.Id,Log:$rootScope.Usuario.Log});
 		
     })
-    socketFactory.on("connect_error",function(){
+	socket.on('logIn',function(data){
+			if(parseInt(data)===parseInt($rootScope.Usuario.Id)){
+				//cerrar sesion
+				Message.alert($rootScope.idioma.General[0],$rootScope.idioma.Login[11],function(){
+					$rootScope.cerrarSesion();
+				})
+			}
+		})
+	socket.on('getSesion',function(val){
+		if(!val){
+			//cerrar sesion
+			Message.alert($rootScope.idioma.General[0],$rootScope.idioma.Login[11],function(){
+					$rootScope.cerrarSesion();
+				})
+		}
+	})
+    socket.on("connect_error",function(){
+		$rootScope.$broadcast("socket.connect",false)
         conectado=false;
 		$rootScope.socketState=false;
 		
     })
-    socketFactory.on("reconnect",function(){
+    socket.on("reconnect",function(){
+		$rootScope.$broadcast("socket.connect",true)
 		if($rootScope.eventos){
 		$rootScope.idEventos=$.map($rootScope.eventos, function(v, i){return v.id;})
 		$rootScope.editEventos=$.map($rootScope.eventos, function(v, i){return v.editado;})
@@ -43,24 +80,23 @@ angular.module('starter.services')
         conectado=true;
 		$rootScope.socketState=true;
     })
-    socketFactory.on("reconnect_error",function(){
+    socket.on("reconnect_error",function(){
+		$rootScope.$broadcast("socket.connect",false)
         conectado=false;
 		$rootScope.socketState=false;
     })
-    socketFactory.on("disconnect",function(){
+    socket.on("disconnect",function(){
+		$rootScope.$broadcast("socket.connect",false)
         conectado=false;
 		$rootScope.socketState=false;
 
     })
-	socketFactory.on("token",function(token){
-        //$rootScope.Usuario.Token=token
-		console.log(token);
-    })
-    socketFactory.on("error",function(){
+    socket.on("error",function(){
+		$rootScope.$broadcast("socket.connect",false)
         conectado=false;
 		$rootScope.socketState=false;
     })
-	return socketFactory;
+	return socket;
 	}
          
     return {
@@ -68,22 +104,25 @@ angular.module('starter.services')
 			return inicializa()
 		},
          getSocket:function(){
-            return socketFactory
+            return socket
          },
          connect:function(){
-            if(!conectado)socketFactory.connect();
+            if(!conectado)socket.connect();
             return true;
          },
          isConnected:function(){
             return conectado;
          },
 		 emit:function(event,obj){
-			 socketFactory.emit(event,obj);
+			 socket.emit(event,obj);
 		 
 		 },
 		 close:function(){
-			 socket.removeAllListeners();
-			 socket.disconnect();
+			
+			 if(socket){
+				socket.removeAllListeners();
+			 	socket.disconnect();
+			 }
 		 }
     };
 })

@@ -1,12 +1,10 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 .controller('Aplicacion', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory,Message,$timeout,Usuario,socket) {
 	//Memory.clean();
-	
 	//Variable que controla el estado de conexion a internet
 	$rootScope.internet={state:true,type:""};
 	//inicializa usuario
 	$rootScope.Usuario=Memory.get("Usuario");
-	$state.go("app.home.mapa")
     //function que se ejecuta cada que hay un cambio de pantalla y limpia el historial para evitar errores con ios
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
 		//limpia el historial
@@ -62,9 +60,10 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		Message.showLoading($rootScope.idioma.Login[9]);
 		//realiza un timeout por diseño
 		$timeout(function(){
+			socket.close();
 			//limpia la memoria de la aplicacion
 			Memory.set("Usuario",null);
-			Usuario.set(null)
+			$rootScope.Usuario=null
 			//programa la transicion de salida
 			$ionicViewSwitcher.nextDirection('back');
 			//cambia a pantalla de login

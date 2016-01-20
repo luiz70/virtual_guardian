@@ -9,12 +9,16 @@
 	padding-bottom: 0px !important;
 	bottom:10vh;
 }
+.login-logo-landscape{
+	display:none;
+}
 .login-logo-container{
 	height: 23vh;
     text-align: center;
 	margin-top: 15vh;
 }
 .login-logo{
+	display: inline;
 	height: 100%;
 }
 .login-input-title{
@@ -81,20 +85,37 @@ padding-right:1vh !important;
 .buttons-footer{
 	width: 100vw;
     position: absolute;
-    bottom: 0px;
+    bottom: 1vw;
     left: 0px;
     height: auto;
     font-weight:100 !important;
 }
 .buttons-footer > button{
-	    height: 5.5vh;
+	   /* height: 5.5vh;
     font-size: 2.7vh;
     min-height: 0px;
     line-height: inherit;
 	margin-top: 1vh !important;
     background: rgba(255, 255, 255, 0.6) !important;
     color: rgb(17, 17, 17) !important;
-	margin-bottom:0px !important;
+	margin-bottom:0px !important;*/
+	min-height: 0px;
+    height: 5.5vh;
+    top: 0px;
+    right: 0px;
+    text-align: center;
+    background: #3E3E3E !important;
+    float: left;
+    clear: initial;
+    position: relative;
+    border-radius: 1vw !important;
+    margin: 1vw !important;
+    margin-bottom: 0px !important;
+    color: #D5D5D5 !important;
+    line-height: initial;
+    width: 98vw;
+    font-size: 2.7vh;
+    border-top: solid 0.5vh #505050 !important;
 }
 /*        REGISTRO         */
 .registro-vista{

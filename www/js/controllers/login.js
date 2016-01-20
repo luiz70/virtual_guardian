@@ -1,9 +1,9 @@
 angular.module('starter.controllers')
-.controller('Login', function($scope,Memory,Message,$timeout,$http,Usuario,$ionicViewSwitcher,$state,$rootScope) {
+.controller('Login', function($scope,Memory,Message,$timeout,$http,$ionicViewSwitcher,$state,$rootScope,Usuario,socket) {
 	
 	$scope.$on('$ionicView.beforeEnter',function(){
-		
-		if(Usuario.get()){
+			
+		if(Memory.get("Usuario")){
 				$ionicViewSwitcher.nextTransition("none");
 				$ionicViewSwitcher.nextDirection('enter');
 				$state.go('app.home.mapa');
@@ -57,15 +57,19 @@ angular.module('starter.controllers')
 			Memory.clean();
 			Usuario.login($scope.login)
 			.success(function(data){
-				Message.hideLoading();
+				
 				if (data.error){
+					Message.hideLoading();
 					Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.Login[7],function(){
 					$scope.login.Contrasena="";
 					});
 				}else{
-					Memory.set("Usuario",data);
-					$ionicViewSwitcher.nextDirection('forward');
-					$state.go('app.home.mapa');
+					$rootScope.Usuario=data;
+					$timeout(function(){
+						Message.hideLoading();
+						$ionicViewSwitcher.nextDirection('forward');
+						$state.go('app.home.mapa');
+					},500)
 				}
 				
 			})
