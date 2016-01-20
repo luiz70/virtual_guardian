@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario//,Notificaciones,Usuario,sql,$ionicPlatform,Mapa,Notificacion,Message,Llamada
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion//,Notificaciones,Usuario,sql,$ionicPlatform,Mapa,Message,Llamada
 ) {
 	$scope.$on('$ionicView.afterEnter',function(){
 		if(Memory.get("Usuario"))
@@ -20,9 +20,9 @@ angular.module('starter.controllers')
 		$rootScope.Usuario=Memory.get("Usuario")
 		socket.inicializa();
 		Usuario.refresh();
-		/*Mapa.inicializa();
-		Llamada.inicializa();
-		$rootScope.sql=sql;*/
+		//Mapa.inicializa();
+		//Llamada.inicializa();
+		//$rootScope.sql=sql;
 	}
 	
 	
@@ -32,8 +32,8 @@ angular.module('starter.controllers')
 		/*Notificaciones.registra(true);
 		Usuario.refresh();
         sql.inicializa(true)
-		sql.update();
-		Notificacion.inicializa()*/
+		sql.update();*/
+		Notificacion.inicializa()
 	}
 	$scope.listener=$rootScope.$on("socket.connect",$scope.conected)
 	
@@ -57,10 +57,10 @@ angular.module('starter.controllers')
   	},
      function (isOpen) {
     if (isOpen){
-		//$("disable-screen").addClass('display');
+		angular.element(document.getElementsByTagName("disable-screen").item(0)).addClass("display")
 		$scope.menuOpen=true
 	}else {
-		//$("disable-screen").removeClass('display');
+		angular.element(document.getElementsByTagName("disable-screen").item(0)).removeClass("display")
 		$scope.menuOpen=false
 	}
   });
@@ -73,7 +73,7 @@ angular.module('starter.controllers')
 	})
 	
 	
-	/*$rootScope.Asuntos=Memory.get("Asuntos")
+	$rootScope.Asuntos=Memory.get("Asuntos")
 	if(!$rootScope.Asuntos && Memory.get("Usuario")){
 	socket.emit("getAsuntos")
 	socket.getSocket().on("getAsuntos",function(data){
@@ -89,7 +89,7 @@ angular.module('starter.controllers')
 	}
 	
 	$rootScope.idioma.Asuntos=$rootScope.Asuntos;
-	*/
+	
 	
 	$rootScope.$watch("Asuntos",function(newValue){
 		if(newValue) Memory.set("Asuntos",$rootScope.Asuntos)	

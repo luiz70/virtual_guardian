@@ -1,7 +1,6 @@
 <ion-view  class="view-seccion" hide-nav-bar="false" hide-back-button="true" can-swipe-back="false"> 
 	<ion-content delegate-handle="notificaciones" padding="false" >
-    notificaciones
-		<!--ion-refresher   on-refresh="loadNotifications(0)" spinner="ripple" pulling-icon="ion-refresh"></ion-refresher>
+		<ion-refresher   on-refresh="loadNotifications(0)" spinner="ripple" pulling-icon="ion-refresh"></ion-refresher>
         <ion-list class="">
            	<ion-item class="list-mensaje" ng-show="!cargandoNotificaciones && notificaciones.length==0 ">
                	{{idioma.Notificaciones[2]}}
@@ -22,7 +21,7 @@
                	{{idioma.Notificaciones[16]}}
             </ion-item>
 		</ion-list>
-		<ion-infinite-scroll on-infinite="loadNotifications(1)" distance="1%" spinner="ripple"  ng-if="moreData">
-		</ion-infinite-scroll-->
+		<ion-infinite-scroll on-infinite="loadNotifications(1)" distance="1%" spinner="ripple"  ng-if="moreData && !cargandoNotificaciones">
+		</ion-infinite-scroll>
     </ion-content>
 </ion-view>

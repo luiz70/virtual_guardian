@@ -242,8 +242,10 @@
 		width: 15vh !important;
 	}
 	.icono-header{
-		padding: 1vw !important;
-		margin-left:0px !important;
+		    padding: 1.5vw !important;
+    padding-right: 0px !important;
+    margin-left: 0px !important;
+	width: 13.5vh !important;
 	}
 	.icono-header > div{
 		width: 100% !important;
@@ -291,5 +293,44 @@
 		font-size: 7vh !important;
    		line-height: 7vh;
 	}
-	
+	.notificacion-item-contenido > img {
+		height: 8vw !important;
+    	right: 87vw !important;
+	}
+	.notificacion-item-contenido{
+		padding-left: 13vw !important;
+		padding-top: 2vw;
+		padding-bottom: 0.5vw;
+		min-height: 12vw !important;
+		padding-right: 6vw !important;
+	}
+	.notificacion-item-contenido > h2 {
+    font-size: 2.8vw;
+	}
+	.notificacion-item-contenido > p {
+		font-size: 2.4vw;
+	}
+	.notificacion-item-fecha {
+		font-size: 2vw !important;
+		line-height: 2vw;
+		margin-top: 0.5vw;
+	}
+	.notificacion-item-contenido > i {
+		font-size: 5vw !important;
+		height: 5vw !important;
+		width: 3vw;
+		left: 94vw !important;
+	}
+	.list-mensaje {
+		font-size: 2.8vw;
+	}
+	.action-sheet-option, .action-sheet-destructive{
+		font-size: 2.5vw !important;
+	}
+	.action-sheet-cancel , .action-sheet-cancel > button{
+	 font-size: 2.5vw !important;
+	}
+	.action-sheet-title{
+		font-size: 2.8vw;
+	}
 }
