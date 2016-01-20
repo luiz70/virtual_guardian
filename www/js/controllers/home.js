@@ -44,7 +44,10 @@ angular.module('starter.controllers')
 	}
 	socket.getSocket().on("connect_error",connectError);*/
 	
-	$scope.menuWidth=window.innerWidth*0.85;
+	$scope.menuWidth=function(){
+		if(window.innerHeight> window.innerWidth)return window.innerWidth*0.85;
+		else return window.innerHeight*0.85;
+	}
 	$scope.menuAbierto=false;
 	$scope.seccion=1;
 	$scope.menuOpen=false

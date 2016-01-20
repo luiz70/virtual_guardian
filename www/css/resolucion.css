@@ -137,12 +137,15 @@
 		bottom:0px;
 	}
 	.registro-header{
-		    height: 6vw;
+		height: 6vw;
+		margin-top: 2vw;
+    	margin-bottom: 2vw;
 	}
 	.registro-header > .titulo{
 		font-size: 4vw;
 		line-height: 4vw;
 		height: 4vw;
+		
 	}
 	.registro-steps{
 		height: 5vw;
@@ -154,11 +157,12 @@
 		font-size: 3vw;
 	}
 	.registro-vista-contenido{
-		height: calc( 100vh - 20vw);
+		height: calc( 100vh - 24vw);
 	}
 	.registro-datos-titulo{
 	    line-height: 3vw;
     	font-size: 3vw;
+		margin-top: 0px !important;
 	}
 	.registro-input{
 		font-size: 2.8vw !important;
@@ -192,6 +196,100 @@
 		line-height: 3vw;
 		font-size: 3vw;
 		padding: 1vw;
+	}
+	.registro-boton-reenviar{
+		width: 40%;
+		font-size: 2.5vw;
+		position: relative;
+		margin-left: 30%;
+		margin-top: 2vw;
+	}
+	.loading{
+		padding: 2vw !important;
+    	max-width: 50vw;
+	}
+	.loading > span {
+		font-size: 3vw;
+	}
+	.registro-datos-titulo.registro-final{
+		display:none;
+	}
+	.registro-logo-container{
+		height: calc( 100vh - 30vw);
+   		margin-top: -16px;
+	}
+	.registro-datos-titulo.registro-bottom{
+		font-size: 2.5vw;
+   		margin-top: 1vw !important;
+	}
+	.registro-vista > ion-content > .registro-pie > .buttons-footer > button.final-center{
+		margin: 1vw !important;
+		width: 98vw;
+		font-size: 2.5vw;
+		height: 5vw !important;
+		border-top: solid 0.5vw #505050 !important;
+	}
+	.barra-home{
+		    height: 15vh !important;
+	}
+	.boton-menu::before {
+    	font-size: 10vh !important;
+	}
+	.boton-menu{
+	    height: 15vh !important;
+		min-height: 15vh !important;
+		max-height: 15vh !important;
+		width: 15vh !important;
+	}
+	.icono-header{
+		padding: 1vw !important;
+		margin-left:0px !important;
+	}
+	.icono-header > div{
+		width: 100% !important;
+    	height: 100% !important;
+	}
+	.view-seccion > ion-content{
+		top:15vh !important;
+	}
+	ion-header-bar {
+		height: 15vh !important;
+		max-height: 15vh !important;
+		min-height: 15vh !important;
+	}
+	.menu-header-img-content {
+		height: 15vh !important;
+		width: 15vh !important;
+	}
+	.menu-header-title {
+		padding-left: 17vh;
+		height: 7vh;
+		font-size: 5vh;
+		padding-bottom: 0px;
+		bottom: 6vh;
+	}
+	.menu-header-subtitle{
+		padding-left: 17vh;
+		height: 7vh;
+		font-size: 4vh;
+		padding-bottom: 0px;
+		bottom: 0vh;
+	}
+	.has-header {
+		top: 15vh !important;
+	}
+	.menu-list-item{
+		height: 12vh;
+		max-height: 12vh !important;
+		font-size: 4.5vh;
+		line-height: 4.5vh;
+		padding-left: 12vh;
+		padding-top: 3.5vh;
+		padding-bottom: 3.5vh;
+	}
+	.menu-list-item-icon{
+		font-size: 7vh !important;
+   		line-height: 7vh;
 	}
 	
 }

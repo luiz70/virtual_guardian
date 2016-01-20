@@ -29,7 +29,7 @@ angular.module('starter.controllers')
 		Correo:"",
 		Contrasena:""	
 	}
-		
+	
 	//Funcion: revisa si se preciona enter en el teclado para realizar accion dependiendo del campo en el que se encuentre.
 	$scope.enter=function(event,field){
 		//verificar si se preciono enter

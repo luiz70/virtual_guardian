@@ -4,7 +4,7 @@
   			<h1 class="titulo">{{idioma.Registro[1]}}</h1>
 		</div>
     	<div class="registro-steps">
-    		<div class="barra"></div>
+    		<div class="barra" ></div>
     		<button style="left:10vw" class="{{(state=='datos')?'stepActivo':''}}">1</button>
         	<button style="left:0px; right:0px;" class="{{(state=='codigo')?'stepActivo':''}}">2</button>
         	<button style="right:10vw" class="{{(state=='final')?'stepActivo':''}}">3</button>
@@ -12,7 +12,7 @@
    		<ion-nav-view name="contenido-registro"  class="registro-vista-contenido"></ion-nav-view>
    		<div class="registro-pie">
        		<div class="bar-footer buttons-footer">
-            	<button class="button button-block" ng-click="siguiente()">
+            	<button class="button button-block {{state=='final'?'final-center':''}}" ng-click="siguiente()">
              	{{botonSiguiente}}
             	</button>
             	<button class="button button-block" ng-click="atras()" ng-hide="state=='final'">

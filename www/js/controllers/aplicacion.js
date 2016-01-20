@@ -54,6 +54,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
     $rootScope.$watch('internet', function(newValue, oldValue) {
         //
     });
+	
 	//function que se ejecuta al cerrar sesion
 	$rootScope.cerrarSesion=function(){
 		//muestra mensaje de cerrando sesion

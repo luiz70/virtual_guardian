@@ -49,8 +49,8 @@ angular.module('starter.controllers')
 			18:"Enviar código de nuevo",
 			19:"El código de verificación ha sido enviado nuevamente a tu correo electrónico",
 			20:"Bienvenido a",
-			21:"Terminar",
-			22:"Ahora puedes iniciar sesión, mantenerte informado y protegido con nosotros.",
+			21:"Entrar",
+			22:"Ahora puedes mantenerte informado en todo momento.",
 			23:"Proporciona tu correo electrónico registrado para enviarte un mensaje con las instrucciones necesarias para recuperar tu contraseña.",
 			24:"Enviar correo",
 			25:"No has proporcionado tu correo electrónico.",
@@ -64,7 +64,8 @@ angular.module('starter.controllers')
 			33:"Creando cuenta...",
 			34:"Completando registro...",
 			35:"El código proporcionado ha activado una suscripción TIPO por TIEMPO mes",
-			36:"Tu registro ha caducado, es necesario que realices el registro de nuevo."
+			36:"Tu registro ha caducado, es necesario que realices el registro de nuevo.",
+			37:"Ocurrio un problema mientras iniciaba tu sesión."
 		},
 		Mapa:{
 			1:"Radio: ",

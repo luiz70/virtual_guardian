@@ -30,11 +30,6 @@ angular.module('starter.controllers')
 	$scope.$on('$ionicView.afterEnter',function(){
 		angular.element(document.getElementById("app_content")).removeClass("invisible")
     	if(Memory.get("Registro"))$scope.nuevoUsuario=Memory.get("Registro");
-		if($scope.state=="datos")
-			$timeout(function(){
-				document.getElementById("registro_correo").focus();
-				if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.show();
-			},500);
     })
 	//FUNCION QUE SE EJECUTA CADA QUE CAMBIA DE ESTADO DENTRO DE REGISTRO PARA MOSTRAR LOS BOTONES CORRECTOS EN LA PARTE INFERIOR
 	$scope.$watch('state', function() {
@@ -125,6 +120,7 @@ angular.module('starter.controllers')
 								});
 							break;
 							case 1: 
+								Memory.set("Login",Memory.get("Registro"));
 								Memory.set("Registro",null);
 								$ionicViewSwitcher.nextDirection('forward');
 								$state.go('app.registro.final');
@@ -153,8 +149,32 @@ angular.module('starter.controllers')
 				}
 			break;
 			case "final":
-				$ionicViewSwitcher.nextDirection('back');
-				$state.go('app.login')
+				var usr=Memory.get("Login");
+				Message.showLoading($rootScope.idioma.Login[8]);
+				Usuario.login({Correo:usr.Correo,Contrasena:usr.Contrasena})
+				.success(function(data){
+					Memory.set("Login",null);
+					if (data.error){
+						Message.hideLoading();
+						Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.Registro[37],function(){
+							$ionicViewSwitcher.nextDirection('back');
+							$state.go('app.login')
+						});
+					}else{
+						$rootScope.Usuario=data;
+						$timeout(function(){
+							Message.hideLoading();
+							$ionicViewSwitcher.nextDirection('forward');
+							$state.go('app.home.mapa');
+						},500)
+					}
+					
+				})
+				.error(function(){
+					Message.hideLoading();
+					
+				})
+				
 			break;
 		}
 	}
@@ -189,11 +209,10 @@ angular.module('starter.controllers')
 	//FUNCTION QUE SE EJECUTA CUANDO EL PRIMER PASO DEL REGISTRO SE REALIZA CORRECTAMENTE
 	$scope.registra=function(promo){
 		var promocion=promo || null;
+		if(promocion.Id)$scope.nuevoUsuario.IdPromocion=promocion.Id;
 		Message.showLoading($rootScope.idioma.Registro[33])
 		$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro', data: $scope.nuevoUsuario})
 	
-	/*.success(function(data){console.log(data)})
-		$http.post("https://www.virtual-guardian.com/virtual/registro",$scope.nuevoUsuario)*/
 		.success(function(data){
 			Message.hideLoading();
 			switch(parseInt(data.return)){
@@ -205,7 +224,7 @@ angular.module('starter.controllers')
 					Memory.set("Registro",$scope.nuevoUsuario);
 					if(promocion)Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[35].replace("TIEMPO",promocion.Duracion).replace("TIPO",promocion.Tipo)+(promocion.Duracion>1?"es.":"."),function(){
 						$ionicViewSwitcher.nextDirection('forward');
-					$state.go('app.registro.codigo')
+						$state.go('app.registro.codigo')
 						});
 					else{
 						$ionicViewSwitcher.nextDirection('forward');
@@ -267,10 +286,8 @@ angular.module('starter.controllers')
 		}
 	})
 	$scope.$on('$ionicView.afterEnter',function(){
-			$timeout(function(){
-				document.getElementById("recuperar_correo").focus()
-				if(window.cordova && window.cordova.plugins.Keyboard)cordova.plugins.Keyboard.show();
-			},500);
+		angular.element(document.getElementById("app_content")).removeClass("invisible")
+			
     })
 	//VARIABLES
 	$scope.recuperar={
