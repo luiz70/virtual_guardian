@@ -2,6 +2,9 @@
 * {
 	font-family: "Helvetica Neue", "Roboto", Sans-Serif !important;
 }
+body,html{
+	    background-color: #242424 !important;
+}
 #app_content.invisible{
 	opacity:0 !important;
 }
