@@ -35,7 +35,7 @@
   <preference name="PaginationBreakingMode" value="page" />
   <preference name="PaginationMode" value="unpaginated" />
   <preference name="StatusBarOverlaysWebView" value="false" />
-  <preference name="android-windowSoftInputMode" value="adjustPan" />
+  <preference name="android-windowSoftInputMode" value="stateHidden|adjustPan" />
   <preference name="Fullscreen" value="false" />
   
   <feature name="StatusBar">
