@@ -47,6 +47,7 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		DC386AB3AB55491BAC3EF50C /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3612122588064C6A91014328 /* CDVStatusBar.m */; };
 		E369BFDFE2624862BE2EBD6E /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D9529D134B4141408D5021B3 /* CDVInAppBrowser.m */; };
+		30797273CB4D45A1A2A1454F /* YoikScreenOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4322330FF7B84FFA8D555AAD /* YoikScreenOrientation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,8 @@
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = VirtualGuardian/config.xml; sourceTree = "<group>"; };
 		D9529D134B4141408D5021B3 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVInAppBrowser.m"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		2E685C70611F49FA93D718E0 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVInAppBrowser.h"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		4322330FF7B84FFA8D555AAD /* YoikScreenOrientation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "YoikScreenOrientation.m"; path = "cordova-plugin-screen-orientation/YoikScreenOrientation.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		FFC795A32023427E8DC4ECFB /* YoikScreenOrientation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "YoikScreenOrientation.h"; path = "cordova-plugin-screen-orientation/YoikScreenOrientation.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +243,8 @@
 				87F2F83C8C984826A3A035AB /* UIWebViewExtension.h */,
 				D9529D134B4141408D5021B3 /* CDVInAppBrowser.m */,
 				2E685C70611F49FA93D718E0 /* CDVInAppBrowser.h */,
+				4322330FF7B84FFA8D555AAD /* YoikScreenOrientation.m */,
+				FFC795A32023427E8DC4ECFB /* YoikScreenOrientation.h */,
 			);
 			name = Plugins;
 			path = VirtualGuardian/Plugins;
@@ -432,6 +437,7 @@
 				7005CB9E721C44049B605220 /* IonicKeyboard.m in Sources */,
 				BCFC3326A320401C8930C23A /* UIWebViewExtension.m in Sources */,
 				E369BFDFE2624862BE2EBD6E /* CDVInAppBrowser.m in Sources */,
+				30797273CB4D45A1A2A1454F /* YoikScreenOrientation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

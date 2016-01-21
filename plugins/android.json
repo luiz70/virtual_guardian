@@ -31,6 +31,10 @@
                         {
                             "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"io.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"YoikScreenOrientation\"><param name=\"android-package\" value=\"net.yoik.cordova.plugins.screenorientation.YoikScreenOrientation\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -57,6 +61,9 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },
