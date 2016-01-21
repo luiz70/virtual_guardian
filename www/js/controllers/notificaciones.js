@@ -158,16 +158,16 @@ angular.module('starter.controllers')
 			//TIPS VIRTUAL
 		}else{
 		var buttons=[];
-		if(data.Tipo<5)buttons.push({text:"Ver evento en mapa",funcion:$scope.verEvento,data:data})
+		if(data.Tipo<5)buttons.push({text:$rootScope.idioma.Notificaciones[20],funcion:$scope.verEvento,data:data})
 		if(data.Tipo>1 && data.Tipo<5){
-			buttons.push({text:"Directorio de servicios",funcion:$scope.verDirectorio,data:data})
+			buttons.push({text:$rootScope.idioma.Notificaciones[21],funcion:$scope.verDirectorio,data:data})
 		}
-		if(data.Tipo==3)buttons.push({text:"Llamar a "+data.Persona,funcion:$scope.llamaPersona,data:data})
+		if(data.Tipo==3)buttons.push({text:$rootScope.idioma.Llamada[14]+data.Persona,funcion:$scope.llamaPersona,data:data})
 		if(data.Tipo==5 || data.Tipo==9){
-			buttons.push({text:"Aceptar solicitud",funcion:$scope.aceptarSolicitud,data:data})
-			buttons.push({text:"Cancelar solicitud",funcion:$scope.cancelarSolicitud,data:data})
+			buttons.push({text:$rootScope.idioma.Contactos[13],funcion:$scope.aceptarSolicitud,data:data})
+			buttons.push({text:$rootScope.idioma.Contactos[20],funcion:$scope.cancelarSolicitud,data:data})
 		}
-		if(data.Tipo==5 || data.Tipo==6)buttons.push({text:"Ver lista de contactos",funcion:$scope.verContactos,data:data})
+		if(data.Tipo==5 || data.Tipo==6)buttons.push({text:$rootScope.idioma.Notificaciones[22],funcion:$scope.verContactos,data:data})
 		Message.showActionSheet(null,buttons,{text:$rootScope.idioma.Notificaciones[17],funcion:function(data){
 				$scope.eliminaNotificacion(data.data)
 		},data:data},$rootScope.idioma.General[6],function(index,res){

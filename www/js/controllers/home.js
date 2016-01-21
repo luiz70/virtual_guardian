@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion//,Notificaciones,Usuario,sql,$ionicPlatform,Mapa,Message,Llamada
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion,Contactos,Llamada//,Notificaciones,Usuario,sql,$ionicPlatform,Mapa,Message
 ) {
 	$scope.$on('$ionicView.afterEnter',function(){
 		if(Memory.get("Usuario"))
@@ -21,7 +21,7 @@ angular.module('starter.controllers')
 		socket.inicializa();
 		Usuario.refresh();
 		//Mapa.inicializa();
-		//Llamada.inicializa();
+		Llamada.inicializa();
 		//$rootScope.sql=sql;
 	}
 	
@@ -33,6 +33,7 @@ angular.module('starter.controllers')
 		Usuario.refresh();
         sql.inicializa(true)
 		sql.update();*/
+		Contactos.inicializa()
 		Notificacion.inicializa()
 	}
 	$scope.listener=$rootScope.$on("socket.connect",$scope.conected)

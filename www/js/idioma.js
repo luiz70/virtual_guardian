@@ -123,7 +123,8 @@ angular.module('starter.controllers')
 			9:"Se ha terminado la llamada.",
             11:" ha terminado la llamada.",
             12:"Usuario no disponible.",
-            13:" esta ocupado."
+            13:" esta ocupado.",
+			14:"Llamar a "
 		},
 		Menu:{
 			1:"Suscripción",
@@ -153,7 +154,10 @@ angular.module('starter.controllers')
 			16:"No hay notificaciones anteriores.",
 			17:"Eliminar notificación",
 			18:"Eliminar notificación",
-			19:"¿Deseas eliminar esta notificación?"
+			19:"¿Deseas eliminar esta notificación?",
+			20:"Ver evento en mapa",
+			21:"Directorio de servicios",
+			22:"Ver lista de contactos"
 			
 		},
 		Contactos:{
@@ -169,13 +173,14 @@ angular.module('starter.controllers')
 			10:"Pendiente de aceptar",
 			11:"Eliminar contacto",
 			12:"¿Estás seguro de que deseas eliminar de tu lista de contactos a ",
-			13:"Aceptar contacto",
+			13:"Aceptar solicitud",
 			14:"¿Deseas aceptar en tu lista de contactos a ",
 			15:" se ha eliminado de tu lista de contactos",
 			16:" se ha aceptado en tu lista de contactos",
 			17:"No has agregado contactos",
 			18:"Contactos",
 			19:"¿Deseas eliminar la solicitud de ",
+			20:"Cancelar solicitud"
 			
 		},
 		Auto:{

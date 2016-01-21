@@ -18,7 +18,7 @@ angular.module('starter.services')
 		if(oldVal && newVal){
 			if(newVal.Activa && !oldVal.Activa){
 				Message.hideModal();
-				Message.showModal("templates/modal/llamada.html")
+				Message.showModal("screens/modal/llamada.html")
 			}else if(!newVal.Activa && oldVal.Activa){
 				Message.hideModal()
 			}

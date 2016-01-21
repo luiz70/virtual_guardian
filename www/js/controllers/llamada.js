@@ -1,0 +1,18 @@
+angular.module('starter')//signaling
+.controller("llamada",function($scope,$http,$rootScope,$cordovaNetwork,$location,$interval,$timeout,socket){
+	$scope.llamada=$rootScope.llamada
+	$scope.idioma=$rootScope.idioma;
+	$scope.activaControl=function(val){
+		if(val==1){
+			$scope.llamada.Altavoz=!$scope.llamada.Altavoz
+		}else{
+			$scope.llamada.Silencio=!$scope.llamada.Silencio
+		}
+	}
+	$scope.cuelgaLlamada=function(){
+		$scope.llamada.Activa=false;
+	}
+	$scope.contestaLlamada=function(){
+		$scope.llamada.Contestada=true;
+	}
+})

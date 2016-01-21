@@ -1484,3 +1484,53 @@ ionic-datepicker{
 .pane{
 	background-color: #242424 !important;
 }
+.contacto-item-contenido{
+	padding-left: 10vh !important;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    min-height: 1vh !important;
+    border-bottom: solid 2px rgb(32, 32, 32) !important;
+    padding-right: 6vh !important;
+}
+.contacto-item-contenido > div{
+	width: 6vh !important;
+    height: 8vh !important;
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 100vh !important;
+    max-height: 100vh !important;
+    position: absolute !important;
+    top: 0px !important;
+    bottom: 0px;
+    margin: auto;
+    left: 0px !important;
+    right: calc( 100vw - 10vh) !important;
+    border-radius: 0px !important;
+	background:#D8D8D8;
+	-webkit-mask-image: url(../img/iconos/contacto.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+	}
+.contacto-item-contenido > h2{
+	    color: #E8E8E8;
+    font-size: 2.8vh;
+	    font-weight: 300;
+}
+.contacto-item-contenido > p{
+	    white-space: initial;
+   color: #059DB5;
+    font-size: 2.4vh;
+	    font-weight: 300;
+}
+.contacto-item-contenido > i{
+	    color: #A1A1A1;
+    position: absolute;
+    font-size: 5vh !important;
+    height: 5vh !important;
+    width: 3vh;
+    top: 0px !important;
+    bottom: 0px !important;
+    margin: auto;
+    right: 0px !important;
+    left: calc(100vw - 6vh) !important;
+}
