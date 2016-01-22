@@ -46,6 +46,7 @@ angular.module('starter.services')
         conectado=true;
 		$rootScope.socketState=true;
 		socket.emit('getSesion',{Id:$rootScope.Usuario.Id,Log:$rootScope.Usuario.Log});
+		try{$rootScope.$apply(function(){})}catch(err){}
 		
     })
 	socket.on('logIn',function(data){
@@ -64,10 +65,12 @@ angular.module('starter.services')
 				})
 		}
 	})
+	
     socket.on("connect_error",function(){
-		$rootScope.$broadcast("socket.connect",false)
-        conectado=false;
+       $rootScope.$broadcast("socket.connect",false)
+	    conectado=false;
 		$rootScope.socketState=false;
+		try{$rootScope.$apply(function(){})}catch(err){}
 		
     })
     socket.on("reconnect",function(){
@@ -80,26 +83,30 @@ angular.module('starter.services')
 		}
         conectado=true;
 		$rootScope.socketState=true;
+		try{$rootScope.$apply(function(){})}catch(err){}
     })
     socket.on("reconnect_error",function(){
 		$rootScope.$broadcast("socket.connect",false)
         conectado=false;
 		$rootScope.socketState=false;
+		try{$rootScope.$apply(function(){})}catch(err){}
     })
     socket.on("disconnect",function(){
 		$rootScope.$broadcast("socket.connect",false)
         conectado=false;
 		$rootScope.socketState=false;
+		try{$rootScope.$apply(function(){})}catch(err){}
 
     })
     socket.on("error",function(){
 		$rootScope.$broadcast("socket.connect",false)
         conectado=false;
 		$rootScope.socketState=false;
+		try{$rootScope.$apply(function(){})}catch(err){}
     })
 	return socket;
 	}
-         
+       
     return {
 		inicializa:function(){
 			return inicializa()

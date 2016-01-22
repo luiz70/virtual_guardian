@@ -1,5 +1,5 @@
 angular.module('starter.services', ['LocalStorageModule','ngError'])
-.factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory){//,Radio,Ubicacion,Filtros,Eventos,Cluster,Lugar,Auto){
+.factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory,$timeout,Ubicacion){//,Radio,Filtros,Eventos,Cluster,Lugar,Auto){
 	
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	
@@ -9,8 +9,8 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 	var inicializa=function(){
 		uiGmapGoogleMapApi.then(function(maps) {
 		
-		/*Ubicacion.inicializa();
-		Auto.inicializa();
+		Ubicacion.inicializa();
+		/*Auto.inicializa();
 		Radio.inicializa();
 		Filtros.inicializa();
 		Eventos.inicializa();
@@ -91,7 +91,13 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		//carga los eventos
 		//Eventos.refresh();
 		//animacion del mapa una vez cargado
+		
 		angular.element(document.getElementsByClassName("angular-google-map")).addClass("aparece-map")
+		$timeout(function(){
+			angular.element(document.getElementsByClassName("angular-google-map")).addClass("visible")
+			//angular.element(document.getElementsByClassName("angular-google-map")).removeClass("aparece-map")
+			//angular.element(document.getElementsByClassName("angular-google-map")).addClass("aparece-map")
+		},1000)
     	/*$(".angular-google-map").animate({
 			opacity:1,
         },500);*/

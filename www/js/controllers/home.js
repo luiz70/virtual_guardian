@@ -20,6 +20,7 @@ angular.module('starter.controllers')
 			case 3:$state.go("app.home.contactos")
 			break;
 		}
+		
 	}
 	if(!Memory.get("Usuario")){
 		$ionicViewSwitcher.nextTransition("none");

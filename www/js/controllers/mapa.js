@@ -18,7 +18,7 @@ angular.module('starter.controllers')
 	$scope.lugar=$rootScope.lugar
 	$scope.timeoutEscala=null;
 	
-	/*$scope.$on('$ionicView.afterEnter',function(){
+	$scope.$on('$ionicView.afterEnter',function(){
 		if($rootScope.cerrada){
 			//Mapa.inicializa();
 		}
@@ -32,7 +32,7 @@ angular.module('starter.controllers')
 	$rootScope.$watch("socketState",function (newValue) {
     	$scope.socketState=$rootScope.socketState;
   	})
-	$scope.buscaLugares=function(){
+	/*$scope.buscaLugares=function(){
 		$scope.buscando=true;
 		if($scope.timeout)$timeout.cancel($scope.timeout)
 		$scope.timeout=$timeout($scope.busca,1000);

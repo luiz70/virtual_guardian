@@ -3,7 +3,6 @@ angular.module('starter.controllers')
 	$scope.idioma=$rootScope.idioma;
 	$scope.cargando=true;
 	$scope.cargandoContactos=true;
-	console.log(3);
 	$scope.$on('$ionicView.afterEnter',function(){
 		$scope.cargandoContactos=true;
 		$timeout(function(){

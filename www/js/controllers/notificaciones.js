@@ -4,7 +4,6 @@ angular.module('starter.controllers')
 	$scope.cargando=true;
 	$scope.moreData=true;
 	$scope.cargandoNotificaciones=true;
-	console.log(2);
 	$scope.$on('$ionicView.afterEnter',function(){
 		$scope.cargandoNotificaciones=true;
 		$timeout(function(){
@@ -178,8 +177,5 @@ angular.module('starter.controllers')
 		}
 	}
 	
-})
-.controller('Test', function($scope,$timeout,ionicMaterialMotion,ionicMaterialInk,socket,$rootScope,Message,Notificacion,$ionicScrollDelegate,$state,$ionicViewSwitcher,Llamada) {
-	console.log(1)
 })
 
