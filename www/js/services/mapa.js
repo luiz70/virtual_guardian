@@ -91,7 +91,6 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		//carga los eventos
 		//Eventos.refresh();
 		//animacion del mapa una vez cargado
-		console.log(document.getElementsByClassName("angular-google-map")[0])
 		angular.element(document.getElementsByClassName("angular-google-map")).addClass("aparece-map")
     	/*$(".angular-google-map").animate({
 			opacity:1,
