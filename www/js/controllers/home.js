@@ -28,7 +28,6 @@ angular.module('starter.controllers')
 	
 	$scope.conected=function(evt,res){
 		$scope.listener();
-		console.log(res);
 		/*Notificaciones.registra(true);
 		Usuario.refresh();
         sql.inicializa(true)
