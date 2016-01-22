@@ -11,7 +11,16 @@ angular.module('starter.controllers')
 			
     })
 	
-	
+	$scope.cambiaPantalla=function(val){
+		switch(val){
+			case 1:$state.go("app.home.mapa")
+			break;
+			case 2:$state.go("app.home.notificaciones")
+			break;
+			case 3:$state.go("app.home.contactos")
+			break;
+		}
+	}
 	if(!Memory.get("Usuario")){
 		$ionicViewSwitcher.nextTransition("none");
 		$ionicViewSwitcher.nextDirection('enter');

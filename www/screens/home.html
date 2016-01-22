@@ -6,13 +6,13 @@
       <button class="logo-menu " ng-click="conecta()">
       	<img src="img/logo_txt.png" height="100%">
         </button>
-       <button class="button button-clear boton-menu icono-header  pull-right {{seccion==3?'seleccionado':''}}" nav-direction="forward" ui-sref="app.home.contactos">
+       <!--button class="button button-clear boton-menu icono-header  pull-right {{seccion==3?'seleccionado':''}}" nav-direction="forward" ui-sref="app.home.contactos"-->
+       <button class="button button-clear boton-menu icono-header  pull-right {{seccion==3?'seleccionado':''}}" ng-click="cambiaPantalla(3)">
         	<div style="-webkit-mask-image:url(img/iconos/barra/personas.png) !important;"></div>
-        <button class="button button-clear boton-menu icono-header  pull-right {{seccion==2?'seleccionado':''}}"  ui-sref="app.home.notificaciones" >
+        <button class="button button-clear boton-menu icono-header  pull-right {{seccion==2?'seleccionado':''}}" ng-click="cambiaPantalla(2)" >
         	<div style="-webkit-mask-image:url(img/iconos/barra/notificaciones.png) !important;"></div>
         </button>
-        
-             <button class="button button-clear boton-menu icono-header  pull-right {{seccion==1?'seleccionado':''}}" nav-direction="back" ui-sref="app.home.mapa">
+        <button class="button button-clear boton-menu icono-header  pull-right {{seccion==1?'seleccionado':''}}" ng-click="cambiaPantalla(1)">
         	<div style="-webkit-mask-image:url(img/iconos/barra/mapa.png) !important;"></div>
         </button>
         </button>

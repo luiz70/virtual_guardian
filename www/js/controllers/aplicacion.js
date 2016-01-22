@@ -8,7 +8,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
     //function que se ejecuta cada que hay un cambio de pantalla y limpia el historial para evitar errores con ios
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
 		//limpia el historial
-		$ionicHistory.clearHistory();
+		//$ionicHistory.clearHistory();
     })
 	$timeout(function(){
 		try{screen.unlockOrientation();}catch(err){}
@@ -20,11 +20,13 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		var state=toState.name
 		//control de direccion en cambio de pestañas
 		//si  va a cambiar de mapa a notificaciones el estado entra de la derecha 
-        if(fromState.name.indexOf("mapa")>=0 && state.indexOf("notificaciones")>=0)
+        /*if(fromState.name.indexOf("mapa")>=0 && state.indexOf("notificaciones")>=0)
 			$ionicViewSwitcher.nextDirection('forward');
 		//si va a cambiar de personas a notificaciones el estado entra de la izquierda por que regresa
         if(fromState.name.indexOf("contactos")>=0 && state.indexOf("notificaciones")>=0)
-			$ionicViewSwitcher.nextDirection('back');
+			$ionicViewSwitcher.nextDirection('back');*/
+		if(fromState.id>toState.id)$ionicViewSwitcher.nextDirection('back');
+		else $ionicViewSwitcher.nextDirection('forward');
 	})
 	
 	
