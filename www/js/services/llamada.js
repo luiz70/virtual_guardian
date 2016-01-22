@@ -18,9 +18,11 @@ angular.module('starter.services')
 		if(oldVal && newVal){
 			if(newVal.Activa && !oldVal.Activa){
 				Message.hideModal();
-				Message.showModal("screens/modal/llamada.html")
+				try{screen.lockOrientation('portrait');}catch(err){}
+				Message.showModal("screens/modal/llamada.html")				
 			}else if(!newVal.Activa && oldVal.Activa){
 				Message.hideModal()
+				try{screen.unlockOrientation();}catch(err){}
 			}
 		}
 	},true)

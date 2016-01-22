@@ -333,4 +333,46 @@
 	.action-sheet-title{
 		font-size: 2.8vw;
 	}
+	.contacto-item-contenido{
+	padding-left: 10vw !important;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    min-height: 1vw !important;
+    padding-right: 6vw !important;
+}
+.contacto-item-contenido > div{
+	width: 6vw !important;
+    height: 8vw !important;
+    max-width: 100vw !important;
+    max-height: 100vw !important;
+    right:  90vw !important;
+	}
+.contacto-item-contenido > h2{
+    font-size: 2.8vw;
+}
+.contacto-item-contenido > p{
+    font-size: 2.4vw;
+}
+.contacto-item-contenido > i{
+    font-size: 5vw !important;
+    height: 5vw !important;
+    width: 3vw;
+    left: 94vw !important;
+}
+.contactos-agrega-contacto{
+    bottom: 2vw;
+    right: 2vw;
+    width: 9vw;
+    height: 9vw;
+    font-size: 5vw;
+}
+.popup-body>input{
+    margin-top: 2vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    font-size: 2.5vw;
+}
+.lista-contactos>div{
+	padding-bottom: 10vw;
+}
 }

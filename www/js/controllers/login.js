@@ -55,8 +55,9 @@ angular.module('starter.controllers')
 		else{
 			Message.showLoading($rootScope.idioma.Login[8]);
 			Memory.clean();
-			Usuario.login($scope.login)
-			.success(function(data){
+			var us=Usuario.login($scope.login)
+			if(us){
+			us.success(function(data){
 				
 				if (data.error){
 					Message.hideLoading();
@@ -75,8 +76,15 @@ angular.module('starter.controllers')
 			})
 			.error(function(){
 				Message.hideLoading();
+				Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.General[7],function(){
+				});
 				
 			})
+			}else{
+				Message.hideLoading();
+				Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.General[7],function(){
+				});
+			}
 		}
 	}
 })

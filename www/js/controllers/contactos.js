@@ -3,7 +3,7 @@ angular.module('starter.controllers')
 	$scope.idioma=$rootScope.idioma;
 	$scope.cargando=true;
 	$scope.cargandoContactos=true;
-	
+	console.log(3);
 	$scope.$on('$ionicView.afterEnter',function(){
 		$scope.cargandoContactos=true;
 		$timeout(function(){
@@ -25,19 +25,14 @@ angular.module('starter.controllers')
 	}
 	
 	var connect=function(){
-		/*if($rootScope.notificaciones && $rootScope.notificaciones.length>0)socket.getSocket().emit("setNotificaciones",_.map($rootScope.notificaciones,function(v){return {IdN:v.IdNotificacion,IdE:v.IdEvento,Edi:v.Editado}}))
 		socket.getSocket().removeListener("connect",connect)
-		$scope.loadNotifications(0)
-		$scope.cargandoNotificaciones=true;
-		$scope.moreData=true;*/
-		
+		$scope.cargandoContactos=true;
+		$ionicScrollDelegate.scrollTop();
+        $scope.loadContactos();		
 	}
 	var connectError=function(){
-		//socket.getSocket().removeListener("connect_error",connectError);
-		//getNotificaciones([]);
-		//$scope.moreData=false;
-	}
-	
+		socket.getSocket().removeListener("connect_error",connectError);
+	}	
 	$scope.loadContactos=function(){
 		socket.getSocket().removeListener("getContactos",getContactos)
 		socket.getSocket().removeListener("connect",connect)
@@ -66,6 +61,43 @@ angular.module('starter.controllers')
 		},300)
 		
 	}
+	$scope.agregarContacto=function(res,correo){
+		Message.hideLoading();
+		switch(res){
+			case null: console.log("error")
+			break;
+			case 1:Message.alert($rootScope.idioma.Contactos[1],correo+$rootScope.idioma.Contactos[4],function(){
+				$scope.loadContactos();
+			})
+			break;
+			case 2:Message.alert($rootScope.idioma.Contactos[1],correo+$rootScope.idioma.Contactos[6],function(){})
+			break;
+			case 3:Message.alert($rootScope.idioma.Contactos[1],correo+$rootScope.idioma.Contactos[5],function(){})
+			break;
+			default:Message.alert($rootScope.idioma.Contactos[1],$rootScope.idioma.General[7],function(){})
+			break;
+		}
+	}
+	$scope.agregaContacto=function(){
+		if(socket.isConnected())
+		Message.prompt($rootScope.idioma.Contactos[1],$rootScope.idioma.Contactos[2],function(res){
+			if(res){
+				if(res.toLowerCase()==$rootScope.Usuario.Correo.toLowerCase())
+					Message.alert($rootScope.idioma.Contactos[1],$rootScope.idioma.Contactos[3],function(){})
+				else{
+					if(socket.isConnected()){
+					Message.showLoading($rootScope.idioma.Contactos[21]);
+					socket.getSocket().removeListener("agregarContacto",$scope.agregarContacto)
+					socket.getSocket().on("agregarContacto",$scope.agregarContacto)
+					socket.getSocket().emit("agregarContacto",$rootScope.Usuario.Id,res)
+					}else Message.alert($rootScope.idioma.Contactos[1],$rootScope.idioma.General[7],function(){})
+				}
+			}else{
+				Message.alert($rootScope.idioma.Contactos[1],$rootScope.idioma.Registro[10],function(){})
+			}
+		},"email",$rootScope.idioma.Login[2])
+		else Message.alert($rootScope.idioma.Contactos[1],$rootScope.idioma.General[7],function(){})
+	}
 	$scope.abreContacto=function(contacto){
 		var buttons=[];
 		if(contacto.Estatus==1){
@@ -76,8 +108,11 @@ angular.module('starter.controllers')
 		else{
 		   	if(contacto.Tipo==1){
 		   	//aceptar / rechazar
+			buttons.push({text:$rootScope.idioma.Contactos[20],funcion:$scope.cancelarSolicitud,data:contacto})
 			}else{
 			//eliminar
+			buttons.push({text:$rootScope.idioma.Contactos[13],funcion:$scope.aceptarSolicitud,data:contacto})
+			buttons.push({text:$rootScope.idioma.Contactos[20],funcion:$scope.cancelarSolicitud,data:contacto})
 			}
 		}
 		Message.showActionSheet(null,buttons,null,$rootScope.idioma.General[6],function(index,res){
@@ -94,105 +129,53 @@ angular.module('starter.controllers')
 			$rootScope.llamada.Usuario=data.IdUsuario;
 			Llamada.abre(true);
 		}else{
-			Message.alert($rootScope.idioma.Llamada[6],$rootScope.idioma.Llamada[7]+data.Persona,function(){})
+			Message.alert($rootScope.idioma.Llamada[6],$rootScope.idioma.Llamada[7]+data.Correo,function(){})
 		}
 		
 	}
-	/*
-	$scope.verEvento=function(data){
-		$rootScope.radio.activo=false;
-		$rootScope.map.zoom=18;
-		$rootScope.map.center={latitude:data.Latitud,longitude:data.Longitud}
-		$ionicViewSwitcher.nextDirection('back');
-		$state.go("app.home.mapa");
-	}
-	$scope.verDirectorio=function(data){
-		Message.showModal("templates/modal/directorio.html")
-	}
-	var getPersona=function(data){
-		if(data){
-			socket.getSocket().removeListener("getPersona",getPersona)
-			$rootScope.llamada.Usuario=data.Id;
-			Llamada.abre(true)
-		}
-		
-	}
-	
-	var aceptaPersona=function(data){
-		socket.getSocket().removeListener("aceptaPersona",aceptaPersona)
-		Message.alert($rootScope.idioma.Notificaciones[7],data+$rootScope.idioma.Contactos[4],function(){
-			$scope.loadNotifications(1);
-		})
-	}
-	$scope.aceptarSolicitud=function(data){
-		if(data.Tipo==5){
-			Message.confirm($rootScope.idioma.Notificaciones[7],$rootScope.idioma.Contactos[14]+data.Persona+"?",function(res){
-				if(socket.isConnected()) {
-					socket.getSocket().on("aceptaPersona",aceptaPersona)
-					socket.getSocket().emit("aceptaPersona",data.Persona,$rootScope.Usuario.Id)
-				}else Message.alert($rootScope.idioma.Notificaciones[7],$rootScope.idioma.General[7],function(){})
-			},null,null,false)
-		}else{
-			
-		}
-	}
-	var personaEliminada=function(data){
-		socket.getSocket().removeListener("eliminaPersona",personaEliminada)
+	var contactoEliminado=function(data){
+		Message.hideLoading();
+		socket.getSocket().removeListener("eliminaPersona",contactoEliminado)
 		Message.alert($rootScope.idioma.Notificaciones[7],data+$rootScope.idioma.Contactos[15],function(){
-			$scope.loadNotifications(1);
+			$scope.loadContactos();
 		})
-	}
-	var eliminaNotificacion=function(data){
-		socket.getSocket().removeListener("eliminaNotificacion",eliminaNotificacion)
-		console.log(data);
-	}
-	$scope.eliminaNotificacion=function(data){
-		Message.confirm($rootScope.idioma.Notificaciones[18],$rootScope.idioma.Notificaciones[19],function(){
-			if(socket.isConnected()) {
-				socket.getSocket().removeListener("eliminaNotificacion",eliminaNotificacion)
-				socket.getSocket().on("eliminaNotificacion",eliminaNotificacion)
-				socket.getSocket().emit("eliminaNotificacion",data.IdNotificacion)
-			}else Message.alert($rootScope.idioma.Notificaciones[18],$rootScope.idioma.General[7],function(){})
-		},null,null,false)
 	}
 	$scope.cancelarSolicitud=function(data){
-		if(data.Tipo==5){
-			Message.confirm($rootScope.idioma.Notificaciones[7],$rootScope.idioma.Contactos[19]+data.Persona+"?",function(res){
+			Message.confirm($rootScope.idioma.Notificaciones[7],$rootScope.idioma.Contactos[19]+data.Correo+"?",function(res){
 				if(socket.isConnected()) {
-					socket.getSocket().on("eliminaPersona",personaEliminada)
-					socket.getSocket().emit("eliminaPersona",data.Persona,$rootScope.Usuario.Id)
+					socket.getSocket().removeListener("eliminaPersona",contactoEliminado)
+					socket.getSocket().on("eliminaPersona",contactoEliminado)
+					socket.getSocket().emit("eliminaPersona",data.Correo,$rootScope.Usuario.Id)
+					Message.showLoading($rootScope.idioma.General[8]);
 				}else Message.alert($rootScope.idioma.Notificaciones[7],$rootScope.idioma.General[7],function(){})
 			},null,null,false)
-		}else{
-			
-		}
 	}
-	$scope.verContactos=function(data){
-		$ionicViewSwitcher.nextDirection('forward');
-		$state.go("app.home.personas");
+	$scope.eliminarContacto=function(data){
+		Message.confirm($rootScope.idioma.Notificaciones[11],$rootScope.idioma.Contactos[12]+data.Correo+"?",function(res){
+			if(socket.isConnected()) {
+				socket.getSocket().removeListener("eliminaPersona",contactoEliminado)
+				socket.getSocket().on("eliminaPersona",contactoEliminado)
+				socket.getSocket().emit("eliminaPersona",data.Correo,$rootScope.Usuario.Id)
+				Message.showLoading($rootScope.idioma.General[8]);
+			}else Message.alert($rootScope.idioma.Notificaciones[11],$rootScope.idioma.General[7],function(){})
+		},null,null,false)
 	}
-	$scope.abreNotificacion=function(data){
-		if(data.Tipo==8){
-			//TIPS VIRTUAL
-		}else{
-		var buttons=[];
-		if(data.Tipo<5)buttons.push({text:"Ver evento en mapa",funcion:$scope.verEvento,data:data})
-		if(data.Tipo>1 && data.Tipo<5){
-			buttons.push({text:"Directorio de servicios",funcion:$scope.verDirectorio,data:data})
-		}
-		if(data.Tipo==3)buttons.push({text:"Llamar a "+data.Persona,funcion:$scope.llamaPersona,data:data})
-		if(data.Tipo==5 || data.Tipo==9){
-			buttons.push({text:"Aceptar solicitud",funcion:$scope.aceptarSolicitud,data:data})
-			buttons.push({text:"Cancelar solicitud",funcion:$scope.cancelarSolicitud,data:data})
-		}
-		if(data.Tipo==5 || data.Tipo==6)buttons.push({text:"Ver lista de contactos",funcion:$scope.verContactos,data:data})
-		Message.showActionSheet(null,buttons,{text:$rootScope.idioma.Notificaciones[17],funcion:function(data){
-				$scope.eliminaNotificacion(data.data)
-		},data:data},$rootScope.idioma.General[6],function(index,res){
-			if(index>=0){
-				res.funcion(res.data);
-			}
+	$scope.aceptarSolicitud=function(data){
+		Message.confirm($rootScope.idioma.Notificaciones[7],$rootScope.idioma.Contactos[14]+data.Correo+"?",function(res){
+			if(socket.isConnected()) {
+				socket.getSocket().removeListener("aceptaPersona",aceptaContacto)
+				socket.getSocket().on("aceptaPersona",aceptaContacto)
+				socket.getSocket().emit("aceptaPersona",data.Correo,$rootScope.Usuario.Id)
+				Message.showLoading($rootScope.idioma.General[9]);
+			}else Message.alert($rootScope.idioma.Notificaciones[7],$rootScope.idioma.General[7],function(){})
+		},null,null,false)
+	}
+	var aceptaContacto=function(data){
+		Message.hideLoading();
+		socket.getSocket().removeListener("aceptaPersona",aceptaContacto)
+		Message.alert($rootScope.idioma.Notificaciones[7],data+$rootScope.idioma.Contactos[4],function(){
+			$scope.loadContactos();
 		})
-		}
-	}*/
+	}
+
 })

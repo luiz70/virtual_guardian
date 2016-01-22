@@ -11,7 +11,6 @@ angular.module('starter.services')
 	}
 	var revisaUsuario=function(data){
 		socket.getSocket().removeListener("getUsuario",revisaUsuario);
-		console.log(data,$rootScope.Usuario);
 		if(data){
 			//sustituye
 			_.extend($rootScope.Usuario,data)
@@ -23,7 +22,9 @@ angular.module('starter.services')
 	},true)
 	return {
 		login:function(credentials){
-			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials})
+			if($rootScope.internet.state)
+			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials,timeout :15000})
+			else return false;
 		},
 		refresh:function(){
 			if(interval)$interval.cancel(interval);

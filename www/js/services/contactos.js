@@ -15,6 +15,7 @@ angular.module('starter.services')
 	}
 	var getContactos=function(res){
 		$rootScope.contactos=res;
+		
 	}
 	var actualiza=function(){
 		socket.getSocket().emit("getContactos");

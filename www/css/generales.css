@@ -253,7 +253,7 @@ position:relative;
 	box-shadow:none !important;
 	    border-bottom: solid 1px #C9C9C9 !important;
 		font-size: 2.5vh !important;
-		    color: #038296 !important;
+		    color: #005E6D !important;
 			    font-weight: 400;
 }
 .action-sheet-destructive{
@@ -471,4 +471,13 @@ position:relative;
 @keyframes desaparecer {
    from {opacity: 1;}
    to {opacity: 0;}
+}
+.popup-body>input{
+	border: solid 2px #ADACAC;
+    margin-top: 2vh;
+    border-radius: 5px !important;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    font-size: 2.5vh;
+    line-height: inherit;
 }

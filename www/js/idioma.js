@@ -13,7 +13,9 @@ angular.module('starter.controllers')
 			4:"No hay conexión a internet.",
 			5:"Actualizar",
 			6:"Cancelar",
-			7:"Error en conexión al servidor"
+			7:"Error en conexión al servidor",
+			8:"Eliminando...",
+			9:"Aceptando..."
 		},
 		Login:{
 			1:"Iniciar Sesión",
@@ -180,7 +182,8 @@ angular.module('starter.controllers')
 			17:"No has agregado contactos",
 			18:"Contactos",
 			19:"¿Deseas eliminar la solicitud de ",
-			20:"Cancelar solicitud"
+			20:"Cancelar solicitud",
+			21:"Agregando contacto..."
 			
 		},
 		Auto:{

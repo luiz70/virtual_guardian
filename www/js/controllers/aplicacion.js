@@ -10,6 +10,10 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		//limpia el historial
 		$ionicHistory.clearHistory();
     })
+	$timeout(function(){
+		try{screen.unlockOrientation();}catch(err){}
+	},500)
+
 	//funcion que se ejecuta cada que inicia un cambio de pantalla y verifica que el usuario tenga permisos para acceder a la seccion deseada
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
 		//define el nombre del estado a acceder

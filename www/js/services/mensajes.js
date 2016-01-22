@@ -3,6 +3,7 @@ angular.module('starter.services')
 	var dictionary=null
 	var alertPopUp=null;
 	var confirmPopUp=null;
+	var promptPopUp=null
 	var options=null;
 	var modal=null;
 	return {
@@ -31,6 +32,24 @@ angular.module('starter.services')
    			alertPopUp.then(function(res) {
      			funcion();
    			});
+		},
+		prompt:function(titulo,texto,funcion,tipo,placeholder){
+			tipo=tipo || "text";
+			placeholder=placeholder || "";
+			if(promptPopUp)promptPopUp.close();
+			promptPopUp=$ionicPopup.prompt({
+   				title: titulo,
+   				template: texto,
+   				inputType: tipo,
+				cancelText:this.dictionary.General[6],
+				cancelType:"button-default",
+				okText:this.dictionary.General[2],
+				okType:"button",
+   				inputPlaceholder: placeholder
+ 			})
+			promptPopUp.then(function(res) {
+				if(!_.isUndefined(res))funcion(res);
+ 			});
 		},
 		confirm:function(titulo,texto,funcion,btn1,btn2,closable,callback){
 			if(confirmPopUp)confirmPopUp.close();

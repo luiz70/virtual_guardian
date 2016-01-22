@@ -1,7 +1,7 @@
 <ion-view  class="view-seccion" hide-nav-bar="false" hide-back-button="true" can-swipe-back="false"> 
 	<ion-content delegate-handle="contactos" padding="false" >
 		<ion-refresher   on-refresh="loadContactos(0)" spinner="ripple" pulling-icon="ion-refresh"></ion-refresher>
-        <ion-list class="">
+        <ion-list class="lista-contactos">
            	<ion-item class="list-mensaje" ng-show="!cargandoContactos && contactos.length==0 ">
                	{{idioma.Contactos[17]}}
             </ion-item>
@@ -22,5 +22,7 @@
 		</ion-list>
 		<!--ion-infinite-scroll on-infinite="loadNotifications(1)" distance="1%" spinner="ripple"  ng-if="moreData && !cargandoContactos && contactos.length>=15">
 		</ion-infinite-scroll-->
+        
     </ion-content>
+    <button class="contactos-agrega-contacto" ng-click="agregaContacto()"><i class="icon ion-person-add"></i></button>
 </ion-view>
