@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion,Contactos,Llamada//,Notificaciones,Usuario,sql,$ionicPlatform,Mapa,Message
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion,Contactos,Llamada,Mapa//,Notificaciones,Usuario,sql,$ionicPlatform,Message
 ) {
 	$scope.$on('$ionicView.afterEnter',function(){
 		if(Memory.get("Usuario"))
@@ -20,7 +20,7 @@ angular.module('starter.controllers')
 		$rootScope.Usuario=Memory.get("Usuario")
 		socket.inicializa();
 		Usuario.refresh();
-		//Mapa.inicializa();
+		Mapa.inicializa();
 		Llamada.inicializa();
 		//$rootScope.sql=sql;
 	}

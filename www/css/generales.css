@@ -148,6 +148,31 @@ ion-header-bar{
 	z-index:10000;
 	display:none;
 }
+.angular-google-map{
+	opacity:0;
+}
+.angular-google-map.aparece-map{
+	animation-duration: 0.5s;
+	animation-timing-function: linear;
+	animation-name: apareceMapa;
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+@keyframes apareceMapa {
+   0% {opacity: 0;
+   -webkit-transform: translate3d(0, 3vh, 0);
+   }
+   50%{
+	   -webkit-transform: translate3d(0, 0, 0);
+   }
+   100% {opacity: 1;
+   	
+   }
+}
 .angular-google-map-container { 
 height:100vh;
 width:100vw;

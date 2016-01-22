@@ -85,3 +85,61 @@ angular.module('starter')
 		return time;
 	}
 })
+.filter('distance', function () {
+return function (input) {
+    if (input >= 1000) {
+        return (input/1000).toFixed(2) + ' km';
+    } else {
+        return input + ' m';
+    }
+}
+})
+.filter('subtituloInfo', function () {
+return function (input,scope) {
+   if(input){
+	   	var direc=[]
+		if((""+input.Municipio).trim()!="")direc.push(input.Municipio)
+		if(parseInt(input.Estado)>0)direc.push(scope.idioma.Estados[parseInt(input.Estado)])
+		var direc=direc.join(", ").split(" ");
+		for(var i=0;i<direc.length;i++)
+			direc[i]=direc[i].substr(0,1).toUpperCase()+direc[i].substr(1).toLowerCase()
+		return direc.join(" ")
+   }else return "";
+}
+})
+.filter('direccion', function () {
+return function (input,scope) {
+   if(input){
+		var palabras=scope.idioma.Palabras		
+	   	var direc=[]
+		if((""+input.Calles).trim()!="")direc.push(input.Calles)
+		if((""+input.Colonia).trim()!="")direc.push(input.Colonia)
+		if((""+input.Municipio).trim()!="")direc.push(input.Municipio)
+		if(parseInt(input.Estado)>0)direc.push(scope.idioma.Estados[parseInt(input.Estado)])
+		var direc=direc.join(", ").toLowerCase().split(" ");
+		for(var i=0;i<direc.length;i++)
+			if(palabras.indexOf(direc[i])<0)direc[i]=direc[i].substr(0,1).toUpperCase()+direc[i].substr(1).toLowerCase();
+		return direc.join(" ")
+   }else return "";
+}
+})
+.filter('fechaInfo', function () {
+	return function (input,scope) {
+	   if(input){
+		   var x=new Date(parseInt(input)*1000);
+		   return ((x.getDate()<10)?"0":"")+x.getDate()+" de "+scope.idioma.Meses[parseInt(x.getMonth()+1)]+" de "+x.getFullYear();
+	   }
+	}
+})
+
+.filter('escalaV', function () {
+	return function (input) {
+	   if(input){
+		   if(!input.Prom)input.Prom=0;
+		   var escala=(input.Val*5)/input.Prom;
+		   if(escala>10)escala=10;
+		   if(escala<0) escala=0;
+		   return (10-escala).toFixed(1);
+	   }
+	}
+})
