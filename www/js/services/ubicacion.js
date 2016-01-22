@@ -183,7 +183,7 @@ angular.module('starter.services')
 		try{Eventos.refresh()}catch(err){}
     }
 	var getLocation=function(){
-		navigator.geolocation.clearWatch(positionId);
+		if(positionId)navigator.geolocation.clearWatch(positionId);
 		positionId = navigator.geolocation.watchPosition(positionSuccess, positionError,{enableHighAccuracy: true,timeout:15000 });
 	}
 	
