@@ -76,8 +76,8 @@ angular.module('starter.services')
     socket.on("reconnect",function(){
 		$rootScope.$broadcast("socket.connect",true)
 		if($rootScope.eventos){
-		$rootScope.idEventos=$.map($rootScope.eventos, function(v, i){return v.id;})
-		$rootScope.editEventos=$.map($rootScope.eventos, function(v, i){return v.editado;})
+		$rootScope.idEventos=_.map($rootScope.eventos, function(v, i){return v.id;})
+		$rootScope.editEventos=_.map($rootScope.eventos, function(v, i){return v.editado;})
 		//se envian los ids al servidor
 		socket.emit('setInfo',{ids:$rootScope.idEventos,edit:$rootScope.editEventos});
 		}
