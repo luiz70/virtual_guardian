@@ -149,3 +149,32 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
     })
 	$urlRouterProvider.otherwise('/app/login');
 })
+.directive('range', function rangeDirective() {
+    return {
+        restrict: 'C',
+        link: function (scope, element, attr) {
+            element.bind('touchstart mousedown', function(event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+            });
+        }
+    };
+ })
+.directive('ng-touchstart', [function() {
+                return function(scope, element, attr) {
+                    element.on('touchstart', function(event) {
+                        scope.$apply(function() { 
+                            scope.$eval(attr.myTouchstart); 
+                        });
+                    });
+                };
+}]).directive('ng-touchend', [function() {
+                return function(scope, element, attr) {
+
+                    element.on('touchend', function(event) {
+                        scope.$apply(function() { 
+                            scope.$eval(attr.myTouchend); 
+                        });
+                    });
+                };
+}]);
