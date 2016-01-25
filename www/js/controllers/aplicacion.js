@@ -8,7 +8,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
     //function que se ejecuta cada que hay un cambio de pantalla y limpia el historial para evitar errores con ios
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
 		//limpia el historial
-		//$ionicHistory.clearHistory();
+		$ionicHistory.clearHistory();
     })
 	$timeout(function(){
 		try{screen.unlockOrientation();}catch(err){}
