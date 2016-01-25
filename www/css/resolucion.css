@@ -375,4 +375,31 @@
 .lista-contactos>div{
 	padding-bottom: 10vw;
 }
+.mapa-socket-indicador{
+	top: 16vh;
+}
+.contenedor-mapa-pie > .parte1, .parte2{
+	height:6vw;
+	    padding: 1vw;
+		width: 50vw;
+}
+.toggle-mapa-pie>.track{
+	    width: 7vw;
+}
+.toggle-mapa-pie > .track > .handle{
+	    width: 4vw;
+}
+.label-pie-radio{
+    left: 8vw;
+    width: 42vw;
+    font-size: 3.5vw;
+    line-height: 3.5vw;
+}
+.toggle-mapa-pie input:checked + .track .handle {
+    -webkit-transform: translate3d(3vw, 0, 0);
+    transform: translate3d(3vw, 0, 0);
+}
+.contenedor-mapa-bottom-center{
+	transform:translate3d(0,0,0) !important;
+}
 }
