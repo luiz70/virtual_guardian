@@ -177,7 +177,7 @@ angular.module('starter.controllers')
 	$scope.idioma=$rootScope.idioma;
 	$scope.map=$rootScope.map;
 })
-.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,$timeout,$animate,$ionicSlideBoxDelegate){//,Radio,Eventos
+.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,$timeout,$animate){//,Radio,Eventos
 	//define el diccionario
 	$scope.idioma=$rootScope.idioma;
 	//importa la configuracion del radio
@@ -197,14 +197,12 @@ angular.module('starter.controllers')
 	//funcion que se ejecuta cuando se inicia el cambio en valor numerico de rango
 		$scope.iniciaCambio=function(){
 			//Eventos.hideAll();
-			$ionicSlideBoxDelegate.enableSlide(false);
 		}
 		//function que se ejecuta cuando se termina el cambio en valor de rango
 		$scope.terminaCambio=function(){
 			$timeout(function(){
 				$rootScope.radio.visible=false;
 				$rootScope.radio.visible=true;
-				$ionicSlideBoxDelegate.enableSlide(true);
 			},200)
 			//Eventos.showHide();
 			try{Eventos.refresh();}catch(err){}
