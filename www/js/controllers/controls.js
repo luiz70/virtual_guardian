@@ -197,9 +197,11 @@ angular.module('starter.controllers')
 	//funcion que se ejecuta cuando se inicia el cambio en valor numerico de rango
 		$scope.iniciaCambio=function(){
 			//Eventos.hideAll();
+			
 		}
 		//function que se ejecuta cuando se termina el cambio en valor de rango
 		$scope.terminaCambio=function(){
+			alert(3);
 			$timeout(function(){
 				$rootScope.radio.visible=false;
 				$rootScope.radio.visible=true;

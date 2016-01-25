@@ -12,7 +12,7 @@
         <div class="parte2">
        		<div class="item range rango-radio" >
               	<i class="icon ion-minus-round"></i>
-              	<input type="range" min="10" max="16000" step="1" ng-model="radio.radio" ng-mouseDown="iniciaCambio()" ng-mouseUp="terminaCambio()"  ng-touchstart="iniciaCambio()" ng-touchend="terminaCambio()">
+              	<input type="range" min="10" max="16000" step="1" ng-model="radio.radio" on-touch="iniciaCambio()" on-release="terminaCambio()">
               	<i class="icon ion-plus-round"></i>
             </div>
             <div class="tapa-parte2" ng-show="!radio.activo"></div>
