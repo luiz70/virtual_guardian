@@ -510,3 +510,32 @@ position:relative;
     font-size: 2.5vh;
     line-height: inherit;
 }
+
+
+.hide-barra{
+	/*animation-duration: 1s;
+	animation-timing-function: ease-in-out;
+	animation-name: down;
+	animation-fill-mode: both;
+	animation-direction:normal;
+	animation-play-state:running;*/
+	transition-delay:0s;
+	transition-duration:0.5s;
+	transition-timing-function:ease-in-out;
+	transform: translate3d(0,7vh,0);
+}
+.show-barra{
+	transition-delay:0s;
+	transition-duration:0.5s;
+	transition-timing-function:ease-in-out;
+	transform: translate3d(0,0,0);
+	
+}
+@keyframes down {
+  0%{transform: translate3d(0,0vh,0);}
+   100% {transform: translate3d(0,7vh,0);}
+}
+@keyframes back {
+  0%{transform: translate3d(0,7vh,0);}
+   100% {transform: translate3d(0,0vh,0);}
+}

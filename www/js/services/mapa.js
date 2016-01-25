@@ -1,5 +1,5 @@
 angular.module('starter.services', ['LocalStorageModule','ngError'])
-.factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory,$timeout,Ubicacion){//,Radio,Filtros,Eventos,Cluster,Lugar,Auto){
+.factory('Mapa',function($rootScope,uiGmapGoogleMapApi,uiGmapIsReady,socket,Memory,$timeout,Ubicacion,Radio){//,Filtros,Eventos,Cluster,Lugar,Auto){
 	
 	//function que se ejecuta una vez que el script de google maps esta cargado
 	
@@ -10,8 +10,9 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		uiGmapGoogleMapApi.then(function(maps) {
 		
 		Ubicacion.inicializa();
-		/*Auto.inicializa();
 		Radio.inicializa();
+		/*Auto.inicializa();
+		
 		Filtros.inicializa();
 		Eventos.inicializa();
 		Cluster.inicializa();
