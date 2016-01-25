@@ -377,6 +377,8 @@
 }
 .mapa-socket-indicador{
 	top: 16vh;
+	height: 8vh;
+    width: 8vh;
 }
 .contenedor-mapa-pie > .parte1, .parte2{
 	height:6vw;
@@ -402,4 +404,19 @@
 .contenedor-mapa-bottom-center{
 	transform:translate3d(0,0,0) !important;
 }
+.range input::-webkit-slider-thumb {
+	height:4vw !important;
+	width:4vw !important;
+	max-height:4vw;
+}
+ .range input::-webkit-slider-thumb:before {
+	  top: 1.6vw;
+	   height:1vw;
+ }
+ .range input{
+ background-size: 99% 1vw;
+ }
+.rango-radio > i{
+    font-size: 4vw !important;
+ }
 }
