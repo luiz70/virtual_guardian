@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'starter.services','ngCordova','btford.socket-io','ngTouch','ionic-datepicker'])
+angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'starter.services','ngCordova','btford.socket-io','ionic-datepicker','ngAnimate',"ngTouch"])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -149,3 +149,14 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
     })
 	$urlRouterProvider.otherwise('/app/login');
 })
+.directive('range', function rangeDirective() {
+    return {
+        restrict: 'C',
+        link: function (scope, element, attr) {
+            element.bind('touchstart mousedown', function(event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+            });
+        }
+    };
+ })
