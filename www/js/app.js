@@ -149,7 +149,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
     })
 	$urlRouterProvider.otherwise('/app/login');
 })
-.directive('range', function rangeDirective() {
+/*.directive('range', function rangeDirective() {
     return {
         restrict: 'C',
         link: function (scope, element, attr) {
@@ -159,4 +159,4 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
             });
         }
     };
- })
+ })*/
