@@ -26,7 +26,7 @@ angular.module('starter.services')
 		//inicializa los eventos del radio
 		$rootScope.radio.events={
 			radius_changed:function(data){
-				
+				$rootScope.radio.Val=$rootScope.radio.radio;
 				//Eventos.hideAll();
 				//$rootScope.radio.visible=false;
 				//$rootScope.radio.visible=data.visible;	
@@ -39,7 +39,6 @@ angular.module('starter.services')
 		$rootScope.$watch('radio.radio', function(newValue, oldValue) {
 			if(newValue){
 				$rootScope.eventosMap=[];
-				$rootScope.radio.Val=parseInt(newValue)
 				$rootScope.radio.radio=parseInt(newValue);
 				//revisaEventos($rootScope.map.ubicacion.position);
 			}

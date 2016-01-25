@@ -187,6 +187,8 @@ angular.module('starter.controllers')
 	uiGmapIsReady.promise().then(function(maps){
 		//activa el touch event en el mapa para ocultar la barra
 		angular.element(angular.element(document.getElementsByClassName("gm-style")[0]).children()[0]).on("touch",$scope.hideBarra)
+		angular.element(document.getElementsByClassName("contenedor-mapa-pie")[0]).on("touch",$scope.showBarra)
+		
 	})
 	//function para mejorar el movimiento de el range de radio
 	$scope.onTap = function(e) {
@@ -209,20 +211,22 @@ angular.module('starter.controllers')
 		}
 	//funcion que oculta la barra de radio
 	$scope.hideBarra=function(){
-		//desactiva el touch event en el mapa para ocultar la barra
-		angular.element(angular.element(document.getElementsByClassName("gm-style")[0]).children()[0]).off("touch",$scope.hideBarra)
 		//activa el touch event en la barra para mostrarla
-		angular.element(document.getElementsByClassName("contenedor-mapa-pie")[0]).on("touch",$scope.showBarra)
+		//angular.element(document.getElementsByClassName("contenedor-mapa-pie")[0]).on("touch",$scope.showBarra)
+		//desactiva el touch event en el mapa para ocultar la barra
+		//angular.element(angular.element(document.getElementsByClassName("gm-style")[0]).children()[0]).off("touch",$scope.hideBarra)
+		
 		$animate.removeClass(document.getElementsByClassName("contenedor-mapa-bottom-center")[0],'show-barra')
 		$animate.addClass(document.getElementsByClassName("contenedor-mapa-bottom-center")[0],'hide-barra')
 		$scope.$digest();
 	}
 	//function que muestra la barra de radio
 	$scope.showBarra=function(){
-		angular.element(document.getElementsByClassName("contenedor-mapa-pie")[0]).off("touch",$scope.showBarra)
-		angular.element(angular.element(document.getElementsByClassName("gm-style")[0]).children()[0]).on("touch",$scope.hideBarra)
+		//angular.element(angular.element(document.getElementsByClassName("gm-style")[0]).children()[0]).on("touch",$scope.hideBarra)
+		//angular.element(document.getElementsByClassName("contenedor-mapa-pie")[0]).off("touch",$scope.showBarra)
+		 
 		$animate.removeClass(document.getElementsByClassName("contenedor-mapa-bottom-center")[0],'hide-barra')
 		$animate.addClass(document.getElementsByClassName("contenedor-mapa-bottom-center")[0],'show-barra')
-		 $scope.$digest();
+		$scope.$digest();
 	}
 })
