@@ -25,11 +25,12 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		//si va a cambiar de personas a notificaciones el estado entra de la izquierda por que regresa
         if(fromState.name.indexOf("contactos")>=0 && state.indexOf("notificaciones")>=0)
 			$ionicViewSwitcher.nextDirection('back');*/
-			
+		if(fromState.id){
 		if(device.platform.toLowerCase()=="android")$ionicViewSwitcher.nextTransition('none');
 		else{
 		if(fromState.id>toState.id)$ionicViewSwitcher.nextDirection('back');
 		else $ionicViewSwitcher.nextDirection('forward');
+		}
 		}
 	})
 	

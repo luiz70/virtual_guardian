@@ -1535,7 +1535,7 @@ ionic-datepicker{
     left: calc(100vw - 6vh) !important;
 }
 .contactos-agrega-contacto{
-	    position: absolute;
+	position: absolute;
     bottom: 2vh;
     right: 2vh;
     width: 9vh;
@@ -1544,10 +1544,12 @@ ionic-datepicker{
     background: #D0CFCF;
     font-size: 5vh;
     color: #242424;
-	    min-width: 9vh;
+	min-width: 9vh;
     min-height: 9vh;
     max-width: 9vh;
     max-height: 9vh;
+	padding: 0px !important;
+    text-align: center;
 }
 .contactos-agrega-contacto>i{
 	    margin: 0 !important;

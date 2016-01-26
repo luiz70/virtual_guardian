@@ -53,6 +53,7 @@ angular.module('starter.controllers')
 	})
 	//FUNCION QUE SE EJECUTA AL DAR CLICK EN EL BOTON SIGUIENTE Y TIENE DIFERENTES ACCIONES DEPENDIENTO EL ESTADO EN EL QUE SE ENCUENTRE
 	$scope.siguiente=function(){
+		$ionicViewSwitcher.nextDirection('forward');
 		switch($scope.state){
 			case "datos":
 				if(!Verificacion.email($scope.nuevoUsuario.Correo))
@@ -276,10 +277,10 @@ angular.module('starter.controllers')
 })
 
 //CONTROLADOR PARA RECUPERAR CONTRASEÑA
-.controller('Recuperar', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http,Usuario,$rootScope) {
+.controller('Recuperar', function($scope,Memory,Message,$state,$ionicViewSwitcher,Verificacion,$timeout,$http,$rootScope) {
 	//FUNCION QUE SE EJECUTA CADA VEZ QUE LA VISTA ENTRA Y REVISA SI EL USUARIO ESTA LOGGEADO
 	$scope.$on('$ionicView.beforeEnter',function(){
-		if(Usuario.get()){
+		if(Memory.get("Usuario")){
 				$ionicViewSwitcher.nextTransition("none");
 				$ionicViewSwitcher.nextDirection('enter');
 				$state.go('app.home.mapa');
