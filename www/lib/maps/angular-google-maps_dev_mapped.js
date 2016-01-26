@@ -4350,7 +4350,7 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
 				  if(gObject.time)clearTimeout(gObject.time);
 				  gObject.time=setTimeout(function(){
 					  gObject.setOptions(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
-				  },100)
+				  },10)
 				  //gObject.setRadius(scope.radius)
                 return gObject
               }
