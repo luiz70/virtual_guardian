@@ -4344,10 +4344,12 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
                 return;
               }
               if (!_.isEqual(newVals, oldVals)) {
-				  gObject.setMap(null);
+				  /*gObject.setMap(null);
 				  gObject=null;
-				  gObject = new google.maps.Circle(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
-                return gObject//.setOptions(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
+				  gObject = new google.maps.Circle(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));*/
+				  //gObject.setVisible(false);
+				  gObject.setRadius(scope.radius)
+                return gObject.setOptions(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
               }
             };
           })(this);
@@ -4358,7 +4360,7 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
             }, {
               prop: 'fill',
               isColl: true
-            }, 'radius', 'zIndex'
+            }, 'radius', 'zIndex','visible'
           ]);
           this.watchProps();
           if (this.scope.control != null) {
