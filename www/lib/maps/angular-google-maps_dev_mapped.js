@@ -4344,7 +4344,10 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
                 return;
               }
               if (!_.isEqual(newVals, oldVals)) {
-                return gObject.setOptions(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
+				  gObject.setMap(null);
+				  gObject=null;
+				  gObject = new google.maps.Circle(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
+                return gObject//.setOptions(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
               }
             };
           })(this);
