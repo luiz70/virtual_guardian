@@ -39,7 +39,13 @@ angular.module('starter.services')
 		$rootScope.$watch('radio.radio', function(newValue, oldValue) {
 			if(newValue){
 				$rootScope.eventosMap=[];
-				$rootScope.radio.radio=parseInt(newValue);
+				if(!$rootScope.$$phase) {
+                    $rootScope.$apply(function(){
+						$rootScope.radio.radio=parseInt(newValue);
+					})
+				}else{
+					$rootScope.radio.radio=parseInt(newValue);
+				}
 				//revisaEventos($rootScope.map.ubicacion.position);
 			}
 		});
