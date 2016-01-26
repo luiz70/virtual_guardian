@@ -4347,8 +4347,8 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
 				  /*gObject.setMap(null);
 				  gObject=null;
 				  gObject = new google.maps.Circle(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));*/
-				  //gObject.setVisible(false);
-				  gObject.setRadius(scope.radius)
+				  gObject.setVisible(false);
+				  //gObject.setRadius(scope.radius)
                 return gObject.setOptions(_this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
               }
             };
