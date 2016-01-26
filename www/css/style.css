@@ -1544,6 +1544,14 @@ ionic-datepicker{
     background: #D0CFCF;
     font-size: 5vh;
     color: #242424;
+	    min-width: 9vh;
+    min-height: 9vh;
+    max-width: 9vh;
+    max-height: 9vh;
+}
+.contactos-agrega-contacto>i{
+	    margin: 0 !important;
+    padding: 0 !important;
 }
 .lista-contactos{
 	padding-bottom: 10vh;

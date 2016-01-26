@@ -26,7 +26,6 @@ angular.module('starter.services')
 		//inicializa los eventos del radio
 		$rootScope.radio.events={
 			radius_changed:function(data){
-				$rootScope.radio.Val=data.getRadius();
 				//Eventos.hideAll();
 				//$rootScope.radio.visible=false;
 				//$rootScope.radio.visible=data.visible;	
