@@ -4378,7 +4378,6 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
               return;
             }
             lastRadius = newRadius;
-			gObject.setRadius(newRadius)
             work = function() {
               return _settingFromDirective(scope, function() {
                 var ref, ref1;

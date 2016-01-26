@@ -26,16 +26,14 @@ angular.module('starter.services')
 		//inicializa los eventos del radio
 		$rootScope.radio.events={
 			radius_changed:function(data){
-				$rootScope.radio.Val=$rootScope.radio.radio;
+				
 				//Eventos.hideAll();
 				//$rootScope.radio.visible=false;
 				//$rootScope.radio.visible=data.visible;	
 			},
 			
 		}
-		$timeout(function(){
-			console.log($rootScope.radio)
-		},2000)
+		
 		$rootScope.$watch('radio.visible', function(newValue, oldValue) {
 			
 		})
@@ -43,13 +41,10 @@ angular.module('starter.services')
 		$rootScope.$watch('radio.radio', function(newValue, oldValue) {
 			if(newValue){
 				$rootScope.eventosMap=[];
-				if(!$rootScope.$$phase) {
-                    $rootScope.$apply(function(){
-						$rootScope.radio.radio=parseInt(newValue);
-					})
-				}else{
-					$rootScope.radio.radio=parseInt(newValue);
-				}
+				$rootScope.radio.radio=parseInt(newValue);
+				try{
+				$rootScope.radio.Val=$rootScope.radio.getCircle().getRadius();
+				}catch(err){}
 				//revisaEventos($rootScope.map.ubicacion.position);
 			}
 		});
