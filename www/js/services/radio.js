@@ -43,7 +43,6 @@ angular.module('starter.services')
 				$rootScope.eventosMap=[];
 				$rootScope.radio.radio=parseInt(newValue);
 				try{
-				$rootScope.radio.getCircle().setRadius($rootScope.radio.radio);
 				}catch(err){}
 				//revisaEventos($rootScope.map.ubicacion.position);
 			}

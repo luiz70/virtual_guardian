@@ -2762,6 +2762,7 @@ Nicholas McCready - https://twitter.com/nmccready
         };
 
         CommonOptionsBuilder.prototype.watchProps = function(props) {
+			
           if (props == null) {
             props = this.props;
           }
@@ -2769,9 +2770,9 @@ Nicholas McCready - https://twitter.com/nmccready
             return function(prop) {
               if ((_this.attrs[prop] != null) || (_this.attrs[prop != null ? prop.prop : void 0] != null)) {
                 if (prop != null ? prop.isColl : void 0) {
-                  return _this.scope.$watchCollection(prop.prop, _this.setMyOptions);
+                  return _this.scope.$watchCollection(prop.prop, _this.setMyOptions,true);
                 } else {
-                  return _this.scope.$watch(prop, _this.setMyOptions);
+                  return _this.scope.$watch(prop, _this.setMyOptions,true);
                 }
               }
             };
@@ -4337,7 +4338,6 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
             };
           })(this);
           gObject = new google.maps.Circle(this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
-		  scope.circle=gObject;
           this.setMyOptions = (function(_this) {
             return function(newVals, oldVals) {
               if (scope.settingFromDirective) {
