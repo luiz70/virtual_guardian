@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'starter.services','ngCordova','btford.socket-io','ngTouch','ionic-datepicker'])
+angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'starter.services','ngCordova','btford.socket-io','ionic-datepicker','ngAnimate',"ngTouch"])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -17,23 +17,34 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
       // from snapping when text inputs are focused. Ionic handles this internally for
       // a much nicer keyboard experience.
       cordova.plugins.Keyboard.disableScroll(true);
+	  ionic.Platform.isFullScreen=true;
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+	$ionicPlatform.registerBackButtonAction(function (event) {
+    	event.preventDefault();
+    }, 100);
   });
 })
-.config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider,uiGmapGoogleMapApiProvider) {
+.config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider,uiGmapGoogleMapApiProvider,$ionicConfigProvider) {
 	uiGmapGoogleMapApiProvider.configure({
         key: 'AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs',
         //v: '3.20', //defaults to latest 3.X anyhow
         libraries: 'places',
         preventLoad: true
     });
+	$ionicConfigProvider.views.maxCache(10);
+	$ionicConfigProvider.views.swipeBackEnabled(false);
+	$ionicConfigProvider.platform.ios.views.maxCache(10);
+	$ionicConfigProvider.platform.android.views.maxCache(10);
+	$ionicConfigProvider.views.transition("ios");
+	$ionicConfigProvider.views.forwardCache(true);
 	// LocalStorage config
   localStorageServiceProvider
   .setPrefix('VirtualGuardian')
   .setStorageType('localStorage');
+  
   $stateProvider.state('app', {
         url: '/app',
         abstract: true,
@@ -92,5 +103,74 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
             },
         }
     })
+	.state('app.home',{
+		url:'/home',
+		abstract:true,
+		views:{
+			'contenido-app':{
+				templateUrl: 'screens/home.html',
+				controller: 'Home'
+			}
+		}
+	})
+	.state('app.home.mapa', {
+        url: '',
+		id:1,
+        views: {
+            'contenido-home': {
+                templateUrl: 'screens/mapa.html',
+				controller: 'Mapa'
+            },
+			'contenido-menu':{
+				templateUrl: 'screens/menu.html',
+				controller: 'Menu'
+			}
+        }
+    })
+	.state('app.home.notificaciones', {
+        url: '',
+		id:2,
+        views: {
+            'contenido-home': {
+                templateUrl: 'screens/notificaciones.html',
+				controller: 'Notificaciones'
+            },
+        }
+    })
+	.state('app.home.contactos', {
+        url: '',
+		id:3,
+        views: {
+            'contenido-home': {
+                templateUrl: 'screens/contactos.html',
+				controller: 'Contactos'
+            },
+        }
+    })
 	$urlRouterProvider.otherwise('/app/login');
 })
+/*
+.directive('range', function rangeDirective() {
+    return {
+        restrict: 'C',
+        link: function (scope, element, attr) {
+            element.bind('touchstart mousedown', function(event) {
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+            });
+        }
+    };
+ })
+*/
+
+.directive('range', function() {
+    return {
+        restrict: 'C',
+        link: function (scope, element, attr) {
+            element.bind('touchstart mousedown', function(event) {
+                event.stopPropagation();
+                //event.stopImmediatePropagation();
+            });
+		}
+	}
+});

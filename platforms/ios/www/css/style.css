@@ -2,12 +2,15 @@
 /* Empty. Add your own CSS if you like */
 /*        LOGIN         */
 .login-view{
-	background: #242424;
+	background: none;
 }
 .login-view > ion-content{
 	padding-top: 0px !important;
 	padding-bottom: 0px !important;
 	bottom:10vh;
+}
+.login-logo-landscape{
+	display:none;
 }
 .login-logo-container{
 	height: 23vh;
@@ -15,6 +18,7 @@
 	margin-top: 15vh;
 }
 .login-logo{
+	display: inline;
 	height: 100%;
 }
 .login-input-title{
@@ -81,20 +85,37 @@ padding-right:1vh !important;
 .buttons-footer{
 	width: 100vw;
     position: absolute;
-    bottom: 0px;
+    bottom: 1vw;
     left: 0px;
     height: auto;
     font-weight:100 !important;
 }
 .buttons-footer > button{
-	    height: 5.5vh;
+	   /* height: 5.5vh;
     font-size: 2.7vh;
     min-height: 0px;
     line-height: inherit;
 	margin-top: 1vh !important;
     background: rgba(255, 255, 255, 0.6) !important;
     color: rgb(17, 17, 17) !important;
-	margin-bottom:0px !important;
+	margin-bottom:0px !important;*/
+	min-height: 0px;
+    height: 5.5vh;
+    top: 0px;
+    right: 0px;
+    text-align: center;
+    background: #3E3E3E !important;
+    float: left;
+    clear: initial;
+    position: relative;
+    border-radius: 1vw !important;
+    margin: 1vw !important;
+    margin-bottom: 0px !important;
+    color: #D5D5D5 !important;
+    line-height: initial;
+    width: 98vw;
+    font-size: 2.7vh;
+    border-top: solid 0.5vh #505050 !important;
 }
 /*        REGISTRO         */
 .registro-vista{
@@ -176,7 +197,7 @@ padding-right:1vh !important;
     background: rgba(255, 255, 255, 0.12);
     color: #ECECEC !important;
     padding: 1vh 2vh !important;
-    line-height: inherit !important;
+    line-height: initial !important;
     margin-top: 2vh;
 	border-radius: 5px !important;
 }
@@ -281,7 +302,8 @@ ion-side-menu{
 }
 .animate-enter-up{
 	opacity:0;
-	top:-10vh;
+	top:0px;
+	-webkit-transform: translate3d(0, -10vh, 0);
 }
 .contenido-home{
 	top:0vh !important;
@@ -1439,4 +1461,98 @@ ionic-datepicker{
     color: #028296;
     background: #E6E4E4;
     border: solid 0.7vh #028296 !important;
+}
+.animate-enter-up.animate{
+	animation-duration: 0.5s;
+	animation-timing-function: linear;
+	animation-name: animate-enter-up;
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+@keyframes animate-enter-up {
+   from {opacity: 0;
+   -webkit-transform: translate3d(0, -10vh, 0);
+   }
+   to {opacity: 1;
+   -webkit-transform: translate3d(0, 0vh, 0);
+   }
+}
+.pane{
+	background-color: #242424 !important;
+}
+.contacto-item-contenido{
+	padding-left: 10vh !important;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    min-height: 1vh !important;
+    border-bottom: solid 2px rgb(32, 32, 32) !important;
+    padding-right: 6vh !important;
+}
+.contacto-item-contenido > div{
+	width: 6vh !important;
+    height: 8vh !important;
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 100vh !important;
+    max-height: 100vh !important;
+    position: absolute !important;
+    top: 0px !important;
+    bottom: 0px;
+    margin: auto;
+    left: 0px !important;
+    right: calc( 100vw - 10vh) !important;
+    border-radius: 0px !important;
+	background:#D8D8D8;
+	-webkit-mask-image: url(../img/iconos/contacto.png);
+    -webkit-mask-position: center;
+    -webkit-mask-size: cover;
+	}
+.contacto-item-contenido > h2{
+	    color: #E8E8E8;
+    font-size: 2.8vh;
+	    font-weight: 300;
+}
+.contacto-item-contenido > p{
+	    white-space: initial;
+   color: #059DB5;
+    font-size: 2.4vh;
+	    font-weight: 300;
+}
+.contacto-item-contenido > i{
+	    color: #A1A1A1;
+    position: absolute;
+    font-size: 5vh !important;
+    height: 5vh !important;
+    width: 3vh;
+    top: 0px !important;
+    bottom: 0px !important;
+    margin: auto;
+    right: 0px !important;
+    left: calc(100vw - 6vh) !important;
+}
+.contactos-agrega-contacto{
+	    position: absolute;
+    bottom: 2vh;
+    right: 2vh;
+    width: 9vh;
+    height: 9vh;
+    border-radius: 100% !important;
+    background: #D0CFCF;
+    font-size: 5vh;
+    color: #242424;
+	    min-width: 9vh;
+    min-height: 9vh;
+    max-width: 9vh;
+    max-height: 9vh;
+}
+.contactos-agrega-contacto>i{
+	    margin: 0 !important;
+    padding: 0 !important;
+}
+.lista-contactos{
+	padding-bottom: 10vh;
 }
