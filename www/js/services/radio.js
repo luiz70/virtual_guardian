@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Radio',function($rootScope,uiGmapGoogleMapApi,Ubicacion,Memory){//,Eventos
+.factory('Radio',function($rootScope,uiGmapIsReady,Ubicacion,Memory,$timeout){//,Eventos
 	//function que inicializa el radio
 	var inicializa=function(){
 		$rootScope.radio=Memory.get("Radio");
@@ -18,7 +18,7 @@ angular.module('starter.services')
 			//define si el circulo esta activo o no (validacion de marcadores)
             activo:true,
 			//define si el circulo esta visible o no (solo proyeccion)
-			visible:true
+			visible:true,
 			
         }
 		$rootScope.radio.Val=0;
@@ -30,8 +30,12 @@ angular.module('starter.services')
 				//Eventos.hideAll();
 				//$rootScope.radio.visible=false;
 				//$rootScope.radio.visible=data.visible;	
-			}
+			},
+			
 		}
+		$timeout(function(){
+			console.log($rootScope.radio)
+		},2000)
 		$rootScope.$watch('radio.visible', function(newValue, oldValue) {
 			
 		})
@@ -65,8 +69,7 @@ angular.module('starter.services')
 		},true)
 	}
 	//function que se ejecuta una vez que el script de google maps esta cargado
-	uiGmapGoogleMapApi.then(function(maps) {
-		
+	uiGmapIsReady.promise().then(function(maps){
 	
 	})
 	return {

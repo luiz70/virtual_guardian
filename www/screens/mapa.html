@@ -3,7 +3,7 @@
 <div data-tap-disabled="true">
 	
     <ui-gmap-google-map class="animate-enter-mapa fast" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events" ng-cloak>
-        <ui-gmap-circle center='radio.center' radius='radio.radio' fill='radio.fill'   stroke='radio.stroke' visible='radio.activo && radio.visible' events="radio.events"></ui-gmap-circle>
+        <ui-gmap-circle center='radio.center' control="radio.circulo" radius='radio.radio' fill='radio.fill'   stroke='radio.stroke' visible='radio.activo && radio.visible' events="radio.events"></ui-gmap-circle>
     
     <!--ui-gmap-marker idKey='1' coords='auto.position'  options="auto.options" icon="content"  events="auto.events" index="10000">
 	</ui-gmap-marker>

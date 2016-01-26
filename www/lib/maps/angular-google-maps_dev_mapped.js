@@ -4337,6 +4337,7 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
             };
           })(this);
           gObject = new google.maps.Circle(this.buildOpts(GmapUtil.getCoords(scope.center), scope.radius));
+		  scope.circle=gObject;
           this.setMyOptions = (function(_this) {
             return function(newVals, oldVals) {
               if (scope.settingFromDirective) {
@@ -4377,6 +4378,7 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
               return;
             }
             lastRadius = newRadius;
+			gObject.setRadius(newRadius)
             work = function() {
               return _settingFromDirective(scope, function() {
                 var ref, ref1;
