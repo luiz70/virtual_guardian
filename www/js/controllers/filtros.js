@@ -22,6 +22,11 @@ angular.module('starter.controllers')
 		Message.hideModal();
 		$rootScope.eventosMap=[];
 		Eventos.refresh();
+		if($rootScope.controls[3].activo && !$rootScope.filtros.activos){
+			$rootScope.map.center={latitude:$rootScope.ubicacion.position.latitude,longitude:$rootScope.ubicacion.position.longitude}
+			$rootScope.radio.activo=true;
+			$rootScope.map.zoom=12;
+		}
 		$rootScope.controls[3].activo=(true && $rootScope.filtros.activos);
 		if($rootScope.filtros.activos ){
 			
