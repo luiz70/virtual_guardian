@@ -191,6 +191,7 @@ angular.module('starter.services')
 		$rootScope.$apply(function(){})
 	}
 	var getPais=function(){
+		if($rootScope.internet.state)
 		$timeout(function(){
 		var geocoder = new google.maps.Geocoder();
 		geocoder.geocode({'location': new google.maps.LatLng($rootScope.ubicacion.position.latitude,$rootScope.ubicacion.position.longitude)}, function(results, status) {
