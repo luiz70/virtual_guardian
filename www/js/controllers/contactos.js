@@ -116,7 +116,11 @@ angular.module('starter.controllers')
 		}
 		Message.showActionSheet(null,buttons,null,$rootScope.idioma.General[6],function(index,res){
 			if(index>=0){
+				if($rootScope.internet.state){
 				res.funcion(res.data);
+				}else{
+				Message.alert($rootScope.idioma.Notificaciones[23],$rootScope.idioma.General[7],function(){})
+				}
 			}
 		})
 	}

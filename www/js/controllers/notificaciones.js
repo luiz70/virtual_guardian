@@ -114,7 +114,7 @@ angular.module('starter.controllers')
 				}else Message.alert($rootScope.idioma.Notificaciones[7],$rootScope.idioma.General[7],function(){})
 			},null,null,false)
 		}else{
-			
+			//solicitud de suscripcion
 		}
 	}
 	var personaEliminada=function(data){
@@ -145,7 +145,7 @@ angular.module('starter.controllers')
 				}else Message.alert($rootScope.idioma.Notificaciones[7],$rootScope.idioma.General[7],function(){})
 			},null,null,false)
 		}else{
-			
+			//solicitud de suscripcion
 		}
 	}
 	$scope.verContactos=function(data){
@@ -153,6 +153,7 @@ angular.module('starter.controllers')
 		$state.go("app.home.personas");
 	}
 	$scope.abreNotificacion=function(data){
+		//FALTA NOTIFICACION DE SOLICITUD DE SUSCRIPCION 9
 		if(data.Tipo==8){
 			//TIPS VIRTUAL
 		}else{
@@ -169,7 +170,11 @@ angular.module('starter.controllers')
 		if(data.Tipo==5 || data.Tipo==6)buttons.push({text:$rootScope.idioma.Notificaciones[22],funcion:$scope.verContactos,data:data})
 		Message.showActionSheet(null,buttons,null,$rootScope.idioma.General[6],function(index,res){
 			if(index>=0){
+				if($rootScope.internet.state){
 				res.funcion(res.data);
+				}else{
+				Message.alert($rootScope.idioma.Notificaciones[23],$rootScope.idioma.General[7],function(){})
+				}
 			}
 		})
 		}

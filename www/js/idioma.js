@@ -162,7 +162,8 @@ angular.module('starter.controllers')
 			19:"¿Deseas eliminar esta notificación?",
 			20:"Ver evento en mapa",
 			21:"Directorio de servicios",
-			22:"Ver lista de contactos"
+			22:"Ver lista de contactos",
+			23:"Notificaciones"
 			
 		},
 		Contactos:{
