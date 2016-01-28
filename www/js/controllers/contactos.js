@@ -119,7 +119,7 @@ angular.module('starter.controllers')
 				if($rootScope.internet.state){
 				res.funcion(res.data);
 				}else{
-				Message.alert($rootScope.idioma.Notificaciones[23],$rootScope.idioma.General[7],function(){})
+				Message.alert($rootScope.idioma.Contactos[18],$rootScope.idioma.General[7],function(){})
 				}
 			}
 		})

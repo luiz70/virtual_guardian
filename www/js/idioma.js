@@ -187,7 +187,8 @@ angular.module('starter.controllers')
 			18:"Contactos",
 			19:"¿Deseas eliminar la solicitud de ",
 			20:"Cancelar solicitud",
-			21:"Agregando contacto..."
+			21:"Agregando contacto...",
+			
 			
 		},
 		Auto:{
