@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		1A9A38598C3F45A3BBC482DC /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 44F066F2325C40ECA8DC3254 /* CDVLogger.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -51,6 +50,16 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		DC386AB3AB55491BAC3EF50C /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3612122588064C6A91014328 /* CDVStatusBar.m */; };
 		E369BFDFE2624862BE2EBD6E /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D9529D134B4141408D5021B3 /* CDVInAppBrowser.m */; };
+		FB30BFA212A249BC8E43F707 /* CDVGlobalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 576AA710587A4FC584668370 /* CDVGlobalization.m */; };
+		09FD8FD1E68940CAA5D4D279 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A3CFA0A780478B94F764EE /* CDVConnection.m */; };
+		7D7643282F4E451FB03E0164 /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F94798ED1CB492C9B1D95F5 /* CDVReachability.m */; };
+		6F526FE0BF36429383DA4F61 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47B1697BEBD344E2A332ED5B /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		176BD4BEFD7849D3B87987A5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B522630196524594BF13A48E /* CoreTelephony.framework */; };
+		EC7EAFB2C5F647AF8EB17CA8 /* SQLitePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0BD3AC213147B1BE11A595 /* SQLitePlugin.m */; };
+		988A5D74470A43DE92D2A4BB /* sqlite3.c in Resources */ = {isa = PBXBuildFile; fileRef = AD96626C62E44542BB7249DA /* sqlite3.c */; };
+		7FB95C016D434061B3A3EC1E /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA926F69FEF42CCB621E497 /* Toast+UIView.m */; };
+		CA918D26A50F42BD925FB95D /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EB2280901542ADA4DFF534 /* Toast.m */; };
+		DF9D495296D741439502EFE3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F707D688874B2FB03B5016 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +144,23 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = VirtualGuardian/config.xml; sourceTree = "<group>"; };
 		FFC795A32023427E8DC4ECFB /* YoikScreenOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoikScreenOrientation.h; path = "cordova-plugin-screen-orientation/YoikScreenOrientation.h"; sourceTree = "<group>"; };
+		576AA710587A4FC584668370 /* CDVGlobalization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVGlobalization.m"; path = "cordova-plugin-globalization/CDVGlobalization.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		DE518759D11948AD8C73A624 /* CDVGlobalization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVGlobalization.h"; path = "cordova-plugin-globalization/CDVGlobalization.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		23A3CFA0A780478B94F764EE /* CDVConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVConnection.m"; path = "cordova-plugin-network-information/CDVConnection.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		6F94798ED1CB492C9B1D95F5 /* CDVReachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVReachability.m"; path = "cordova-plugin-network-information/CDVReachability.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		596955F93C6A4374A58A9C08 /* CDVConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVConnection.h"; path = "cordova-plugin-network-information/CDVConnection.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		1E140DAB2FDE474382D78F8E /* CDVReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVReachability.h"; path = "cordova-plugin-network-information/CDVReachability.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		47B1697BEBD344E2A332ED5B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		B522630196524594BF13A48E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "CoreTelephony.framework"; path = "System/Library/Frameworks/CoreTelephony.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		4C0BD3AC213147B1BE11A595 /* SQLitePlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "SQLitePlugin.m"; path = "cordova-sqlite-storage/SQLitePlugin.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		AD96626C62E44542BB7249DA /* sqlite3.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "sqlite3.c"; path = "cordova-sqlite-storage/sqlite3.c"; sourceTree = "<group>"; fileEncoding = 4; };
+		906F6CCC6D7440DF87C23D02 /* SQLitePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SQLitePlugin.h"; path = "cordova-sqlite-storage/SQLitePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		887CEC2FBB44420F95071591 /* sqlite3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "sqlite3.h"; path = "cordova-sqlite-storage/sqlite3.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		AFA926F69FEF42CCB621E497 /* Toast+UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Toast+UIView.m"; path = "cordova-plugin-x-toast/Toast+UIView.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		54EB2280901542ADA4DFF534 /* Toast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Toast.m"; path = "cordova-plugin-x-toast/Toast.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		9AE72E1A729C44D7B68BB637 /* Toast+UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Toast+UIView.h"; path = "cordova-plugin-x-toast/Toast+UIView.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		9387679F91E34EABA4060F6B /* Toast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Toast.h"; path = "cordova-plugin-x-toast/Toast.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		B2F707D688874B2FB03B5016 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "QuartzCore.framework"; path = "System/Library/Frameworks/QuartzCore.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +173,9 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				9A41E08AE0AA460CA98B0563 /* CoreLocation.framework in Frameworks */,
+				6F526FE0BF36429383DA4F61 /* SystemConfiguration.framework in Frameworks */,
+				176BD4BEFD7849D3B87987A5 /* CoreTelephony.framework in Frameworks */,
+				DF9D495296D741439502EFE3 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +249,9 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				CD0AAAA7B8B84543912BFBA4 /* CoreLocation.framework */,
+				47B1697BEBD344E2A332ED5B /* SystemConfiguration.framework */,
+				B522630196524594BF13A48E /* CoreTelephony.framework */,
+				B2F707D688874B2FB03B5016 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -255,6 +287,20 @@
 				FFC795A32023427E8DC4ECFB /* YoikScreenOrientation.h */,
 				B8B66C63B92C439E88916D04 /* CDVLocation.m */,
 				4998A9F647884A708EA1A538 /* CDVLocation.h */,
+				576AA710587A4FC584668370 /* CDVGlobalization.m */,
+				DE518759D11948AD8C73A624 /* CDVGlobalization.h */,
+				23A3CFA0A780478B94F764EE /* CDVConnection.m */,
+				6F94798ED1CB492C9B1D95F5 /* CDVReachability.m */,
+				596955F93C6A4374A58A9C08 /* CDVConnection.h */,
+				1E140DAB2FDE474382D78F8E /* CDVReachability.h */,
+				4C0BD3AC213147B1BE11A595 /* SQLitePlugin.m */,
+				AD96626C62E44542BB7249DA /* sqlite3.c */,
+				906F6CCC6D7440DF87C23D02 /* SQLitePlugin.h */,
+				887CEC2FBB44420F95071591 /* sqlite3.h */,
+				AFA926F69FEF42CCB621E497 /* Toast+UIView.m */,
+				54EB2280901542ADA4DFF534 /* Toast.m */,
+				9AE72E1A729C44D7B68BB637 /* Toast+UIView.h */,
+				9387679F91E34EABA4060F6B /* Toast.h */,
 			);
 			name = Plugins;
 			path = VirtualGuardian/Plugins;
@@ -449,6 +495,13 @@
 				E369BFDFE2624862BE2EBD6E /* CDVInAppBrowser.m in Sources */,
 				30797273CB4D45A1A2A1454F /* YoikScreenOrientation.m in Sources */,
 				5A969841ACF54B3B8D0F5879 /* CDVLocation.m in Sources */,
+				FB30BFA212A249BC8E43F707 /* CDVGlobalization.m in Sources */,
+				09FD8FD1E68940CAA5D4D279 /* CDVConnection.m in Sources */,
+				7D7643282F4E451FB03E0164 /* CDVReachability.m in Sources */,
+				EC7EAFB2C5F647AF8EB17CA8 /* SQLitePlugin.m in Sources */,
+				988A5D74470A43DE92D2A4BB /* sqlite3.c in Resources */,
+				7FB95C016D434061B3A3EC1E /* Toast+UIView.m in Sources */,
+				CA918D26A50F42BD925FB95D /* Toast.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

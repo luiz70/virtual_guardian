@@ -34,7 +34,7 @@ angular.module('starter.services')
 	})
 	return {
 		registra:function(state){
-			if(state){
+			/*if(state){
 				if(window.cordova)
 				switch(window.device.platform.toLowerCase()){
 					case "android":
@@ -52,7 +52,7 @@ angular.module('starter.services')
 					registra("");
 				});
 			}
-			
+			*/
 			return true;
 		},
 		desregistra:function(){

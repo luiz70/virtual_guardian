@@ -39,6 +39,22 @@
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Globalization\"><param name=\"android-package\" value=\"org.apache.cordova.globalization.Globalization\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.liteglue.SQLitePlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Toast\"><param name=\"android-package\" value=\"nl.xservices.plugins.Toast\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -52,6 +68,10 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 1
                         }
                     ]
@@ -85,6 +105,18 @@
             "PACKAGE_NAME": "com.app.virtualguardian"
         },
         "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.app.virtualguardian"
+        },
+        "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.app.virtualguardian"
         }
     },

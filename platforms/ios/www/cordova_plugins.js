@@ -92,6 +92,53 @@ module.exports = [
         "clobbers": [
             "navigator.geolocation"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
+        "id": "cordova-plugin-globalization.GlobalizationError",
+        "clobbers": [
+            "window.GlobalizationError"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-globalization/www/globalization.js",
+        "id": "cordova-plugin-globalization.globalization",
+        "clobbers": [
+            "navigator.globalization"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-network-information/www/network.js",
+        "id": "cordova-plugin-network-information.network",
+        "clobbers": [
+            "navigator.connection",
+            "navigator.network.connection"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+        "id": "cordova-plugin-network-information.Connection",
+        "clobbers": [
+            "Connection"
+        ]
+    },
+    {
+        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+        "id": "cordova-sqlite-storage.SQLitePlugin",
+        "clobbers": [
+            "SQLitePlugin"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-x-toast/www/Toast.js",
+        "id": "cordova-plugin-x-toast.Toast",
+        "clobbers": [
+            "window.plugins.toast"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-x-toast/test/tests.js",
+        "id": "cordova-plugin-x-toast.tests"
     }
 ];
 module.exports.metadata = 
@@ -103,9 +150,13 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.0.0",
     "cordova-plugin-whitelist": "1.2.0",
     "ionic-plugin-keyboard": "1.0.8",
-    "cordova-plugin-inappbrowser": "1.1.1",
+    "cordova-plugin-inappbrowser": "1.2.0",
     "cordova-plugin-screen-orientation": "1.4.0",
-    "cordova-plugin-geolocation": "2.1.0"
+    "cordova-plugin-geolocation": "2.1.0",
+    "cordova-plugin-globalization": "1.0.2",
+    "cordova-plugin-network-information": "1.2.0",
+    "cordova-sqlite-storage": "0.7.14",
+    "cordova-plugin-x-toast": "2.4.0"
 }
 // BOTTOM OF METADATA
 });

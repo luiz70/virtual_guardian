@@ -2,7 +2,11 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 .controller('Aplicacion', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory,Message,$timeout,Usuario,socket) {
 	//Memory.clean();
 	//Variable que controla el estado de conexion a internet
-	$rootScope.internet={state:window.navigator.connection.type !== window.Connection.NONE,type:window.navigator.connection.type};
+	try{
+    	$rootScope.internet={state:$cordovaNetwork.isOnline(),type:($cordovaNetwork.getNetwork()).Type};
+    }catch(err){
+        $rootScope.internet={state:true,type:false};
+    }
 	//inicializa usuario
 	$rootScope.Usuario=Memory.get("Usuario");
     //function que se ejecuta cada que hay un cambio de pantalla y limpia el historial para evitar errores con ios

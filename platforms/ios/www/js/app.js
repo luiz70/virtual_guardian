@@ -32,7 +32,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
         key: 'AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs',
         //v: '3.20', //defaults to latest 3.X anyhow
         libraries: 'places',
-        preventLoad: true
+        preventLoad: true,
+		transport:"https"
     });
 	$ionicConfigProvider.views.maxCache(10);
 	$ionicConfigProvider.views.swipeBackEnabled(false);
