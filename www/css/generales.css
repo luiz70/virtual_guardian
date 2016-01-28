@@ -613,3 +613,13 @@ position:relative;
     width: 100%;
     text-align: center;
 }
+.sin-conexion>ion-spinner{
+	position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    width: 30px;
+    height: 30px;
+}

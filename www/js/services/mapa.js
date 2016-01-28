@@ -11,6 +11,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		Eventos.inicializa();
 		Cluster.inicializa();
 		Lugar.inicializa()
+		Ubicacion.refreshLocation();
 		
 		//carga la informacion del mapa guardada
    		if(!$rootScope.map)$rootScope.map=Memory.get('Mapa')

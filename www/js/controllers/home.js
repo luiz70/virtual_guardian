@@ -35,6 +35,7 @@ angular.module('starter.controllers')
 		},500)
 	}
 	$scope.loadMapa=function(){
+		$rootScope.cargandoMapa=true;
 		uiGmapGoogleMapApiManualLoader.load();
 	}
 	uiGmapGoogleMapApi.then(function(){

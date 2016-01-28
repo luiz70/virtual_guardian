@@ -177,7 +177,6 @@ angular.module('starter.services')
 	}
 	//funcion que se ejecuta una vez que se obtiene la ubicacion del usuario
 	var positionSuccess=function(position){
-		console.log( $rootScope.ubicacion.position);
 		var bnds=$rootScope.map.getGMap().getBounds() 
 		if(bnds && !bnds.contains(new google.maps.LatLng(position.coords.latitude,position.coords.longitude)))$rootScope.ubicacion.centrar=true;
 		//actualiza el valor de la ultima ubicacion obtenida

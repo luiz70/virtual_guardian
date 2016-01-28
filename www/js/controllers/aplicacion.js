@@ -3,9 +3,9 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 	//Memory.clean();
 	//Variable que controla el estado de conexion a internet
 	try{
-    	$rootScope.internet={state:$cordovaNetwork.isOnline(),type:($cordovaNetwork.getNetwork()).Type};
+    	$rootScope.internet={state:$cordovaNetwork.isOnline(),type:$cordovaNetwork.getNetwork()};
     }catch(err){
-        $rootScope.internet={state:true,type:false};
+        $rootScope.internet={state:true,type:""};
     }
 	//inicializa usuario
 	$rootScope.Usuario=Memory.get("Usuario");
@@ -50,11 +50,13 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 	$rootScope.$on('$cordovaNetwork:online', function(event, networkState){
 		//modifica la variable internet para que otras secciones puedan usarla
 		$rootScope.internet={state:true,type:networkState};
+		console.log(networkState)
 	})
 	//funcion que se ejecuta cada que se cambia de conectado a desconectado del internet
 	$rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
 		//modifica la variable internet para que otras secciones puedan usarla
 		$rootScope.internet={state:false,type:networkState};
+		console.log(networkState)
 	})
 	//function que se ejecuta cada que cambia el usuario
 	$rootScope.$watch('Usuario', function(newValue, oldValue) {

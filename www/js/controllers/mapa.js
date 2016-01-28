@@ -1,7 +1,7 @@
 angular.module('starter.controllers')
-.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope,$timeout,socket,$ionicScrollDelegate,$animate,Lugar){//,Evento,Message) {
+.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope,$timeout,socket,$ionicScrollDelegate,$animate,Lugar,uiGmapGoogleMapApi){//,Evento,Message) {
 		//variable que controla si se cargo el mapa en pantalla
-	
+	$rootScope.cargandoMapa=true;
 	$scope.mapaCargado=false;
 	$scope.timeout=null
 	$scope.showInfo=$rootScope.info;
@@ -124,10 +124,13 @@ angular.module('starter.controllers')
 		var d=_.findWhere($scope.resultados,{id:data.id})
 		if(d)d.escala=data.v
 	}
-	//funcion que se ejecuta cuando el mapa se carga 
-	uiGmapIsReady.promise().then(function(maps){
+	uiGmapGoogleMapApi.then(function(){
 		//declara que el mapa se cargo
 		$scope.mapaCargado=true;
+	})
+	//funcion que se ejecuta cuando el mapa se carga 
+	uiGmapIsReady.promise().then(function(maps){
+		
 		//limpia historial para evitar incompatibilidad con ios
 		$ionicHistory.clearHistory();		
 	})

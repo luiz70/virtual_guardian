@@ -63,7 +63,7 @@ Nicholas McCready - https://twitter.com/nmccready
 }).call(this);
 ;(function() {
   angular.module('uiGmapgoogle-maps.providers').factory('uiGmapMapScriptLoader', [
-    '$q', 'uiGmapuuid', function($q, uuid) {
+    '$q', 'uiGmapuuid','$rootScope', function($q, uuid,$rootScope) {
       var getScriptUrl, includeScript, isGoogleMapsLoaded, scriptId, usedConfiguration;
       scriptId = void 0;
 	  usedConfiguration = void 0;
@@ -96,6 +96,12 @@ Nicholas McCready - https://twitter.com/nmccready
         script.id = scriptId = "ui_gmap_map_load_" + (uuid.generate());
         script.type = 'text/javascript';
         script.src = getScriptUrl(options) + query;
+		script.onerror=function(){
+			$rootScope.cargandoMapa=false;
+		}
+		script.onload=function(){
+			$rootScope.cargandoMapa=true;
+		}
         return document.body.appendChild(script);
       };
       isGoogleMapsLoaded = function() {
@@ -114,13 +120,13 @@ Nicholas McCready - https://twitter.com/nmccready
             window[randomizedFunctionName] = null;
             deferred.resolve(window.google.maps);
           };
-          if (window.navigator.connection && window.Connection && window.navigator.connection.type === window.Connection.NONE && !options.preventLoad) {
+          /*if (window.navigator.connection && window.Connection && window.navigator.connection.type === window.Connection.NONE && !options.preventLoad) {
             document.addEventListener('online', function() {
               if (!isGoogleMapsLoaded()) {
                 return includeScript(options);
               }
             });
-          } else if (!options.preventLoad) {
+          } else*/ if (!options.preventLoad) {
             includeScript(options);
           }
 		  usedConfiguration = options;
@@ -165,14 +171,14 @@ Nicholas McCready - https://twitter.com/nmccready
      'uiGmapMapScriptLoader','$rootScope', function(loader,$rootScope) {
        return {
          load: function() {
-		if($rootScope.internet && $rootScope.internet.state && $rootScope.internet.type!=null){
+		//if($rootScope.internet && $rootScope.internet.state && $rootScope.internet.type!=null){
 		 var c=document.getElementsByTagName('script');
         	for(var i=0;i<c.length;i++){
 			if(c[i].src.indexOf("https://maps.googleapis.com")>=0)c[i].parentElement.removeChild(c[i]);
 			i=c.length;
 			}
-          	loader.manualLoad();
-		}
+			loader.manualLoad();
+		//}
          }
        };
      }
