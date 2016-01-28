@@ -24,7 +24,7 @@
         <p class="ng-hide " ng-show="!cargandoMapa" ng-click="loadMapa()">Cargar de nuevo.</p>
         <ion-spinner icon="ripple" ng-show="cargandoMapa" class="ng-hide "></ion-spinner>
     </div>
-    <button class="mapa-socket-indicador ng-hide" ng-show="!socketState && internet.state && mapaCargado" ><img style="-webkit-mask-image: url('img/iconos/mapa/sinconexion.png');"></button>
+    <button class="mapa-socket-indicador ng-hide" ng-show="!socketState && mapaCargado" ><img style="-webkit-mask-image: url('img/iconos/mapa/sinconexion.png');"></button>
     <div class="mapa-descripcion-evento ng-hide" ng-show="showInfo">
     <div class="mapa-descripcion-evento-cover"></div>
     <div class="mapa-descripcion-evento-contenedor">
