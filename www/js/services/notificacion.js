@@ -5,8 +5,8 @@ angular.module('starter.services')
 		$rootScope.notificaciones=Memory.get("Notificaciones")
 		if(!$rootScope.notificaciones)$rootScope.notificaciones=[];
 		if(socket.isConnected()){
-			if($rootScope.notificaciones.length>0)socket.getSocket().emit("setNotificaciones",_.map($rootScope.notificaciones,function(v){return {IdN:v.IdNotificacion,IdE:v.IdEvento,Edi:v.Editado}}))
-			
+			if($rootScope.notificaciones.length>0)
+				socket.getSocket().emit("setNotificaciones",_.map($rootScope.notificaciones,function(v){return {IdN:v.IdNotificacion,IdE:v.IdEvento,Edi:v.Editado}}))
 		}
 		socket.getSocket().removeListener("notificacionesEliminadas",notificacionesEliminadas)
 		socket.getSocket().on("notificacionesEliminadas",notificacionesEliminadas)	
@@ -48,8 +48,10 @@ angular.module('starter.services')
 	}
 	return {
 		inicializa:function(){
+			if(!$rootScope.notificaciones){
 			inicializa();
 			listeners();
+			}
 		},
 		getNotificaciones:function(val){
 			actualiza(val);

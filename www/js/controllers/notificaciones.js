@@ -78,7 +78,7 @@ angular.module('starter.controllers')
 		$state.go("app.home.mapa");
 	}
 	$scope.verDirectorio=function(data){
-		Message.showModal("templates/modal/directorio.html")
+		Message.showModal("screens/modal/directorio.html")
 	}
 	var getPersona=function(data){
 		if(data){
@@ -167,9 +167,7 @@ angular.module('starter.controllers')
 			buttons.push({text:$rootScope.idioma.Contactos[20],funcion:$scope.cancelarSolicitud,data:data})
 		}
 		if(data.Tipo==5 || data.Tipo==6)buttons.push({text:$rootScope.idioma.Notificaciones[22],funcion:$scope.verContactos,data:data})
-		Message.showActionSheet(null,buttons,{text:$rootScope.idioma.Notificaciones[17],funcion:function(data){
-				$scope.eliminaNotificacion(data.data)
-		},data:data},$rootScope.idioma.General[6],function(index,res){
+		Message.showActionSheet(null,buttons,null,$rootScope.idioma.General[6],function(index,res){
 			if(index>=0){
 				res.funcion(res.data);
 			}

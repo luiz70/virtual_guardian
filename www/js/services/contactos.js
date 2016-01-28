@@ -24,8 +24,10 @@ angular.module('starter.services')
 	}
 	return {
 		inicializa:function(){
+			if(!$rootScope.contactos){
 			inicializa();
 			listeners();
+			}
 		},
 		getContactos:function(){
 			actualiza();

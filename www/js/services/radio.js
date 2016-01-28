@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Radio',function($rootScope,uiGmapIsReady,Ubicacion,Memory,$timeout){//,Eventos
+.factory('Radio',function($rootScope,uiGmapIsReady,Ubicacion,Memory,$timeout,Eventos){//
 	//function que inicializa el radio
 	var inicializa=function(){
 		$rootScope.radio=Memory.get("Radio");
@@ -39,10 +39,8 @@ angular.module('starter.services')
 		//funcion que se ejecuta cada que el radio es cambiado
 		$rootScope.$watch('radio.radio', function(newValue, oldValue) {
 			if(newValue){
-				//$rootScope.eventosMap=[];
+				$rootScope.eventosMap=[];
 				$rootScope.radio.radio=parseInt(newValue);
-				try{
-				}catch(err){}
 				//revisaEventos($rootScope.map.ubicacion.position);
 			}
 		});

@@ -1,6 +1,6 @@
 // JavaScript Document
 angular.module('starter.services')
-.factory('InfoEvento',function($rootScope,uiGmapGoogleMapApi,$timeout){
+.factory('InfoEvento',function($rootScope,uiGmapGoogleMapApi,$timeout,$animate){
 	$rootScope.info=false;
 	$rootScope.selectedMarker=null;
 	var open=false;
@@ -8,34 +8,34 @@ angular.module('starter.services')
 	var showInfo=function(){
 		$rootScope.info=true;
 		open=true;
-		$(".mapa-descripcion-evento-contenedor").animate({
-			bottom:"0px"
-			},500);
-			$(".mapa-descripcion-evento-cover").animate({
-			opacity:"1"
-			},500,function(){
-				$(".mapa-descripcion-evento-cover").on("click",hideInfo);
-				$(".mapa-descripcion-evento-close").on("click",hideInfo);
-			
-			});
+		$animate.addClass(document.getElementsByClassName("mapa-descripcion-evento-contenedor")[0],'show-info')
+		$animate.removeClass(document.getElementsByClassName("mapa-descripcion-evento-contenedor")[0],'hide-info')
+		$animate.addClass(document.getElementsByClassName("mapa-descripcion-evento-cover")[0],'show-search')
+		$animate.removeClass(document.getElementsByClassName("mapa-descripcion-evento-cover")[0],'hide-search')
+		angular.element(document.getElementsByClassName("mapa-descripcion-evento-cover")[0]).on("touch",hideInfo)
+		angular.element(document.getElementsByClassName("mapa-descripcion-evento-close")[0]).on("touch",hideInfo)
+		if(!$rootScope.$$phase) $rootScope.$digest();
 	}
 	var hideInfo=function(){
 		open=false;
-		$(".mapa-descripcion-evento-cover").off("click",hideInfo);
-		$(".mapa-descripcion-evento-close").off("click",hideInfo);
-		$(".mapa-descripcion-evento-contenedor").animate({
-			bottom:"-100vh"
-			},500);
-			$(".mapa-descripcion-evento-cover").animate({
-			opacity:"0"
-			},500,function(){
-				if(!$rootScope.$$phase) {
-                    $rootScope.$apply(function(){
-						$rootScope.info=false;
-						$rootScope.selectedMarker=null;
-					})
-				}else $rootScope.info=false;
-			});
+		$animate.removeClass(document.getElementsByClassName("mapa-descripcion-evento-contenedor")[0],'show-info')
+		$animate.addClass(document.getElementsByClassName("mapa-descripcion-evento-contenedor")[0],'hide-info')
+		$animate.removeClass(document.getElementsByClassName("mapa-descripcion-evento-cover")[0],'show-search')
+		$animate.addClass(document.getElementsByClassName("mapa-descripcion-evento-cover")[0],'hide-search')
+		angular.element(document.getElementsByClassName("mapa-descripcion-evento-cover")[0]).off("touch",hideInfo)
+		angular.element(document.getElementsByClassName("mapa-descripcion-evento-close")[0]).off("touch",hideInfo)
+		if(!$rootScope.$$phase) $rootScope.$digest();
+		$timeout(function(){
+			if(!$rootScope.$$phase) {
+    	        $rootScope.$apply(function(){
+					$rootScope.info=false;
+					$rootScope.selectedMarker=null;
+				})
+			}else {
+				$rootScope.info=false;
+				$rootScope.selectedMarker=null;
+			}
+		},500)
 	}
 	
 	return {

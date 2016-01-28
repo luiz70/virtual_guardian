@@ -1,5 +1,5 @@
 <div class="contenedor-mapa-controls" >
-<div class="contenedor-mapa-top-right more" z-index="1" ng-hide="auto.posicionando">
+<div class="contenedor-mapa-top-right more" z-index="1" ng-hide="auto.posicionando" style="height:auto !important;    z-index: 20;">
 <button class="boton-mapa-top-right options" ng-click="showControls()"><i class="icon ion-android-more-vertical"></i></button>
 </div>
 <div class="contenedor-mapa-top-right" z-index="2" ng-hide="auto.posicionando" >
@@ -8,10 +8,10 @@
         </button>
 </div>
 <div class="auto-id ng-hide" z-index="2" ng-show="auto.posicionando" >
-        <button  class="boton-mapa-top-right dead "   ng-click="cancelarAuto()" style="top: 10vh;">
+        <button  class="boton-mapa-top-right dead2 "   ng-click="cancelarAuto()" style="top: 10vh;">
         <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/cerrar.png');" >
         </button>
-        <button  class="boton-mapa-top-right dead "   ng-click="actualizaAuto()" style="top: 10vh;">
+        <button  class="boton-mapa-top-right dead2 "   ng-click="actualizaAuto()" style="top: 10vh;">
         <img class="img-boton-mapa-top-right " style="-webkit-mask-image: url('img/iconos/mapa/controls/ubicacion.png');" >
         </button>
 </div>

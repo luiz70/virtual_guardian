@@ -75,6 +75,7 @@ angular.module('starter.controllers')
 			3:"Escribe para buscar lugares",
 			4:"No hay resultados para",
 			5:"Mostrar los eventos de los ultimos:",
+			6:"La aplicación no tiene cobertura en esta zona"
 			
 			
 		},
@@ -94,7 +95,9 @@ angular.module('starter.controllers')
 			7:"Estados",
 			8:"Eventos",
 			9:"Seleccionar todo",
-			10:"Borrar selección"
+			10:"Borrar selección",
+			11:"No ha seleccionado ningun estado.",
+			12:"No ha seleccionado ningun tipo de evento."
 		},
 		Asuntos:{
 			1:"Asalto",

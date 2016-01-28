@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Auto',function($rootScope,uiGmapGoogleMapApi,Memory,$timeout){//,Eventos
+.factory('Auto',function($rootScope,uiGmapGoogleMapApi,Memory,$timeout,Eventos){//
 	
 		var inicializa=function(){
 			$rootScope.auto=Memory.get("Auto")
@@ -81,7 +81,7 @@ angular.module('starter.services')
 				$rootScope.auto.position={latitude:$rootScope.ubicacion.position.latitude,longitude:$rootScope.ubicacion.position.longitude}
 				$rootScope.map.zoom=17;
 				$rootScope.map.center={latitude:$rootScope.auto.position.latitude,longitude:$rootScope.auto.position.longitude}
-				},100)
+				},200)
 				//navigator.geolocation.getCurrentPosition(mapSuccessAuto, mapError);
 			}
 			else{

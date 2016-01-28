@@ -7,6 +7,18 @@ angular.module('starter.controllers')
 	$scope.maxDate=new Date()
 	
 	$scope.guardaFiltros=function(){
+		
+		var estados=_.compact(_.map($rootScope.filtros.estados,function(v,i){if(v.Selected)return v.Id; else return null;}))
+		var asuntos=_.compact(_.map($rootScope.filtros.asuntos,function(v,i){if(v.Selected)return v.Id; else return null;}))
+		if(estados.length==0){
+			Message.alert($rootScope.idioma.Filtros[1],$rootScope.idioma.Filtros[11],function(){
+			
+			})
+		}else if(asuntos.length==0){
+			Message.alert($rootScope.idioma.Filtros[1],$rootScope.idioma.Filtros[12],function(){
+			
+			})
+		}else{
 		Message.hideModal();
 		$rootScope.eventosMap=[];
 		Eventos.refresh();
@@ -19,20 +31,20 @@ angular.module('starter.controllers')
 				var state="";
 				for(var i=0;i<results.length;i++)
 					if(results[i].address_components.length==2){
-						state=results[i];
+						state=results[i].address_components[0].long_name.toLowerCase();
+						if(state=="estado de méxico")state="méxico"
 						i=results.length
 					}
-				for(var i=0;i<$rootScope.filtros.estados.length;i++)
-					if($rootScope.filtros.estados[i].Nombre.toLowerCase()==state.address_components[0].long_name.toLowerCase()){
-						i=$rootScope.filtros.estados.length;
-						console.log(state);
-						//if(!$rootScope.filtros.estados[i].Selected)
-						
+					var estados=_.compact(_.map($rootScope.filtros.estados,function(v,i){if(v.Selected)return v.Nombre.toLowerCase(); else return null;}))
+					if(estados.indexOf(state)<0){
+						$rootScope.radio.activo=false;
+						$rootScope.map.zoom=6
 					}
+					
 			}
 		})
 		}
-		
+		}
 	}
 	$scope.getEstado=function(){
 		
@@ -68,22 +80,4 @@ $scope.marcaTodoEventos=function(val){
 					if(data)$scope.filtros.periodo=data.valor;
 				})
   }
-})
-.filter('fechaFiltros', function () {
-	return function (input,scope,id) {
-	   if(input){
-		   var f=new Date();
-		   switch(id){
-			   case 1:
-			   		if(input.tipo)f.setDate(f.getDate()-input.periodo)
-					else f=input.fechaInicial
-			   break;
-			   case 2:
-			   		if(!input.tipo)f=input.fechaFinal
-			   break;
-		   }
-		   var d=f.getDate()
-		   return (d<10?"0"+d:d)+" - "+scope.idioma.Meses[parseInt(f.getMonth()+1)].substring(0,3)+" - "+f.getFullYear();
-	   }
-	}
 })

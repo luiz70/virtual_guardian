@@ -17,17 +17,12 @@ angular.module('starter.services')
 			socket=null;
 			
 			//socket = io();
-			try{
+			
 			socket=io.connect('https://www.virtual-guardian.com:3200/socket',{
                                     reconnection:true,
 									query: "token="+usuario.Token,
 									"force new connection":true
-            });
-	
-			}catch(err){
-				console.log("errorSocketConnect")
-			}
-			
+            });			
 			/*socketFactory = null;
 			socketFactory = socketFactory({
         		ioSocket: socket

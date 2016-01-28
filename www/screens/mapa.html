@@ -1,25 +1,29 @@
-<ion-view  class="view-seccion fast " hide-nav-bar="false" can-swipe-back="false">
+<ion-view  class="view-seccion fast " hide-nav-bar="false" can-swipe-back="false" >
 
-<div data-tap-disabled="true">
+<div data-tap-disabled="true" >
 	
     <ui-gmap-google-map class="animate-enter-mapa fast" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events" ng-cloak>
         <ui-gmap-circle center='radio.center' control='radio' radius='radio.radio' fill='radio.fill'   stroke='radio.stroke' visible='radio.activo && radio.visible' events="radio.events"></ui-gmap-circle>
     
-    <!--ui-gmap-marker idKey='1' coords='auto.position'  options="auto.options" icon="content"  events="auto.events" index="10000">
+    <ui-gmap-marker idKey='1' coords='auto.position'  options="auto.options" icon="content"  events="auto.events" >
 	</ui-gmap-marker>
     <ui-gmap-markers  models='eventosMap' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="cluster" typeEvents='cluster.events' index="2">
-    </ui-gmap-markers-->
+    </ui-gmap-markers>
     <ui-gmap-marker idKey='0' style="opacity:1 !important" coords='ubicacion.position' options="ubicacion.options" icon="'icon'" events="ubicacion.events" index="1000" >
 	</ui-gmap-marker>
-    <!--ui-gmap-marker idKey='0' style="opacity:1 !important" coords='lugar.position' options="lugar.options" icon="'content'" events="lugar.events" index="10000" >
+    <ui-gmap-marker idKey='0' style="opacity:1 !important" coords='lugar.position' options="lugar.options" icon="'content'" events="lugar.events" index="10000" >
 	</ui-gmap-marker>
     <ui-gmap-map-control template='screens/controls/controls.html' position="right-top" index="-1" controller="controls"></ui-gmap-map-control>
     
-    <ui-gmap-map-control template='screens/controls/top-center.html' position="top-center" controller="top-center" index="5"></ui-gmap-map-control-->
+    <ui-gmap-map-control template='screens/controls/top-center.html' position="top-center" controller="top-center" index="5"></ui-gmap-map-control>
     <ui-gmap-map-control template='screens/controls/bottom-center.html' position="bottom-center"   controller="bottom-center" index="5"></ui-gmap-map-control>
     </ui-gmap-google-map>
+    </div >
+    <div class="sin-conexion" ng-click="loadMapa()" ng-show="!internet.state && !mapaCargado">
+    	<img style="-webkit-mask-image: url('img/iconos/mapa/sinconexion.png');">
+        <p>No hay conexion a internet</p>
     </div>
-    <button class="mapa-socket-indicador ng-hide" ng-show="!socketState"><img style="-webkit-mask-image: url('img/iconos/mapa/sinconexion.png');"></button>
+    <button class="mapa-socket-indicador ng-hide" ng-show="!socketState && internet.state && mapaCargado" ><img style="-webkit-mask-image: url('img/iconos/mapa/sinconexion.png');"></button>
     <div class="mapa-descripcion-evento ng-hide" ng-show="showInfo">
     <div class="mapa-descripcion-evento-cover"></div>
     <div class="mapa-descripcion-evento-contenedor">
@@ -55,7 +59,7 @@
        	</div>
     </div>
     </div>
-    <div class="mapa-search" ng-show="showSearch">
+    <div class="mapa-search ng-hide" ng-show="showSearch">
     	<div class="mapa-search-input-contenedor">
     		<input class="mapa-search-input"  placeholder="{{idioma.Mapa[2]}}" ng-model="buscador" ng-change="buscaLugares()" type="text">
             <button class="mapa-search-cancelar" ng-click="cierraBuscador()"><i class="icon ion-close-round"></i></button>

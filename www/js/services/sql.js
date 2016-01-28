@@ -15,16 +15,13 @@ angular.module('starter.services')
 			db = window.openDatabase("VirtualG", "1.0", "VirtualG", 100000000)
 		}
 		//$cordovaSQLite.execute(db, "DROP TABLE EVENTOS")
-		$cordovaSQLite.execute(db, "DELETE FROM EVENTOS")
+		//$cordovaSQLite.execute(db, "DELETE FROM EVENTOS")
 		//crea la tabla eventos en caso de que no exista
 		$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS EVENTOS (IdEvento integer primary key, Asunto integer, Latitud real,Longitud real, Estado integer,Fecha integer,Municipio text, Colonia text, Calles text,Hora text,Edicion integer,Edicion_info integer)")
 		.then(function(res){
 			//Manda llamar a la funcion que revisa que la informacion este actualizada
-			//actualizaEventos()
-			getEventosServer();
-			
+			//actualizaEventos()			
 		})
-		
 	}
 	//funcion que se comunica con el servidor para revisar ids de edicion y comprobar que este actualizada
 	var actualizaEventos=function(){
@@ -56,7 +53,6 @@ angular.module('starter.services')
 		//se ejecuta la consulta que inserta todos los registros en la base de datos
 		$cordovaSQLite.execute(db, "INSERT OR REPLACE INTO EVENTOS("+keys.join(",")+") VALUES"+eventos.join(" , "))
 		.then(function (res){
-			console.log(res.rowsAffected);
 			
 		})
 		
@@ -98,6 +94,7 @@ angular.module('starter.services')
 	}
 	//funcion que se ejecuta una ves que se obtienen los ids de la consulta
 	var getIdEventos=function(ids){		//se limpian los eventos que no deben de aparecer en el mapa
+	
 		var temp=$rootScope.eventosMap;
 		$rootScope.eventosMap=[]
 		for(var i=0;i<temp.length;i++)
@@ -158,16 +155,18 @@ angular.module('starter.services')
 	}
 	
 	var getInfoEvento=function(data){
-		console.log(data);
 		if(data!==1)guardaInfoEvento(data);
 	}
 	
 	//funcion que obtiene los parametros de busqueda de los eventos
 	var getEventosServer=function(){
+		
+		if($rootScope.Usuario && $rootScope.filtros)
 		if(!$rootScope.auto || ($rootScope.auto && !$rootScope.auto.posicionando)){
 		var estados=[];
 		var asuntos=[];
 	  //se verifica si hay filtros para derifinir las fechas
+	  
 		if(!$rootScope.filtros.activos){
 			//si no hay filtros se definen en base al periodo establecido
 			//la fecha final se define como la fecha actual
@@ -200,11 +199,12 @@ angular.module('starter.services')
 				f1=f1.getTime()/1000000
 				f2=(new Date()).getTime()/1000000;
 			}
-			estados=_.map($rootScope.filtros.estados,function(v,i){if(!v.Selected)return v.Id})
-			asuntos=_.map($rootScope.filtros.asuntos,function(v,i){if(!v.Selected)return v.Id})
+			estados=_.compact(_.map($rootScope.filtros.estados,function(v,i){if(!v.Selected)return v.Id; else return null;}))
+			asuntos=_.compact(_.map($rootScope.filtros.asuntos,function(v,i){if(!v.Selected)return v.Id; else return null;}))
 		}
 		//si no se ha creado el circulo lo crea con los parametros actuales
-		if(!circulo)
+		
+		if(!circulo )
 		circulo=new google.maps.Circle({
 			map: $rootScope.map.getGMap(),
 			center: {lat: $rootScope.ubicacion.position.latitude, lng: $rootScope.ubicacion.position.longitude},
@@ -244,9 +244,8 @@ angular.module('starter.services')
   }
 	return {
 		inicializa:function(val){
-			if(!db)
-			inicializa();
-			else if(val) getEventosServer()
+			if(!db) inicializa();
+			if(val) getEventosServer()
 			listeners();
 		},
 		getDb:function(){

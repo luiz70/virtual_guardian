@@ -1,6 +1,5 @@
 angular.module('starter.controllers')
-.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion,Contactos,Llamada,Mapa//,Notificaciones,Usuario,sql,$ionicPlatform,Message
-) {
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion,Contactos,Llamada,Mapa,sql,Usuario,Push,uiGmapGoogleMapApiManualLoader,uiGmapGoogleMapApi) {
 	$scope.$on('$ionicView.afterEnter',function(){
 		if(Memory.get("Usuario"))
 			$timeout(function() {
@@ -10,7 +9,6 @@ angular.module('starter.controllers')
             }, 100);
 			
     })
-	
 	$scope.cambiaPantalla=function(val){
 		switch(val){
 			case 1:$state.go("app.home.mapa")
@@ -22,38 +20,54 @@ angular.module('starter.controllers')
 		}
 		
 	}
+	
 	if(!Memory.get("Usuario")){
 		$ionicViewSwitcher.nextTransition("none");
 		$ionicViewSwitcher.nextDirection('enter');
 		$state.go("app.login")
 	}else{
+		$timeout(function(){
+		angular.element(document.getElementsByClassName("mapa-search")[0]).css("display","block")
 		$rootScope.Usuario=Memory.get("Usuario")
 		socket.inicializa();
-		Usuario.refresh();
-		Mapa.inicializa();
-		Llamada.inicializa();
-		//$rootScope.sql=sql;
+		$rootScope.sql=sql;
+		$scope.loadMapa();
+		},500)
 	}
+	$scope.loadMapa=function(){
+		uiGmapGoogleMapApiManualLoader.load();
+	}
+	uiGmapGoogleMapApi.then(function(){
+		Mapa.inicializa();
+	})
 	
-	
-	$scope.conected=function(evt,res){
-		$scope.listener();
-		/*Notificaciones.registra(true);
+	$scope.conectedonce=function(evt,res){
+		$scope.conectado();
+		sql.inicializa(true)
+		if(res){
+			sql.update();
+			Push.registra(true);
+			Usuario.refresh();
+			Contactos.inicializa()
+			Notificacion.inicializa()
+		}
+		Contactos.inicializa()
+		Notificacion.inicializa()
+		socket.getSocket().on("connect",$scope.conected)
+	}
+	$scope.conected=function(){
+		sql.inicializa(true);
+		getasuntos();
+		Push.registra(true);
 		Usuario.refresh();
-        sql.inicializa(true)
-		sql.update();*/
+		sql.update();
 		Contactos.inicializa()
 		Notificacion.inicializa()
 	}
-	$scope.listener=$rootScope.$on("socket.connect",$scope.conected)
 	
-	/*var connectError=function(){
-		socket.getSocket().removeListener("connect_error",connectError);
-		 sql.inicializa(false);
-		 Notificacion.inicializa()
-	}
-	socket.getSocket().on("connect_error",connectError);*/
+	$scope.conectado=$rootScope.$on("socket.connect",$scope.conectedonce)
 	
+		
 	$scope.menuWidth=function(){
 		if(window.innerHeight> window.innerWidth)return window.innerWidth*0.85;
 		else return window.innerHeight*0.85;
@@ -84,9 +98,9 @@ angular.module('starter.controllers')
 	
 	
 	$rootScope.Asuntos=Memory.get("Asuntos")
-	if(!$rootScope.Asuntos && Memory.get("Usuario")){
-	socket.emit("getAsuntos")
-	socket.getSocket().on("getAsuntos",function(data){
+	var getasuntos=function(){
+		socket.emit("getAsuntos")
+		socket.getSocket().on("getAsuntos",function(data){
 		if(data){
 			$rootScope.Asuntos={};
 			for(var i=0;i<data.length;i++)
@@ -96,9 +110,10 @@ angular.module('starter.controllers')
 			//no hay asuntos!!!
 		}
 	})
+	
 	}
 	
-	$rootScope.idioma.Asuntos=$rootScope.Asuntos;
+	
 	
 	
 	$rootScope.$watch("Asuntos",function(newValue){

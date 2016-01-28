@@ -1,6 +1,7 @@
 angular.module('starter.controllers')
-.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope,$timeout,socket,$ionicScrollDelegate){//,Evento,Lugar,Message) {
+.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope,$timeout,socket,$ionicScrollDelegate,$animate,Lugar){//,Evento,Message) {
 		//variable que controla si se cargo el mapa en pantalla
+	
 	$scope.mapaCargado=false;
 	$scope.timeout=null
 	$scope.showInfo=$rootScope.info;
@@ -32,7 +33,7 @@ angular.module('starter.controllers')
 	$rootScope.$watch("socketState",function (newValue) {
     	$scope.socketState=$rootScope.socketState;
   	})
-	/*$scope.buscaLugares=function(){
+	$scope.buscaLugares=function(){
 		$scope.buscando=true;
 		if($scope.timeout)$timeout.cancel($scope.timeout)
 		$scope.timeout=$timeout($scope.busca,1000);
@@ -91,34 +92,32 @@ angular.module('starter.controllers')
 	},true)
 	$rootScope.$watch("search",function(newValue){
 		if(newValue){
-			
-			$(".mapa-search").css("opacity","0")
+			angular.element(document.getElementsByClassName("mapa-search")[0]).css("opacity","0")
 			$scope.showSearch=newValue;
-			$(".mapa-search").animate({
-				opacity:1
-			},300)
+			$animate.addClass(document.getElementsByClassName("mapa-search")[0],'show-search')
+			$animate.removeClass(document.getElementsByClassName("mapa-search")[0],'hide-search')
 		}else{
-			$(".mapa-search").css("opacity","1")
-			$(".mapa-search").animate({
-				opacity:0
-			},300,function(){
-				$scope.$apply(function(){
+			angular.element(document.getElementsByClassName("mapa-search")[0]).css("opacity","1")
+			$animate.removeClass(document.getElementsByClassName("mapa-search")[0],'show-search')
+			$animate.addClass(document.getElementsByClassName("mapa-search")[0],'hide-search')
+			$timeout(function(){
 					$scope.resultados=[]
 					$scope.showSearch=false;
 					$scope.buscador=""
-				});
-				
-			})
+			},300)
+			
 		}
 	})
 	$scope.cierraBuscador=function(){
 		$rootScope.search=false;
 	}
 	$scope.revisaEscala=function(){
+		if(socket.getSocket()){
 		socket.getSocket().on("getEscalaVirtual",getEscalaVirtual);
 		for(var i=0; i<$scope.resultados.length;i++)
 		if($scope.resultados[i].types.length>0)
 		socket.emit("getEscalaVirtual",{lat:$scope.resultados[i].geometry.location.lat(),lng:$scope.resultados[i].geometry.location.lng(),type:$scope.resultados[i].types.join(" "),nom:$scope.resultados[i].name,id:$scope.resultados[i].id})
+	}
 	}
 	var getEscalaVirtual=function(data){
 		socket.getSocket().removeListener("getEscalaVirtual",getEscalaVirtual);
@@ -194,5 +193,5 @@ angular.module('starter.controllers')
 			$scope.selectedMarker=newValue
 			$scope.loadData();
 		}else $scope.cargandoInfo=true;
-	})*/
+	})
 })

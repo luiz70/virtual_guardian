@@ -2,7 +2,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 .controller('Aplicacion', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory,Message,$timeout,Usuario,socket) {
 	//Memory.clean();
 	//Variable que controla el estado de conexion a internet
-	$rootScope.internet={state:true,type:""};
+	$rootScope.internet={state:window.navigator.connection.type !== window.Connection.NONE,type:window.navigator.connection.type};
 	//inicializa usuario
 	$rootScope.Usuario=Memory.get("Usuario");
     //function que se ejecuta cada que hay un cambio de pantalla y limpia el historial para evitar errores con ios
@@ -20,11 +20,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 		var state=toState.name
 		//control de direccion en cambio de pestañas
 		//si  va a cambiar de mapa a notificaciones el estado entra de la derecha 
-        /*if(fromState.name.indexOf("mapa")>=0 && state.indexOf("notificaciones")>=0)
-			$ionicViewSwitcher.nextDirection('forward');
-		//si va a cambiar de personas a notificaciones el estado entra de la izquierda por que regresa
-        if(fromState.name.indexOf("contactos")>=0 && state.indexOf("notificaciones")>=0)
-			$ionicViewSwitcher.nextDirection('back');*/
+        
 		if(fromState.id){
 		if(device.platform.toLowerCase()=="android")$ionicViewSwitcher.nextTransition('none');
 		else{
@@ -64,7 +60,8 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 	//function que se ejecuta cada que se cambia el estado del internet
     $rootScope.$watch('internet', function(newValue, oldValue) {
         //
-    });
+		
+    },true);
 	
 	//function que se ejecuta al cerrar sesion
 	$rootScope.cerrarSesion=function(){
@@ -77,12 +74,14 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 			Memory.set("Usuario",null);
 			$rootScope.Usuario=null
 			//programa la transicion de salida
-			$ionicViewSwitcher.nextDirection('back');
+			//$ionicViewSwitcher.nextDirection('back');
 			//cambia a pantalla de login
-			$state.go('app.login')
+			//$state.go('app.login')
 			//oculta el mensaje de cerrando sesion
 			Message.hideLoading();
 			$rootScope.cerrada=true;
+			if(navigator.splashscreen)navigator.splashscreen.show();
+			document.location.href="index.html"
 		},300)
 	}
 	//obtiene el ultimo elemento del nombre del estado

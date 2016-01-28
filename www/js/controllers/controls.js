@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout,Ubicacion,Message,socket,Lugar){
+.controller('controls',function($scope,$rootScope,Mapa,uiGmapIsReady,$timeout,Ubicacion,Message,socket,Lugar,$animate){
 	$scope.map=$rootScope.map;
 	$scope.ubicacion=$rootScope.ubicacion;
 	$scope.radio=$rootScope.radio;
@@ -38,11 +38,11 @@ angular.module('starter.controllers')
 		},
 		{nombre:"filtro",
 			id:4,
-			activo:false,
+			activo:(true && $rootScope.filtros.activos),
 			activable:true,
 			content:"",
 			onClick:function(){
-			Message.showModal("templates/modal/filtros.html");
+			Message.showModal("screens/modal/filtros.html");
 			},
 		},
 		{nombre:"periodo",
@@ -58,6 +58,7 @@ angular.module('starter.controllers')
 				if($rootScope.Usuario.Periodo!=365)buttons.push({text:$rootScope.idioma.Periodos[365],valor:365})
 				
 				Message.showActionSheet($rootScope.idioma.Mapa[5],buttons,null,$rootScope.idioma.General[6],function(res,data){
+					$rootScope.eventosMap=[];
 					if(data)$rootScope.Usuario.Periodo=data.valor;
 				})
 			},
@@ -72,26 +73,45 @@ angular.module('starter.controllers')
 	uiGmapIsReady.promise()
 	.then(function(maps){
 		$scope.mapa=$rootScope.map;
-        $(".gm-style div").first().click($scope.hideControls)
-        $(".gm-style div").first().mousedown($scope.hideControls)
+		angular.element(angular.element(document.getElementsByClassName("gm-style")[0]).children()[0]).on("touch",$scope.hideControls)
 		$scope.showControls();
 	})
 	$scope.showControls=function(){
-		$(".contenedor-mapa-top-right").animate({
+		
+		$animate.removeClass(document.getElementsByClassName("more")[0],'show-more')
+		$animate.addClass(document.getElementsByClassName("more")[0],'hide-more')
+		var deads=document.getElementsByClassName("dead")
+		for(var i=0;i<deads.length;i++){
+		$animate.removeClass(deads[i],'hide-options')
+		$animate.addClass(deads[i],'show-options')
+		}
+		$timeout(function(){
+		angular.element(document.getElementsByClassName("more")[0]).addClass("ng-hide")
+		},500)
+		/*$(".contenedor-mapa-top-right").animate({
 			right:"1vh"
 		},200);
 		$(".boton-mapa-top-right.options").animate({
 		opacity:0
 		},200,function(){
-		});
+		});*/
 	}
 	$scope.hideControls=function(){
-		$(".contenedor-mapa-top-right").animate({
+		angular.element(document.getElementsByClassName("more")[0]).removeClass("ng-hide")
+		$animate.addClass(document.getElementsByClassName("more")[0],'show-more')
+		$animate.removeClass(document.getElementsByClassName("more")[0],'hide-more')
+		var deads=document.getElementsByClassName("dead")
+		for(var i=0;i<deads.length;i++){
+		$animate.removeClass(deads[i],'show-options')
+		$animate.addClass(deads[i],'hide-options')
+		}
+		
+		/*$(".contenedor-mapa-top-right").animate({
 			right:"-10vh"
 		},400);
 		$(".boton-mapa-top-right.options").animate({
 		opacity:1
-		},200);
+		},200);*/
 	}
 	$scope.refreshLocation=function(){
 		$rootScope.eventosMap=[];
@@ -141,7 +161,7 @@ angular.module('starter.controllers')
 		Message.hideLoading();
 		$rootScope.auto.escala=escala;
 		$rootScope.auto.eventos=eventos;
-		Message.showModal("templates/modal/resumen-auto.html");
+		Message.showModal("screens/modal/resumen-auto.html");
 	}
 	$scope.errorAnalisis=function(data){
 		socket.getSocket().removeListener("errorAnalisisAuto",$scope.errorAnalisis)
@@ -177,7 +197,7 @@ angular.module('starter.controllers')
 	$scope.idioma=$rootScope.idioma;
 	$scope.map=$rootScope.map;
 })
-.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,$timeout,$animate){//,Radio,Eventos
+.controller('bottom-center',function($scope,$rootScope,uiGmapIsReady,$timeout,$animate,Eventos){//,Radio
 	//define el diccionario
 	$scope.idioma=$rootScope.idioma;
 	//importa la configuracion del radio

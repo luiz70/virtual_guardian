@@ -1,19 +1,20 @@
 angular.module('starter.services')
-.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,$interval,Message,$timeout){//,Eventos
+.factory('Ubicacion',function($rootScope,uiGmapGoogleMapApi,Memory,$interval,Message,$timeout,Eventos){//
 	//function que se ejecuta una vez que el script de google maps esta cargado
-	uiGmapGoogleMapApi.then(function(maps) {
-		getLocation();
-	})
+	
 	var eventos=[];
 	var pos={}
 	var interval=null;
 	var positionId=null;
+	var first=true;
+	var mexico={ latitude: 20.6737919, longitude:  -103.3354131 }
 	//funcion que inicializa la ubicacion
 	var inicializa=function(){
+		
 		//carga los datos guardados de la ubicacion
 		$rootScope.ubicacion=Memory.get("Ubicacion");
 		//si no esta definida la inicializa
-		if(!$rootScope.ubicacion)
+		if(!$rootScope.ubicacion){
 		//define el objeto ubicacion que sera mostrado en el mapa
 		$rootScope.ubicacion={
 			//la posicion que tiene el marcador
@@ -39,13 +40,14 @@ angular.module('starter.services')
 			},
 			
 		}
+		}
 		
 		$rootScope.ubicacion.centrar=true
 		//define los eventos de la ubicacion
 		$rootScope.ubicacion.events={
 			//cuando el mouse termina el click
 			mouseup:function(event){
-				
+				getPais();
                 //intenta aplicar para apresurar la proyeccion.
                 if(!$rootScope.$$phase) {
                     $rootScope.$apply(function(){
@@ -100,26 +102,28 @@ angular.module('starter.services')
 				
 			},
 			position_changed:function(event){
+				
 			},
 			dblclick:function(event){
 				$rootScope.map.zoom=18
 				$rootScope.map.center={ latitude: $rootScope.ubicacion.position.latitude, longitude:  $rootScope.ubicacion.position.longitude}
 			}
 		}
-		$timeout(function(){
+		/*$timeout(function(){
 			if($rootScope.auto){
 				if(!$rootScope.auto.posicionando)
 					$rootScope.ubicacion.centrar=true
 				else $rootScope.ubicacion.centrar=false
 					getLocation();
 			}
-		},10)
+		},500)*/
 	}
 	document.addEventListener("pause", function(){
 		navigator.geolocation.clearWatch(positionId);
 		
 	}, false);
 	document.addEventListener("resume", function(){
+		if($rootScope.ubicacion){
 		$rootScope.eventosMap=[]
 		if($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)){
 		getLocation();
@@ -127,10 +131,13 @@ angular.module('starter.services')
 			//preguntar si quiere actualizar ubicacion
 			try{Eventos.refresh()}catch(err){}
 		}
+		}
 	}, false);
 	//function que se ejecuta cada que la posicion del marcador cambia
 	$rootScope.$watch('ubicacion.position', function(newValue, oldValue) {
   		if(newValue){
+			
+			
 			if($rootScope.radio){
 				$rootScope.radio.center=$rootScope.ubicacion.position;
 				$timeout(function(){$rootScope.radio.center=$rootScope.ubicacion.position;},500)
@@ -144,6 +151,8 @@ angular.module('starter.services')
 			$rootScope.ubicacion.options.icon=getIconUbicacion();
 			try{Eventos.refresh()}catch(err){}
 			if(!($rootScope.ubicacion.position.latitude.toFixed(10)==$rootScope.ubicacion.location.latitude.toFixed(10) && $rootScope.ubicacion.position.longitude.toFixed(10)==$rootScope.ubicacion.location.longitude.toFixed(10)))navigator.geolocation.clearWatch(positionId);
+			if($rootScope.auto.posicionando)$rootScope.ubicacion.options.visible=false;
+			else $rootScope.ubicacion.options.visible=true;
 		}
 	},true);
 	$rootScope.$watch('ubicacion', function(newValue, oldValue) {
@@ -164,19 +173,48 @@ angular.module('starter.services')
 			//define el tamaño a proyectar 
 			scaledSize:new google.maps.Size(20, 20)
 		}
-		
 		return icono;
 	}
 	//funcion que se ejecuta una vez que se obtiene la ubicacion del usuario
 	var positionSuccess=function(position){
+		console.log( $rootScope.ubicacion.position);
 		var bnds=$rootScope.map.getGMap().getBounds() 
 		if(bnds && !bnds.contains(new google.maps.LatLng(position.coords.latitude,position.coords.longitude)))$rootScope.ubicacion.centrar=true;
 		//actualiza el valor de la ultima ubicacion obtenida
 		$rootScope.ubicacion.location={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
 		//actualiza la posicion del marcador
         $rootScope.ubicacion.position={ latitude: position.coords.latitude, longitude:  position.coords.longitude }
+		if(first){
+			first=false;
+			getPais();
+		}
 		//aplica cambios por que es una funcion externa a agular
 		$rootScope.$apply(function(){})
+	}
+	var getPais=function(){
+		$timeout(function(){
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode({'location': new google.maps.LatLng($rootScope.ubicacion.position.latitude,$rootScope.ubicacion.position.longitude)}, function(results, status) {
+    		if (status === google.maps.GeocoderStatus.OK) {
+				//console.log(results)
+				if(results[results.length-1].formatted_address!="México"){
+					//console.log(results[results.length-1].formatted_address)
+					//$rootScope.ubicacion.centrar=true;
+					Message.toast($rootScope.idioma.Mapa[6])
+					//$rootScope.ubicacion.position={latitude:mexico.latitude,longitude:mexico.longitude}
+					$rootScope.radio.activo=false;
+					$rootScope.$apply()
+				}
+				
+			}else{
+				//$rootScope.ubicacion.centrar=true;
+				Message.toast($rootScope.idioma.Mapa[6])
+				$rootScope.radio.activo=false;
+				//$rootScope.ubicacion.position={latitude:mexico.latitude,longitude:mexico.longitude}
+				$rootScope.$apply()
+			}
+		})
+		},300);
 	}
 	//funcion que se ejecuta cuando se produce un error en la ubicacion del evento
 	var positionError=function(error){

@@ -143,3 +143,21 @@ return function (input,scope) {
 	   }
 	}
 })
+.filter('fechaFiltros', function () {
+	return function (input,scope,id) {
+	   if(input){
+		   var f=new Date();
+		   switch(id){
+			   case 1:
+			   		if(input.tipo)f.setDate(f.getDate()-input.periodo)
+					else f=input.fechaInicial
+			   break;
+			   case 2:
+			   		if(!input.tipo)f=input.fechaFinal
+			   break;
+		   }
+		   var d=f.getDate()
+		   return (d<10?"0"+d:d)+" - "+scope.idioma.Meses[parseInt(f.getMonth()+1)].substring(0,3)+" - "+f.getFullYear();
+	   }
+	}
+})
