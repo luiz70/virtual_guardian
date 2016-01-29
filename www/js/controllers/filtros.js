@@ -28,7 +28,7 @@ angular.module('starter.controllers')
 			$rootScope.map.zoom=12;
 		}
 		$rootScope.controls[3].activo=(true && $rootScope.filtros.activos);
-		if($rootScope.filtros.activos ){
+		if($rootScope.filtros.activos){
 			
 		var geocoder = new google.maps.Geocoder();
 		geocoder.geocode({'location': new google.maps.LatLng($rootScope.ubicacion.position.latitude,$rootScope.ubicacion.position.longitude)}, function(results, status) {

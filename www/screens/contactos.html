@@ -9,11 +9,11 @@
                	<ion-spinner icon="ripple" class="spinner-blue"></ion-spinner>
             </ion-item>
             <div class="animate-fade-slide-in-right">
-               	<ion-item class="item-avatar item-icon-right contacto-item-contenido" ng-repeat="contacto in contactos track by contacto.IdUsuario"  >				
+               	<ion-item class="item-avatar item-icon-right contacto-item-contenido" ng-repeat="contacto in contactos track by contacto.IdUsuario"  ng-click="abreContacto(contacto)">				
                 	<div  class="friends-avatar"></div>
                 	<h2>{{contacto.Correo}}</h2>
                     <p>{{contacto | contactoEstatus:this}}</p>
-                    <i class="icon ion-android-more-vertical friends-more" ng-click="abreContacto(contacto)"></i>
+                    <i class="icon ion-android-more-vertical friends-more" ></i>
 				</ion-item>
             </div>
             <!--ion-item class="list-mensaje ng-hide" ng-show="!moreData">

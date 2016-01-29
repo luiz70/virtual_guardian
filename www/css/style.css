@@ -1563,3 +1563,20 @@ ionic-datepicker{
 .lista-contactos{
 	padding-bottom: 10vh;
 }
+.mapa-descripcion-evento-rating.uber>button{
+	padding: 1vh 7vh;
+    background: #353535;
+    color: #fff;
+    font-size: 3vh;
+    border-radius: 5px !important;
+    margin-top: 2vh;
+}
+.mapa-descripcion-evento-rating.uber>button>img{
+	    width: 4vh;
+    position: absolute;
+    top: 1vh;
+    left: 1vh;
+	opacity: 0.9;
+}
+.mapa-descripcion-evento-rating.uber{
+}

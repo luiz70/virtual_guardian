@@ -117,7 +117,7 @@ angular.module('starter.controllers')
 			3:"Dirección: ",
 			4:"Error al cargar la información",
 			5:"Escala Virtual",
-			6:"10 es el valor mas seguro"
+			6:"Viaja con Uber"
 		},
 		Llamada:{
 			1:"llamada entrante",

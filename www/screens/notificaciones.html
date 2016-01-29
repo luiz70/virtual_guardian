@@ -9,12 +9,12 @@
                	<ion-spinner icon="ripple" class="spinner-blue"></ion-spinner>
             </ion-item>
             <div class="animate-fade-slide-in-right">
-               	<ion-item class="item-avatar item-icon-right notificacion-item-contenido" ng-repeat="notificacion in notificaciones track by notificacion.IdNotificacion"  >				
+               	<ion-item class="item-avatar item-icon-right notificacion-item-contenido" ng-repeat="notificacion in notificaciones track by notificacion.IdNotificacion"  ng-click="abreNotificacion(notificacion)">				
                 	<img ng-src={{"img/iconos/notificaciones/"+notificacion.Imagen+".png"}} class="friends-avatar">
                 	<h2>{{notificacion | tituloNotificacion:this}}</h2>
                     <p>{{notificacion | subtituloNotificacion:this }}</p>
                     <p class="notificacion-item-fecha">{{notificacion | FHNotificacion}}</p>
-                    <i class="icon ion-android-more-vertical friends-more" ng-click="abreNotificacion(notificacion)"></i>
+                    <i class="icon ion-android-more-vertical friends-more" ></i>
 				</ion-item>
             </div>
             <ion-item class="list-mensaje ng-hide" ng-show="!moreData">

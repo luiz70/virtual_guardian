@@ -82,6 +82,7 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 				
 			}
 		}
+		
 		//})
 		uiGmapIsReady.promise().then(function(maps){
 		//carga los eventos
@@ -92,6 +93,14 @@ angular.module('starter.services', ['LocalStorageModule','ngError'])
 		$timeout(function(){
 			angular.element(document.getElementsByClassName("angular-google-map")).addClass("visible")
 		},1000)
+		window.addEventListener("orientationchange", function(){
+    		if(window.innerHeight>window.innerWidth){
+			//port
+			}else{
+			//land
+				$rootScope.map.center={latitude:$rootScope.ubicacion.position.latitude,longirude:$rootScope.ubicacion.position.longitude}
+			}
+		});
     	
 	})   
 	};

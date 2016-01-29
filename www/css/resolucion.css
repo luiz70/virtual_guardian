@@ -423,4 +423,345 @@
 .rango-radio > i{
     font-size: 4vw !important;
  }
+ .contenedor-mapa-top-right {
+    width: 10vh;
+    top: 16vh !important;
+    right: 1vw;
+ }
+ .contenedor-mapa-top-left{
+	 width: 10vh;
+    top: 16vh !important;
+    left: 1vw;
+ }
+ .boton-mapa-top-right.options,.boton-mapa-top-right.dead,.boton-mapa-top-right.dead2,.boton-mapa-top-right.activo {
+    margin-top: 1vw;
+    width: 10vh;
+    height: 10vh;
+    padding: 1vw;
+}
+.boton-mapa-top-right{
+	    font-size: 6.5vh;
+    line-height: 6.5vh;
+}
+.hide-options{
+	transition-delay:0s;
+	transition-duration:0.5s;
+	transition-timing-function:ease-in-out;
+	transform: translate3d(16vh,0,0) !important;
+}
+.contenedor-mapa-top-center {
+    height: auto;
+    top: 17vh !important;
+    left: 14vh !important;
+    right: 14vh;
+    padding: 1vw;
+    font-size: 4.5vh;
+    line-height: 4.5vh;
+}
+.auto-id {
+    width: 10vh;
+    top: 5vh !important;
+    right: 1vw;
+}
+.contenedor-mapa-auto>button{
+    height: 11vh;
+    font-size: 5vh;
+}
+.modal-view-filtros > ion-header-bar > h1 {
+    line-height: 12vh !important;
+    font-size: 6vh !important;
+}
+.auto-intro {
+       height: 10vh;
+        font-size: 4.3vh;
+    line-height: 4.3vh;
+    bottom: 1vh;
+    left: 2vh;
+    right: 2vh;
+}
+.modal-view-filtros > ion-header-bar {
+        height: 12vh !important;
+}
+.modal-view-filtros > ion-content {
+    height: 73vh;
+}
+.filtros-cover {
+    top: 15vh;
+    height: 73vh;
+}
+.modal-view-filtros > ion-header-bar > div {
+    height: 7vh;
+    position: absolute;
+    top: 0px !important;
+    bottom: 0px !important;
+    margin: auto !important;
+    left: 2vh;
+}
+.auto-escala {
+    height: 10vh;
+    font-size: 6vh;
+}
+.auto-escala>span {
+    font-size: 4vh;
+}
+.modal-view-filtros > ion-footer-bar {
+    height: 10vh;
+}
+.modal-view-filtros > ion-footer-bar > button {
+    font-size: 4.5vh;
+}
+.filtros-tabs-fecha {
+    font-size: 5vh;
+    padding: 1vw;
+}
+.filtros-fechas-item {
+    height: 10vh;
+    min-height: 0px !important;
+    font-size: 4.5vh;
+    line-height: 4.5vh;
+    padding-top:2.5vh
+}
+ionic-datepicker{
+	height:10vh;
+}
+ionic-datepicker.2{
+	top:10vh !important;
+}
+.filtros-fechas-item>span {
+    font-size: 4vh;
+    color: rgb(212, 211, 211);
+}
+.filtros-estados-item {
+        padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-left: 4vh;
+    padding-right: 8vh;
+    height: 10vh;
+    font-size: 4.5vh;
+    line-height: 5vh;
+    
+}
+.lista-estados-container {
+    height: 20vw;
+}
+.filtros-eventos-item {
+    width: 20%;
+    height: auto;
+    padding: 3vh;
+    text-align: center;
+}
+.filtros-eventos-item>p {
+    font-size: 4vh;
+    height: 5.5vh;
+}
+.filtros-eventos-item>img {
+       width: 40%;
+}
+.filtros-fecha-periodo {
+        height: 20vh;
+}
+.datepicker-modal-head {
+    height: 10vh;
+    min-height: 10vh;
+	padding:2.5vh;
+}
+.datepicker-modal-head >div {
+    font-size: 5vh;
+    line-height: 5vh;
+}
+.datepicker-month {
+    height: 15vh;
+    line-height: 15vh;
+    font-size: 5vh;
+    border: solid 1px rgba(255, 255, 255, 0.66);
+    border-radius: 6px;
+}
+.datepicker-year {
+    height: 15vh;
+    line-height: 15vh;
+    font-size: 5vh;
+    border: solid 1px rgba(255, 255, 255, 0.66);
+    border-radius: 6px;
+}
+.datepicker-day-of-month {
+    height: 15vh;
+    line-height: 15vh;
+}
+.datepicker-modal-head + div >div {
+	width: 33%;
+    height: 100%;
+    float: left;
+    padding: 2.5vh;
+	margin-top: 0px !important;
+	padding-top:2.5vh !important;
+}
+.datepicker-modal-head + div {
+	    height: 20vh;
+    min-height: 20vh;
+    max-height: 20vh;
+}
+.datepicker-content {
+        height: 55vh;
+    width: 80%;
+    margin-left: 10%;
+}
+.datepicker-modal-buttons {
+    height: 15vh;
+}
+.datepicker-modal-buttons > button {
+    font-size: 5vh !important;
+}
+.datepicker-content > .col {
+    height: 9vh;
+    line-height: 7vh;
+    font-size: 5vh;
+}
+.datepicker-content > .row:not(.col) > div {
+    font-size: 5vh;
+    line-height: 6.5vh;
+}
+.datepicker-content > .row:not(.col) {
+    height: 6.5vh;
+}
+.datepicker-month-content-js.datepicker-content> .row:not(.col) > div ,.datepicker-year-content-js.datepicker-content > .row:not(.col) > div{
+    font-size: 5vh;
+    line-height: 8vh;
+}
+.datepicker-month-content-js.datepicker-content > .row:not(.col),.datepicker-year-content-js.datepicker-content > .row:not(.col){
+	height:8vh;
+}
+.mapa-search-input-contenedor {
+    top: 17vh;
+    left: 2vh;
+    right: 2vh;
+    height: 9vh;
+}
+.mapa-search-input {
+    padding-left: 5vh !important;
+    font-size: 5vh !important;    
+	width: calc( 100vw - 15vh) !important;
+}
+.mapa-search-cancelar {
+    height: 9vh;
+    width: 9vh;
+}
+.mapa-search-cancelar > i {
+    font-size: 4vh;
+}
+.mapa-search-mensaje {
+        top: 28vh;
+    font-size: 4.5vh;
+}
+.mapa-search-resultados-contenedor {
+    top: 28vh !important;
+    left: 0px !important;
+ 
+}
+.mapa-search-resultados-item {
+        padding-left: 15vh;
+        padding-right: 15vw;
+	    padding-top: 3vh;
+    padding-bottom: 3vh;
+}
+.mapa-search-resultados-item > img {
+       max-width: 10vh !important;
+    max-height: 10vh !important;
+    right: calc(100vw - 17vh);
+}
+.mapa-search-resultados-item > h2 {
+    font-size: 5vh;
+}
+.mapa-search-resultados-item > p {
+    font-size: 4vh;
+}
+.mapa-descripcion-evento-icono {
+        width: 16vh;
+    height: 16vh;
+    top: -9vh;
+   
+}
+.mapa-descripcion-evento-titulo {
+    font-size: 6vh;
+	
+	    padding-left: 5vh;
+		    padding-right: 5vh;
+}
+.mapa-descripcion-evento-subtitulo {
+    font-size: 5vh;
+    margin-top: 1vh;
+	
+	    padding-left: 5vh;
+		    padding-right: 5vh;
+			padding-bottom: 5vh;
+			    margin-bottom: 5vh;
+}
+.mapa-descripcion-evento-texto {
+    font-size: 5vh;
+    margin-bottom: 0.5vh;
+	    padding-left: 5vh;
+    padding-right: 5vh;
+}
+.mapa-descripcion-evento-infoEvento{
+	margin-bottom:5vh;
+}
+.mapa-descripcion-evento-rating{
+	    font-size: 5vh;
+    width: 50%;
+    float: left;
+}
+.mapa-descripcion-evento-rating:not(.uber){
+	position:absolute;
+	right:0px;
+	bottom: 0px;
+    top: 0px;
+    margin: auto;
+	margin-bottom: auto !important;
+
+    height: 13vh;
+}
+.mapa-descripcion-evento-rating>p{
+	    font-size: 6vh !important;
+}
+.uber{
+	    border: none;
+    width: 100%;
+    margin-bottom: 5vh !important;
+    text-align: left;
+    padding-left: 5vh !important;
+    padding-right: 5vh !important;
+    border-top: solid 1px #CACACA;
+    padding-top: 5vh !important;
+}
+.mapa-descripcion-evento-rating.uber>button{
+	    font-size: 5vh;
+    background: #353535;
+    color: #fff;
+    border-radius: 5px !important;
+    padding: 2vh 15vh;
+    margin-top: 1vh;
+}
+.mapa-descripcion-evento-titulo-completo{
+	position: relative;
+    width: 100%;
+    height: auto;
+    float: left;
+}
+.mapa-descripcion-evento-general{
+	width: 50%;
+    float: left;
+}
+.mapa-descripcion-evento-general>.mapa-descripcion-evento-subtitulo{
+	border:none;
+	margin-bottom:0px;
+}
+.mapa-descripcion-evento-contenedor{
+	padding-bottom:0px;
+}
+.mapa-descripcion-evento-rating>button>.logo-uber{
+	position: absolute;
+    height: 9vh;
+    top: 1vh;
+    left: 1vh;
+    opacity: 0.9;
+}
 }

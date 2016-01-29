@@ -127,6 +127,7 @@ angular.module('starter.controllers')
 	$scope.eliminarContacto=function(){
 	}
 	$scope.llamaPersona=function(data){
+		
 		if(socket.isConnected()){
 			$rootScope.llamada.Correo=data.Correo;
 			$rootScope.llamada.Usuario=data.IdUsuario;

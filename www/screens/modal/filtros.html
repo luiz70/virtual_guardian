@@ -29,7 +29,7 @@
       <ionic-datepicker date="filtros.fechaInicial" callback="cambioFecha" min="minDate" max="filtros.fechaFinal" class="ng-hide" ng-show="!filtros.tipo">
     		<button class="filtros-fecha-boton"></button>
 		</ionic-datepicker>
-        <ionic-datepicker date="filtros.fechaFinal" callback="cambioFecha" min="filtros.fechaInicial" max="maxDate" style="top:6vh" class="ng-hide" ng-show="!filtros.tipo">
+        <ionic-datepicker  date="filtros.fechaFinal" callback="cambioFecha" min="filtros.fechaInicial" max="maxDate" style="top:6vh" class="ng-hide 2" ng-show="!filtros.tipo">
     		<button class="filtros-fecha-boton" ></button>
 		</ionic-datepicker>
         <div class="filtros-fecha-periodo ng-hide" ng-click="cambiaPeriodo()" ng-show="filtros.tipo"></div>

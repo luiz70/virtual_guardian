@@ -27,6 +27,7 @@ angular.module('starter.controllers')
 		$state.go("app.login")
 	}else{
 		$timeout(function(){
+		Llamada.inicializa();
 		angular.element(document.getElementsByClassName("mapa-search")[0]).css("display","block")
 		$rootScope.Usuario=Memory.get("Usuario")
 		socket.inicializa();

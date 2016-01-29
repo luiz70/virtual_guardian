@@ -1,6 +1,6 @@
 <div class="contenedor-mapa-controls" >
 <div class="contenedor-mapa-top-right more" z-index="1" ng-hide="auto.posicionando" style="height:auto !important;    z-index: 20;">
-<button class="boton-mapa-top-right options" ng-click="showControls()"><i class="icon ion-android-more-vertical"></i></button>
+<button class="boton-mapa-top-right options" ng-click="showControls()" ng-hide="auto.posicionando"><i class="icon ion-android-more-vertical"></i></button>
 </div>
 <div class="contenedor-mapa-top-right" z-index="2" ng-hide="auto.posicionando" >
         <button ng-repeat="control in controls" class="boton-mapa-top-right dead {{control.id}}"   ng-click="controlClick($index)" ng-hide="control.activo">

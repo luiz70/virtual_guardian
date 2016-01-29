@@ -35,7 +35,7 @@
         <button class="mapa-descripcion-evento-close">
         	<i class="icon ion-chevron-down" ></i>
         </button>
-        <div  ng-show="selectedMarker.IdEvento && !cargandoInfo">
+        <div  ng-show="selectedMarker.IdEvento && !cargandoInfo" class="mapa-descripcion-evento-infoEvento">
         <div class="mapa-descripcion-evento-titulo" ng-hide="cargandoInfo || error" >{{idioma.Asuntos[selectedMarker.Asunto]}}</div>
         <div class="mapa-descripcion-evento-subtitulo" ng-hide="cargandoInfo || error">{{selectedMarker.Info | subtituloInfo:this}}</div>
         <div class="mapa-descripcion-evento-texto" ng-hide="cargandoInfo || error">{{idioma.Info[1]}}{{selectedMarker.Info.Fecha | fechaInfo:this}}</div>
@@ -43,12 +43,18 @@
         <div class="mapa-descripcion-evento-texto"  ng-hide="cargandoInfo || error">{{idioma.Info[3]}}{{selectedMarker.Info | direccion:this }}</div>
         </div>
          <div  ng-show="!selectedMarker.IdEvento && !cargandoInfo">
+         <div class="mapa-descripcion-evento-titulo-completo"> 
+         <div class="mapa-descripcion-evento-general">
          	<div class="mapa-descripcion-evento-titulo" ng-hide="cargandoInfo || error" >{{selectedMarker.data.name}}</div>
             <div class="mapa-descripcion-evento-subtitulo" ng-hide="cargandoInfo || error">{{selectedMarker.data.formatted_address}}</div>
+            </div>
             <div class="mapa-descripcion-evento-rating" style="margin-bottom:0px; border-bottom:none;padding:0px">
             	<p style="margin-bottom: 1vh;color: #036777; font-size:4vh">{{idioma.Info[5]}}</p>
                 <h style="color: #047385;">{{selectedMarker.data.escala | escalaV}}</h> / <h>10</h>
-                <p style="font-size: 2.5vh;margin-bottom: 0px;">{{idioma.Info[6]}}</p>
+            </div>
+            </div>
+            <div class="mapa-descripcion-evento-rating uber" style="margin-bottom:0px; border-bottom:none;padding:0px">
+            	<button><img class="logo-uber" ng-src="img/iconos/mapa/uber.png">{{idioma.Info[6]}}</button>
             </div>
          </div>
         <div style="text-align:center" ng-hide="!cargandoInfo">

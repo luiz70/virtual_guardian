@@ -84,8 +84,8 @@ angular.module('starter.controllers')
 	  },100)
 	  
   }
-	$scope.$watch("resultados",function(newValue){
-		if(newValue){
+	$scope.$watch("resultados",function(newValue,oldValue){
+		if(newValue && oldValue && newValue.length>0){
 			if($scope.timeoutEscala)$timeout.cancel($scope.timeoutEscala)
 			$scope.timeoutEscala=$timeout($scope.revisaEscala,1000);
 		}
@@ -113,6 +113,7 @@ angular.module('starter.controllers')
 	}
 	$scope.revisaEscala=function(){
 		if(socket.getSocket()){
+		socket.getSocket().removeListener("getEscalaVirtual",getEscalaVirtual);
 		socket.getSocket().on("getEscalaVirtual",getEscalaVirtual);
 		for(var i=0; i<$scope.resultados.length;i++)
 		if($scope.resultados[i].types.length>0)
@@ -120,7 +121,6 @@ angular.module('starter.controllers')
 	}
 	}
 	var getEscalaVirtual=function(data){
-		socket.getSocket().removeListener("getEscalaVirtual",getEscalaVirtual);
 		var d=_.findWhere($scope.resultados,{id:data.id})
 		if(d)d.escala=data.v
 	}
@@ -186,7 +186,6 @@ angular.module('starter.controllers')
 			$scope.cargandoInfo=false;
 		}else {
 			//error
-			console.log("error");
 			$scope.cargandoInfo=false;
 			$scope.error=true;
 		}
