@@ -148,6 +148,16 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
             },
         }
     })
+	.state('app.home.reportes', {
+        url: '',
+		id:4,
+        views: {
+            'contenido-home': {
+                templateUrl: 'screens/reportes.html',
+				controller: 'Reportes'
+            },
+        }
+    })
 	$urlRouterProvider.otherwise('/app/login');
 })
 /*

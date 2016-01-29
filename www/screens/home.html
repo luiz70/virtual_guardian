@@ -6,15 +6,19 @@
       <button class="logo-menu " ng-click="conecta()">
       	<img src="img/logo_txt.png" height="100%">
         </button>
+        <button class="button button-clear boton-menu icono-header  pull-right {{seccion==4?'seleccionado':''}}" ng-click="cambiaPantalla(4)">
+        	<div style="-webkit-mask-image:url(img/iconos/barra/reportes.png) !important;"></div>
+           </button>
        <button class="button button-clear boton-menu icono-header  pull-right {{seccion==3?'seleccionado':''}}" ng-click="cambiaPantalla(3)">
         	<div style="-webkit-mask-image:url(img/iconos/barra/personas.png) !important;"></div>
+           </button>
         <button class="button button-clear boton-menu icono-header  pull-right {{seccion==2?'seleccionado':''}}" ng-click="cambiaPantalla(2)" >
         	<div style="-webkit-mask-image:url(img/iconos/barra/notificaciones.png) !important;"></div>
         </button>
         <button class="button button-clear boton-menu icono-header  pull-right {{seccion==1?'seleccionado':''}}" ng-click="cambiaPantalla(1)">
         	<div style="-webkit-mask-image:url(img/iconos/barra/mapa.png) !important;"></div>
         </button>
-        </button>
+        
 	</div>
     <disable-screen class="cover"></disable-screen>
     <ion-nav-view name="contenido-home" class="contenido-home"></ion-nav-view>

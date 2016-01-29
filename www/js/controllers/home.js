@@ -17,6 +17,8 @@ angular.module('starter.controllers')
 			break;
 			case 3:$state.go("app.home.contactos")
 			break;
+			case 4:$state.go("app.home.reportes")
+			break;
 		}
 		
 	}

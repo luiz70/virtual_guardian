@@ -29,8 +29,10 @@
     <div class="mapa-descripcion-evento-cover"></div>
     <div class="mapa-descripcion-evento-contenedor">
     	<button class="mapa-descripcion-evento-icono">
-    		<img ng-src="img/iconos/mapa/marcadores/{{selectedMarker.Asunto}}.png" height="100%" ng-show="selectedMarker.Asunto">
-            <img class="iconMarker" style="-webkit-mask-image: url('{{selectedMarker.data.icon}}');background: #059DB5;height: 90%;width: 90%;" ng-show="!selectedMarker.asunto">
+    		<img ng-src="img/iconos/notificaciones/{{selectedMarker.Asunto}}.png" height="100%" ng-show="selectedMarker.Asunto">
+             <div class="mapa-descripcion-evento-icono-back ng-hide" ng-show="!selectedMarker.Asunto"></div>
+            <img class="iconMarker" style="-webkit-mask-image: url('{{selectedMarker.data.icon}}');background: #059DB5;height: 60%; width: 60%;position: absolute;top: 0px;bottom: 0px;margin: auto;left: 0px;right: 0px;" ng-show="!selectedMarker.Asunto">
+           
         </button>
         <button class="mapa-descripcion-evento-close">
         	<i class="icon ion-chevron-down" ></i>
