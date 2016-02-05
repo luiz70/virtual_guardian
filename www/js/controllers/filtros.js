@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 .controller('Filtros', function($scope,$rootScope,Filtros,Message,Eventos) {
-	Filtros.inicializa()
+	
 	$scope.idioma=$rootScope.idioma
   	$scope.filtros=$rootScope.filtros
 	$scope.minDate=new Date(2010,6,3)
