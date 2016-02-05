@@ -44,11 +44,12 @@ ion-header-bar > .title.show{
     text-align: center !important;
     height: 100%;
     font-size: 3.5vh;
-	line-height:3.5vh !important;
+	    line-height: 3vh !important;
     padding-top: 3.5vh;
     padding-bottom: 3.5vh;
     color: #fff;
     font-weight: 300;
+	margin-top:0px !important;
 }
 ion-header-bar>button{
 	height: 100% !important;
@@ -375,8 +376,9 @@ padding:1vh;
 	ion-header-bar > .title.show{
 		font-size: 5.5vh;
 		padding-top: 5vh;
-		line-height: 5.5vh !important;
+		    line-height: 5vh !important;
 		padding-bottom: 5vh;
+		
 	}
 	ion-header-bar>button{
 		padding: 1vh !important;
