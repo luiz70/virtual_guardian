@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope,$timeout,socket,$ionicScrollDelegate,$animate,Lugar,uiGmapGoogleMapApi){//,Evento,Message) {
+.controller('Mapa', function($scope,Mapa,uiGmapIsReady,$ionicHistory,$rootScope,$timeout,socket,$ionicScrollDelegate,$animate,Lugar,uiGmapGoogleMapApi,$window){//,Evento,Message) {
 		//variable que controla si se cargo el mapa en pantalla
 	$rootScope.cargandoMapa=true;
 	$scope.mapaCargado=false;
@@ -18,14 +18,31 @@ angular.module('starter.controllers')
 	$scope.socket=socket;
 	$scope.lugar=$rootScope.lugar
 	$scope.timeoutEscala=null;
-	
+	$scope.timeoutScreen=null;
 	$scope.$on('$ionicView.afterEnter',function(){
 		if($rootScope.cerrada){
 			//Mapa.inicializa();
 		}
 	})
+	angular.element($window).bind('resize', function(){
+			try{$scope.$apply(function(){})}catch(err){}
+  		  $animate.addClass(document.getElementById("app_content"),'hide-all')
+		  if($scope.timeoutScreen)$timeout.cancel($scope.timeoutScreen)
+		  try{
+            google.maps.event.trigger($rootScope.map.getGMap(), 'resize');
+        	}catch(err){}
+		  $scope.timeoutScreen=$timeout(function(){
+			 $animate.addClass(document.getElementById("app_content"),'show-all')
+			  $timeout(function(){
+				  angular.element(document.getElementById("app_content")).removeClass('show-all')
+				  angular.element(document.getElementById("app_content")).removeClass('hide-all')
+			  },500)
+			 
+			 },500)
+	});
 	$scope.$on('$ionicView.enter',function(){
 		try{
+			console.log($rootScope.map.getGMap())
             google.maps.event.trigger($rootScope.map.getGMap(), 'resize');
         }catch(err){}
 	})
@@ -33,7 +50,6 @@ angular.module('starter.controllers')
     	try{
             google.maps.event.trigger($rootScope.map.getGMap(), 'resize');
         }catch(err){}
-		alert(2);
 	});
 	//Message.showModal("templates/modal/filtros.html");
 	$rootScope.$watch("socketState",function (newValue) {

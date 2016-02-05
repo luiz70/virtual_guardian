@@ -133,6 +133,18 @@ ion-header-bar.menu button:nth-of-type(2){
 	-o-animation-fill-mode: forwards;
 	animation-fill-mode: forwards;
 }
+.hide-all{
+	transition-delay:0s;
+	transition-duration:0.5s;
+	transition-timing-function:ease-in-out;
+	opacity:0 !important;
+}
+.show-all{
+	transition-delay:0s;
+	transition-duration:0.5s;
+	transition-timing-function:ease-in-out;
+	opacity:1 !important;
+}
 @keyframes animate-enter-up {
    from {opacity: 0;
    -webkit-transform: translate3d(0, -10vh, 0);
