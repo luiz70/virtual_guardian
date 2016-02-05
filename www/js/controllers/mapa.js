@@ -24,22 +24,7 @@ angular.module('starter.controllers')
 			//Mapa.inicializa();
 		}
 	})
-	angular.element($window).bind('resize', function(){
-			try{$scope.$apply(function(){})}catch(err){}
-  		  $animate.addClass(document.getElementById("app_content"),'hide-all')
-		  if($scope.timeoutScreen)$timeout.cancel($scope.timeoutScreen)
-		  try{
-            google.maps.event.trigger($rootScope.map.getGMap(), 'resize');
-        	}catch(err){}
-		  $scope.timeoutScreen=$timeout(function(){
-			 $animate.addClass(document.getElementById("app_content"),'show-all')
-			  $timeout(function(){
-				  angular.element(document.getElementById("app_content")).removeClass('show-all')
-				  angular.element(document.getElementById("app_content")).removeClass('hide-all')
-			  },500)
-			 
-			 },500)
-	});
+	
 	$scope.$on('$ionicView.enter',function(){
 		try{
 			console.log($rootScope.map.getGMap())
@@ -47,9 +32,7 @@ angular.module('starter.controllers')
         }catch(err){}
 	})
 	window.addEventListener("orientationchange", function(){
-    	try{
-            google.maps.event.trigger($rootScope.map.getGMap(), 'resize');
-        }catch(err){}
+    	
 	});
 	//Message.showModal("templates/modal/filtros.html");
 	$rootScope.$watch("socketState",function (newValue) {

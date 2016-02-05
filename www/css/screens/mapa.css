@@ -899,8 +899,11 @@ position:relative;
    }
 }
 .angular-google-map-container { 
-height:100vh;
-width:100vw;
+    height: 100vh;
+    width: 100vw;
+    position: absolute !important;
+    top: 0px !important;
+    left: 0px;
  }
   .gm-style-cc, .gm-style > div + div {
 	display:none
