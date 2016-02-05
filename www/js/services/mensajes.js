@@ -111,10 +111,21 @@ angular.module('starter.services')
 			}
 			 options = $ionicActionSheet.show(settings);
 		},
-		showModal:function(template){
+		showModal:function(template,direction){
+			var direction=direction || ''
+			switch(direction){
+				case 'left':direction='slide-in-left'
+				break;
+				case 'right': direction='slide-in-right'
+				break;
+				case 'up': direction='slide-in-down'
+				break;
+				default: direction='slide-in-up'
+				break
+			}
 			 $ionicModal.fromTemplateUrl(template, {
 				scope: $rootScope,
-				animation: 'slide-in-up',
+				animation: direction,
 				hardwareBackButtonClose:false
 			  }).then(function(mod) {
     			modal = mod;

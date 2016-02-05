@@ -23,7 +23,7 @@ angular.module('starter.services')
 	return {
 		login:function(credentials){
 			if($rootScope.internet.state)
-			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/login', data: credentials,timeout :15000})
+			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/login', data: credentials,timeout :15000})
 			else return false;
 		},
 		refresh:function(){

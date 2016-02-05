@@ -1,7 +1,30 @@
 <ion-view  class="view-seccion" hide-nav-bar="false" hide-back-button="true" can-swipe-back="false"> 
 	<ion-content delegate-handle="reportes" padding="false" >
-		
-        
+		<ion-refresher   on-refresh="loadReportes(0)" spinner="ripple" pulling-icon="ion-android-refresh" ></ion-refresher>
+        <div class="reporte-titulo">{{idioma.Reportes[3]}}</div>
+        <ion-list class="lista-reportes">
+        	<ion-item class="list-mensaje ng-hide" ng-show="!cargandoReportes && reportes.length==0 && !reportesRefresh">
+               	{{idioma.Reportes[4]}}
+            </ion-item>
+            <ion-item class="ng-hide" style="padding-bottom: 0px;text-align:center" ng-show="cargandoReportes && !reportesRefresh">
+               	<ion-spinner icon="ripple" class="spinner-blue"></ion-spinner>
+            </ion-item>
+            <div class="animate-fade-slide-in-right">
+               	<ion-item class="item-avatar item-icon-right reporte-item-contenido" ng-repeat="reporte in reportes track by $index" >				
+                	<div class="mapa-estatico" style="background-image:url({{reporte | StaticMap}})"></div>
+                    <img ng-src={{"img/iconos/reportes/"+reporte.Asunto+".png"}} class="friends-avatar">
+                    <h2>{{reporte | tituloReporte:this}}</h2>
+                    <p>{{reporte | subtituloReporte:this }}</p>
+                    <p class="reporte-item-fecha">{{reporte | FHReporte:this}}</p>
+                    <i class="icon ion-android-more-vertical friends-more"  ng-click="abreReporte(reporte)"></i>
+				</ion-item>
+            </div>
+            <ion-item class="list-mensaje ng-hide" ng-show="!moreData">
+               	{{idioma.Reportes[5]}}
+            </ion-item>
+        </ion-list>
+        <ion-infinite-scroll on-infinite="loadReportes(1)" distance="1%" spinner="ripple"  ng-if="moreData && !cargandoReportes && reportes.length>=15">
+		</ion-infinite-scroll>
     </ion-content>
-    <button class="contactos-agrega-reporte" ng-click="agregaReporte()"><div style="-webkit-mask-image:url(img/iconos/add-reporte.png) !important;"></div></button>
+    <button class="reportes-agrega-reporte" ng-click="creaReporte()"><div style="-webkit-mask-image:url(img/iconos/add-reporte.png) !important;"></div></button>
 </ion-view>

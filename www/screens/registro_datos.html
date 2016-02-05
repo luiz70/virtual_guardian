@@ -1,12 +1,12 @@
-<ion-view view-title="Registro_data" class="registro-datos-vista" can-swipe-back="false">
+<ion-view can-swipe-back="false" >
   	<ion-content class="padding" has-bouncing="false" >
-  		<div class="registro-datos-titulo">{{idioma.Registro[2]}}</div>
-        <input id="registro_correo" class="registro-input" type="email" placeholder="{{idioma.Registro[3]}}" style="margin-bottom: 2vh;" ng-model="nuevoUsuario.Correo" ng-keydown="enter($event,1)">
-        <div class="registro-leyenda-contrasena">{{idioma.Registro[11]}}</div>
-        <input id="registro_contrasena" class="registro-input" type="password" placeholder="{{idioma.Registro[4]}}" ng-model="nuevoUsuario.Contrasena" ng-keydown="enter($event,2)">
-        <input id="registro_contrasena2" class="registro-input" type="password" placeholder="{{idioma.Registro[5]}}" style="margin-bottom: 2vh;" ng-model="nuevoUsuario.Contrasena2" ng-keydown="enter($event,3)">
-        <div class="registro-leyenda-contrasena">{{idioma.Registro[29]}}</div>
-        <input id="registro_codigo" class="registro-input" type="text" placeholder="{{idioma.Registro[30]}}" ng-model="nuevoUsuario.Promocion" style="text-transform:uppercase"ng-keydown="enter($event,4)">
-        <button class="registro-boton-privacidad" ng-click="abrePrivacidad()">{{idioma.Registro[6]}}</button>
+  		<h1>{{idioma.Registro[2]}}</h1>
+        <input id="registro_correo" type="email" placeholder="{{idioma.Registro[3]}}"  ng-model="nuevoUsuario.Correo" ng-keydown="enter($event,1)">
+        <h2>{{idioma.Registro[11]}}</h2>
+        <input id="registro_contrasena" type="password" placeholder="{{idioma.Registro[4]}}" ng-model="nuevoUsuario.Contrasena" ng-keydown="enter($event,2)">
+        <input id="registro_contrasena2" type="password" placeholder="{{idioma.Registro[5]}}"  ng-model="nuevoUsuario.Contrasena2" ng-keydown="enter($event,3)">
+        <h2>{{idioma.Registro[29]}}</h2>
+        <input id="registro_codigo" type="text" placeholder="{{idioma.Registro[30]}}" ng-model="nuevoUsuario.Promocion" style="text-transform:uppercase"ng-keydown="enter($event,4)">
+        <button ng-click="abrePrivacidad()">{{idioma.Registro[6]}}</button>
   	</ion-content>
 </ion-view>

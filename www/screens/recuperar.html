@@ -1,4 +1,17 @@
-<ion-view view-title="Registro" class="registro-vista" can-swipe-back="false">
+<ion-view  class="recuperar-vista" can-swipe-back="false" cache-view="false">
+	<ion-header-bar>
+    	<button class="button button-clear"  ng-click="atras()" >{{idioma.General[6]}}</button>
+  		<h1 class="title show">{{idioma.Registro[4]}}</h1>
+  		<!--button class="button button-clear pull-right" ng-click="siguiente()" >{{idioma.Registro[24]}}</button-->
+	</ion-header-bar>
+	<ion-content has-bouncing="false" scroll="false" class="padding">
+        <div class="logo-registro"><img src="img/logo_k.png"></div>
+  		<h1>{{idioma.Registro[23]}}</h1>
+        <input id="recuperar_correo" class="registro-input" type="email" placeholder="{{idioma.Registro[3]}}" style="margin-bottom: 2vh;" ng-model="recuperar.Correo" ng-keydown="enter($event)">
+        <button ng-click="siguiente()">{{idioma.Registro[24]}}</button>
+	</ion-content>
+</ion-view>
+<!--ion-view view-title="Registro" class="registro-vista" can-swipe-back="false">
 	<ion-content has-bouncing="false" scroll="false">
     	<div class="registro-header">
   			<h1 class="titulo">{{idioma.Registro[26]}}</h1>
@@ -8,7 +21,7 @@
         <input id="recuperar_correo" class="registro-input" type="email" placeholder="{{idioma.Registro[3]}}" style="margin-bottom: 2vh;" ng-model="recuperar.Correo" ng-keydown="enter($event)">
         </div>
    		<div class="registro-pie">
-       		<div class="bar-footer buttons-footer">
+       		<div class="bar-footer buttons-footer registro-footer">
             	<button class="button button-block" ng-click="siguiente()">
              	{{idioma.Registro[24]}}
             	</button>
@@ -19,4 +32,4 @@
    		
         </div>
 	</ion-content>
-</ion-view>
+</ion-view-->

@@ -18,7 +18,7 @@ angular.module('starter.services')
 			
 			//socket = io();
 			
-			socket=io.connect('https://www.virtual-guardian.com:3200/socket',{
+			socket=io.connect('https://www.virtual-guardian.com:'+$rootScope.port+'/socket',{
                                     reconnection:true,
 									query: "token="+usuario.Token,
 									"force new connection":true

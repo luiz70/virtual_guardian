@@ -1,24 +1,11 @@
-<ion-view view-title="Registro" class="registro-vista" can-swipe-back="false">
+<ion-view  class="registro-vista" can-swipe-back="false" cache-view="false">
+	<ion-header-bar style="">
+    	<button class="button button-clear"  ng-click="atras()" ng-hide="state=='final'">{{botonAtras}}</button>
+  		<h1 class="title show">{{idioma.Registro[1]}}</h1>
+  		<button class="button button-clear pull-right" ng-click="siguiente()" >{{botonSiguiente}}</button>
+	</ion-header-bar>
 	<ion-content has-bouncing="false" scroll="false">
-    	<div class="registro-header">
-  			<h1 class="titulo">{{idioma.Registro[1]}}</h1>
-		</div>
-    	<div class="registro-steps">
-    		<div class="barra" ></div>
-    		<button style="left:10vw" class="{{(state=='datos')?'stepActivo':''}}">1</button>
-        	<button style="left:0px; right:0px;" class="{{(state=='codigo')?'stepActivo':''}}">2</button>
-        	<button style="right:10vw" class="{{(state=='final')?'stepActivo':''}}">3</button>
-		</div>
-   		<ion-nav-view name="contenido-registro"  class="registro-vista-contenido"></ion-nav-view>
-   		<div class="registro-pie">
-       		<div class="bar-footer buttons-footer">
-            	<button class="button button-block {{state=='final'?'final-center':''}}" ng-click="siguiente()">
-             	{{botonSiguiente}}
-            	</button>
-            	<button class="button button-block" ng-click="atras()" ng-hide="state=='final'">
-             	{{botonAtras}}
-            	</button>
-      		</div>
-   		</div>
+		<div class="logo-registro"><img src="img/logo_k.png"></div>
+        <ion-nav-view name="contenido-registro"  ></ion-nav-view>
 	</ion-content>
 </ion-view>

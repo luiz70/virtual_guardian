@@ -191,6 +191,19 @@ angular.module('starter.controllers')
 			
 			
 		},
+		Reportes:{
+			1:"Reportar evento",
+			2:"Enviar",
+			3:"Los siguientes reportes fueron generados por usuarios como tú que buscan crear una comunidad segura.",
+			4:"No hay reportes recientes",
+			5:"No hay más reportes recientes.",
+			6:"Reportes",
+			7:"Apoyar reporte",
+			8:"Reportar como falso",
+			9:"Hace ",
+			10:" min",
+			11:" h"
+		},
 		Auto:{
 			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto.",
 			2:"Inicial vigilancia",

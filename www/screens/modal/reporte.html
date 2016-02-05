@@ -1,0 +1,24 @@
+<ion-modal-view class="reportes" ng-controller="CreaReporte">
+    <ion-header-bar style="">
+     <button class="button button-clear" style="float:left;"  ng-click="cierraModal()">{{idioma.General[6]}}</button>
+  <h1 class="title show">{{idioma.Reportes[1]}}</h1>
+  	<button class="button button-clear" style="float:left;"  ng-click="reporta()">{{idioma.Reportes[2]}}</button>
+    </ion-header-bar>
+    <ion-content has-bouncing="false" >
+      	<!--div data-tap-disabled="true" >
+		    <ui-gmap-google-map control="minimapa" center='minimapa.center' zoom='minimapa.zoom' style="height: 30vh; width:100vw" options='minimapa.options' pan='true' events="minimapa.events" ng-cloak>
+            </ui-gmap-google-map>
+    	</div-->
+        <div class="mapa-contenedor"></div>
+        
+        
+    </ion-content>
+    <div class="barra-opciones">
+    	<button class="button button-clear button-icon ion-images"></button>
+        <button class="button button-clear button-icon ion-android-list"></button>
+        <button class="button button-clear button-icon ion-location"></button>
+    </div>
+    <!--ion-footer-bar style="    background: #252424">
+      <button ng-click="cierraModal()" style="margin-right: 0.5vh;background: #ACACAC;">{{idioma.General[2]}}</button> 
+    </ion-footer-bar-->
+  </ion-modal-view>

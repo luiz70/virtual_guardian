@@ -111,7 +111,7 @@ angular.module('starter.controllers')
 				});
 				else{
 					Message.showLoading($rootScope.idioma.Registro[34])
-					$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/finalizar', data: {Codigo:$scope.nuevoUsuario.Codigo,Correo:$scope.nuevoUsuario.Correo}})
+					$http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/registro/finalizar', data: {Codigo:$scope.nuevoUsuario.Codigo,Correo:$scope.nuevoUsuario.Correo}})
 					.success(function(data){
 						Message.hideLoading();
 						
@@ -124,11 +124,11 @@ angular.module('starter.controllers')
 								Memory.set("Login",Memory.get("Registro"));
 								Memory.set("Registro",null);
 								$ionicViewSwitcher.nextDirection('forward');
-								$state.go('app.registro.final');
+								$scope.iniciaApp()
 							break;
 							case 2:
 								Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[36],function(){
-									$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/limpia', data: {Correo:$scope.nuevoUsuario.Correo}})
+									$http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/registro/limpia', data: {Correo:$scope.nuevoUsuario.Correo}})
 									Memory.set("Registro",null);
 									$scope.nuevoUsuario={
 										Correo:$scope.nuevoUsuario.Correo,
@@ -149,35 +149,35 @@ angular.module('starter.controllers')
 					})
 				}
 			break;
-			case "final":
-				var usr=Memory.get("Login");
-				Message.showLoading($rootScope.idioma.Login[8]);
-				Usuario.login({Correo:usr.Correo,Contrasena:usr.Contrasena})
-				.success(function(data){
-					Memory.set("Login",null);
-					if (data.error){
-						Message.hideLoading();
-						Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.Registro[37],function(){
-							$ionicViewSwitcher.nextDirection('back');
-							$state.go('app.login')
-						});
-					}else{
-						$rootScope.Usuario=data;
-						$timeout(function(){
-							Message.hideLoading();
-							$ionicViewSwitcher.nextDirection('forward');
-							$state.go('app.home.mapa');
-						},500)
-					}
-					
-				})
-				.error(function(){
-					Message.hideLoading();
-					
-				})
-				
-			break;
 		}
+	}
+	$scope.iniciaApp=function(){
+		
+		var usr=Memory.get("Login");
+		Message.showLoading($rootScope.idioma.Login[8]);
+		Memory.clean();
+		Usuario.login({Correo:usr.Correo,Contrasena:usr.Contrasena})
+		.success(function(data){
+			Memory.set("Login",null);
+			if (data.error){
+				Message.hideLoading();
+				Message.alert($rootScope.idioma.Login[1],$rootScope.idioma.Registro[37],function(){
+					$ionicViewSwitcher.nextDirection('back');
+					$state.go('app.login')
+				});
+			}else{
+				$rootScope.Usuario=data;
+				$timeout(function(){
+					Message.hideLoading();
+					$ionicViewSwitcher.nextDirection('forward');
+					$state.go('app.home.mapa');
+				},500)
+			}
+					
+		})
+		.error(function(){
+			Message.hideLoading();
+		})
 	}
 	//FUNCTION QUE SE EJECUTA AL DAR ENTER EN TECLADO
 	$scope.enter=function(event,field){
@@ -202,7 +202,7 @@ angular.module('starter.controllers')
 	}
 	//FUNCION QUE SE EJECUTA AL DAR CLICK EN REGRESAR O CANCELAR Y ENVIA A LA PANTALLA DE LOGIN, ADICIONAL BORRA LA MEMORIA DEL REGISTRO
 	$scope.atras=function(){
-		$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/limpia', data: {Correo:$scope.nuevoUsuario.Correo}})
+		$http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/registro/limpia', data: {Correo:$scope.nuevoUsuario.Correo}})
 		Memory.set("Registro",null);
 		$ionicViewSwitcher.nextDirection('back');
 		$state.go('app.login')
@@ -210,9 +210,9 @@ angular.module('starter.controllers')
 	//FUNCTION QUE SE EJECUTA CUANDO EL PRIMER PASO DEL REGISTRO SE REALIZA CORRECTAMENTE
 	$scope.registra=function(promo){
 		var promocion=promo || null;
-		if(promocion.Id)$scope.nuevoUsuario.IdPromocion=promocion.Id;
+		if(promocion && promocion.Id)$scope.nuevoUsuario.IdPromocion=promocion.Id;
 		Message.showLoading($rootScope.idioma.Registro[33])
-		$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro', data: $scope.nuevoUsuario})
+		$http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/registro', data: $scope.nuevoUsuario})
 	
 		.success(function(data){
 			Message.hideLoading();
@@ -249,12 +249,12 @@ angular.module('starter.controllers')
 	//FUNCION QUE ENVIA EL CORREO DE CONFIRMACION
 	$scope.reeviarCorreo=function(){
 		Message.showLoading("")
-		$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/reenvio', data: {Correo:$scope.nuevoUsuario.Correo}})
+		$http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/registro/reenvio', data: {Correo:$scope.nuevoUsuario.Correo}})
 		.success(function(data){
 			Message.hideLoading()
 			if(!data.error) Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[19],function(){})
 			else Message.alert($rootScope.idioma.Registro[1],$rootScope.idioma.Registro[36],function(){
-				$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/registro/limpia', data: {Correo:$scope.nuevoUsuario.Correo}})
+				$http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/registro/limpia', data: {Correo:$scope.nuevoUsuario.Correo}})
 				Memory.set("Registro",null);
 				$scope.nuevoUsuario={
 					Correo:$scope.nuevoUsuario.Correo,
@@ -305,7 +305,7 @@ angular.module('starter.controllers')
 					})
 		else{
 			Message.showLoading("");
-			$http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/recuperacion', data: $scope.recuperar})
+			$http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/recuperacion', data: $scope.recuperar})
 			//$http.post("https://www.virtual-guardian.com/virtual/recuperacion",$scope.recuperar)
 		.success(function(data){
 			Message.hideLoading()

@@ -118,6 +118,7 @@ angular.module('starter.services')
 			}
 		},500)*/
 	}
+	
 	document.addEventListener("pause", function(){
 		navigator.geolocation.clearWatch(positionId);
 		
@@ -140,7 +141,7 @@ angular.module('starter.services')
 			
 			if($rootScope.radio){
 				$rootScope.radio.center=$rootScope.ubicacion.position;
-				$timeout(function(){$rootScope.radio.center=$rootScope.ubicacion.position;},500)
+				$timeout(function(){$rootScope.radio.center=$rootScope.ubicacion.position;},500)			
 			}
 			//centra el mapa en la nueva ubicación
 			if($rootScope.ubicacion.centrar){

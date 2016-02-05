@@ -1,0 +1,182 @@
+@charset "utf-8";
+/* NORMAL*/
+.registro-vista ion-nav-view ion-view ion-content{
+	padding:1vh 3vh !important;
+}
+.logo-registro{
+	position: relative;
+    float: left;
+    width: 100%;
+    height: 14vh;
+    text-align: center;
+    margin-top: 1vh;
+}
+.logo-registro>img{
+	height:100%;
+}
+.registro-vista ion-nav-view{
+	background-color: #242424 !important;
+    position: relative;
+    float: left;
+    height: 75vh;
+}
+/*****DATOS****/
+
+.registro-vista ion-nav-view ion-view h1, .recuperar-vista ion-content h1{
+	position: relative;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    color: #ECECEC;
+    line-height: 3.5vh;
+	font-weight:300;
+    font-size: 3vh;
+	margin-bottom: 0px !important;
+}
+.registro-vista ion-nav-view ion-view input, .recuperar-vista ion-content input{
+	position: relative;
+    float: left;
+    width: 100%;
+    font-size: 2.8vh !important;
+    height: auto !important;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ECECEC !important;
+    padding: 1vh 2vh !important;
+    line-height: initial !important;
+    margin-top: 2vh;
+	border-radius: 5px !important;
+	margin-bottom: 0px;
+}
+
+.registro-vista ion-nav-view ion-view h2{
+	position: relative;
+    float: left;
+    width: 100%;
+    text-align: center;
+    color: #ECECEC;
+    font-size: 2.5vh;
+    line-height: 2.7vh;
+    padding-top: 2vh;
+    border-top: solid 1px #4E4E4E;
+	margin-top: 2vh;
+    margin-bottom: 0px;
+	font-weight: 200;
+}
+.registro-vista ion-nav-view ion-view button{
+	width: 100%;
+    margin-top: 2vh;
+    background: none;
+    color: #868686;
+    font-size: 3vh;
+	margin-bottom:2vh;
+}
+/***CODIGO***/
+.registro-codigo input{
+	width: 40% !important;
+    margin-left: 30%;
+	margin-top:6vh !important;
+	text-transform:uppercase;
+	text-align:center;
+	margin-bottom:3vh !important;
+}
+/****FINAL***/
+.registro-final .logo{
+	height: 23vh;
+    text-align: center;
+	margin-top: 0vh;
+}
+.registro-final .logo>img{
+	height: 100%;
+}
+.registro-final h3{
+	color:#fff;
+	font-size: 3.5vh;
+	    margin-top: 10vh;
+	margin-bottom:3vh;
+}
+.registro-final h1{
+	margin-top:3vh;
+	opacity: 0.6;
+}
+/*****CONTRASEÑA******/
+.recuperar-vista ion-content{
+    text-align: center;
+}
+.recuperar-vista ion-content button{
+	width: 100%;
+    margin-top: 3vh;
+    background: none;
+    color: #868686;
+    font-size: 3vh;
+    margin-bottom: 2vh;
+}
+.recuperar-vista ion-content input{
+	margin-top:6vh;
+}
+
+/* LANDSCAPE*/
+@media (orientation: landscape) {
+	.registro-vista ion-nav-view ion-view ion-content{
+		padding:1vw 3vw !important;
+	}
+	.logo-registro {
+		height: 10vw;
+    	margin-top: 1vw;
+	}
+	.registro-vista ion-nav-view{
+		height: 64vh;
+	}
+	/*****DATOS****/
+	
+	.registro-vista ion-nav-view ion-view h1, .recuperar-vista ion-content h1{
+		line-height: 3vw;
+    	font-size: 3vw;
+		margin-top: 0px !important;
+	}
+	.registro-vista ion-nav-view ion-view input, .recuperar-vista ion-content input{
+		font-size: 2.8vw !important;
+		padding: 1vw 2vw !important;
+		margin-top: 2vw;
+		
+	}
+	.registro-vista ion-nav-view ion-view h2{
+		font-size: 2.2vw;
+		line-height: 2.5vw;
+		padding-top: 2vw;
+		margin-top:2vw;
+	}
+	.registro-vista ion-nav-view ion-view button{
+		margin-top: 2vw;
+    	font-size: 2.5vw;
+		margin-bottom:2vw;
+	}
+	/****CODIGO****/
+	.registro-codigo input{
+		margin-top:4vw !important;
+		margin-bottom:1vw !important;
+	}
+	/****FINAL****/
+	.registro-logo-container{
+		height: calc( 100vh - 30vw);
+   		margin-top: -16px;
+	}
+	/*****CONTRASEÑA******/
+	.recuperar-vista ion-content button{
+		margin-top: 1vw;
+		font-size: 3vw;
+		margin-bottom: 0vw;
+	}
+	.recuperar-vista ion-content input{
+		margin-top:3vw;
+		width:50%;
+		margin-left:25%;
+	}
+}
+/* TABLET PRTRAIT*/
+@media only screen and (min-width : 768px) and (orientation : portrait) {
+	
+}
+/* TABLET LANDSCAPE*/
+@media only screen and (min-width : 1000px) and (orientation : landscape){
+	
+}

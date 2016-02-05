@@ -1,6 +1,6 @@
 <ion-view  class="view-seccion" hide-nav-bar="false" hide-back-button="true" can-swipe-back="false"> 
 	<ion-content delegate-handle="contactos" padding="false" >
-		<ion-refresher   on-refresh="loadContactos(0)" spinner="ripple" pulling-icon="ion-refresh"></ion-refresher>
+		<ion-refresher   on-refresh="loadContactos(0)" spinner="ripple" pulling-icon="ion-android-refresh"></ion-refresher>
         <ion-list class="lista-contactos">
            	<ion-item class="list-mensaje" ng-show="!cargandoContactos && contactos.length==0 ">
                	{{idioma.Contactos[17]}}

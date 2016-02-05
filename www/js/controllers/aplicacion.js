@@ -1,5 +1,6 @@
 angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 .controller('Aplicacion', function($scope,$rootScope,Memory,$state,$ionicViewSwitcher,$http,$cordovaDevice,$cordovaNetwork,$ionicHistory,Message,$timeout,Usuario,socket) {
+	$rootScope.port=88;//3200
 	//Memory.clean();
 	//Variable que controla el estado de conexion a internet
 	try{

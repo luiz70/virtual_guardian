@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.factory('Verificacion',function($http){
+.factory('Verificacion',function($http,$rootScope){
 	var re = /[0-9]/;
 	var re2 = /[a-z]/;
 	var re3 = /[A-Z]/;
@@ -16,7 +16,7 @@ angular.module('starter.services')
     		return remail.test(email);
 		},
 		promocion:function(promo){
-			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:3200/promocion', data: {Promocion:promo}})
+			return $http({method: 'Post', url: 'https://www.virtual-guardian.com:'+$rootScope.port+'/promocion', data: {Promocion:promo}})
 		}
 	}
 })

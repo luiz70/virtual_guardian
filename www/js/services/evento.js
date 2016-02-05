@@ -99,6 +99,7 @@ angular.module('starter.services')
                 return false;
             }else 
 			if(!$rootScope.radio.activo) {
+				
 				return true;
 			}else {
 				var pos=$rootScope.ubicacion.position;
@@ -119,7 +120,7 @@ angular.module('starter.services')
 		load:function(id){
 			load(id);
 		},
-		review:function(data){
+		revisa:function(data){
 			return revisa(data);
 			
 		},

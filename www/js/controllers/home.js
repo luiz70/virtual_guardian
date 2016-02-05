@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion,Contactos,Llamada,Mapa,sql,Usuario,Push,uiGmapGoogleMapApiManualLoader,uiGmapGoogleMapApi) {
+.controller('Home', function($scope,$timeout,$ionicSideMenuDelegate,$state,socket,$rootScope,Memory,$ionicViewSwitcher,Usuario,Notificacion,Contactos,Reporte,Llamada,Mapa,sql,Usuario,Push,uiGmapGoogleMapApiManualLoader,uiGmapGoogleMapApi) {
 	$scope.$on('$ionicView.afterEnter',function(){
 		if(Memory.get("Usuario"))
 			$timeout(function() {
@@ -54,9 +54,11 @@ angular.module('starter.controllers')
 			Usuario.refresh();
 			Contactos.inicializa()
 			Notificacion.inicializa()
+			Reporte.inicializa()
 		}
 		Contactos.inicializa()
 		Notificacion.inicializa()
+		Reporte.inicializa()
 		socket.getSocket().on("connect",$scope.conected)
 	}
 	$scope.conected=function(){
@@ -67,6 +69,7 @@ angular.module('starter.controllers')
 		sql.update();
 		Contactos.inicializa()
 		Notificacion.inicializa()
+		Reporte.inicializa()
 	}
 	
 	$scope.conectado=$rootScope.$on("socket.connect",$scope.conectedonce)

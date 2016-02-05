@@ -61,9 +61,18 @@ angular.module('starter.services')
 	},true);
 	
 	var revisashowHide=function(){
-		for(var i=0;i<$rootScope.eventos.length;i++){
+		//for(var i=0;i<$rootScope.eventosMap.length;i++)
+			//	if(Evento.revisa($rootScope.eventosMap[i].options.data))
 			//$rootScope.eventos[i].options.visible=Evento.review($rootScope.eventos[i]);
-		}
+		
+	}
+	var visibles=function(){
+		for(var i=0;i<$rootScope.eventosMap.length;i++)
+				if(!Evento.revisa($rootScope.eventosMap[i].options.data)){
+					
+				}
+			//$rootScope.eventos[i].options.visible=Evento.review($rootScope.eventos[i]);
+		
 	}
     var hideAll=function(){
 		
@@ -85,8 +94,8 @@ angular.module('starter.services')
 			getEventosServer();
 		},
 		showHide:function(){
-			Evento.hide(false);
-			//revisashowHide();
+			//Evento.hide(false);
+			revisashowHide();
 		},
 		hideAll:function(){
         	 Evento.hide(true);

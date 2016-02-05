@@ -50,9 +50,9 @@
          	<div class="mapa-descripcion-evento-titulo" ng-hide="cargandoInfo || error" >{{selectedMarker.data.name}}</div>
             <div class="mapa-descripcion-evento-subtitulo" ng-hide="cargandoInfo || error">{{selectedMarker.data.formatted_address}}</div>
             </div>
-            <div class="mapa-descripcion-evento-rating" style="margin-bottom:0px; border-bottom:none;padding:0px">
-            	<p style="margin-bottom: 1vh;color: #036777; font-size:4vh">{{idioma.Info[5]}}</p>
-                <h style="color: #047385;">{{selectedMarker.data.escala | escalaV}}</h> / <h>10</h>
+            <div class="mapa-descripcion-evento-rating">
+            	<p style="margin-bottom: 1vh;color: #036777; font-size:4vh"><i class="icon ion-record" style="margin-right:1vh;color:{{selectedMarker.data.escala | escalaVColor}}"></i>{{idioma.Info[5]}}</p>
+                <h style="color: #047385;">{{selectedMarker.data.escala | escalaV}}</h> <h></h>
             </div>
             </div>
             <div class="mapa-descripcion-evento-rating uber" style="margin-bottom:0px; border-bottom:none;padding:0px">
@@ -82,7 +82,8 @@
               <img style="-webkit-mask-image: url('{{resultado.icon}}');" >
                 <h2>{{resultado.name}}</h2>
      			 <p>{{resultado.formatted_address}}</p>
-                <div ng-show="resultado.escala" ><i class="icon ion-android-star-outline"></i>{{resultado.escala | escalaV}}</div>
+                <div ng-show="resultado.escala" ><i class="icon ion-record" style="color:{{resultado.escala | escalaVColor}}"></i>{{resultado.escala | escalaV}}</div>
+                <div  ng-show="!resultado.escala"><ion-spinner icon="ripple"></ion-spinner></div>
               </ion-item>
             </ion-list>
        	</ion-content>

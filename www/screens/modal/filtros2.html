@@ -1,6 +1,6 @@
-<ion-modal-view class="modal-view" ng-controller="Filtros">
-    <!--ion-header-bar>
-    <div class="modal-view-filtros-switch">
+<ion-modal-view class="modal-view-filtros" ng-controller="Filtros">
+    <ion-header-bar>
+    <div>
     	<label class="toggle toggle-mapa-pie">
 			<input type="checkbox" ng-model="filtros.activos" >
 			<div class="track">
@@ -9,22 +9,8 @@
 		</label>
  	</div>
       <h1 class="title">{{idioma.Filtros[1]}}</h1>
-    </ion-header-bar-->
-    <ion-header-bar style="">
-     <div class="modal-view-filtros-switch">
-    	<label class="toggle toggle-mapa-pie">
-			<input type="checkbox" ng-model="filtros.activos" >
-			<div class="track">
-				<div class="handle"></div>
-			</div>
-		</label>
- 	</div>
-  	<h1 class="title show">{{idioma.Filtros[1]}}</h1>
-  	<button class="button button-clear pull-right button-header" style="float:right;top: 0px;right: 0px;" ng-click="guardaFiltros()" >OK</button>
-      <!--h1 class="title auto-titulo">{{idioma.Reportes[1]}}</h1-->
     </ion-header-bar>
-    <ion-content has-bouncing="false" style="background: #393939;">
-    <div class="filtros-contenido">
+    <ion-content has-bouncing="false">
       <button class="filtros-tabs-fecha {{(!filtros.tipo)?'activo':''}}" ng-click="cambiaTipoFecha(0)">{{idioma.Filtros[2]}}</button>
       <button class="filtros-tabs-fecha {{(filtros.tipo)?'activo':''}}" ng-click="cambiaTipoFecha(1)">{{idioma.Filtros[3]}}</button>
       <div class="filtros-fechas-contenedor " >
@@ -67,10 +53,10 @@
         	<img ng-src="img/iconos/mapa/marcadores/{{asunto.Id}}.png">
             <p>{{asunto.Nombre}}</p>
         </div>
-        <div class="filtros-cover " ng-hide="filtros.activos"></div>
-        </div>
         
     </ion-content>
-    
-    
+    <div class="filtros-cover " ng-hide="filtros.activos"></div>
+    <ion-footer-bar>
+      <button ng-click="guardaFiltros()">{{idioma.General[2]}}</button>
+    </ion-footer-bar>
   </ion-modal-view>

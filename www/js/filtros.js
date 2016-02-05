@@ -10,6 +10,63 @@ angular.module('starter')
 	   }
 	}
 })
+.filter('FHReporte', function () {
+	return function (input,scope) {
+	   if(input){
+		   var f1=parseInt(input.Fecha)*1000
+		   var f2=new Date();
+		   f2=f2.getTime();
+		   var val=Math.floor((f2-f1)/60000)
+		   if(val==0){
+			   return "ahora" 
+		   }else if(val<60){
+			   return scope.idioma.Reportes[9]+val+scope.idioma.Reportes[10]
+		   }else {
+			   var d=Math.floor(val/60);
+			   return scope.idioma.Reportes[9]+d+scope.idioma.Reportes[11]
+		   }
+		   /*var date=new Date(parseInt(input.Fecha)*1000);
+		   var d,m,h,mi
+		   d=(date.getDate()<10)?("0"+date.getDate()):date.getDate()
+		   m=((date.getMonth()+1)<10)?("0"+(date.getMonth()+1)):(date.getMonth()+1)
+		   h=(date.getHours()<10)?("0"+date.getHours()):date.getHours()
+		   mi=(date.getMinutes()<10)?("0"+date.getMinutes()):date.getMinutes()
+		   return ""+d+"-"+m+"-"+date.getFullYear()+" "+h+":"+mi;*/
+	   }
+	}
+})
+.filter('StaticMap', function () {
+	return function (input) {
+	   if(input){
+		   
+		   return "https://maps.googleapis.com/maps/api/staticmap?center="+input.Latitud+","+input.Longitud+"&zoom=16&size="+window.innerWidth+"x"+Math.round(window.innerHeight*0.3)+"&format=png&maptype=roadmap&language=es&markers=icon:https://goo.gl/gWqqNE%7C"+input.Latitud+","+input.Longitud+"&key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs";
+	   }
+	}
+})
+
+.filter('tituloReporte', function () {
+	return function (input,scope) {
+		if(input){
+			return scope.idioma.Asuntos[input.Asunto]+scope.idioma.Notificaciones[1]+scope.idioma.Estados[input.Estado]
+		}
+	}
+})
+.filter('subtituloReporte', function () {
+	return function (input,scope) {
+	   if(input){
+		   var palabras=scope.idioma.Palabras
+		   var direc=[]
+		   if((""+input.Calles).trim()!="")direc.push(input.Calles)
+		   if((""+input.Colonia).trim()!="")direc.push(input.Colonia)
+		   if((""+input.Municipio).trim()!="")direc.push(input.Municipio)
+		   if(parseInt(input.Estado)>0)direc.push(scope.idioma.Estados[parseInt(input.Estado)])
+		   var direc=direc.join(", ").toLowerCase().split(" ");
+		   for(var i=0;i<direc.length;i++)
+		   		if(palabras.indexOf(direc[i])<0)direc[i]=direc[i].substr(0,1).toUpperCase()+direc[i].substr(1).toLowerCase();
+			return direc.join(" ")
+	   }
+	}
+})
 .filter('tituloNotificacion', function () {
 	return function (input,scope) {
 		if(input){
@@ -139,7 +196,21 @@ return function (input,scope) {
 		   var escala=(input.Val*5)/input.Prom;
 		   if(escala>10)escala=10;
 		   if(escala<0) escala=0;
-		   return (10-escala).toFixed(1);
+		   return (escala).toFixed(1);
+	   }
+	}
+})
+.filter('escalaVColor', function () {
+	return function (input,bg) {
+	   if(input){
+		   if(!input.Prom)input.Prom=0;
+		   var escala=(input.Val*5)/input.Prom;
+		   if(escala>10)escala=10;
+		   if(escala<0) escala=0;
+		   if(escala<3.3)return "#059DB5";
+		   else if(escala>6.6)return "#BD1614";
+		   else return "#FDBE16; "+(bg?"color:#242424;":"");
+		   return (escala).toFixed(1);
 	   }
 	}
 })

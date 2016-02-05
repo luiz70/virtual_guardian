@@ -1,0 +1,51 @@
+ion-header-bar > .title{
+	display:none !important;
+}
+ion-side-menu{
+	width:80vw;
+}
+.location.loading{
+    -webkit-animation-name: location-intermitent;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    animation-name:location-intermitent;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+.location.loading > img{
+    background:#E1E1E1;
+}
+
+@-webkit-keyframes location-intermitent {
+    0%   {background-color:#059DB5}
+    50%  {background-color:#005B6E}
+	100%  {background-color:#059DB5}
+}
+
+@keyframes location-intermitent {
+    0%   {background-color:#059DB5}
+    50%  {background-color:#005B6E}
+	100%  {background-color:#059DB5}
+}
+.icon-directorio{
+	    
+    -webkit-mask-size: 90% !important;
+    background: #C5C5C5 !important;
+    -webkit-mask-repeat: no-repeat !important;
+}
+
+.letra-periodo{
+	position: absolute;
+    top: 0px;
+    font-size: 3vh !important;
+    font-weight: 800;
+    text-align: center;
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+    height: 3.5vh;
+    margin: auto;
+    color: rgba(0, 0, 0, 0.82);
+}
+.modal-view-reportes{
+}

@@ -122,7 +122,13 @@ angular.module('starter.controllers')
 	}
 	var getEscalaVirtual=function(data){
 		var d=_.findWhere($scope.resultados,{id:data.id})
-		if(d)d.escala=data.v
+		if(d){
+			if(!$rootScope.$$phase) {
+                    $rootScope.$apply(function(){
+						d.escala=data.v
+					})
+			}else d.escala=data.v;
+		}
 	}
 	uiGmapGoogleMapApi.then(function(){
 		//declara que el mapa se cargo
