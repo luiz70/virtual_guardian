@@ -29,6 +29,12 @@ ion-modal-view.reportes ion-content .mapa-contenedor{
     height: 30vh;
 	padding:2vh;
 }
+ion-modal-view.reportes ion-content .mapa-contenedor>textarea{
+	width:100%;
+	height:100%;
+	background:none;
+	color:#fff;
+}
 ion-modal-view.reportes .barra-opciones{
 	    position: fixed;
     width: 100vw;
