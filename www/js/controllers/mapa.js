@@ -29,6 +29,12 @@ angular.module('starter.controllers')
             google.maps.event.trigger($rootScope.map.getGMap(), 'resize');
         }catch(err){}
 	})
+	window.addEventListener("orientationchange", function(){
+    	try{
+            google.maps.event.trigger($rootScope.map.getGMap(), 'resize');
+        }catch(err){}
+		alert(2);
+	});
 	//Message.showModal("templates/modal/filtros.html");
 	$rootScope.$watch("socketState",function (newValue) {
     	$scope.socketState=$rootScope.socketState;
