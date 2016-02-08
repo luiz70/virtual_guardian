@@ -189,11 +189,11 @@ ion-view .reporte-titulo{
     left: 0px;
     border-radius: 0px;
     width: 100%;
-    height: 25vh;
+    height: 16vh;
     max-width: 100vw;
     max-height: 100vh;
     background-size: cover;
-    background-position: bottom;
+    background-position: center;
 	z-index: -1;
 }
 .reporte-item-contenido > div.mapa-estatico:after{

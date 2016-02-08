@@ -51,7 +51,6 @@ angular.module('starter.controllers')
 		
 	}
 	function getReportes(data){
-		console.log(data);
 		socket.getSocket().removeListener("getReportes",getReportes)
 		$timeout(function(){
 			$ionicScrollDelegate.resize()
