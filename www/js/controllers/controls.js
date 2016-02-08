@@ -52,14 +52,19 @@ angular.module('starter.controllers')
 			content:"<div class='letra-periodo'>{{$rootScope.Usuario.Periodo}}</div>",
 			onClick:function(){
 				var buttons=[]
-				if($rootScope.Usuario.Periodo!=7)buttons.push({text:$rootScope.idioma.Periodos[7],valor:7})
-				if($rootScope.Usuario.Periodo!=30)buttons.push({text:$rootScope.idioma.Periodos[30],valor:30})
-				if($rootScope.Usuario.Periodo!=180)buttons.push({text:$rootScope.idioma.Periodos[180],valor:180})
-				if($rootScope.Usuario.Periodo!=365)buttons.push({text:$rootScope.idioma.Periodos[365],valor:365})
+				buttons.push({text:$rootScope.idioma.Periodos[7],valor:7})
+				buttons.push({text:$rootScope.idioma.Periodos[30],valor:30})
+				buttons.push({text:$rootScope.idioma.Periodos[180],valor:180})
+				buttons.push({text:$rootScope.idioma.Periodos[365],valor:365})
 				
 				Message.showActionSheet($rootScope.idioma.Mapa[5],buttons,null,$rootScope.idioma.General[6],function(res,data){
 					$rootScope.eventosMap=[];
-					if(data)$rootScope.Usuario.Periodo=data.valor;
+					if(data){
+						$rootScope.Usuario.Periodo=data.valor;
+						if(socket.isConnected()){
+							socket.getSocket().emit("setPeriodo",$rootScope.Usuario.Periodo);
+						}
+					}
 				})
 			},
 		},

@@ -18,20 +18,32 @@ angular.module('starter')
 		   f2=f2.getTime();
 		   var val=Math.floor((f2-f1)/60000)
 		   if(val==0){
-			   return "ahora" 
+			   return scope.idioma.Reportes[15]; 
 		   }else if(val<60){
 			   return scope.idioma.Reportes[9]+val+scope.idioma.Reportes[10]
 		   }else {
 			   var d=Math.floor(val/60);
 			   return scope.idioma.Reportes[9]+d+scope.idioma.Reportes[11]
 		   }
-		   /*var date=new Date(parseInt(input.Fecha)*1000);
-		   var d,m,h,mi
-		   d=(date.getDate()<10)?("0"+date.getDate()):date.getDate()
-		   m=((date.getMonth()+1)<10)?("0"+(date.getMonth()+1)):(date.getMonth()+1)
-		   h=(date.getHours()<10)?("0"+date.getHours()):date.getHours()
-		   mi=(date.getMinutes()<10)?("0"+date.getMinutes()):date.getMinutes()
-		   return ""+d+"-"+m+"-"+date.getFullYear()+" "+h+":"+mi;*/
+	   }
+	}
+})
+.filter('FHReportar', function () {
+	return function (input,scope) {
+	   if(input){
+		   var f1=input.getTime();
+		   var f2=new Date();
+		   f2=f2.getTime();
+		   var val=Math.floor((f2-f1)/60000)
+		   console.log(val);
+		   if(val==0){
+			   return scope.idioma.Reportes[15]; 
+		   }else if(val<60){
+			   return scope.idioma.Reportes[9]+val+scope.idioma.Reportes[10]
+		   }else {
+			   var d=Math.floor(val/60);
+			   return scope.idioma.Reportes[9]+d+scope.idioma.Reportes[11]
+		   }
 	   }
 	}
 })
@@ -39,7 +51,7 @@ angular.module('starter')
 	return function (input) {
 	   if(input){
 		   
-		   return "https://maps.googleapis.com/maps/api/staticmap?center="+input.Latitud+","+input.Longitud+"&zoom=16&size="+window.innerWidth+"x"+Math.round(window.innerHeight*0.3)+"&format=png&maptype=roadmap&language=es&markers=icon:https://goo.gl/gWqqNE%7C"+input.Latitud+","+input.Longitud+"&key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs";
+		   return "https://maps.googleapis.com/maps/api/staticmap?center="+input.Latitud+","+input.Longitud+"&zoom=16&size="+window.innerWidth+"x"+Math.round(window.innerHeight*0.3)+"&format=png&maptype=roadmap&language=es&markers=icon:http://"+input.Icono+"%7C"+input.Latitud+","+input.Longitud+"&key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs";
 	   }
 	}
 })

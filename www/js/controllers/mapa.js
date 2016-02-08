@@ -27,13 +27,10 @@ angular.module('starter.controllers')
 	
 	$scope.$on('$ionicView.enter',function(){
 		try{
-			console.log($rootScope.map.getGMap())
             google.maps.event.trigger($rootScope.map.getGMap(), 'resize');
         }catch(err){}
 	})
-	window.addEventListener("orientationchange", function(){
-    	
-	});
+	
 	//Message.showModal("templates/modal/filtros.html");
 	$rootScope.$watch("socketState",function (newValue) {
     	$scope.socketState=$rootScope.socketState;

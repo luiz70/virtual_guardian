@@ -1,11 +1,12 @@
 angular.module('starter.controllers')
-.controller('Filtros', function($scope,$rootScope,Filtros,Message,Eventos) {
+.controller('Filtros', function($scope,$rootScope,Filtros,Message,Eventos,$timeout) {
 	
 	$scope.idioma=$rootScope.idioma
   	$scope.filtros=$rootScope.filtros
 	$scope.minDate=new Date(2010,6,3)
 	$scope.maxDate=new Date()
-	
+	//for(var i=0;i<$scope.filtros.estados.length;i++)
+	//$scope.filtros.estados[i].Selected=(true && $scope.filtros.estados[i].Selected)
 	$scope.guardaFiltros=function(){
 		
 		var estados=_.compact(_.map($rootScope.filtros.estados,function(v,i){if(v.Selected)return v.Id; else return null;}))
@@ -70,6 +71,13 @@ $scope.marcaTodo=function(val){
 	for(var i=0;i<$scope.filtros.estados.length;i++)
 	$scope.filtros.estados[i].Selected=val;
 }
+$timeout(function(){
+	var resp=JSON.parse(JSON.stringify($scope.filtros.estados));
+	document.getElementById("desmarca").click();
+	document.getElementById("marca").click();
+	for(var i=0;i<$scope.filtros.estados.length;i++)
+	$scope.filtros.estados[i].Selected=resp[i].Selected;
+},500)
 $scope.marcaTodoEventos=function(val){
 	for(var i=0;i<$scope.filtros.asuntos.length;i++)
 	$scope.filtros.asuntos[i].Selected=val;

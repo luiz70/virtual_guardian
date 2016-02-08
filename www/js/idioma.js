@@ -117,7 +117,7 @@ angular.module('starter.controllers')
 			3:"Dirección: ",
 			4:"Error al cargar la información",
 			5:"Escala Virtual",
-			6:"Viaja con Uber"
+			6:"Viaja con CityDrive"
 		},
 		Llamada:{
 			1:"llamada entrante",
@@ -202,7 +202,11 @@ angular.module('starter.controllers')
 			8:"Reportar como falso",
 			9:"Hace ",
 			10:" min",
-			11:" h"
+			11:" h",
+			12:"¿Qué sucedió?",
+			13:"¿Dónde sucedió?",
+			14:"¿Cuándo sucedió?",
+			15:"Ahora"
 		},
 		Auto:{
 			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto.",

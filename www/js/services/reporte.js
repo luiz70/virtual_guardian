@@ -31,7 +31,7 @@ angular.module('starter.services')
 	}
 	var getReportes=function(res){
 		switch(res.Tipo){
-			case 0: $rootScope.reportes=_.uniq(_.union(res.Data,$rootScope.reportes),function(item) { return item.IdReporte;}) 
+			case 0: $rootScope.reportes=res.Data;//$rootScope.reportes=_.uniq(_.union(res.Data,$rootScope.reportes),function(item) { return item.IdReporte;}) 
 			break;
 			case 1:$rootScope.reportes=_.uniq(_.union($rootScope.reportes,res.Data),function(item) { return item.IdReporte;}) 
 			break;
@@ -40,7 +40,7 @@ angular.module('starter.services')
 	var actualiza=function(val){
 		switch(val){
 			case 0: 
-			socket.getSocket().emit("getReportes",{Val:($rootScope.reportes.length>0)?$rootScope.reportes[0].IdReporte:0 ,Tipo:0,Limit:15});
+			socket.getSocket().emit("getReportes",{Val:0 ,Tipo:0,Limit:15});
 			break;
 			case 1:
 			socket.getSocket().emit("getReportes",{Val:($rootScope.reportes.length>0)?$rootScope.reportes[$rootScope.reportes.length-1].IdReporte:0 ,Tipo:1,Limit:5});
