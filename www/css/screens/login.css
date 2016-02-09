@@ -84,10 +84,10 @@ label.item-input{
 .login-footer{
 	width: 100vw;
     position: absolute;
-    bottom: 1vw;
+    bottom: 1vh;
     left: 0px;
     height: auto;
-    font-weight:100 !important;
+    font-weight: 100 !important;
 }
 .login-footer > button{
 	min-height: 0px;
@@ -95,18 +95,22 @@ label.item-input{
     top: 0px;
     right: 0px;
     text-align: center;
-    background: #3E3E3E !important;
+    background: rgba(232, 232, 232, 0.08) !important;
     float: left;
     clear: initial;
     position: relative;
-    border-radius: 1vw !important;
-    margin: 1vw !important;
+    border-radius: 0px !important;
+    margin: 0px !important;
     margin-bottom: 0px !important;
-    color: #D5D5D5 !important;
+    margin-top: 1vh !important;
+    color: #ADADAD !important;
     line-height: initial;
-    width: 98vw;
+    width: 100%;
     font-size: 2.7vh;
-    border-top: solid 0.5vh #505050 !important;
+    /* border-top: solid 0.5vh #505050 !important; */
+    box-shadow: none;
+    left: 0px;
+
 }
 /****IPHONE PEQUEÑOS***/
 @media (max-width: 320px){
@@ -207,14 +211,17 @@ label.item-input{
 		padding-right:1vw !important;
 	}
 	.login-footer > button{
-		margin: 1vw !important;
-		width: 48vw;
-		font-size: 2.5vw;
-		height: 5vw !important;
-		border-top: solid 0.5vw #505050 !important;
+		margin: 0px !important;
+    width: 50%;
+    font-size: 2.5vw;
+    height: 5vw !important;
+    border-left: 1vh solid #242424 !important;
+	}
+	.login-footer > button:first-of-type{
+		border-left:none !important;
 	}
 	.buttons-footer{
-		bottom:0px;
+		    bottom: 0px;
 	}
 }
 /* TABLET PRTRAIT*/

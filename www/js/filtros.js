@@ -51,7 +51,7 @@ angular.module('starter')
 	return function (input) {
 	   if(input){
 		   
-		   return "https://maps.googleapis.com/maps/api/staticmap?center="+input.Latitud+","+input.Longitud+"&zoom=16&size=640x640&scale=2&format=png&maptype=roadmap&language=es&markers=icon:http://"+input.Icono+"%7C"+input.Latitud+","+input.Longitud+"&key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs";
+		   return "https://maps.googleapis.com/maps/api/staticmap?center="+input.Latitud+","+input.Longitud+"&zoom=16&size=640x640&scale=2&format=png&maptype=roadmap&language=es&markers=icon:http://www."+input.Icono+"%7C"+input.Latitud+","+input.Longitud+"&key=AIzaSyCmZHupxphffFq38UTwBiVB-dbAZ736hLs";
 	   }
 	}
 })

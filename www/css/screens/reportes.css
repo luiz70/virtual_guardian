@@ -250,6 +250,9 @@ ion-view .reporte-titulo{
 .lista-reportes > div {
 	padding-bottom: 10vh;
 }
+.popup-container.select-hora>.popup{
+	    border-radius: 0px;
+}
 /* LANDSCAPE*/
 @media (orientation: landscape) {
 	.reportes-agrega-reporte{
@@ -268,10 +271,8 @@ ion-view .reporte-titulo {
     font-size: 2.5vw;
 }
 .reporte-item-contenido > div.mapa-estatico {
-    height: 25vw;
-    background-size: cover;
-    background-position: bottom;
-    z-index: -1;
+    
+    height: 16vw;
 }
 .reporte-item-contenido > img {
 	

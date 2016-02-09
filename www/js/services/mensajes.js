@@ -4,6 +4,7 @@ angular.module('starter.services')
 	var alertPopUp=null;
 	var confirmPopUp=null;
 	var promptPopUp=null
+	var timePopUp=null;
 	var options=null;
 	var modal=null;
 	return {
@@ -50,6 +51,33 @@ angular.module('starter.services')
 			promptPopUp.then(function(res) {
 				if(!_.isUndefined(res))funcion(res);
  			});
+		},
+		time:function(){
+			
+			if(timePopUp)timePopUp.close();
+			timePopUp=$ionicPopup.show({
+  				title: '¿cuando sucedio?', // String. The title of the popup.
+				 cssClass: 'select-hora',
+				templateUrl: 'screens/modal/time.html', // String (optional). The URL of an html template to place in the popup   body.
+				scope: $rootScope, // Scope (optional). A scope to link to the popup content.
+			  buttons: [{ // Array[Object] (optional). Buttons to place in the popup footer.
+				text: 'Cancel',
+				type: 'button-default',
+				onTap: function(e) {
+					timePopUp.close();
+				  // e.preventDefault() will stop the popup from closing when tapped.
+				  e.preventDefault();
+				}
+			  }, {
+				text: 'OK',
+				type: 'button-positive',
+				onTap: function(e) {
+					timePopUp.close();
+				  // Returning a value will cause the promise to resolve with the given value.
+				  //return scope.data.response;
+				}
+			  }]
+			})
 		},
 		confirm:function(titulo,texto,funcion,btn1,btn2,closable,callback){
 			if(confirmPopUp)confirmPopUp.close();
