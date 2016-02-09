@@ -26,6 +26,21 @@
     <feature name="YoikScreenOrientation">
         <param name="android-package" value="net.yoik.cordova.plugins.screenorientation.YoikScreenOrientation" />
     </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    </feature>
+    <feature name="Globalization">
+        <param name="android-package" value="org.apache.cordova.globalization.Globalization" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
+    <feature name="SQLitePlugin">
+        <param name="android-package" value="io.liteglue.SQLitePlugin" />
+    </feature>
+    <feature name="Toast">
+        <param name="android-package" value="nl.xservices.plugins.Toast" />
+    </feature>
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
@@ -53,6 +68,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <access origin="*.virtual-guardian.com" subdomains="true" />
     <preference name="target-device" value="universal" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
@@ -65,7 +81,7 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="KeyboardShrinksView" value="false" />
-    <preference name="StatusBarBackgroundColor" value="#E6E6E6" />
+    <preference name="StatusBarBackgroundColor" value="#151515" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="cloud" />
@@ -81,19 +97,4 @@
     <preference name="android-windowSoftInputMode" value="stateHidden|adjustPan" />
     <preference name="Fullscreen" value="false" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
-    <feature name="Geolocation">
-        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
-    </feature>
-    <feature name="Globalization">
-        <param name="android-package" value="org.apache.cordova.globalization.Globalization" />
-    </feature>
-    <feature name="NetworkStatus">
-        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
-    </feature>
-    <feature name="SQLitePlugin">
-        <param name="android-package" value="io.liteglue.SQLitePlugin" />
-    </feature>
-    <feature name="Toast">
-        <param name="android-package" value="nl.xservices.plugins.Toast" />
-    </feature>
 </widget>

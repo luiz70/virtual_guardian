@@ -267,7 +267,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 {
     // default, lightContent, blackTranslucent, blackOpaque
     NSString* lcStatusBarStyle = [statusBarStyle lowercaseString];
-
+    
     if ([lcStatusBarStyle isEqualToString:@"default"]) {
         [self styleDefault:nil];
     } else if ([lcStatusBarStyle isEqualToString:@"lightcontent"]) {
@@ -277,6 +277,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     } else if ([lcStatusBarStyle isEqualToString:@"blackopaque"]) {
         [self styleBlackOpaque:nil];
     }
+    
 }
 
 - (void) styleDefault:(CDVInvokedUrlCommand*)command
@@ -287,6 +288,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 - (void) styleLightContent:(CDVInvokedUrlCommand*)command
 {
     [self setStyleForStatusBar:UIStatusBarStyleLightContent];
+    
 }
 
 - (void) styleBlackTranslucent:(CDVInvokedUrlCommand*)command

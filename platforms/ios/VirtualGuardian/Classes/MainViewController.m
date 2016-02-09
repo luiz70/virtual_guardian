@@ -73,6 +73,7 @@
 
 - (void)viewDidLoad
 {
+    [self setNeedsStatusBarAppearanceUpdate];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
@@ -108,7 +109,10 @@
 
     return [super webViewDidFinishLoad:theWebView];
 }
-
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 /* Comment out the block below to over-ride */
 
 /*

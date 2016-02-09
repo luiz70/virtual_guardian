@@ -91,7 +91,7 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="KeyboardShrinksView" value="false" />
-    <preference name="StatusBarBackgroundColor" value="#E6E6E6" />
+    <preference name="StatusBarBackgroundColor" value="#151515" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="cloud" />
