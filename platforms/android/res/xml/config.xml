@@ -97,4 +97,7 @@
     <preference name="android-windowSoftInputMode" value="stateHidden|adjustPan" />
     <preference name="Fullscreen" value="false" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
+    <feature name="PushPlugin">
+        <param name="android-package" value="com.plugin.gcm.PushPlugin" />
+    </feature>
 </widget>
