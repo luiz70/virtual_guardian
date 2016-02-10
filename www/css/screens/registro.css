@@ -113,6 +113,9 @@
 .recuperar-vista ion-content input{
 	margin-top:6vh;
 }
+#recuperar_correo{
+	margin-bottom: 2vh;
+}
 
 /* LANDSCAPE*/
 @media (orientation: landscape) {

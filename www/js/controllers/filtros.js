@@ -11,11 +11,11 @@ angular.module('starter.controllers')
 		
 		var estados=_.compact(_.map($rootScope.filtros.estados,function(v,i){if(v.Selected)return v.Id; else return null;}))
 		var asuntos=_.compact(_.map($rootScope.filtros.asuntos,function(v,i){if(v.Selected)return v.Id; else return null;}))
-		if(estados.length==0){
+		if($rootScope.filtros.activos && estados.length==0){
 			Message.alert($rootScope.idioma.Filtros[1],$rootScope.idioma.Filtros[11],function(){
 			
 			})
-		}else if(asuntos.length==0){
+		}else if($rootScope.filtros.activos && asuntos.length==0){
 			Message.alert($rootScope.idioma.Filtros[1],$rootScope.idioma.Filtros[12],function(){
 			
 			})

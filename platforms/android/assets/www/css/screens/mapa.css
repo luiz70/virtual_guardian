@@ -14,6 +14,7 @@
 .google-map img {
     max-width: none;
 }
+/*.animate-enter-mapa{height: 100vh; width:100vw}*/
 .boton-mapa-top-right{
 	margin-right: 0px;
     margin-top: 1vh;
@@ -643,7 +644,7 @@
 	
 }
 .auto-content{
-	height: 90vh;
+	height: 91vh;
 	background: #252424;
 }
 .auto-header{
@@ -803,6 +804,14 @@ ionic-datepicker{
     font-size: 2.5vh;
     color: rgb(212, 211, 211);
 }
+.mapa-descripcion-evento-rating>p{
+	margin-bottom: 1vh;
+	color: #036777; 
+	font-size:4vh;
+}
+.mapa-descripcion-evento-rating>p>i{
+margin-right:1vh;
+}
 .mapa-descripcion-evento-rating.uber>button{
 	padding: 1vh 7vh;
     background: #353535;
@@ -828,6 +837,18 @@ ionic-datepicker{
 	 text-align: right;
 	 opacity:0.8 !important;
 	right:1vh;
+}
+div.top10>button{
+top: 10vh !important;
+}
+.top6{
+	top: 6vh !important;
+}
+.filtros-tabs-fecha.border5303030{
+border-left:solid 0.5vh #303030 !important;    background: #353535;
+}
+.filtros-eventos-item.border5393939{
+	border-right:solid 0.5vh #393939;
 }
 ion-side-menu-content{
 	background:#242424 !important
@@ -887,6 +908,7 @@ position:relative;
 	animation-name: none;
 	    opacity: 1 !important;
 }
+
 @keyframes apareceMapa {
    0% {opacity: 0;
    -webkit-transform: translate3d(0, 3vh, 0);
