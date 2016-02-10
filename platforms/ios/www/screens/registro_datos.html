@@ -1,0 +1,12 @@
+<ion-view can-swipe-back="false" >
+  	<ion-content class="padding" has-bouncing="false" >
+  		<h1>{{idioma.Registro[2]}}</h1>
+        <input id="registro_correo" type="email" placeholder="{{idioma.Registro[3]}}"  ng-model="nuevoUsuario.Correo" ng-keydown="enter($event,1)">
+        <h2>{{idioma.Registro[11]}}</h2>
+        <input id="registro_contrasena" type="password" placeholder="{{idioma.Registro[4]}}" ng-model="nuevoUsuario.Contrasena" ng-keydown="enter($event,2)">
+        <input id="registro_contrasena2" type="password" placeholder="{{idioma.Registro[5]}}"  ng-model="nuevoUsuario.Contrasena2" ng-keydown="enter($event,3)">
+        <h2>{{idioma.Registro[29]}}</h2>
+        <input id="registro_codigo" type="text" placeholder="{{idioma.Registro[30]}}" ng-model="nuevoUsuario.Promocion" style="text-transform:uppercase"ng-keydown="enter($event,4)">
+        <button ng-click="abrePrivacidad()">{{idioma.Registro[6]}}</button>
+  	</ion-content>
+</ion-view>

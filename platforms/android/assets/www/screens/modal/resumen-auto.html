@@ -1,0 +1,29 @@
+<ion-modal-view  ng-controller="Auto">
+    <ion-header-bar >
+    	<button class="button button-clear"  ng-click="cierraModal()" >{{idioma.General[6]}}</button>
+      	<h1 class="title show">{{idioma.Auto[3]}}</h1>
+      	<button class="button button-clear"  ng-click="guardaAuto()" >{{idioma.General[2]}}</button>
+      
+    </ion-header-bar>
+    
+    <ion-content has-bouncing="false " class="auto-content" >
+    	<button class="auto-intro">Estos son los eventos que se han presentado en la semana a menos de 1km de tu auto.</button>
+    	<button class="auto-escala" style="background:{{auto.escala | escalaVColor:1}}">{{auto.escala | escalaV}}<span></span></button>
+      	<ion-list>
+        	<ion-item class="item  item-icon-right notificacion-item-contenido auto-evento auto-label ng-hide" ng-show="auto.eventos.length==0" >
+                <h2 style="white-space: initial;">{{idioma.Auto[10]}}</h2>
+            </ion-item>
+        	<ion-item class="item item-avatar item-icon-right notificacion-item-contenido auto-evento" ng-repeat="evento in auto.eventos track by $index">
+            	<img ng-src={{"img/iconos/mapa/marcadores/"+evento.Asunto+".png"}} class="friends-avatar">
+                <h2>{{idioma.Asuntos[evento.Asunto]+idioma.Notificaciones[1]+idioma.Estados[evento.Estado]}}</h2>
+                <p>{{evento | direccion:this }}</p>
+                <p class="notificacion-item-fecha">{{evento.Fecha+"  "+evento.Hora}}</p>
+            </ion-item>
+        </ion-list>
+        
+    </ion-content>
+    <!--ion-footer-bar style="background: #252424;">
+      <button ng-click="cierraModal()" style="margin-right: 0.5vh;background: #ACACAC;">{{idioma.General[6]}}</button> 
+      <button ng-click="guardaAuto()" style="margin-left: 0.5vh;background: #454545;color: #fff;">{{idioma.General[2]}}</button>
+    </ion-footer-bar-->
+  </ion-modal-view>

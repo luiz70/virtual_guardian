@@ -1,0 +1,91 @@
+<ion-view  class="view-seccion fast " hide-nav-bar="false" can-swipe-back="false" >
+
+<div data-tap-disabled="true" >
+	
+    <ui-gmap-google-map class="animate-enter-mapa fast" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events" ng-cloak>
+        <ui-gmap-circle center='radio.center' control='radio' radius='radio.radio' fill='radio.fill'   stroke='radio.stroke' visible='radio.activo && radio.visible' events="radio.events"></ui-gmap-circle>
+    
+    <ui-gmap-marker idKey='1' coords='auto.position'  options="auto.options" icon="content"  events="auto.events" >
+	</ui-gmap-marker>
+    <ui-gmap-markers  models='eventosMap' coords="'self'" icon="'icono'" options="'options'" type="'cluster'" typeOptions ="cluster" typeEvents='cluster.events' index="2">
+    </ui-gmap-markers>
+    <ui-gmap-marker idKey='0' style="opacity:1 !important" coords='ubicacion.position' options="ubicacion.options" icon="'icon'" events="ubicacion.events" index="1000" >
+	</ui-gmap-marker>
+    <ui-gmap-marker idKey='0' style="opacity:1 !important" coords='lugar.position' options="lugar.options" icon="'content'" events="lugar.events" index="10000" >
+	</ui-gmap-marker>
+    <ui-gmap-map-control template='screens/controls/controls.html' position="right-top" index="-1" controller="controls"></ui-gmap-map-control>
+    
+    <ui-gmap-map-control template='screens/controls/top-center.html' position="top-center" controller="top-center" index="5"></ui-gmap-map-control>
+    <ui-gmap-map-control template='screens/controls/bottom-center.html' position="bottom-center"   controller="bottom-center" index="5"></ui-gmap-map-control>
+    </ui-gmap-google-map>
+    </div >
+    <div class="sin-conexion"  ng-show="!mapaCargado">
+    	<img style="-webkit-mask-image: url('img/iconos/mapa/sinconexion.png');" ng-show="!cargandoMapa" class="ng-hide " ng-click="loadMapa()">
+        <p class="ng-hide " ng-show="!cargandoMapa" ng-click="loadMapa()">Cargar de nuevo.</p>
+        <ion-spinner icon="ripple" ng-show="cargandoMapa" class="ng-hide "></ion-spinner>
+    </div>
+    <button class="mapa-socket-indicador ng-hide" ng-show="!socketState && mapaCargado" ><img style="-webkit-mask-image: url('img/iconos/mapa/sinconexion.png');"></button>
+    <div class="mapa-descripcion-evento ng-hide" ng-show="showInfo">
+    <div class="mapa-descripcion-evento-cover"></div>
+    <div class="mapa-descripcion-evento-contenedor">
+    	<button class="mapa-descripcion-evento-icono">
+    		<img ng-src="img/iconos/notificaciones/{{selectedMarker.Asunto}}.png" height="100%" ng-show="selectedMarker.Asunto">
+             <div class="mapa-descripcion-evento-icono-back ng-hide" ng-show="!selectedMarker.Asunto"></div>
+            <img class="iconMarker" style="-webkit-mask-image: url('{{selectedMarker.data.icon}}');background: #059DB5;height: 60%; width: 60%;position: absolute;top: 0px;bottom: 0px;margin: auto;left: 0px;right: 0px;" ng-show="!selectedMarker.Asunto">
+           
+        </button>
+        <button class="mapa-descripcion-evento-close">
+        	<i class="icon ion-chevron-down" ></i>
+        </button>
+        <div  ng-show="selectedMarker.IdEvento && !cargandoInfo" class="mapa-descripcion-evento-infoEvento">
+        <div class="mapa-descripcion-evento-titulo" ng-hide="cargandoInfo || error" >{{idioma.Asuntos[selectedMarker.Asunto]}}</div>
+        <div class="mapa-descripcion-evento-subtitulo" ng-hide="cargandoInfo || error">{{selectedMarker.Info | subtituloInfo:this}}</div>
+        <div class="mapa-descripcion-evento-texto" ng-hide="cargandoInfo || error">{{idioma.Info[1]}}{{selectedMarker.Info.Fecha | fechaInfo:this}}</div>
+        <div class="mapa-descripcion-evento-texto" ng-hide="cargandoInfo || error">{{idioma.Info[2]}}{{selectedMarker.Info.Hora}}</div>
+        <div class="mapa-descripcion-evento-texto"  ng-hide="cargandoInfo || error">{{idioma.Info[3]}}{{selectedMarker.Info | direccion:this }}</div>
+        </div>
+         <div  ng-show="!selectedMarker.IdEvento && !cargandoInfo">
+         <div class="mapa-descripcion-evento-titulo-completo"> 
+         <div class="mapa-descripcion-evento-general">
+         	<div class="mapa-descripcion-evento-titulo" ng-hide="cargandoInfo || error" >{{selectedMarker.data.name}}</div>
+            <div class="mapa-descripcion-evento-subtitulo" ng-hide="cargandoInfo || error">{{selectedMarker.data.formatted_address}}</div>
+            </div>
+            <div class="mapa-descripcion-evento-rating">
+            	<p style="margin-bottom: 1vh;color: #036777; font-size:4vh"><i class="icon ion-record" style="margin-right:1vh;color:{{selectedMarker.data.escala | escalaVColor}}"></i>{{idioma.Info[5]}}</p>
+                <h style="color: #047385;">{{selectedMarker.data.escala | escalaV}}</h> <h></h>
+            </div>
+            </div>
+            <div class="mapa-descripcion-evento-rating uber" style="margin-bottom:0px; border-bottom:none;padding:0px">
+            	<button><img class="logo-uber" ng-src="img/iconos/mapa/uber.png">{{idioma.Info[6]}}</button>
+            </div>
+         </div>
+        <div style="text-align:center" ng-hide="!cargandoInfo">
+       		<ion-spinner icon="ripple"></ion-spinner>
+        	<div class="mapa-descripcion-evento-texto" style="text-align:center">cargando...</div>
+        </div>
+        <div ng-show="error">
+       		<div class="mapa-descripcion-evento-texto" style="text-align:center">{{idioma.Info[4]}}</div>
+       	</div>
+    </div>
+    </div>
+    <div class="mapa-search ng-hide" ng-show="showSearch">
+    	<div class="mapa-search-input-contenedor">
+    		<input class="mapa-search-input"  placeholder="{{idioma.Mapa[2]}}" ng-model="buscador" ng-change="buscaLugares()" type="text">
+            <button class="mapa-search-cancelar" ng-click="cierraBuscador()"><i class="icon ion-close-round"></i></button>
+        </div>
+        <div class="mapa-search-mensaje" ng-hide="buscador.length>0 || buscando">{{idioma.Mapa[3]}}</div>
+        <div class="mapa-search-mensaje ng-hide" ng-show="buscador.length>0 && !buscando && resultados.length==0" >{{idioma.Mapa[4]+' "'+buscador+'"'}}</div>
+        <div class="mapa-search-cargando ng-hide" ng-show="buscando" ><ion-spinner icon="ripple"></ion-spinner></div>
+        <ion-content class="mapa-search-resultados-contenedor" has-bouncing="true" scroll="true" ng-show="!buscando">
+       		<ion-list >
+              <ion-item class="item-avatar item-icon-right mapa-search-resultados-item" ng-repeat="resultado in resultados" ng-click="abreLugar(resultado)">
+              <img style="-webkit-mask-image: url('{{resultado.icon}}');" >
+                <h2>{{resultado.name}}</h2>
+     			 <p>{{resultado.formatted_address}}</p>
+                <div ng-show="resultado.escala" ><i class="icon ion-record" style="color:{{resultado.escala | escalaVColor}}"></i>{{resultado.escala | escalaV}}</div>
+                <div  ng-show="!resultado.escala"><ion-spinner icon="ripple"></ion-spinner></div>
+              </ion-item>
+            </ion-list>
+       	</ion-content>
+    </div>
+</ion-view>

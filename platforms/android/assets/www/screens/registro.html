@@ -1,0 +1,11 @@
+<ion-view  class="registro-vista" can-swipe-back="false" cache-view="false">
+	<ion-header-bar style="">
+    	<button class="button button-clear"  ng-click="atras()" ng-hide="state=='final'">{{botonAtras}}</button>
+  		<h1 class="title show">{{idioma.Registro[1]}}</h1>
+  		<button class="button button-clear pull-right" ng-click="siguiente()" >{{botonSiguiente}}</button>
+	</ion-header-bar>
+	<ion-content has-bouncing="false" scroll="false">
+		<div class="logo-registro"><img src="img/logo_k.png"></div>
+        <ion-nav-view name="contenido-registro"  ></ion-nav-view>
+	</ion-content>
+</ion-view>

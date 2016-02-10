@@ -1,0 +1,102 @@
+@charset "utf-8";
+/* NORMAL*/
+.notificacion-item-contenido{
+	padding-left: 13vh !important;
+    padding-top: 2vh;
+    padding-bottom: 0.5vh;
+    min-height: 12vh !important;
+    border-bottom: solid 2px rgb(32, 32, 32) !important;
+	padding-right: 6vh !important;
+}
+.notificacion-item-contenido > img{
+	width: auto !important;
+	height: 8vh !important;
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 100vh !important;
+    max-height: 100vh !important;
+    position: absolute !important;
+    top: 0px !important;
+    bottom: 0px;
+    margin: auto;
+    left: 0px !important;
+    right: calc( 100vw - 13vh) !important;
+	border-radius: 0px !important;
+}
+
+.notificacion-item-contenido > h2{
+	    color: #E8E8E8;
+    font-size: 2.8vh;
+	    font-weight: 300;
+		height: auto;
+    line-height: initial;
+
+}
+.notificacion-item-contenido > p{
+	    white-space: initial;
+    color: #B1B7B8;
+    font-size: 2.4vh;
+	    font-weight: 300;
+		height: auto;
+    line-height: initial;
+
+}
+.notificacion-item-contenido > i{
+	    color: #A1A1A1;
+    position: absolute;
+    font-size: 5vh !important;
+    height: 5vh !important;
+    width: 3vh;
+    top: 0px !important;
+    bottom: 0px !important;
+    margin: auto;
+    right: 0px !important;
+    left: calc(100vw - 6vh) !important;
+}
+.notificacion-item-fecha{
+	    font-size: 2vh !important;
+    height: auto;
+    line-height: initial;
+    text-align: right;
+    margin-top: 0.5vh;
+	    font-weight: 100;
+	
+}
+/* LANDSCAPE*/
+@media (orientation: landscape) {
+	.notificacion-item-contenido > img {
+		height: 8vw !important;
+    	right: 87vw !important;
+	}
+	.notificacion-item-contenido{
+		padding-left: 13vw !important;
+		padding-top: 2vw;
+		padding-bottom: 0.5vw;
+		min-height: 12vw !important;
+		padding-right: 6vw !important;
+	}
+	.notificacion-item-contenido > h2 {
+    font-size: 2.8vw;
+	}
+	.notificacion-item-contenido > p {
+		font-size: 2.4vw;
+	}
+	.notificacion-item-fecha {
+		font-size: 2vw !important;
+		margin-top: 0.5vw;
+	}
+	.notificacion-item-contenido > i {
+		font-size: 5vw !important;
+		height: 5vw !important;
+		width: 3vw;
+		left: 94vw !important;
+	}
+}
+/* TABLET PRTRAIT*/
+@media only screen and (min-width : 768px) and (orientation : portrait) {
+	
+}
+/* TABLET LANDSCAPE*/
+@media only screen and (min-width : 1000px) and (orientation : landscape){
+	
+}

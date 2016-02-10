@@ -1,0 +1,28 @@
+<ion-view  class="view-seccion" hide-nav-bar="false" hide-back-button="true" can-swipe-back="false"> 
+	<ion-content delegate-handle="contactos" padding="false" >
+		<ion-refresher   on-refresh="loadContactos(0)" spinner="ripple" pulling-icon="ion-android-refresh"></ion-refresher>
+        <ion-list class="lista-contactos">
+           	<ion-item class="list-mensaje" ng-show="!cargandoContactos && contactos.length==0 ">
+               	{{idioma.Contactos[17]}}
+            </ion-item>
+            <ion-item class="ng-hide" style="padding-bottom: 0px;text-align:center" ng-show="cargandoContactos">
+               	<ion-spinner icon="ripple" class="spinner-blue"></ion-spinner>
+            </ion-item>
+            <div class="animate-fade-slide-in-right">
+               	<ion-item class="item-avatar item-icon-right contacto-item-contenido" ng-repeat="contacto in contactos track by contacto.IdUsuario"  ng-click="abreContacto(contacto)">				
+                	<div  class="friends-avatar"></div>
+                	<h2>{{contacto.Correo}}</h2>
+                    <p>{{contacto | contactoEstatus:this}}</p>
+                    <i class="icon ion-android-more-vertical friends-more" ></i>
+				</ion-item>
+            </div>
+            <!--ion-item class="list-mensaje ng-hide" ng-show="!moreData">
+               	{{idioma.Contactos[16]}}
+            </ion-item-->
+		</ion-list>
+		<!--ion-infinite-scroll on-infinite="loadNotifications(1)" distance="1%" spinner="ripple"  ng-if="moreData && !cargandoContactos && contactos.length>=15">
+		</ion-infinite-scroll-->
+        
+    </ion-content>
+    <button class="contactos-agrega-contacto" ng-click="agregaContacto()"><i class="icon ion-person-add"></i></button>
+</ion-view>

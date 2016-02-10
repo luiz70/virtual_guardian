@@ -1,0 +1,18 @@
+<ion-modal-view class="modal-view-filtros" ng-controller="Directorio">
+    <ion-header-bar style="" class="auto-header">
+      <h1 class="title auto-titulo">{{idioma.Directorio[1]}}</h1>
+    </ion-header-bar>
+    <ion-content has-bouncing="false" style="padding:2vh;padding-left:3vh; padding-right:3vh;">
+      	<ion-list>
+        	<ion-item class="item item-avatar item-icon-right notificacion-item-contenido auto-evento" style="min-height: 0vh !important;padding-bottom: 2vh;" ng-repeat="servicio in servicios" ng-click="llama(servicio)">
+            	<img style="-webkit-mask-image:url(img/iconos/servicios/{{servicio.Icono}}.png);height: 100% !important;width: 6vh !important;" class="friends-avatar icon-directorio" >
+                <h2 style="margin-bottom: 0px;line-height: 3.5vh;">{{servicio.Nombre}}</h2>
+                <i class="icon ion-android-call friends-more" style="right: 2vh !important;left: initial !important;font-size: 4vh !important;"></i>
+            </ion-item>
+        </ion-list>
+        
+    </ion-content>
+    <ion-footer-bar style="">
+      <button ng-click="cierraModal()" style="margin-right: 0.5vh;background: #ACACAC;">{{idioma.General[6]}}</button> 
+    </ion-footer-bar>
+  </ion-modal-view>

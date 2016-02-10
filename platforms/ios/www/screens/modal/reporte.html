@@ -1,0 +1,41 @@
+<ion-modal-view class="reportes" ng-controller="CreaReporte">
+    <ion-header-bar style="">
+     <button class="button button-clear" style="float:left;"  ng-click="cierraModal()">{{idioma.General[6]}}</button>
+  <h1 class="title show">{{idioma.Reportes[1]}}</h1>
+  	<button class="button button-clear" style="float:left;"  ng-click="reporta()">{{idioma.Reportes[2]}}</button>
+    </ion-header-bar>
+    <ion-content has-bouncing="false" >
+    <div class="barra-opciones">
+    	<button class="button button-clear button-icon ion-images"></button>
+        <button class="button button-clear button-icon ion-android-list"></button>
+        <button class="button button-clear button-icon ion-location"></button>
+    </div>
+      	<!--div data-tap-disabled="true" >
+		    <ui-gmap-google-map control="minimapa" center='minimapa.center' zoom='minimapa.zoom' style="height: 30vh; width:100vw" options='minimapa.options' pan='true' events="minimapa.events" ng-cloak>
+            </ui-gmap-google-map>
+    	</div-->
+        
+    	<div class="select" ng-click="cambiaAsunto()">{{idioma.Reportes[12]}}<span>{{idioma.Asuntos[reporte.Asunto]}}</span></div>
+        <div class="select" ng-click="cambiaFecha()">{{idioma.Reportes[14]}}<span>{{reporte.Fecha | FHReportar:this}}</span></div>
+        <div class="select">
+       	<input type="text" placeholder="{{idioma.Reportes[13]}}" ng-model="direccion.search" ng-change="buscaDireccion()">
+        <i class="icon ion-android-close" ng-click="eliminaDireccion()" ng-hide="direccion.search.length==0"></i>
+        </div>
+        <ion-content class="lista-reportes-lugares">
+        <ion-list >
+        	<ion-item class="item-avatar item-icon-right mapa-search-resultados-item" ng-repeat="resultado in resultados" ng-click="">
+                <img style="-webkit-mask-image: url('{{resultado.icon}}');" >
+                <h2>{{resultado.name}}</h2>
+                <p>{{resultado.formatted_address}}</p>
+            </ion-item>
+        </ion-list>
+        </ion-content>
+      
+        
+        
+    </ion-content>
+    
+    <!--ion-footer-bar style="    background: #252424">
+      <button ng-click="cierraModal()" style="margin-right: 0.5vh;background: #ACACAC;">{{idioma.General[2]}}</button> 
+    </ion-footer-bar-->
+  </ion-modal-view>

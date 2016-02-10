@@ -1,0 +1,35 @@
+ <ion-header-bar class="bar-stable menu">
+      <div class="menu-header-img-content"> <img src="img/avatar.png" height="100%"></div>
+      <button class="menu-header-title">{{Usuario.Correo | firstMayus}}</button>
+      <button class="menu-header-subtitle">{{idioma.Menu[1]+" "+Usuario.Suscripcion | firstMayus}}</button>
+    </ion-header-bar>
+    <ion-content class="menu-contenido" has-bouncing="false">
+      <ion-list can-swipe="false">
+        <ion-item  class="item-icon-left">
+        <i class="icon ion-person menu-list-item-icon"></i>
+          {{idioma.Menu[2]}}
+        </ion-item>
+        <ion-item  class="item-icon-left menu-list-item">
+        <i class="icon ion-chatbox-working menu-list-item-icon"></i>
+          {{idioma.Menu[3]}}
+        </ion-item>
+        <ion-item  class="item-icon-left menu-list-item">
+        <i class="icon ion-images menu-list-item-icon"></i>
+          {{idioma.Menu[4]}}
+        </ion-item>
+        <ion-item  class="item-icon-left menu-list-item">
+        <i class="icon ion-help-circled menu-list-item-icon"></i>
+          {{idioma.Menu[5]}}
+        </ion-item>
+        <ion-item  class="item-icon-left menu-list-item">
+        <i class="icon ion-information-circled menu-list-item-icon"></i>
+          {{idioma.Menu[6]}}
+        </ion-item>
+        <ion-item  class="item-icon-left menu-list-item" ng-click="cerrarSesion()">
+        <i class="icon ion-power menu-list-item-icon"></i>
+          {{idioma.Menu[7]}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    
+    

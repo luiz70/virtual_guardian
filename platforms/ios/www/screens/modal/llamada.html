@@ -1,0 +1,29 @@
+<ion-modal-view class="modal-view-llamada" ng-controller="llamada">
+    <div class="llamada-titulo">
+    	<img src="img/logo.png">
+        <h>{{llamada.Llamando?idioma.Llamada[2]:idioma.Llamada[1]}}</h>
+    </div>
+    <div class="llamada-contacto elipsis">
+    	<i class="icon ion-android-call"></i>{{llamada.Correo}}
+    </div>
+    <div class="llamada-imagen">
+    <img src="img/avatar.png">
+    </div>
+    <div class="llamada-tiempo ng-hide" ng-show="llamada.Contestada">{{llamada.TiempoLlamada | duracion}}</div>
+    <div class="llamada-tiempo ng-hide" ng-show="!llamada.Contestada">{{idioma.Llamada[3][llamada.Estado]}}</div>
+    <div class="llamada-contenedor-boton-circular {{llamada.Altavoz?'activo':''}} ng-hide" ng-show="llamada.Contestada || llamada.Llamando">
+    	<button ng-click="activaControl(1)"><i class="icon ion-volume-medium" ></i></button>
+    </div>
+    <div class="llamada-contenedor-boton-circular {{llamada.Silencio?'activo':''}} ng-hide" ng-show="llamada.Contestada || llamada.Llamando">
+    	<button ng-click="activaControl(2)"><i class="icon ion-android-microphone-off"></i></button>
+    </div>
+    <div class="llamada-contenedor-boton-circular-contestar  ng-hide" ng-show="!llamada.Contestada && !llamada.Llamando">
+    	<button ng-click="cuelgaLlamada()"><i class="icon ion-android-call rotate"></i></button>
+    </div>
+    <div class="llamada-contenedor-boton-circular-contestar activo ng-hide" ng-show="!llamada.Contestada && !llamada.Llamando">
+    	<button ng-click="contestaLlamada()"><i class="ion-android-call" ></i></button>
+    </div>
+    
+    <button class="llamada-boton-colgar ng-hide" ng-show="llamada.Contestada || llamada.Llamando" ng-click="cuelgaLlamada()"><i class="icon ion-android-call rotate"></i></button>
+    
+  </ion-modal-view>
