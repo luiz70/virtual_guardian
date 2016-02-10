@@ -12,6 +12,7 @@
 	display:none;
 }
 .login-logo-container{
+	content: 'viewport-units-buggyfill;height: 23vh;';
 	height: 23vh;
     text-align: center;
 	margin-top: 15vh;

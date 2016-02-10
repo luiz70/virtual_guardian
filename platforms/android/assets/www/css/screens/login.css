@@ -12,6 +12,7 @@
 	display:none;
 }
 .login-logo-container{
+	content: 'viewport-units-buggyfill;height: 23vh;';
 	height: 23vh;
     text-align: center;
 	margin-top: 15vh;
@@ -112,7 +113,7 @@ label.item-input{
     left: 0px;
 
 }
-/****IPHONE PEQUEÑOS***/
+/****IPHONE PEQUEÑOS**
 @media (max-width: 320px){
 .login-logo-container{
 	height: 23vh;
@@ -166,7 +167,7 @@ label.item-input{
     padding-left:1.5vh !important;
     font-weight:200 !important;
 }
-}
+}*/
 /* LANDSCAPE*/
 @media (orientation: landscape) {
 	.login-view > ion-content{
