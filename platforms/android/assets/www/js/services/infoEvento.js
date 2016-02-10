@@ -44,6 +44,7 @@ angular.module('starter.services')
 			else hideInfo();
 		},
 		select:function(marker){
+			$rootScope.selectedMarker=null;
 			if(!open){
 				if(marker.IdEvento)
 				$rootScope.sql.getInfoEvento(marker.IdEvento)

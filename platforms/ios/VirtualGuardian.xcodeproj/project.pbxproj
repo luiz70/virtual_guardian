@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		09FD8FD1E68940CAA5D4D279 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A3CFA0A780478B94F764EE /* CDVConnection.m */; };
 		176BD4BEFD7849D3B87987A5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B522630196524594BF13A48E /* CoreTelephony.framework */; };

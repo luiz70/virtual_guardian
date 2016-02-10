@@ -65,39 +65,7 @@ PushNotification.prototype.setApplicationIconBadgeNumber = function(successCallb
 };
 
 //-------------------------------------------------------------------
-// Call this to register for push notifications. Content of [options] depends on whether we are working with APNS (iOS) or GCM (Android)
-PushNotification.prototype.carLocation = function(successCallback, errorCallback, options) {
-    if (errorCallback == null) { errorCallback = function() {}}
 
-    if (typeof errorCallback != "function")  {
-        console.log("PushNotification.carLocation failure: failure parameter not a function");
-        return
-    }
-
-    if (typeof successCallback != "function") {
-        console.log("PushNotification.carLocation failure: success callback parameter must be a function");
-        return
-    }
-    cordova.exec(successCallback, errorCallback, "PushPlugin", "carLocation", [options]);
-};
-
-//-------------------------------------------------------------------
-PushNotification.prototype.carLocation = function(successCallback, errorCallback, options) {
-    if (errorCallback == null) { errorCallback = function() {}}
-
-    if (typeof errorCallback != "function")  {
-        console.log("PushNotification.carLocation failure: failure parameter not a function");
-        return
-    }
-
-    if (typeof successCallback != "function") {
-        console.log("PushNotification.carLocation failure: success callback parameter must be a function");
-        return
-    }
-    cordova.exec(successCallback, errorCallback, "PushPlugin", "carLocation", [options]);
-};
-
-//-------------------------------------------------------------------
 if(!window.plugins) {
     window.plugins = {};
 }

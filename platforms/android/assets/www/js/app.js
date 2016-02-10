@@ -11,7 +11,9 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-	  StatusBar.backgroundColorByHexString("#151515");
+                       
+	  
+                       
 	  //StatusBar.backgroundColorByHexString("#059DB5");
       // Don't remove this line unless you know what you are doing. It stops the viewport
       // from snapping when text inputs are focused. Ionic handles this internally for
@@ -20,7 +22,10 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-material', 'sta
 	  ionic.Platform.isFullScreen=true;
     }
     if(window.StatusBar) {
-      StatusBar.styleDefault();
+        StatusBar.overlaysWebView(false);
+        StatusBar.backgroundColorByHexString("#151515");
+        StatusBar.styleLightContent();
+        StatusBar.show();
     }
 	$ionicPlatform.registerBackButtonAction(function (event) {
     	event.preventDefault();

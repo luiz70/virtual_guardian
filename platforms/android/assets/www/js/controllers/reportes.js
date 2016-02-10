@@ -100,6 +100,7 @@ angular.module('starter.controllers')
 		console.log(data);
 	}
 })
+
 .controller('CreaReporte', function($scope,$rootScope,Message,$ionicScrollDelegate,$timeout) {
 	$scope.idioma=$rootScope.idioma
 	$scope.buscando=false;
@@ -116,6 +117,9 @@ angular.module('starter.controllers')
 	}
 	$scope.cierraModal=function(){
 		Message.hideModal();
+	}
+	$scope.cambiaFecha=function(){
+		Message.time();
 	}
 	$rootScope.reporta=function(){
 		Message.hideModal();
@@ -169,4 +173,7 @@ angular.module('starter.controllers')
 	  }
 	  
   }
+})
+.controller('Hora', function($rootScope) {
+	alert(3);
 })

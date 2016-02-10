@@ -160,7 +160,7 @@ angular.module('starter.controllers')
 		var buttons=[];
 		if(data.Tipo<5)buttons.push({text:$rootScope.idioma.Notificaciones[20],funcion:$scope.verEvento,data:data})
 		if(data.Tipo>1 && data.Tipo<5){
-			buttons.push({text:$rootScope.idioma.Notificaciones[21],funcion:$scope.verDirectorio,data:data})
+			//buttons.push({text:$rootScope.idioma.Notificaciones[21],funcion:$scope.verDirectorio,data:data})
 		}
 		if(data.Tipo==3)buttons.push({text:$rootScope.idioma.Llamada[14]+data.Persona,funcion:$scope.llamaPersona,data:data})
 		if(data.Tipo==5 || data.Tipo==9){
