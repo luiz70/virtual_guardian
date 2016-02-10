@@ -2,6 +2,7 @@
 /* NORMAL*/
 .login-view{
 	background: none;
+	opacity:0 !important;
 }
 .login-view > ion-content{
 	padding-top: 0px !important;
