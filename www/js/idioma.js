@@ -211,7 +211,7 @@ angular.module('starter.controllers')
 		Auto:{
 			1:"Arrastra el marcador hasta la ubicación donde estacionaste tu auto.",
 			2:"Inicial vigilancia",
-			3:"Análisis de seguridad",
+			3:"Análisis",
 			4:"Mi auto",
 			5:"Detener vigilacia",
 			6:"Editar ubicación",
