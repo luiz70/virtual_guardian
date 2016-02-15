@@ -61,7 +61,7 @@
     <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
     <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
     <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
-    <name>Virtual Guardian</name>
+    <name>VirtualGuardian</name>
     <description>
         An Ionic Framework and Cordova project.
     </description>
