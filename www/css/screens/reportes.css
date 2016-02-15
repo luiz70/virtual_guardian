@@ -63,6 +63,25 @@ width: 100%;
     float: left;
     margin-bottom: 0.5vh;
 }
+ion-modal-view.reportes ion-content div.contenedor-mapa-reporte{
+	position: relative;
+    float: left;
+    width: 100%;
+    height: 64vh;
+}
+ion-modal-view.reportes ion-content div.contenedor-mapa-reporte>div{
+  /* height: 100%; */
+    position: absolute;
+    top: 0vh;
+    left: 0px;
+    background: #CACACA;
+    /* left: 2vh; */
+    /* right: 2vh; */
+    /* bottom: 2.5vh; */
+    right: 0px;
+    bottom: 0px;
+	z-index:-2;
+}
 ion-modal-view.reportes ion-content div.select>span{
 	position: absolute;
     right: 2vh;
@@ -118,6 +137,7 @@ ion-modal-view.reportes .barra-opciones{
     bottom: 0px;
 }
 ion-modal-view.reportes .barra-opciones>button{
+	    min-height: 0px;
     position: relative;
     float: left;
     width: 33.3%;
@@ -128,6 +148,7 @@ ion-modal-view.reportes .barra-opciones>button{
     color: #D6D6D6;
 	border-bottom:solid 1px #202020 !important;
 }
+  
 ion-modal-view.reportes .barra-opciones>button:first-of-type{
 	border-left:none !important;
 }

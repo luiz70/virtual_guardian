@@ -75,7 +75,12 @@ angular.module('starter.controllers')
 			3:"Escribe para buscar lugares",
 			4:"No hay resultados para",
 			5:"Mostrar los eventos de los ultimos:",
-			6:"La aplicación no tiene cobertura en esta zona"
+			6:"La aplicación no tiene cobertura en esta zona",
+			7:"Buscar lugares",
+			8:"Actualizar ubicación",
+			9:"Vigilar auto",
+			10:"Aplicar filtros",
+			11:"Cambiar periodo"
 			
 			
 		},

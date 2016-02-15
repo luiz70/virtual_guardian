@@ -124,61 +124,73 @@ label.item-input{
     left: 0px;
 
 }
-/****IPHONE PEQUEÑOS**
+/****IPHONE PEQUEÑOS***/
 @media (max-width: 320px){
 .login-logo-container{
+	content: 'viewport-units-buggyfill;height: 23vh;margin-top: 10vh;';
 	height: 23vh;
 	margin-top: 10vh;
 }
 .login-input-title{
+	content: 'viewport-units-buggyfill;font-size: 5vh;margin-top: 4vh;line-height:5vh;';
     font-size: 5vh;
     margin-top: 4vh;
 	line-height:5vh;
 }
 .login-input-container{
+	content: 'viewport-units-buggyfill;margin-top:4vh;';
 	margin-top:4vh;
 }
 
 .login-input-bg{
+	content: 'viewport-units-buggyfill;font-size: 2.5vh;';
 	width: 80%;
 	margin-left: 10%;
 	font-size: 2.5vh;
 }
 .login-input{
+	content: 'viewport-units-buggyfill;font-size: 3.5vh !important;line-height: 5.3vh !important;height:5.3vh !important;';
     font-size: 3.5vh !important;
     line-height: 5.3vh !important;
     height:5.3vh !important;
     
 }
 .login-input-icon{
+	content: 'viewport-units-buggyfill;font-size: 3.5vh !important;';
 	font-size: 3.5vh !important;
 }
 .login-enter-button-container{
+	content: 'viewport-units-buggyfill;';
 	margin-top:5vh;
 }
 .login-enter-button, .login-enter-button:active, .login-enter-button:hover{
+	content: 'viewport-units-buggyfill;font-size:3.5vh;height: 6vh;line-height:6vh;';
 	font-size:3.5vh;
 	height: 6vh;
     line-height:6vh;
 }
 .buttons-footer > button{
+	content: 'viewport-units-buggyfill;height: 7vh;font-size: 3.5vh;line-height:7vh;';
 	height: 7vh;
 	font-size: 3.5vh;
     line-height:7vh;
 }
 
 .contenedor-mapa-top-right ,.contenedor-mapa-top-right-more{
+	content: 'viewport-units-buggyfill;width:8vh !important;';
 	width:8vh !important;
 }
 .boton-mapa-top-right{
+	content: 'viewport-units-buggyfill;width:7vh !important;height:7vh !important;';
 	width:7vh !important;
 	height:7vh !important;
 }
 .label-pie-radio{
+	content: 'viewport-units-buggyfill;padding-left:1.5vh !important;';
     padding-left:1.5vh !important;
     font-weight:200 !important;
 }
-}*/
+}
 /* LANDSCAPE*/
 @media (orientation: landscape) {
 	.login-view > ion-content{

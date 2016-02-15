@@ -11,6 +11,7 @@ angular.module('starter.controllers')
 			activo:false,
 			activable:true,
 			content:"",
+			label:$rootScope.idioma.Mapa[7],
 			onClick:function(){
 				$rootScope.controls[0].activo=false;
 				Lugar.hide();
@@ -22,6 +23,7 @@ angular.module('starter.controllers')
 			activo:false,
 			activable:true,
 			content:"",
+			label:$rootScope.idioma.Mapa[8],
 			onClick:function(){
 				$scope.refreshLocation();
 			},
@@ -32,6 +34,7 @@ angular.module('starter.controllers')
 			activable:true,
 			posicionando:false,
 			content:"",
+			label:$rootScope.idioma.Mapa[9],
 			onClick:function(){
 			$scope.carPark();
 			},
@@ -41,6 +44,7 @@ angular.module('starter.controllers')
 			activo:(true && $rootScope.filtros.activos),
 			activable:true,
 			content:"",
+			label:$rootScope.idioma.Mapa[10],
 			onClick:function(){
 			Message.showModal("screens/modal/filtros.html");
 			},
@@ -49,6 +53,7 @@ angular.module('starter.controllers')
 			id:5,
 			activo:false,
 			activable:false,
+			label:$rootScope.idioma.Mapa[11],
 			content:"<div class='letra-periodo'>{{$rootScope.Usuario.Periodo}}</div>",
 			onClick:function(){
 				var buttons=[]
@@ -85,38 +90,44 @@ angular.module('starter.controllers')
 		
 		$animate.removeClass(document.getElementsByClassName("more")[0],'show-more')
 		$animate.addClass(document.getElementsByClassName("more")[0],'hide-more')
-		var deads=document.getElementsByClassName("dead")
+		$animate.removeClass(document.getElementsByClassName("dead-items")[0],'hide-options')
+		$animate.addClass(document.getElementsByClassName("dead-items")[0],'show-options')
+		/*var deads=document.getElementsByClassName("dead")
+		
 		for(var i=0;i<deads.length;i++){
 		$animate.removeClass(deads[i],'hide-options')
 		$animate.addClass(deads[i],'show-options')
-		}
+		
+		}*/
 		$timeout(function(){
-		angular.element(document.getElementsByClassName("more")[0]).addClass("ng-hide")
+			
+			angular.element(document.getElementsByClassName("more")[0]).addClass("ng-hide")
+			var labs=document.getElementsByClassName("boton-mapa-top-right-label")
+			for(var i=0;i<labs.length;i++){
+				angular.element(labs[i]).css("display","block")
+				$animate.removeClass(labs[i],'hide-info-label')
+				$animate.addClass(labs[i],'show-info-label')
+			}
 		},500)
-		/*$(".contenedor-mapa-top-right").animate({
-			right:"1vh"
-		},200);
-		$(".boton-mapa-top-right.options").animate({
-		opacity:0
-		},200,function(){
-		});*/
+		if($scope.hidelabel)$timeout.cancel($scope.hidelabel)
+		/*$scope.hidelabel=$timeout(function(){
+			$animate.addClass(document.getElementsByClassName("dead-items")[0],'no-label')
+			try{$scope.$digest();}catch(err){}
+		},4000);*/
+		try{$scope.$digest();}catch(err){}
+		
 	}
 	$scope.hideControls=function(){
 		angular.element(document.getElementsByClassName("more")[0]).removeClass("ng-hide")
 		$animate.addClass(document.getElementsByClassName("more")[0],'show-more')
 		$animate.removeClass(document.getElementsByClassName("more")[0],'hide-more')
-		var deads=document.getElementsByClassName("dead")
-		for(var i=0;i<deads.length;i++){
-		$animate.removeClass(deads[i],'show-options')
-		$animate.addClass(deads[i],'hide-options')
-		}
+		$animate.removeClass(document.getElementsByClassName("dead-items")[0],'show-options')
+		$animate.addClass(document.getElementsByClassName("dead-items")[0],'hide-options')
 		
-		/*$(".contenedor-mapa-top-right").animate({
-			right:"-10vh"
-		},400);
-		$(".boton-mapa-top-right.options").animate({
-		opacity:1
-		},200);*/
+		//$timeout(function(){angular.element(document.getElementsByClassName("dead-items")[0]).removeClass('no-label')},600)
+		$timeout(function(){angular.element(document.getElementsByClassName("dead-items")[0]).addClass('no-label')},600)
+		try{$scope.$digest();}catch(err){}
+		
 	}
 	$scope.refreshLocation=function(){
 		$rootScope.eventosMap=[];
@@ -124,9 +135,12 @@ angular.module('starter.controllers')
 		
 	}
 	$scope.carPark=function(){
-		if(!$scope.auto.activo)
+		if(!$scope.auto.activo){
+			
 			$scope.auto.posicionando=true;
-		else{
+			
+			
+		}else{
 			var buttons=[{text:$rootScope.idioma.Auto[5],id:1},{text:$rootScope.idioma.Auto[6],id:2},{text:$rootScope.idioma.Auto[7],id:3}]
 			Message.showActionSheet($rootScope.idioma.Auto[4],buttons,null,$rootScope.idioma.General[6],function(res,data){
 				if(data)

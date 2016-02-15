@@ -2,10 +2,21 @@
 <div class="contenedor-mapa-top-right more" z-index="1" ng-hide="auto.posicionando" style="height:auto !important;    z-index: 20;">
 <button class="boton-mapa-top-right options" ng-click="showControls()" ng-hide="auto.posicionando"><i class="icon ion-android-more-vertical"></i></button>
 </div>
-<div class="contenedor-mapa-top-right" z-index="2" ng-hide="auto.posicionando" >
-        <button ng-repeat="control in controls" class="boton-mapa-top-right dead {{control.id}}"   ng-click="controlClick($index)" ng-hide="control.activo">
+<div class="contenedor-mapa-top-right dead-items" z-index="2" ng-hide="auto.posicionando" >
+	<!--div class="botom-mapa-top-right-cont" ng-repeat="control in controls" ng-hide="control.activo">
+    	<button class="boton-mapa-top-right-label">{{control.label}}</button>
+        <button  class="boton-mapa-top-right dead {{control.id}}"   ng-click="controlClick($index)" >
         <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/{{control.nombre}}.png');" >
         </button>
+     </div>
+     
+        <!--button  ng-repeat="control in controls" class="boton-mapa-top-right dead {{control.id}}"   ng-click="controlClick($index)" ng-hide="control.activo">
+        <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/{{control.nombre}}.png');" >
+        </button-->
+        <button  ng-repeat="control in controls" class="boton-mapa-top-right dead {{control.id}}"   ng-click="controlClick($index)" ng-hide="control.activo">
+        <div class="boton-mapa-top-right-dead-label">{{control.label}}</div><img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/{{control.nombre}}.png');" >
+        </button>
+     
 </div>
 <div class="auto-id ng-hide top10" z-index="2" ng-show="auto.posicionando" >
         <button  class="boton-mapa-top-right dead2 "   ng-click="cancelarAuto()" >
@@ -16,9 +27,11 @@
         </button>
 </div>
 <div class="contenedor-mapa-top-left" ng-hide="auto.posicionando">
-	<button ng-repeat="control in controls" class="boton-mapa-top-right activo {{control.id}}"   ng-click="controlClick($index)" ng-show="control.activo">
+	
+	<button  ng-repeat="control in controls" ng-show="control.activo" class="boton-mapa-top-right activo {{control.id}}"   ng-click="controlClick($index)" >
         <img class="img-boton-mapa-top-right" style="-webkit-mask-image: url('img/iconos/mapa/controls/{{control.nombre}}.png');" >
     </button>
+  
 </div>
 <div ng-show="auto.posicionando" class="contenedor-mapa-auto ng-hide">
 	<button class="boton-auto-aceptar" ng-click="setAuto()">{{idioma.Auto[2]}}</button>

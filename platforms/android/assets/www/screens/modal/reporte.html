@@ -21,6 +21,7 @@
        	<input type="text" placeholder="{{idioma.Reportes[13]}}" ng-model="direccion.search" ng-change="buscaDireccion()">
         <i class="icon ion-android-close" ng-click="eliminaDireccion()" ng-hide="direccion.search.length==0"></i>
         </div>
+        <div class="contenedor-mapa-reporte">
         <ion-content class="lista-reportes-lugares">
         <ion-list >
         	<ion-item class="item-avatar item-icon-right mapa-search-resultados-item" ng-repeat="resultado in resultados" ng-click="">
@@ -30,6 +31,9 @@
             </ion-item>
         </ion-list>
         </ion-content>
+        <div class="mapa-reporte">
+        </div>
+        </div>
       
         
         

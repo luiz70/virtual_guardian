@@ -83,6 +83,8 @@ angular.module('starter.services')
 				$rootScope.map.center={latitude:$rootScope.auto.position.latitude,longitude:$rootScope.auto.position.longitude}
 				},200)
 				//navigator.geolocation.getCurrentPosition(mapSuccessAuto, mapError);
+				var t=document.getElementsByClassName("dead-items")[0]
+				t.style="display:none !important;"
 			}
 			else{
 				$timeout(function(){
@@ -93,6 +95,8 @@ angular.module('starter.services')
 				$rootScope.map.center={latitude:$rootScope.ubicacion.position.latitude,longitude:$rootScope.ubicacion.position.longitude}
 				$rootScope.map.zoom=12;
 				Eventos.refresh();
+				var t=document.getElementsByClassName("dead-items")[0]
+				t.style="display:block;"
 				},100)
 			}
 		}
