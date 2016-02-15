@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		09FD8FD1E68940CAA5D4D279 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A3CFA0A780478B94F764EE /* CDVConnection.m */; };
 		176BD4BEFD7849D3B87987A5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B522630196524594BF13A48E /* CoreTelephony.framework */; };
@@ -88,7 +89,7 @@
 		1AA691841C6B91270006740F /* VirtualGuardian.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = VirtualGuardian.entitlements; path = VirtualGuardian/VirtualGuardian.entitlements; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* VirtualGuardian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualGuardian.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Virtual Guardian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Guardian.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D959186B93B4B69A0711B3B /* CDVSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVSplashScreen.h; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; };
 		1E140DAB2FDE474382D78F8E /* CDVReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVReachability.h; path = "cordova-plugin-network-information/CDVReachability.h"; sourceTree = "<group>"; };
 		1EC12E24D45646978D227B2A /* IonicKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IonicKeyboard.h; path = "ionic-plugin-keyboard/IonicKeyboard.h"; sourceTree = "<group>"; };
@@ -205,7 +206,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* VirtualGuardian.app */,
+				1D6058910D05DD3D006BFB54 /* Virtual Guardian.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -385,7 +386,7 @@
 			);
 			name = VirtualGuardian;
 			productName = VirtualGuardian;
-			productReference = 1D6058910D05DD3D006BFB54 /* VirtualGuardian.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Virtual Guardian.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -573,7 +574,7 @@
 					"-weak-lSystem",
 					"-ObjC",
 				);
-				PRODUCT_NAME = VirtualGuardian;
+				PRODUCT_NAME = "Virtual Guardian";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -607,7 +608,7 @@
 					"-weak-lSystem",
 					"-ObjC",
 				);
-				PRODUCT_NAME = VirtualGuardian;
+				PRODUCT_NAME = "Virtual Guardian";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

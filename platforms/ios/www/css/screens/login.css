@@ -4,6 +4,7 @@
 	background: none;
 }
 .login-view > ion-content{
+	content: 'viewport-units-buggyfill;bottom:10vh;';
 	padding-top: 0px !important;
 	padding-bottom: 0px !important;
 	bottom:10vh;
@@ -12,6 +13,7 @@
 	display:none;
 }
 .login-logo-container{
+	content: 'viewport-units-buggyfill;height: 23vh;';
 	height: 23vh;
     text-align: center;
 	margin-top: 15vh;
@@ -21,6 +23,7 @@
 	height: 100%;
 }
 .login-input-title{
+	content: 'viewport-units-buggyfill;font-size: 4vh;margin-top: 6.5vh;line-height: 5vh;';
     color: #059DB5;
     text-align: center;
     font-size: 4vh;
@@ -28,10 +31,12 @@
     line-height: 5vh;
 }
 .login-input-container{
+	content: 'viewport-units-buggyfill;margin-top: 2.5vh;';
 	 margin-top: 2.5vh;
 }
 
 .login-input-bg{
+	content: 'viewport-units-buggyfill;font-size: 2.5vh;';
 	width: 80%;
 	margin-left: 10%;
 	font-size: 2.5vh;
@@ -43,10 +48,12 @@
 	outline: none;
 }
 label.item-input{
+	content: 'viewport-units-buggyfill;padding-left:1vh !important;padding-right:1vh !important;';
 	padding-left:1vh !important;
 	padding-right:1vh !important;
 }
 .login-input{
+	content: 'viewport-units-buggyfill;font-size: 2.5vh !important;padding-left: 1vh !important;';
     font-size: 2.5vh !important;
     color: #E7E7E7 !important;
     padding-left: 1vh !important;
@@ -58,6 +65,7 @@ label.item-input{
     
 }
 .login-input-icon{
+	content: 'viewport-units-buggyfill;font-size: 2.5vh !important;padding-left: 1vh !important;line-height: 2.5vh !important;height:2.5vh !important;';
 	font-size: 2.5vh !important;
 	color: #E7E7E7 !important;
 	padding-left: 1vh !important;
@@ -66,10 +74,12 @@ label.item-input{
     padding-top: 0px !important;
 }
 .login-enter-button-container{
+	content: 'viewport-units-buggyfill;margin-top: 3vh;';
 	text-align:center;
 	margin-top: 3vh;
 }
 .login-enter-button, .login-enter-button:active, .login-enter-button:hover{
+	content: 'viewport-units-buggyfill;font-size: 2.5vh; height: 4.5vh;padding-left: 7vw;padding-right: 7vw;';
 	width: auto !important;
     font-size: 2.5vh;
     background: #059DB5;
@@ -82,6 +92,7 @@ label.item-input{
     padding-right: 7vw;
 }
 .login-footer{
+	content: 'viewport-units-buggyfill;width: 100vw;bottom: 1vh;';
 	width: 100vw;
     position: absolute;
     bottom: 1vh;
@@ -90,6 +101,7 @@ label.item-input{
     font-weight: 100 !important;
 }
 .login-footer > button{
+	content: 'viewport-units-buggyfill;height: 5.5vh;margin-top: 1vh !important;font-size: 2.7vh;';
 	min-height: 0px;
     height: 5.5vh;
     top: 0px;
@@ -115,54 +127,66 @@ label.item-input{
 /****IPHONE PEQUEÑOS***/
 @media (max-width: 320px){
 .login-logo-container{
+	content: 'viewport-units-buggyfill;height: 23vh;margin-top: 10vh;';
 	height: 23vh;
 	margin-top: 10vh;
 }
 .login-input-title{
+	content: 'viewport-units-buggyfill;font-size: 5vh;margin-top: 4vh;line-height:5vh;';
     font-size: 5vh;
     margin-top: 4vh;
 	line-height:5vh;
 }
 .login-input-container{
+	content: 'viewport-units-buggyfill;margin-top:4vh;';
 	margin-top:4vh;
 }
 
 .login-input-bg{
+	content: 'viewport-units-buggyfill;font-size: 2.5vh;';
 	width: 80%;
 	margin-left: 10%;
 	font-size: 2.5vh;
 }
 .login-input{
+	content: 'viewport-units-buggyfill;font-size: 3.5vh !important;line-height: 5.3vh !important;height:5.3vh !important;';
     font-size: 3.5vh !important;
     line-height: 5.3vh !important;
     height:5.3vh !important;
     
 }
 .login-input-icon{
+	content: 'viewport-units-buggyfill;font-size: 3.5vh !important;';
 	font-size: 3.5vh !important;
 }
 .login-enter-button-container{
+	content: 'viewport-units-buggyfill;';
 	margin-top:5vh;
 }
 .login-enter-button, .login-enter-button:active, .login-enter-button:hover{
+	content: 'viewport-units-buggyfill;font-size:3.5vh;height: 6vh;line-height:6vh;';
 	font-size:3.5vh;
 	height: 6vh;
     line-height:6vh;
 }
 .buttons-footer > button{
+	content: 'viewport-units-buggyfill;height: 7vh;font-size: 3.5vh;line-height:7vh;';
 	height: 7vh;
 	font-size: 3.5vh;
     line-height:7vh;
 }
 
 .contenedor-mapa-top-right ,.contenedor-mapa-top-right-more{
+	content: 'viewport-units-buggyfill;width:8vh !important;';
 	width:8vh !important;
 }
 .boton-mapa-top-right{
+	content: 'viewport-units-buggyfill;width:7vh !important;height:7vh !important;';
 	width:7vh !important;
 	height:7vh !important;
 }
 .label-pie-radio{
+	content: 'viewport-units-buggyfill;padding-left:1.5vh !important;';
     padding-left:1.5vh !important;
     font-weight:200 !important;
 }
@@ -170,10 +194,12 @@ label.item-input{
 /* LANDSCAPE*/
 @media (orientation: landscape) {
 	.login-view > ion-content{
+		content: 'viewport-units-buggyfill;padding:2vw !important';
 		bottom: 0px;
 		padding:2vw !important
 	}
 	.login-logo-container{
+		content: 'viewport-units-buggyfill;height: 15vw;margin: 2vw;';
 		margin-top: 0px;
 		height: 15vw;
 		margin: 2vw;
@@ -187,13 +213,16 @@ label.item-input{
     	margin-left: 25%;
 	}
 	.login-input-icon{
+		content: 'viewport-units-buggyfill;font-size: 2vw !important;height: 2vw !important;';
 		font-size: 2vw !important;
     	height: 2vw !important;
 	}
 	.login-input{
+		content: 'viewport-units-buggyfill;font-size: 2.5vw !important;';
 	    font-size: 2.5vw !important;
 	}
 	.login-enter-button, .login-enter-button:active, .login-enter-button:hover{
+		content: 'viewport-units-buggyfill;font-size: 2.5vw;height: 4.5vw;';
 		font-size: 2.5vw;
     	height: 4.5vw;
 	}
@@ -203,14 +232,17 @@ label.item-input{
     	left: 0px;
 	}
 	.login-enter-button-container{
+		content: 'viewport-units-buggyfill;margin-top: 3vw;';
 		margin-top: 3vw;
 	}
 	
 	label.item-input{
+		content: 'viewport-units-buggyfill;padding-left:1vw !important;padding-right:1vw !important;';
 		padding-left:1vw !important;
 		padding-right:1vw !important;
 	}
 	.login-footer > button{
+		content: 'viewport-units-buggyfill;font-size: 2.5vw;height: 5vw !important; border-left: 1vh solid #242424 !important;';
 		margin: 0px !important;
     width: 50%;
     font-size: 2.5vw;

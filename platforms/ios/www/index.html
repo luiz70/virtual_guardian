@@ -86,7 +86,20 @@
     <!-- res -->
     <script src="js/resources/underscore.js"></script>
     <script src="js/resources/ngTouch.min.js"></script>
+    <script src="js/resources/viewport-units-buggyfill.js"></script>
+    <script src="js/resources/viewport-units-buggyfill.hacks.js"></script>
     <!-- maps -->
+    <script>
+        alert(window.innerWidth+","+window.innerHeight)
+        window.viewportUnitsBuggyfill.init({
+    // ignore browser capability, run this puppy everywhere
+    force: false,
+    // milliseconds to delay between updates of viewport-units
+    // caused by orientationchange, pageshow, resize events
+    refreshDebounceWait: 500,
+    hacks: window.viewportUnitsBuggyfillHacks
+  });
+ </script>
     <script src="lib/maps/angular-google-maps_dev_mapped.js"></script>
     <!--date picker-->
     <script src="lib/datepicker-for-ionic/dist/templates.min.js"></script>

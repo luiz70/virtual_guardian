@@ -2,7 +2,7 @@
 
 <div data-tap-disabled="true" >
 	
-    <ui-gmap-google-map class="animate-enter-mapa fast" control="map" center='map.center' zoom='map.zoom' style="height: 100vh; width:100vw" options='map.options' pan='true' events="map.events" ng-cloak>
+    <ui-gmap-google-map class="animate-enter-mapa fast" control="map" center='map.center' zoom='map.zoom'  options='map.options' pan='true' events="map.events" ng-cloak>
         <ui-gmap-circle center='radio.center' control='radio' radius='radio.radio' fill='radio.fill'   stroke='radio.stroke' visible='radio.activo && radio.visible' events="radio.events"></ui-gmap-circle>
     
     <ui-gmap-marker idKey='1' coords='auto.position'  options="auto.options" icon="content"  events="auto.events" >
@@ -51,7 +51,7 @@
             <div class="mapa-descripcion-evento-subtitulo" ng-hide="cargandoInfo || error">{{selectedMarker.data.formatted_address}}</div>
             </div>
             <div class="mapa-descripcion-evento-rating">
-            	<p style="margin-bottom: 1vh;color: #036777; font-size:4vh"><i class="icon ion-record" style="margin-right:1vh;color:{{selectedMarker.data.escala | escalaVColor}}"></i>{{idioma.Info[5]}}</p>
+            	<p ><i class="icon ion-record" style="color:{{selectedMarker.data.escala | escalaVColor}}"></i>{{idioma.Info[5]}}</p>
                 <h style="color: #047385;">{{selectedMarker.data.escala | escalaV}}</h> <h></h>
             </div>
             </div>
